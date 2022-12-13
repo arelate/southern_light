@@ -1,6 +1,9 @@
 package pcgw_integration
 
-import "net/url"
+import (
+	"net/url"
+	"strings"
+)
 
 const (
 	pageIdParam = "pageid"
@@ -16,7 +19,7 @@ func ParseExternalLinksUrl(pageId string) *url.URL {
 
 	q := u.Query()
 	q.Set(actionParam, "parse")
-	q.Set(propParam, "externallinks")
+	q.Set(propParam, strings.Join([]string{"externallinks", "iwlinks"}, "|"))
 	q.Set(pageIdParam, pageId)
 	q.Set(formatParam, "json")
 

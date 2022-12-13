@@ -10,17 +10,27 @@ const (
 	steamCommunityAppPrefix    = "https://steamcommunity.com/app/"
 	howLongToBeatPrefix        = "https://howlongtobeat.com/game?id="
 	igdbPrefix                 = "https://www.igdb.com/games/"
-	strategyWikiPrefix         = "https://strategywiki.org/wiki/"
 	mobyGamesPrefix            = "https://www.mobygames.com/game/"
-	wikipediaPrefix            = "https://en.wikipedia.org/wiki/"
 	wineHQPrefix               = "https://appdb.winehq.org/objectManager.php?sClass=application&iId="
+	vndbPrefix                 = "https://vndb.org/"
+
+	strategyWikiPrefix = "strategywiki"
+	wikipediaPrefix    = "wikipedia"
 )
+
+type IWLinks struct {
+}
 
 type ParseExternalLinks struct {
 	Parse struct {
 		Title         string   `json:"title"`
 		PageId        uint64   `json:"pageid"`
 		ExternalLinks []string `json:"externallinks"`
+		IWLinks       []struct {
+			Prefix string `json:"prefix"`
+			Url    string `json:"url"`
+			Id     string `json:"*"`
+		} `json:"iwlinks"`
 	} `json:"parse"`
 }
 
@@ -52,6 +62,10 @@ type WineHQIdGetter interface {
 	GetWineHQId() string
 }
 
+type VNDBIdGetter interface {
+	GetVNDBId() string
+}
+
 func extractSteamAppId(link, pfx string) uint32 {
 	if strings.HasPrefix(link, pfx) {
 		if parts := strings.Split(strings.TrimPrefix(link, pfx), "/"); len(parts) > 0 {
@@ -79,7 +93,7 @@ func (pel *ParseExternalLinks) GetSteamAppId() uint32 {
 	return 0
 }
 
-func (pel *ParseExternalLinks) extractSuffixId(pfx string) string {
+func (pel *ParseExternalLinks) externalLinkSuffixId(pfx string) string {
 	for _, link := range pel.Parse.ExternalLinks {
 		if strings.HasPrefix(link, pfx) {
 			return strings.TrimPrefix(link, pfx)
@@ -88,26 +102,39 @@ func (pel *ParseExternalLinks) extractSuffixId(pfx string) string {
 	return ""
 }
 
+func (pel *ParseExternalLinks) iwLinkId(pfx string) string {
+	for _, iw := range pel.Parse.IWLinks {
+		if iw.Prefix == pfx {
+			return strings.TrimPrefix(iw.Id, pfx+":")
+		}
+	}
+	return ""
+}
+
 func (pel *ParseExternalLinks) GetHowLongToBeatId() string {
-	return pel.extractSuffixId(howLongToBeatPrefix)
+	return pel.externalLinkSuffixId(howLongToBeatPrefix)
 }
 
 func (pel *ParseExternalLinks) GetIGDBId() string {
-	return pel.extractSuffixId(igdbPrefix)
-}
-
-func (pel *ParseExternalLinks) GetStrategyWikiId() string {
-	return pel.extractSuffixId(strategyWikiPrefix)
+	return pel.externalLinkSuffixId(igdbPrefix)
 }
 
 func (pel *ParseExternalLinks) GetMobyGamesId() string {
-	return pel.extractSuffixId(mobyGamesPrefix)
-}
-
-func (pel *ParseExternalLinks) GetWikipediaId() string {
-	return pel.extractSuffixId(wikipediaPrefix)
+	return pel.externalLinkSuffixId(mobyGamesPrefix)
 }
 
 func (pel *ParseExternalLinks) GetWineHQId() string {
-	return pel.extractSuffixId(wineHQPrefix)
+	return pel.externalLinkSuffixId(wineHQPrefix)
+}
+
+func (pel *ParseExternalLinks) GetVNDBId() string {
+	return pel.externalLinkSuffixId(vndbPrefix)
+}
+
+func (pel *ParseExternalLinks) GetWikipediaId() string {
+	return pel.iwLinkId(wikipediaPrefix)
+}
+
+func (pel *ParseExternalLinks) GetStrategyWikiId() string {
+	return pel.iwLinkId(strategyWikiPrefix)
 }
