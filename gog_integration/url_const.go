@@ -4,10 +4,6 @@
 
 package gog_integration
 
-const (
-	HttpsScheme = "https"
-)
-
 // hosts
 const (
 	GogHost       = "gog.com"

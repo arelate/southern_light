@@ -1,11 +1,10 @@
 package gogdb_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 func GOGDBUrl(gogId string) *url.URL {
-	return &url.URL{
-		Scheme: httpsScheme,
-		Host:   gogDBHost,
-		Path:   productPath + gogId,
-	}
+	return southern_light.SuffixIdUrl(gogDBHost, productPath, gogId)
 }

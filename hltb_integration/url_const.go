@@ -1,10 +1,5 @@
 package hltb_integration
 
-// scheme
-const (
-	httpsScheme = "https"
-)
-
 // hosts
 const (
 	hltbHost = "howlongtobeat.com"

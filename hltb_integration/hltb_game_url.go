@@ -1,16 +1,10 @@
 package hltb_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
 func GameUrl(hltbId string) *url.URL {
-
-	u := &url.URL{
-		Scheme: httpsScheme,
-		Host:   hltbHost,
-		Path:   gamePath + hltbId,
-	}
-
-	return u
+	return southern_light.SuffixIdUrl(hltbHost, gamePath, hltbId)
 }

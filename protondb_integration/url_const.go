@@ -1,11 +1,11 @@
 package protondb_integration
 
-// scheme
-const (
-	httpsScheme = "https"
-)
-
+// hosts
 const (
 	protonDBHost = "www.protondb.com"
-	appPath      = "/app/"
+)
+
+// paths
+const (
+	appPath = "/app/"
 )

@@ -1,17 +1,20 @@
 package vndb_integration
 
-// scheme
-const (
-	httpsScheme = "https"
-)
-
 // hosts
 const (
-	vndbHost = "vndb.org"
+	rootHost = "vndb.org"
+	apiHost  = "api." + rootHost
 )
 
 // paths
 const (
-	// VNDB API paths
 	itemPath = "/"
+	kanaPath = "/kana"
+	vnPath   = kanaPath + "/vn"
+)
+
+// params
+const (
+	TagsName = "tags.name"
+	Rating   = "rating"
 )

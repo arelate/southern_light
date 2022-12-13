@@ -1,6 +1,7 @@
 package pcgw_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 	"strings"
 )
@@ -12,7 +13,7 @@ const (
 
 func ParseExternalLinksUrl(pageId string) *url.URL {
 	u := &url.URL{
-		Scheme: httpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   pcgwHost,
 		Path:   apiPath,
 	}

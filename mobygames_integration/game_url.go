@@ -1,13 +1,10 @@
 package mobygames_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 func GameUrl(id string) *url.URL {
-	u := &url.URL{
-		Scheme: httpsScheme,
-		Host:   mobyGamesHost,
-		Path:   gamePath + id,
-	}
-
-	return u
+	return southern_light.SuffixIdUrl(mobyGamesHost, gamePath, id)
 }

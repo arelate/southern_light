@@ -1,10 +1,5 @@
 package mobygames_integration
 
-// scheme
-const (
-	httpsScheme = "https"
-)
-
 // hosts
 const (
 	mobyGamesHost = "www.mobygames.com"
@@ -12,6 +7,5 @@ const (
 
 // paths
 const (
-	// MobyGames API paths
 	gamePath = "/game/"
 )

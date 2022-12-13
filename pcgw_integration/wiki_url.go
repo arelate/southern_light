@@ -1,6 +1,9 @@
 package pcgw_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 const (
 	pageParam  = "page"
@@ -9,7 +12,7 @@ const (
 
 func WikiGOGUrl(gogId string) *url.URL {
 	u := &url.URL{
-		Scheme: httpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   pcgwHost,
 		Path:   apiGOGPath,
 	}
@@ -23,7 +26,7 @@ func WikiGOGUrl(gogId string) *url.URL {
 
 func WikiUrl(pageId string) *url.URL {
 	u := &url.URL{
-		Scheme: httpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   pcgwHost,
 		Path:   wikiPath,
 	}

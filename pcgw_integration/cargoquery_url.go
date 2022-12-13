@@ -2,6 +2,7 @@ package pcgw_integration
 
 import (
 	"fmt"
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
@@ -16,7 +17,7 @@ const (
 func CargoQueryUrl(gogId string) *url.URL {
 
 	u := &url.URL{
-		Scheme: httpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   pcgwHost,
 		Path:   apiPath,
 	}

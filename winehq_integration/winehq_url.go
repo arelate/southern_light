@@ -1,6 +1,9 @@
 package winehq_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 const (
 	sClassParam = "sClass"
@@ -9,7 +12,7 @@ const (
 
 func WineHQUrl(id string) *url.URL {
 	u := &url.URL{
-		Scheme: httpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   appdbWineHqHost,
 		Path:   objectManagerPath,
 	}

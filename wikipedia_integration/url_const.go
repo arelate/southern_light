@@ -1,10 +1,5 @@
 package wikipedia_integration
 
-// scheme
-const (
-	httpsScheme = "https"
-)
-
 // hosts
 const (
 	enWikipediaHost = "en.wikipedia.org"
@@ -12,6 +7,5 @@ const (
 
 // paths
 const (
-	// Wikipedia API paths
 	wikiPath = "/wiki/"
 )

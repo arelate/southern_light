@@ -1,16 +1,10 @@
 package igdb_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
 func GameUrl(igdbId string) *url.URL {
-
-	u := &url.URL{
-		Scheme: httpsScheme,
-		Host:   igdbHost,
-		Path:   gamesPath + igdbId,
-	}
-
-	return u
+	return southern_light.SuffixIdUrl(igdbHost, gamesPath, igdbId)
 }
