@@ -1,4 +1,4 @@
-package steam_integration
+package protondb_integration
 
 import (
 	"net/url"
