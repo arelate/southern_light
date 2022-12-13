@@ -1,0 +1,50 @@
+// Copyright (c) 2020. All rights reserved.
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file.
+
+package gog_integration
+
+import (
+	"net/url"
+)
+
+const (
+	gameMediaType = "1"
+)
+
+func DefaultAccountPageUrl(page string) *url.URL {
+	return AccountPageUrl(
+		page,
+		AccountSortByPurchaseDate,
+		false,
+		false)
+}
+
+func AccountPageUrl(
+	page string,
+	sortOrder AccountSortOrder,
+	updated bool, /* get only updated products */
+	hidden bool /* get only hidden products */) *url.URL {
+
+	accountPage := &url.URL{
+		Scheme: HttpsScheme,
+		Host:   GogHost,
+		Path:   accountPagePath,
+	}
+
+	q := accountPage.Query()
+	q.Add("mediaType", gameMediaType)
+	if sortOrder != "" {
+		q.Add("sortBy", string(sortOrder))
+	}
+	q.Add("page", page)
+	if hidden {
+		q.Add("hiddenFlag", "1")
+	}
+	if updated {
+		q.Add("isUpdated", "1")
+	}
+	accountPage.RawQuery = q.Encode()
+
+	return accountPage
+}
