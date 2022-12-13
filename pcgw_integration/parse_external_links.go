@@ -10,6 +10,10 @@ const (
 	steamCommunityAppPrefix    = "https://steamcommunity.com/app/"
 	howLongToBeatPrefix        = "https://howlongtobeat.com/game?id="
 	igdbPrefix                 = "https://www.igdb.com/games/"
+	strategyWikiPrefix         = "https://strategywiki.org/wiki/"
+	mobyGamesPrefix            = "https://www.mobygames.com/game/"
+	wikipediaPrefix            = "https://en.wikipedia.org/wiki/"
+	wineHQPrefix               = "https://appdb.winehq.org/objectManager.php?sClass=application&iId="
 )
 
 type ParseExternalLinks struct {
@@ -30,6 +34,22 @@ type HowLongToBeatIdGetter interface {
 
 type IGDBIdGetter interface {
 	GetIGDBId() string
+}
+
+type StrategyWikiIdGetter interface {
+	GetStrategyWikiId() string
+}
+
+type MobyGamesIdGetter interface {
+	GetMobyGamesId() string
+}
+
+type WikipediaIdGetter interface {
+	GetWikipediaId() string
+}
+
+type WineHQIdGetter interface {
+	GetWineHQId() string
 }
 
 func extractSteamAppId(link, pfx string) uint32 {
@@ -59,20 +79,35 @@ func (pel *ParseExternalLinks) GetSteamAppId() uint32 {
 	return 0
 }
 
-func (pel *ParseExternalLinks) GetHowLongToBeatId() string {
-	for _, el := range pel.Parse.ExternalLinks {
-		if strings.HasPrefix(el, howLongToBeatPrefix) {
-			return strings.TrimPrefix(el, howLongToBeatPrefix)
+func (pel *ParseExternalLinks) extractSuffixId(pfx string) string {
+	for _, link := range pel.Parse.ExternalLinks {
+		if strings.HasPrefix(link, pfx) {
+			return strings.TrimPrefix(link, pfx)
 		}
 	}
 	return ""
 }
 
+func (pel *ParseExternalLinks) GetHowLongToBeatId() string {
+	return pel.extractSuffixId(howLongToBeatPrefix)
+}
+
 func (pel *ParseExternalLinks) GetIGDBId() string {
-	for _, el := range pel.Parse.ExternalLinks {
-		if strings.HasPrefix(el, igdbPrefix) {
-			return strings.TrimPrefix(el, igdbPrefix)
-		}
-	}
-	return ""
+	return pel.extractSuffixId(igdbPrefix)
+}
+
+func (pel *ParseExternalLinks) GetStrategyWikiId() string {
+	return pel.extractSuffixId(strategyWikiPrefix)
+}
+
+func (pel *ParseExternalLinks) GetMobyGamesId() string {
+	return pel.extractSuffixId(mobyGamesPrefix)
+}
+
+func (pel *ParseExternalLinks) GetWikipediaId() string {
+	return pel.extractSuffixId(wikipediaPrefix)
+}
+
+func (pel *ParseExternalLinks) GetWineHQId() string {
+	return pel.extractSuffixId(wineHQPrefix)
 }
