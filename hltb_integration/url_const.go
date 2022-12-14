@@ -8,5 +8,6 @@ const (
 // paths
 const (
 	// HowLongToBeat API paths
-	gamePath = "/game/"
+	gamePath         = "/game/"
+	dataPathTemplate = "/_next/data/{build}/game/{id}.json"
 )
