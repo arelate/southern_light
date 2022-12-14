@@ -1,6 +1,7 @@
 package gog_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
@@ -34,7 +35,7 @@ func DefaultOrdersPageUrl(page string) *url.URL {
 
 func OrdersPageUrl(page string, canceled, completed, inProgress, notRedeemed, pending, redeemed bool) *url.URL {
 	orderPage := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   ordersPath,
 	}

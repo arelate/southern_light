@@ -1,6 +1,7 @@
 package gog_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 	"strconv"
 )
@@ -14,7 +15,7 @@ func DefaultCatalogPageUrl(page string) *url.URL {
 func CatalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
 
 	catalogPage := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   CatalogHost,
 		Path:   catalogPath,
 	}

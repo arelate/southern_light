@@ -2,6 +2,7 @@ package gog_integration
 
 import (
 	"fmt"
+	"github.com/arelate/southern_light"
 	"net/url"
 	"path"
 	"strings"
@@ -29,7 +30,7 @@ func ImageUrl(imageId, ext string) (*url.URL, error) {
 		return nil, fmt.Errorf("gog_urls: empty image-id")
 	}
 	return &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   imagesHost,
 		Path:   strings.Replace(imagesPathTemplate, "{image_id}", imageId, 1) + ext,
 	}, nil

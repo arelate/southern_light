@@ -5,6 +5,7 @@
 package gog_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
@@ -14,7 +15,7 @@ const (
 
 func authUrl(host string) *url.URL {
 	authURL := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   host,
 		Path:   authPath,
 	}

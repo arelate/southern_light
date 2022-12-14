@@ -1,10 +1,13 @@
 package gog_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 func UserWishlistUrl() *url.URL {
 	return &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   WwwGogHost,
 		Path:   userWishlistPath,
 	}

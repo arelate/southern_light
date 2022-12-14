@@ -5,6 +5,7 @@
 package gog_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"net/url"
 )
 
@@ -27,7 +28,7 @@ func AccountPageUrl(
 	hidden bool /* get only hidden products */) *url.URL {
 
 	accountPage := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   accountPagePath,
 	}

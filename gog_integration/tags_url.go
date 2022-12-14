@@ -1,10 +1,13 @@
 package gog_integration
 
-import "net/url"
+import (
+	"github.com/arelate/southern_light"
+	"net/url"
+)
 
 func CreateTagUrl(name string) *url.URL {
 	createTag := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   tagsCreatePath,
 	}
@@ -18,7 +21,7 @@ func CreateTagUrl(name string) *url.URL {
 
 func DeleteTagUrl(tagId string) *url.URL {
 	deleteTag := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   tagsDeletePath,
 	}
@@ -32,7 +35,7 @@ func DeleteTagUrl(tagId string) *url.URL {
 
 func UpdateTagsUrl(tagsJson string) *url.URL {
 	updateTags := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   tagsUpdatePath,
 	}
@@ -46,7 +49,7 @@ func UpdateTagsUrl(tagsJson string) *url.URL {
 
 func AddTagUrl(productId, tagId string) *url.URL {
 	addTag := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   tagsAddPath,
 	}
@@ -61,7 +64,7 @@ func AddTagUrl(productId, tagId string) *url.URL {
 
 func RemoveTagUrl(productId, tagId string) *url.URL {
 	removeTag := &url.URL{
-		Scheme: HttpsScheme,
+		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
 		Path:   tagsRemovePath,
 	}
