@@ -3,7 +3,7 @@ package hltb_integration
 import "golang.org/x/net/html"
 
 type RootPage struct {
-	doc *html.Node
+	Doc *html.Node
 }
 
 type NextBuildGetter interface {
