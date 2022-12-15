@@ -8,7 +8,7 @@ import (
 const (
 	storeSteamPoweredAppPrefix = "https://store.steampowered.com/app/"
 	steamCommunityAppPrefix    = "https://steamcommunity.com/app/"
-	howLongToBeatPrefix        = "https://howlongtobeat.com/game?id="
+	hltbPrefix                 = "https://howlongtobeat.com/game?id="
 	igdbPrefix                 = "https://www.igdb.com/games/"
 	mobyGamesPrefix            = "https://www.mobygames.com/game/"
 	wineHQPrefix               = "https://appdb.winehq.org/objectManager.php?sClass=application&iId="
@@ -38,8 +38,8 @@ type SteamAppIdGetter interface {
 	GetSteamAppId() uint32
 }
 
-type HowLongToBeatIdGetter interface {
-	GetHowLongToBeatId() string
+type HLTBIdGetter interface {
+	GetHLTBId() string
 }
 
 type IGDBIdGetter interface {
@@ -111,8 +111,8 @@ func (pel *ParseExternalLinks) iwLinkId(pfx string) string {
 	return ""
 }
 
-func (pel *ParseExternalLinks) GetHowLongToBeatId() string {
-	return pel.externalLinkSuffixId(howLongToBeatPrefix)
+func (pel *ParseExternalLinks) GetHLTBId() string {
+	return pel.externalLinkSuffixId(hltbPrefix)
 }
 
 func (pel *ParseExternalLinks) GetIGDBId() string {
