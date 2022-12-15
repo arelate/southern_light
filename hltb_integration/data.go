@@ -169,27 +169,33 @@ type HoursToComplete100Getter interface {
 	GetHoursToComplete100() string
 }
 
-func secondsToHours(seconds int) float64 {
-	return float64(seconds) / 3600.0
+func (d *Data) fmtSecondsToHours(style string) string {
+	seconds := 0
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		switch style {
+		case "main":
+			seconds = gd[0].CompMain
+		case "plus":
+			seconds = gd[0].CompPlus
+		case "100":
+			seconds = gd[0].Comp100
+		}
+	}
+
+	if seconds > 0 {
+		return fmt.Sprintf("%07.1f", float64(seconds)/3600.0)
+	}
+	return ""
 }
 
 func (d *Data) GetHoursToCompleteMain() string {
-	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].CompMain))
-	}
-	return ""
+	return d.fmtSecondsToHours("main")
 }
 
 func (d *Data) GetHoursToCompletePlus() string {
-	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].CompPlus))
-	}
-	return ""
+	return d.fmtSecondsToHours("plus")
 }
 
 func (d *Data) GetHoursToComplete100() string {
-	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].Comp100))
-	}
-	return ""
+	return d.fmtSecondsToHours("100")
 }
