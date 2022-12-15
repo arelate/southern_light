@@ -175,21 +175,21 @@ func secondsToHours(seconds int) float64 {
 
 func (d *Data) GetHoursToCompleteMain() string {
 	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%05.1f", secondsToHours(gd[0].CompMain))
+		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].CompMain))
 	}
 	return ""
 }
 
 func (d *Data) GetHoursToCompletePlus() string {
 	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%05.1f", secondsToHours(gd[0].CompPlus))
+		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].CompPlus))
 	}
 	return ""
 }
 
 func (d *Data) GetHoursToComplete100() string {
 	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return fmt.Sprintf("%05.1f", secondsToHours(gd[0].Comp100))
+		return fmt.Sprintf("%07.1f", secondsToHours(gd[0].Comp100))
 	}
 	return ""
 }
