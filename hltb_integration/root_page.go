@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+const (
+	buildIdMarker = "\"buildId\":"
+)
+
 type RootPage struct {
 	Doc *html.Node
 }
@@ -21,10 +25,12 @@ func (rp *RootPage) GetNextBuild() string {
 	}
 
 	if ndsm := match_node.Match(rp.Doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
-		for _, line := range strings.Split(ndsm.FirstChild.Data, "\n") {
-			if strings.Contains(line, "buildId") {
-				if parts := strings.Split(line, "\""); len(parts) > 3 {
-					return parts[len(parts)-2]
+		buildString := ndsm.FirstChild.Data
+		if strings.Contains(buildString, "buildId") {
+
+			if _, version, ok := strings.Cut(buildString, buildIdMarker); ok {
+				if parts := strings.Split(version, ","); len(parts) > 0 {
+					return strings.Trim(parts[0], "\"")
 				}
 			}
 		}
