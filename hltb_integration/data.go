@@ -144,19 +144,15 @@ type Data struct {
 			} `json:"data"`
 		} `json:"game"`
 		IgnWikiSlug string `json:"ignWikiSlug"`
-		IgnMap      struct {
-		} `json:"ignMap"`
-		IgnWikiNav struct {
-		} `json:"ignWikiNav"`
-		PageMetadata struct {
-			Title       string `json:"title"`
-			Image       string `json:"image"`
-			Description string `json:"description"`
-			Canonical   string `json:"canonical"`
-			Template    string `json:"template"`
-		} `json:"pageMetadata"`
-		SentryTraceData string `json:"_sentryTraceData"`
-		SentryBaggage   string `json:"_sentryBaggage"`
+		//PageMetadata struct {
+		//	Title       string `json:"title"`
+		//	Image       string `json:"image"`
+		//	Description string `json:"description"`
+		//	Canonical   string `json:"canonical"`
+		//	Template    string `json:"template"`
+		//} `json:"pageMetadata"`
+		//SentryTraceData string `json:"_sentryTraceData"`
+		//SentryBaggage   string `json:"_sentryBaggage"`
 	} `json:"pageProps"`
 	NSSP bool `json:"__N_SSP"`
 }
