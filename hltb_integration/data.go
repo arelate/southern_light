@@ -1,6 +1,9 @@
 package hltb_integration
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Data struct {
 	PageProps struct {
@@ -29,8 +32,8 @@ type Data struct {
 					ProfilePub        string `json:"profile_pub"`
 					ProfilePlatform   string `json:"profile_platform"`
 					ProfileGenre      string `json:"profile_genre"`
-					ProfileSteam      int    `json:"profile_steam"`
-					ProfileSteamAlt   int    `json:"profile_steam_alt"`
+					ProfileSteam      uint32 `json:"profile_steam"`
+					ProfileSteamAlt   uint32 `json:"profile_steam_alt"`
 					ProfileItch       int    `json:"profile_itch"`
 					ProfileIgn        string `json:"profile_ign"`
 					ReleaseWorld      string `json:"release_world"`
@@ -169,6 +172,18 @@ type HoursToComplete100Getter interface {
 	GetHoursToComplete100() string
 }
 
+type ReviewScoreGetter interface {
+	GetReviewScore() int
+}
+
+type PlatformsGetter interface {
+	GetPlatforms() []string
+}
+
+type IGNWikiSlugGetter interface {
+	GetIGNWikiSlug() string
+}
+
 func (d *Data) fmtSecondsToHours(style string) string {
 	seconds := 0
 	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
@@ -198,4 +213,43 @@ func (d *Data) GetHoursToCompletePlus() string {
 
 func (d *Data) GetHoursToComplete100() string {
 	return d.fmtSecondsToHours("100")
+}
+
+func (d *Data) GetSteamAppId() uint32 {
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		return gd[0].ProfileSteam
+	}
+	return 0
+}
+
+func (d *Data) GetReviewScore() int {
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		return gd[0].ReviewScore
+	}
+	return 0
+}
+
+func (d *Data) GetGenres() []string {
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		return strings.Split(gd[0].ProfileGenre, ", ")
+	}
+	return nil
+}
+
+func (d *Data) GetPlatforms() []string {
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		return strings.Split(gd[0].ProfilePlatform, ", ")
+	}
+	return nil
+}
+
+func (d *Data) GetGlobalRelease() string {
+	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
+		return strings.Replace(gd[0].ReleaseWorld, "-", ".", -1)
+	}
+	return ""
+}
+
+func (d *Data) GetIGNWikiSlug() string {
+	return d.PageProps.IgnWikiSlug
 }

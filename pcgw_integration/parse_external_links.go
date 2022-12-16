@@ -34,10 +34,6 @@ type ParseExternalLinks struct {
 	} `json:"parse"`
 }
 
-type SteamAppIdGetter interface {
-	GetSteamAppId() uint32
-}
-
 type HLTBIdGetter interface {
 	GetHLTBId() string
 }
