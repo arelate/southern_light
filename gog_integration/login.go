@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	reCaptchaError       = "reCAPTCHA present on the page"
+	reCaptchaError       = "reCAPTCHA present on the page, please follow https://github.com/boggydigital/coost#copying-session-cookies-from-an-existing-browser-session guide to import session cookies from the browser"
 	secondStepCodePrompt = "Two-step authentication security code:"
 )
 
@@ -39,7 +39,6 @@ func authToken(client *http.Client) (token string, error error) {
 
 	// check for captcha presence
 	if match_node.Match(doc, &scriptReCaptchaMatcher{}) != nil {
-		// TODO: Write how to add cookie from the browser to allow user to unblock themselves
 		return "", errors.New(reCaptchaError)
 	}
 

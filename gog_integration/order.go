@@ -20,28 +20,22 @@ type value struct {
 
 type Order struct {
 	PublicId string `json:"publicId"`
-	// TODO: find non-nil data to infer type
-	Distributor        interface{} `json:"distributor"`
-	Date               int         `json:"date"`
-	MoneybackGuarantee bool        `json:"moneybackGuarantee"`
-	Status             string      `json:"status"`
-	PaymentMethod      string      `json:"paymentMethod"`
-	// TODO: find non-nil data to infer type
-	ValidUntil      interface{} `json:"validUntil"`
-	CheckoutLink    string      `json:"checkoutLink"`
-	ReceiptLink     string      `json:"receiptLink"`
-	Total           value       `json:"total"`
-	StoreCreditUsed value       `json:"storeCreditUsed"`
-	// TODO: find non-nil data to infer type
-	GiftRecipient interface{} `json:"giftRecipient"`
-	// TODO: find non-nil data to infer type
-	GiftSender interface{} `json:"giftSender"`
-	Products   []struct {
-		// TODO: find non-nil data to infer type
-		Status interface{} `json:"status"`
-		// TODO: find non-nil data to infer type
-		RelatedAccount interface{} `json:"relatedAccount"`
-		Price          struct {
+	//Distributor        interface{} `json:"distributor"`
+	Date               int    `json:"date"`
+	MoneybackGuarantee bool   `json:"moneybackGuarantee"`
+	Status             string `json:"status"`
+	PaymentMethod      string `json:"paymentMethod"`
+	//ValidUntil      interface{} `json:"validUntil"`
+	CheckoutLink    string `json:"checkoutLink"`
+	ReceiptLink     string `json:"receiptLink"`
+	Total           value  `json:"total"`
+	StoreCreditUsed value  `json:"storeCreditUsed"`
+	//GiftRecipient interface{} `json:"giftRecipient"`
+	//GiftSender interface{} `json:"giftSender"`
+	Products []struct {
+		//Status interface{} `json:"status"`
+		//RelatedAccount interface{} `json:"relatedAccount"`
+		Price struct {
 			BaseAmount   string `json:"baseAmount"`
 			Amount       string `json:"amount"`
 			IsFree       bool   `json:"isFree"`
@@ -56,8 +50,7 @@ type Order struct {
 		WalletValue                value  `json:"walletValue"`
 		IsPreorder                 bool   `json:"isPreorder"`
 		DisplayAutomaticRefundLink bool   `json:"displayAutomaticRefundLink"`
-		// TODO: find non-nil data to infer type
-		RefundDate interface{} `json:"refundDate"`
+		//RefundDate interface{} `json:"refundDate"`
 	} `json:"products"`
 	GiftCode      interface{} `json:"giftCode"`
 	IsResendable  bool        `json:"isResendable"`

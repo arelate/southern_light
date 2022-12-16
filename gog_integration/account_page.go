@@ -16,8 +16,7 @@ type AccountPage struct {
 	SortBy          string `json:"sortBy"`
 	TotalProducts   int    `json:"totalProducts"`
 	ProductsPerPage int    `json:"productsPerPage"`
-	// TODO: find data examples where ContentSystemCompatibility is not empty and create a type from that
-	ContentSystemCompatibility interface{}      `json:"contentSystemCompatibility"`
+	//ContentSystemCompatibility interface{}      `json:"contentSystemCompatibility"`
 	MoviesCount                int              `json:"moviesCount"`
 	Tags                       []accountTag     `json:"tags"`
 	Products                   []AccountProduct `json:"products"`
