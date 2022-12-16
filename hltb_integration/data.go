@@ -180,10 +180,6 @@ type PlatformsGetter interface {
 	GetPlatforms() []string
 }
 
-type IGNWikiSlugGetter interface {
-	GetIGNWikiSlug() string
-}
-
 func (d *Data) fmtSecondsToHours(style string) string {
 	seconds := 0
 	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {

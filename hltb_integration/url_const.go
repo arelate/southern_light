@@ -7,7 +7,6 @@ const (
 
 // paths
 const (
-	// HLTB API paths
 	gamePath         = "/game/"
 	dataPathTemplate = "/_next/data/{build}/game/{id}.json"
 )
