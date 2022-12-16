@@ -160,16 +160,8 @@ type ComingSoonGetter interface {
 	GetComingSoon() bool
 }
 
-type IsUsingDOSBoxGetter interface {
-	IsUsingDOSBox() bool
-}
-
 type AdditionalRequirementsGetter interface {
 	GetAdditionalRequirements() string
-}
-
-type IsUsingScummVMGetter interface {
-	IsUsingScummVM() bool
 }
 
 type BasePriceGetter interface {
