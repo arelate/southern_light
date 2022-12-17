@@ -15,7 +15,7 @@ const (
 	formatParam = "format"
 )
 
-func SteamAppIdCargoQueryUrl(gogId string) *url.URL {
+func PageIdCargoQueryUrl(gogId string) *url.URL {
 
 	u := &url.URL{
 		Scheme: southern_light.HttpsScheme,
