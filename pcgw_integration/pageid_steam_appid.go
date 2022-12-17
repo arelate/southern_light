@@ -1,6 +1,6 @@
 package pcgw_integration
 
-type Cargo struct {
+type PageIdSteamAppId struct {
 	Cargoquery []struct {
 		Title struct {
 			PageID string `json:"PageID"`
@@ -12,8 +12,8 @@ type PageIdGetter interface {
 	GetPageId() string
 }
 
-func (c *Cargo) GetPageId() string {
-	for _, cq := range c.Cargoquery {
+func (ps *PageIdSteamAppId) GetPageId() string {
+	for _, cq := range ps.Cargoquery {
 		return cq.Title.PageID
 	}
 	return ""
