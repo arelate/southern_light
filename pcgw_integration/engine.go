@@ -1,5 +1,11 @@
 package pcgw_integration
 
+import "strings"
+
+const (
+	enginePagePrefix = "Engine:"
+)
+
 type Engine struct {
 	Cargoquery []struct {
 		Title struct {
@@ -20,7 +26,7 @@ type EnginesBuildsGetter interface {
 func (e *Engine) GetEngines() []string {
 	engines := make([]string, 0, len(e.Cargoquery))
 	for _, cq := range e.Cargoquery {
-		engines = append(engines, cq.Title.Engine)
+		engines = append(engines, strings.TrimPrefix(cq.Title.Engine, enginePagePrefix))
 	}
 	return engines
 }
