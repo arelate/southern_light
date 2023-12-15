@@ -28,6 +28,10 @@ const (
 
 	// Steam Website paths
 	appPath = "/app"
+
+	// Store paths
+	deckAppCompatibilityReportPath = "/saleaction/ajaxgetdeckappcompatibilityreport"
+	appDetailsPath                 = "/api/appdetails"
 )
 
 type SteamUrlFunc func(appId uint32) *url.URL

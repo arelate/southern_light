@@ -7,5 +7,6 @@ const (
 
 // paths
 const (
-	appPath = "/app/"
+	appPath             = "/app/"
+	summaryPathTemplate = "/api/v1/reports/summaries/{0}.json"
 )

@@ -7,5 +7,8 @@ import (
 )
 
 func ProtonDBUrl(steamAppId uint32) *url.URL {
-	return southern_light.SuffixIdUrl(protonDBHost, appPath, strconv.Itoa(int(steamAppId)))
+	return southern_light.SuffixIdUrl(
+		protonDBHost,
+		appPath,
+		strconv.FormatInt(int64(steamAppId), 10))
 }
