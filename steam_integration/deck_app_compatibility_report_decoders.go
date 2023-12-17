@@ -39,6 +39,17 @@ var locTokensStrings = map[string]string{
 	"videoPlaybackHasNonblockingIssues":                    "Some in-game movie content may be missing",
 }
 
+var categoryTitles = map[int]string{
+	0: "Unknown",
+	1: "Unsupported",
+	2: "Playable",
+	3: "Verified",
+}
+
+func DecodeCategory(category int) string {
+	return categoryTitles[category]
+}
+
 func DecodeLocToken(token string) string {
 	token = strings.TrimPrefix(token, locTokenPrefix)
 	token = firstToLower(token)

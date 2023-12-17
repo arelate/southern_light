@@ -18,8 +18,8 @@ func (dacr *DeckAppCompatibilityReport) IsSuccess() bool {
 	return dacr.Success == 1
 }
 
-func (dacr *DeckAppCompatibilityReport) GetCategory() int {
-	return dacr.Results.ResolvedCategory
+func (dacr *DeckAppCompatibilityReport) String() string {
+	return DecodeCategory(dacr.Results.ResolvedCategory)
 }
 
 func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []int {
