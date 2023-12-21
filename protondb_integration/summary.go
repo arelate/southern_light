@@ -19,6 +19,10 @@ func (s *Summary) String() string {
 	}
 }
 
+type ConfidenceGetter interface {
+	GetConfidence() string
+}
+
 func (s *Summary) GetConfidence() string {
 	return s.Confidence
 }
