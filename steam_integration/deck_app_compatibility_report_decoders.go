@@ -1,9 +1,8 @@
 package steam_integration
 
 import (
+	"github.com/arelate/southern_light"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 )
 
 const locTokenPrefix = "#SteamDeckVerified_TestResult_"
@@ -52,20 +51,7 @@ func DecodeCategory(category int) string {
 
 func DecodeLocToken(token string) string {
 	token = strings.TrimPrefix(token, locTokenPrefix)
-	token = firstToLower(token)
+	token = southern_light.FirstToLower(token)
 
 	return locTokensStrings[token]
-}
-
-// https://stackoverflow.com/questions/75988064/make-first-letter-of-string-lower-case-in-golang
-func firstToLower(s string) string {
-	r, size := utf8.DecodeRuneInString(s)
-	if r == utf8.RuneError && size <= 1 {
-		return s
-	}
-	lc := unicode.ToLower(r)
-	if r == lc {
-		return s
-	}
-	return string(lc) + s[size:]
 }

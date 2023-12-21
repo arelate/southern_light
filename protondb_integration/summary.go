@@ -1,5 +1,7 @@
 package protondb_integration
 
+import "github.com/arelate/southern_light"
+
 type Summary struct {
 	BestReportedTier string  `json:"bestReportedTier"`
 	Confidence       string  `json:"confidence"`
@@ -11,12 +13,14 @@ type Summary struct {
 }
 
 func (s *Summary) String() string {
+	tier := ""
 	switch s.Tier {
 	case "pending":
-		return s.ProvisionalTier
+		tier = s.ProvisionalTier
 	default:
-		return s.Tier
+		tier = s.Tier
 	}
+	return southern_light.FirstToUpper(tier)
 }
 
 type ConfidenceGetter interface {
@@ -24,5 +28,5 @@ type ConfidenceGetter interface {
 }
 
 func (s *Summary) GetConfidence() string {
-	return s.Confidence
+	return southern_light.FirstToUpper(s.Confidence)
 }
