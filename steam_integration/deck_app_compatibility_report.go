@@ -30,10 +30,10 @@ func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []int {
 	return ridt
 }
 
-func (dacr *DeckAppCompatibilityReport) GetResultsLocTokens() []string {
+func (dacr *DeckAppCompatibilityReport) GetResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
-		rilt = append(rilt, ri.LocToken)
+		rilt = append(rilt, DecodeLocToken(ri.LocToken))
 	}
 	return rilt
 }
