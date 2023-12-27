@@ -22,10 +22,10 @@ func (dacr *DeckAppCompatibilityReport) String() string {
 	return DecodeCategory(dacr.Results.ResolvedCategory)
 }
 
-func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []int {
-	ridt := make([]int, 0, len(dacr.Results.ResolvedItems))
+func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []string {
+	ridt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
-		ridt = append(ridt, ri.DisplayType)
+		ridt = append(ridt, DecodeCategory(ri.DisplayType-1))
 	}
 	return ridt
 }
