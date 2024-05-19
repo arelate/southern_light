@@ -1,6 +1,17 @@
 package ign_integration
 
-import "time"
+import (
+	"fmt"
+	"github.com/boggydigital/match_node"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
+	"strings"
+	"time"
+)
+
+const (
+	wikisLinkPfx = "/wikis"
+)
 
 type Breadcrumb struct {
 	Typename string `json:"__typename"`
@@ -222,4 +233,46 @@ type WikiProps struct {
 	Query struct {
 		Slug string `json:"slug"`
 	} `json:"query"`
+}
+
+func (wp *WikiProps) NextPageUrl() string {
+	return wp.Props.PageProps.Page.Page.NextPage.Url
+}
+
+func (wp *WikiProps) PreviousPageUrl() string {
+	return wp.Props.PageProps.Page.Page.PrevPage.Url
+}
+
+func (wp *WikiProps) HTMLEntities() []HTMLEntity {
+	return wp.Props.PageProps.Page.Page.HtmlEntities
+}
+
+func (he *HTMLEntity) PageUrls(slug string) ([]string, error) {
+	fragment, err := html.Parse(strings.NewReader(he.Values.Html))
+	if err != nil {
+		return nil, err
+	}
+
+	etc := match_node.NewEtc(atom.A, "", false)
+
+	pageUrls := make([]string, 0)
+
+	wikiSlugPfx := fmt.Sprintf("%s/%s/", wikisLinkPfx, slug)
+
+	for _, link := range match_node.Matches(fragment, etc, -1) {
+		href := match_node.AttrVal(link, "href")
+		if strings.HasPrefix(href, wikisLinkPfx) {
+			rel := strings.TrimPrefix(href, wikiSlugPfx)
+			if rel != "" {
+				pageUrls = append(pageUrls, rel)
+			}
+		}
+	}
+
+	return pageUrls, nil
+}
+
+func (he *HTMLEntity) ImageUrls() ([]string, error) {
+	panic("not implemented")
+	//return nil, nil
 }
