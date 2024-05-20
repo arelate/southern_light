@@ -291,6 +291,22 @@ func (he *HTMLEntity) PageUrls(slug string) ([]string, error) {
 }
 
 func (he *HTMLEntity) ImageUrls() ([]string, error) {
-	panic("not implemented")
-	//return nil, nil
+	imageUrls := make([]string, 0)
+	for _, iv := range he.ImageValues {
+		imageUrls = append(imageUrls, iv.Original)
+	}
+
+	fragment, err := html.Parse(strings.NewReader(he.Values.Html))
+	if err != nil {
+		return nil, err
+	}
+
+	etc := match_node.NewEtc(atom.Img, "", false)
+
+	for _, img := range match_node.Matches(fragment, etc, -1) {
+		src := match_node.AttrVal(img, "src")
+		imageUrls = append(imageUrls, src)
+	}
+
+	return imageUrls, nil
 }
