@@ -53,14 +53,32 @@ type Breadcrumb struct {
 }
 
 type HTMLEntity struct {
-	Typename string `json:"__typename"`
-	Name     string `json:"name"`
-	Values   struct {
-		Html   string `json:"html"`
-		Tag    string `json:"tag"`
-		Header bool   `json:"header"`
-		Block  bool   `json:"block"`
-	} `json:"values"`
+	Typename string    `json:"__typename"`
+	Name     string    `json:"name"`
+	Values   HTMLValue `json:"values"`
+	// this field is not present in source data
+	// check github.com/arelate/align fixDataProblems
+	// for an introduction
+	ImageValues []ImageValue `json:"imageValues"`
+}
+
+type HTMLValue struct {
+	Html   string `json:"html"`
+	Tag    string `json:"tag"`
+	Header bool   `json:"header"`
+	Block  bool   `json:"block"`
+}
+
+type ImageValue struct {
+	Src      string `json:"src"`
+	SrcSet   string `json:"srcset"`
+	Original string `json:"original"`
+	Size     string `json:"size"`
+	Sizes    string `json:"sizes"`
+	Modal    struct {
+		Src    string `json:"src"`
+		SrcSet string `json:"srcset"`
+	} `json:"modal"`
 }
 
 type Views struct {
