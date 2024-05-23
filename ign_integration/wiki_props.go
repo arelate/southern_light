@@ -13,6 +13,12 @@ const (
 	wikisLinkPfx = "/wikis"
 )
 
+type WikiNavigation struct {
+	Label  string           `json:"label"`
+	Url    string           `json:"url"`
+	SubNav []WikiNavigation `json:"subnav"`
+}
+
 type Breadcrumb struct {
 	Typename string `json:"__typename"`
 	Id       string `json:"id"`
