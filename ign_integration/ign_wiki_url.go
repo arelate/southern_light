@@ -6,12 +6,15 @@ import (
 	"path/filepath"
 )
 
-func WikiUrl(slug, page string) *url.URL {
-
+func WikiPageUrl(slug, page string) *url.URL {
 	path := slug
 	if page != "" {
 		path = filepath.Join(slug, page)
 	}
 
 	return southern_light.SuffixIdUrl(ignHost, wikisPath, path)
+}
+
+func WikiUrl(slug string) *url.URL {
+	return southern_light.SuffixIdUrl(ignHost, wikisPath, slug)
 }
