@@ -271,6 +271,19 @@ func (wp *WikiProps) HTMLEntities() []HTMLEntity {
 	return wp.Props.PageProps.Page.Page.HtmlEntities
 }
 
+func (wp *WikiProps) PrimaryImageUrl() string {
+	page := wp.Props.PageProps.Page
+	if page.PrimaryObject.PrimaryImage.Url != "" {
+		return page.PrimaryObject.PrimaryImage.Url
+	}
+	for _, bc := range page.Breadcrumbs {
+		if bc.PrimaryImage.Url != "" {
+			return bc.PrimaryImage.Url
+		}
+	}
+	return ""
+}
+
 func (he *HTMLEntity) PageUrls(slug string) ([]string, error) {
 	fragment, err := html.Parse(strings.NewReader(he.Values.Html))
 	if err != nil {
