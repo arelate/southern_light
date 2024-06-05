@@ -271,6 +271,14 @@ func (wp *WikiProps) HTMLEntities() []HTMLEntity {
 	return wp.Props.PageProps.Page.Page.HtmlEntities
 }
 
+func (wp *WikiProps) WikiName() string {
+	return wp.Props.PageProps.Page.Name
+}
+
+func (wp *WikiProps) PageTitle() string {
+	return wp.Props.PageProps.Page.Page.Title
+}
+
 func (wp *WikiProps) PrimaryImageUrl() string {
 	page := wp.Props.PageProps.Page
 	if page.PrimaryObject.PrimaryImage.Url != "" {
