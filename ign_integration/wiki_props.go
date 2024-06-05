@@ -279,6 +279,14 @@ func (wp *WikiProps) PageTitle() string {
 	return wp.Props.PageProps.Page.Page.Title
 }
 
+func (wp *WikiProps) PublishDate() time.Time {
+	return wp.Props.PageProps.Page.PublishDate
+}
+
+func (wp *WikiProps) UpdatedAt() time.Time {
+	return wp.Props.PageProps.Page.UpdatedAt
+}
+
 func (wp *WikiProps) PrimaryImageUrl() string {
 	page := wp.Props.PageProps.Page
 	if page.PrimaryObject.PrimaryImage.Url != "" {
