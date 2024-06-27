@@ -14,7 +14,3 @@ func WikiPageUrl(slug, page string) *url.URL {
 
 	return southern_light.SuffixIdUrl(ignHost, wikisPath, path)
 }
-
-func WikiUrl(slug string) *url.URL {
-	return southern_light.SuffixIdUrl(ignHost, wikisPath, slug)
-}
