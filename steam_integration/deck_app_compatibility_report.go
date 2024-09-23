@@ -22,7 +22,7 @@ func (dacr *DeckAppCompatibilityReport) String() string {
 	return DecodeCategory(dacr.Results.ResolvedCategory)
 }
 
-func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []string {
+func (dacr *DeckAppCompatibilityReport) GetDisplayTypes() []string {
 	ridt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
 		ridt = append(ridt, DecodeCategory(ri.DisplayType-1))
@@ -38,6 +38,6 @@ func (dacr *DeckAppCompatibilityReport) GetResults() []string {
 	return rilt
 }
 
-func (dacr *DeckAppCompatibilityReport) GetSteamDeckBlogUrl() string {
+func (dacr *DeckAppCompatibilityReport) GetBlogUrl() string {
 	return dacr.Results.SteamDeckBlogUrl
 }
