@@ -1,7 +1,6 @@
 package steam_integration
 
 import (
-	"errors"
 	"github.com/arelate/southern_light"
 	"strings"
 )
@@ -54,11 +53,7 @@ func TrimLocToken(token string) string {
 	return strings.TrimPrefix(token, locTokenPrefix)
 }
 
-func DecodeLocToken(token string) (string, error) {
+func DecodeLocToken(token string) string {
 	token = southern_light.FirstToLower(token)
-	if str, ok := locTokensStrings[token]; ok {
-		return str, nil
-	} else {
-		return "", errors.New("unknown steam loc token: " + token)
-	}
+	return locTokensStrings[token]
 }
