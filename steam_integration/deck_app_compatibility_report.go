@@ -33,7 +33,7 @@ func (dacr *DeckAppCompatibilityReport) GetResultsDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
-		rilt = append(rilt, DecodeLocToken(ri.LocToken))
+		rilt = append(rilt, TrimLocToken(ri.LocToken))
 	}
 	return rilt
 }
