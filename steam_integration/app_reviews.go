@@ -23,6 +23,7 @@ type Author struct {
 	PlaytimeForever      int    `json:"playtime_forever"`
 	PlaytimeLastTwoWeeks int    `json:"playtime_last_two_weeks"`
 	PlaytimeAtReview     int    `json:"playtime_at_review"`
+	DeckPlaytimeAtReview int    `json:"deck_playtime_at_review,omitempty"`
 	LastPlayed           int    `json:"last_played"`
 }
 
@@ -44,6 +45,7 @@ type Review struct {
 	SteamPurchase            bool `json:"steam_purchase"`
 	ReceivedForFree          bool `json:"received_for_free"`
 	WrittenDuringEarlyAccess bool `json:"written_during_early_access"`
+	PrimarilySteamDeck       bool `json:"primarily_steam_deck"`
 }
 
 type ReviewScoreDescGetter interface {
