@@ -26,6 +26,7 @@ var locTokensStrings = map[string]string{
 	"interfaceTextIsLegible":                               "In-game interface text is legible on Steam Deck",
 	"interfaceTextIsNotLegible":                            "Some in-game text is small and may be difficult to read",
 	"launcherInteractionIssues":                            "This game's launcher/setup tool may require the touchscreen or virtual keyboard, or have difficult to read text",
+	"nativeResolutionNotDefault":                           "This game supports Steam Deck's native display resolution but does not set it by default and may require you to configure the display resolution manually",
 	"nativeResolutionNotSupported":                         "This game doesn't support Steam Deck's native display resolution and may experience degraded performance",
 	"simultaneousInputGyroTrackpadFriendly":                "This game supports using the gyro/trackpad in mouse mode for camera controls with gamepad controls for movement",
 	"singleplayerGameplayRequiresActiveInternetConnection": "Singleplayer gameplay requires an active Internet connection",
