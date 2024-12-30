@@ -2,25 +2,11 @@ package steam_vdf
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"path"
 	"strings"
 )
-
-type KeyValue struct {
-	Key string
-	Val *string
-}
-
-func (kv *KeyValue) String() string {
-	if kv.Val != nil {
-		return fmt.Sprintf("%s=%s", kv.Key, *kv.Val)
-	} else {
-		return fmt.Sprintf("%s={}", kv.Key)
-	}
-}
 
 type parseStateFn func(parser *parser) parseStateFn
 
