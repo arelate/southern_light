@@ -4,17 +4,17 @@ import (
 	"errors"
 	"io"
 	"os"
-	"path"
 	"strings"
 )
 
 type parseStateFn func(parser *parser) parseStateFn
 
 type parser struct {
-	lex  *lexer
-	path string
-	kv   []*KeyValue
-	err  error
+	lex   *lexer
+	last  *KeyValue
+	stack []*KeyValue
+	kv    []*KeyValue
+	err   error
 }
 
 func newParser(lex *lexer) *parser {
@@ -39,13 +39,18 @@ func parseKey(p *parser) parseStateFn {
 	for {
 		item := p.lex.nextItem()
 		if item.typ == itemKeyValue {
-			pt := path.Join(p.path, item.val)
-			p.kv = append(p.kv, &KeyValue{Key: pt})
+			p.last = &KeyValue{Key: item.val}
+			if len(p.stack) == 0 {
+				p.kv = append(p.kv, p.last)
+			} else {
+				p.stack[len(p.stack)-1].Children = append(p.stack[len(p.stack)-1].Children, p.last)
+			}
 			return parseValue
 		}
 		if item.typ == itemRightMeta {
-			lp, _ := path.Split(p.path)
-			p.path = lp
+			if len(p.stack) > 0 {
+				p.stack = p.stack[:len(p.stack)-1]
+			}
 			return parseKey
 		}
 		if item.typ == itemEOF {
@@ -60,25 +65,17 @@ func parseKey(p *parser) parseStateFn {
 
 func parseValue(p *parser) parseStateFn {
 	item := p.lex.nextItem()
-	var last *KeyValue
-	if len(p.kv) > 0 {
-		last = p.kv[len(p.kv)-1]
-	}
 	if item.typ == itemKeyValue {
-		if last != nil {
-			last.Val = &item.val
+		if len(p.stack) > 0 {
+			p.last.Val = &item.val
 			return parseKey
 		}
 		p.err = errors.New("vdf cannot start with a value")
 		return nil
 	}
 	if item.typ == itemLeftMeta {
-		if last != nil {
-			p.path = p.kv[len(p.kv)-1].Key
-			return parseKey
-		}
-		p.err = errors.New("vdf cannot start with a left meta")
-		return nil
+		p.stack = append(p.stack, p.last)
+		return parseKey
 	}
 	return nil
 }
