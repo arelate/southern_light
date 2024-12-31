@@ -9,17 +9,23 @@ import (
 
 func Write(p string, keyValues []*KeyValues) error {
 
-	//if _, err := os.Stat(p); err == nil {
-	//	if err := backup(p); err != nil {
-	//		return err
-	//	}
-	//}
+	if _, err := os.Stat(p); err == nil {
+		if err := backup(p); err != nil {
+			return err
+		}
+	}
 
-	//vdfFile, err := os.Create(p)
-	//if err != nil {
-	//	return err
-	//}
-	//defer vdfFile.Close()
+	vdfFile, err := os.Create(p)
+	if err != nil {
+		return err
+	}
+	defer vdfFile.Close()
+
+	for _, kv := range keyValues {
+		if err := kv.WriteString(vdfFile, 0); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
