@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/arelate/southern_light/steam_integration"
 	"github.com/arelate/southern_light/steam_vdf"
 	"os"
 	"path/filepath"
@@ -14,7 +15,7 @@ func main() {
 	}
 
 	scDir := filepath.Join(ucDir, "Steam", "config")
-	fn := "libraryfolders.vdf"
+	fn := "loginusers.vdf"
 	fp := filepath.Join(scDir, fn)
 
 	keyValues, err := steam_vdf.Parse(fp)
@@ -22,17 +23,27 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(keyValues)
+	personaName := steam_vdf.GetKevValuesByKey(keyValues, "PersonaName")
 
-	//if val := steam_vdf.GetValByRelKey(keyValues, "PersonaName"); val != nil {
-	//	fmt.Println(*val)
-	//}
-	//
-	//if userIds := steam_vdf.GetDirectChildren(keyValues, "users"); len(userIds) > 0 {
-	//	for _, userId := range userIds {
-	//		fmt.Println(steam_integration.SteamIdFromUserId(userId))
-	//	}
-	//}
+	if personaName != nil {
+		fmt.Println(personaName.Key, *personaName.Value)
+	} else {
+		fmt.Println("PersonaName not found")
+	}
+
+	users := steam_vdf.GetKevValuesByKey(keyValues, "users")
+	if users != nil {
+		for _, kv := range users.Values {
+			steamId, err := steam_integration.SteamIdFromUserId(kv.Key)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("Current user Steam Id: %d\n", steamId)
+
+		}
+	} else {
+		fmt.Println("users not found")
+	}
 
 	//uhDir, err := os.UserHomeDir()
 	//if err != nil {

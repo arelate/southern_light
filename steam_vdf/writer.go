@@ -14,9 +14,7 @@ func Write(p string, keyValues []*KeyValues) error {
 	//		return err
 	//	}
 	//}
-	//
-	//
-	//
+
 	//vdfFile, err := os.Create(p)
 	//if err != nil {
 	//	return err
