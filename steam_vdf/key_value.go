@@ -1,7 +1,7 @@
 package steam_vdf
 
-type KeyValue struct {
-	Key      string
-	Val      *string
-	Children []*KeyValue
+type KeyValues struct {
+	Key    string
+	Value  *string
+	Values []*KeyValues
 }

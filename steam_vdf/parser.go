@@ -11,16 +11,16 @@ type parseStateFn func(parser *parser) parseStateFn
 
 type parser struct {
 	lex   *lexer
-	last  *KeyValue
-	stack []*KeyValue
-	kv    []*KeyValue
+	last  *KeyValues
+	stack []*KeyValues
+	kv    []*KeyValues
 	err   error
 }
 
 func newParser(lex *lexer) *parser {
 	p := &parser{
 		lex: lex,
-		kv:  make([]*KeyValue, 0),
+		kv:  make([]*KeyValues, 0),
 	}
 	return p
 }
@@ -39,11 +39,11 @@ func parseKey(p *parser) parseStateFn {
 	for {
 		item := p.lex.nextItem()
 		if item.typ == itemKeyValue {
-			p.last = &KeyValue{Key: item.val}
+			p.last = &KeyValues{Key: item.val}
 			if len(p.stack) == 0 {
 				p.kv = append(p.kv, p.last)
 			} else {
-				p.stack[len(p.stack)-1].Children = append(p.stack[len(p.stack)-1].Children, p.last)
+				p.stack[len(p.stack)-1].Values = append(p.stack[len(p.stack)-1].Values, p.last)
 			}
 			return parseValue
 		}
@@ -67,7 +67,7 @@ func parseValue(p *parser) parseStateFn {
 	item := p.lex.nextItem()
 	if item.typ == itemKeyValue {
 		if len(p.stack) > 0 {
-			p.last.Val = &item.val
+			p.last.Value = &item.val
 			return parseKey
 		}
 		p.err = errors.New("vdf cannot start with a value")
@@ -80,7 +80,7 @@ func parseValue(p *parser) parseStateFn {
 	return nil
 }
 
-func Parse(path string) ([]*KeyValue, error) {
+func Parse(path string) ([]*KeyValues, error) {
 
 	vdfFile, err := os.Open(path)
 	if err != nil {
