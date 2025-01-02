@@ -85,7 +85,7 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 		}
 	}
 
-	// write Values
+	// write Values at depth + 1
 	for _, val := range kv.Values {
 		if err := val.WriteString(w, depth+1); err != nil {
 			return err

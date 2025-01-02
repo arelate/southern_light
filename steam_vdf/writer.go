@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func Write(p string, keyValues []*KeyValues) error {
+func WriteText(p string, keyValues []*KeyValues) error {
 
 	if _, err := os.Stat(p); err == nil {
 		if err := backup(p); err != nil {

@@ -1,29 +1,34 @@
 package main
 
 import (
-	"crypto/sha256"
-	"errors"
 	"fmt"
 	"github.com/arelate/southern_light/steam_vdf"
-	"io"
 	"os"
 	"path/filepath"
 )
 
 func main() {
-	ucDir, err := os.UserConfigDir()
+	uhDir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
 
-	scDir := filepath.Join(ucDir, "Steam", "config")
-	fn := "config.vdf"
-	ifp := filepath.Join(scDir, fn)
+	downloadsDir := filepath.Join(uhDir, "Downloads")
+	fn := "shortcuts.vdf"
+	ifp := filepath.Join(downloadsDir, fn)
 
-	keyValues, err := steam_vdf.Parse(ifp)
+	inputFile, err := os.Open(ifp)
 	if err != nil {
 		panic(err)
 	}
+	defer inputFile.Close()
+
+	kv, err := steam_vdf.ParseBinary(ifp)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(kv)
 
 	// This sample code only makes sense for loginusers.vdf
 
@@ -51,58 +56,58 @@ func main() {
 	//	fmt.Println("users not found")
 	//}
 
-	ofp := filepath.Join(os.TempDir(), fn)
-
-	if err := steam_vdf.Write(ofp, keyValues); err != nil {
-		panic(err)
-	}
-
-	fmt.Println("file://" + ofp)
-
-	if err := compareFileHashes(ifp, ofp); err != nil {
-		panic(err)
-	} else {
-		fmt.Println("input and output files are identical")
-	}
+	//ofp := filepath.Join(os.TempDir(), fn)
+	//
+	//if err := steam_vdf.WriteText(ofp, keyValues); err != nil {
+	//	panic(err)
+	//}
+	//
+	//fmt.Println("file://" + ofp)
+	//
+	//if err := compareFileHashes(ifp, ofp); err != nil {
+	//	panic(err)
+	//} else {
+	//	fmt.Println("input and output files are identical")
+	//}
 
 }
 
-func Sha256(reader io.Reader) (string, error) {
-	h := sha256.New()
-	var err error
-	if _, err = io.Copy(h, reader); err == nil {
-		return fmt.Sprintf("%x", h.Sum(nil)), nil
-	}
-	return "", err
-}
-
-func compareFileHashes(path1, path2 string) error {
-
-	f1, err := os.Open(path1)
-	if err != nil {
-		return err
-	}
-	defer f1.Close()
-
-	fhash1, err := Sha256(f1)
-	if err != nil {
-		return err
-	}
-
-	f2, err := os.Open(path2)
-	if err != nil {
-		return err
-	}
-	defer f2.Close()
-
-	fhash2, err := Sha256(f2)
-	if err != nil {
-		return err
-	}
-
-	if fhash1 != fhash2 {
-		return errors.New("files produced different hashes")
-	}
-
-	return nil
-}
+//func Sha256(reader io.Reader) (string, error) {
+//	h := sha256.New()
+//	var err error
+//	if _, err = io.Copy(h, reader); err == nil {
+//		return fmt.Sprintf("%x", h.Sum(nil)), nil
+//	}
+//	return "", err
+//}
+//
+//func compareFileHashes(path1, path2 string) error {
+//
+//	f1, err := os.Open(path1)
+//	if err != nil {
+//		return err
+//	}
+//	defer f1.Close()
+//
+//	fhash1, err := Sha256(f1)
+//	if err != nil {
+//		return err
+//	}
+//
+//	f2, err := os.Open(path2)
+//	if err != nil {
+//		return err
+//	}
+//	defer f2.Close()
+//
+//	fhash2, err := Sha256(f2)
+//	if err != nil {
+//		return err
+//	}
+//
+//	if fhash1 != fhash2 {
+//		return errors.New("files produced different hashes")
+//	}
+//
+//	return nil
+//}
