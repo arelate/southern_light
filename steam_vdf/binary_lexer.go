@@ -45,6 +45,11 @@ func lexBinaryType(bl *binaryLexer) binaryLexStateFn {
 
 	bit := BinaryType(t)
 
+	if !IsKnownBinaryType(bit) {
+		bl.emit(BinaryTypeError, errors.New("unknown binary type"))
+		return nil
+	}
+
 	if bit == BinaryTypeNullMarker {
 		bl.emit(BinaryTypeNullMarker, nil)
 		return lexBinaryType

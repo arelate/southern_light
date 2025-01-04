@@ -38,6 +38,11 @@ func parseNextValue(bp *binaryParser) binaryParseStateFn {
 	for {
 		itemType := bp.lex.nextItem()
 
+		if itemType.typ == BinaryTypeError {
+			bp.err = itemType.val.(error)
+			return nil
+		}
+
 		if itemType.typ == BinaryTypeEOF {
 			return nil
 		}
@@ -50,12 +55,28 @@ func parseNextValue(bp *binaryParser) binaryParseStateFn {
 		}
 
 		itemKey := bp.lex.nextItem()
+
+		if itemKey.typ == BinaryTypeEOF {
+			bp.err = errors.New("unexpected vdf binary EOF while parsing key")
+			return nil
+		}
+
+		if itemKey.typ == BinaryTypeError {
+			bp.err = itemKey.val.(error)
+			return nil
+		}
+
 		if itemKey.typ != BinaryTypeString {
 			bp.err = errors.New("vdf binary key must be string")
 			return nil
 		}
 
 		itemVal := bp.lex.nextItem()
+
+		if itemKey.typ == BinaryTypeEOF {
+			bp.err = errors.New("unexpected vdf binary EOF while parsing value")
+			return nil
+		}
 
 		if itemType.typ == BinaryTypeError {
 			bp.err = itemVal.val.(error)

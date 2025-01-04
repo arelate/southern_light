@@ -8,14 +8,14 @@ import (
 )
 
 func main() {
-	uhDir, err := os.UserHomeDir()
+	ucDir, err := os.UserConfigDir()
 	if err != nil {
 		panic(err)
 	}
 
-	downloadsDir := filepath.Join(uhDir, "Downloads")
-	fn := "shortcuts.vdf"
-	ifp := filepath.Join(downloadsDir, fn)
+	steamDir := filepath.Join(ucDir, "Steam", "appcache")
+	fn := "packageinfo.vdf"
+	ifp := filepath.Join(steamDir, fn)
 
 	inputFile, err := os.Open(ifp)
 	if err != nil {
@@ -30,9 +30,9 @@ func main() {
 
 	fmt.Println(kv)
 
-	if err := steam_vdf.WriteBinary(ifp+".new", kv); err != nil {
-		panic(err)
-	}
+	//if err := steam_vdf.WriteBinary(ifp+".new", kv); err != nil {
+	//	panic(err)
+	//}
 
 	// This sample code only makes sense for loginusers.vdf
 

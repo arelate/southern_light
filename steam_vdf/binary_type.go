@@ -16,3 +16,7 @@ const (
 	BinaryTypeError BinaryType = 254
 	BinaryTypeEOF   BinaryType = 255
 )
+
+func IsKnownBinaryType(b BinaryType) bool {
+	return b <= BinaryTypeNullMarker
+}
