@@ -8,33 +8,16 @@ import (
 )
 
 type binaryLexItem struct {
-	typ binaryItemType
+	typ BinaryType
 	val any
 }
-
-type binaryItemType byte
-
-// https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/public/tier1/kvpacker.h
-const (
-	binaryItemNone binaryItemType = iota
-	binaryItemString
-	binaryItemInt
-	binaryItemFloat
-	binaryItemPtr
-	binaryItemWString
-	binaryItemColor
-	binaryItemUint64
-	binaryItemNullMarker
-	binaryItemError binaryItemType = 254
-	binaryItemEOF   binaryItemType = 255
-)
 
 type binaryLexStateFn func(*binaryLexer) binaryLexStateFn
 
 type binaryLexer struct {
 	r      io.Reader
 	eof    bool
-	expTyp binaryItemType
+	expTyp BinaryType
 	items  chan binaryLexItem
 }
 
@@ -60,10 +43,10 @@ func lexBinaryType(bl *binaryLexer) binaryLexStateFn {
 		return bl.errorf(err)
 	}
 
-	bit := binaryItemType(t)
+	bit := BinaryType(t)
 
-	if bit == binaryItemNullMarker {
-		bl.emit(binaryItemNullMarker, nil)
+	if bit == BinaryTypeNullMarker {
+		bl.emit(BinaryTypeNullMarker, nil)
 		return lexBinaryType
 	}
 
@@ -79,7 +62,7 @@ func lexBinaryKey(bl *binaryLexer) binaryLexStateFn {
 		return bl.errorf(err)
 	}
 
-	bl.emit(binaryItemString, str)
+	bl.emit(BinaryTypeString, str)
 
 	return lexBinaryValue
 }
@@ -90,23 +73,23 @@ func lexBinaryValue(bl *binaryLexer) binaryLexStateFn {
 	var err error
 
 	switch bl.expTyp {
-	case binaryItemNullMarker:
+	case BinaryTypeNullMarker:
 		// do nothing
-	case binaryItemNone:
+	case BinaryTypeNone:
 		// do nothing
-	case binaryItemColor:
+	case BinaryTypeColor:
 		fallthrough
-	case binaryItemPtr:
+	case BinaryTypePtr:
 		fallthrough
-	case binaryItemInt:
+	case BinaryTypeInt:
 		val, err = bl.readInt()
-	case binaryItemString:
+	case BinaryTypeString:
 		val, err = bl.readString()
-	case binaryItemUint64:
+	case BinaryTypeUint64:
 		val, err = bl.readUint64()
-	case binaryItemFloat:
+	case BinaryTypeFloat:
 		val, err = bl.readFloat32()
-	case binaryItemWString:
+	case BinaryTypeWString:
 		val, err = bl.readWString()
 	default:
 		err = errors.New("unsupported vdf binary item type")
@@ -119,7 +102,7 @@ func lexBinaryValue(bl *binaryLexer) binaryLexStateFn {
 		return nil
 	}
 
-	bl.expTyp = binaryItemNone
+	bl.expTyp = BinaryTypeNone
 
 	return lexBinaryType
 }
@@ -129,7 +112,7 @@ func (bl *binaryLexer) readString() (string, error) {
 	for {
 		var b byte
 		if err := binary.Read(bl.r, binary.LittleEndian, &b); err == nil {
-			if b == byte(binaryItemNone) {
+			if b == byte(BinaryTypeNone) {
 				break
 			}
 			bts = append(bts, b)
@@ -145,7 +128,7 @@ func (bl *binaryLexer) readWString() (string, error) {
 	for {
 		var wc uint16
 		if err := binary.Read(bl.r, binary.LittleEndian, &wc); err == nil {
-			if wc == uint16(binaryItemNone) {
+			if wc == uint16(BinaryTypeNone) {
 				break
 			}
 			ws = append(ws, wc)
@@ -179,15 +162,15 @@ func (bl *binaryLexer) readFloat32() (f32 float32, err error) {
 func (bl *binaryLexer) errorf(err error) binaryLexStateFn {
 
 	if errors.Is(err, io.EOF) {
-		bl.emit(binaryItemEOF, nil)
+		bl.emit(BinaryTypeEOF, nil)
 		return nil
 	}
 
-	bl.items <- binaryLexItem{binaryItemError, err}
+	bl.items <- binaryLexItem{BinaryTypeError, err}
 	return nil
 }
 
-func (bl *binaryLexer) emit(t binaryItemType, val any) {
+func (bl *binaryLexer) emit(t BinaryType, val any) {
 	bl.items <- binaryLexItem{t, val}
 }
 

@@ -1,6 +1,7 @@
 package steam_vdf
 
 import (
+	"errors"
 	"os"
 )
 
@@ -23,7 +24,7 @@ func newBinaryParser(lex *binaryLexer) *binaryParser {
 }
 
 func (bp *binaryParser) run() error {
-	for st := parseType; st != nil; {
+	for st := parseNextValue; st != nil; {
 		st = st(bp)
 	}
 	if bp.err != nil {
@@ -32,17 +33,54 @@ func (bp *binaryParser) run() error {
 	return nil
 }
 
-func parseType(bp *binaryParser) binaryParseStateFn {
+func parseNextValue(bp *binaryParser) binaryParseStateFn {
+
 	for {
-		item := bp.lex.nextItem()
-		if item.typ == binaryItemEOF {
-			break
+		itemType := bp.lex.nextItem()
+
+		if itemType.typ == BinaryTypeEOF {
+			return nil
 		}
-		if item.typ == binaryItemError {
-			bp.err = item.val.(error)
+
+		if itemType.typ == BinaryTypeNullMarker {
+			if len(bp.stack) > 0 {
+				bp.stack = bp.stack[:len(bp.stack)-1]
+			}
+			return parseNextValue
+		}
+
+		itemKey := bp.lex.nextItem()
+		if itemKey.typ != BinaryTypeString {
+			bp.err = errors.New("vdf binary key must be string")
+			return nil
+		}
+
+		itemVal := bp.lex.nextItem()
+
+		if itemType.typ == BinaryTypeError {
+			bp.err = itemVal.val.(error)
+			return nil
+		}
+
+		item := &KeyValues{
+			Key:        itemKey.val.(string),
+			Type:       itemType.typ,
+			TypedValue: itemVal.val,
+		}
+
+		if itemType.typ == BinaryTypeNone {
+			if len(bp.stack) == 0 {
+				bp.kv = append(bp.kv, item)
+			} else {
+				bp.stack[len(bp.stack)-1].Values = append(bp.stack[len(bp.stack)-1].Values, item)
+			}
+			bp.stack = append(bp.stack, item)
+			bp.last = item
+
+		} else {
+			bp.last.Values = append(bp.last.Values, item)
 		}
 	}
-	return nil
 }
 
 func ParseBinary(path string) ([]*KeyValues, error) {

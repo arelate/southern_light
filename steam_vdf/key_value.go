@@ -7,9 +7,11 @@ import (
 )
 
 type KeyValues struct {
-	Key    string
-	Value  *string
-	Values []*KeyValues
+	Key        string
+	Value      *string
+	Type       BinaryType
+	TypedValue any
+	Values     []*KeyValues
 }
 
 func GetKevValuesByKey(keyValues []*KeyValues, key string) *KeyValues {
