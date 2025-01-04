@@ -149,7 +149,7 @@ func (bl *binaryLexer) readByte() (b byte, err error) {
 	return b, err
 }
 
-func (bl *binaryLexer) readInt() (i int32, err error) {
+func (bl *binaryLexer) readInt() (i uint32, err error) {
 	err = binary.Read(bl.r, binary.LittleEndian, &i)
 	return i, err
 }
