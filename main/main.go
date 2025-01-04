@@ -30,6 +30,10 @@ func main() {
 
 	fmt.Println(kv)
 
+	if err := steam_vdf.WriteBinary(ifp+".new", kv); err != nil {
+		panic(err)
+	}
+
 	// This sample code only makes sense for loginusers.vdf
 
 	//personaName := steam_vdf.GetKevValuesByKey(keyValues, "PersonaName")

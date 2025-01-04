@@ -3,51 +3,11 @@ package steam_vdf
 import (
 	"fmt"
 	"io"
+	"os"
+	"path/filepath"
 	"strings"
+	"time"
 )
-
-type KeyValues struct {
-	Key        string
-	Value      *string
-	Type       BinaryType
-	TypedValue any
-	Values     []*KeyValues
-}
-
-func GetKevValuesByKey(keyValues []*KeyValues, key string) *KeyValues {
-
-	queue := make(map[*KeyValues]bool)
-
-	for _, kv := range keyValues {
-		queue[kv] = true
-	}
-
-	for {
-		var next *KeyValues
-		for kv, flag := range queue {
-			if flag == true {
-				next = kv
-				break
-			}
-		}
-
-		if next == nil {
-			break
-		}
-
-		if next.Key == key {
-			return next
-		}
-
-		for _, kv := range next.Values {
-			queue[kv] = true
-		}
-
-		queue[next] = false
-	}
-
-	return nil
-}
 
 func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 
@@ -105,6 +65,54 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 		if _, err := io.WriteString(w, "\n"); err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+func WriteText(p string, keyValues []*KeyValues) error {
+
+	if _, err := os.Stat(p); err == nil {
+		if err := backup(p); err != nil {
+			return err
+		}
+	}
+
+	vdfFile, err := os.Create(p)
+	if err != nil {
+		return err
+	}
+	defer vdfFile.Close()
+
+	for _, kv := range keyValues {
+		if err := kv.WriteString(vdfFile, 0); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func backup(path string) error {
+
+	timestamp := time.Now().Format("2006-01-02-15-04-05")
+
+	originalFile, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer originalFile.Close()
+
+	backupPath := filepath.Join(path + "." + timestamp)
+
+	backupFile, err := os.Create(backupPath)
+	if err != nil {
+		return err
+	}
+	defer backupFile.Close()
+
+	if _, err := io.Copy(backupFile, originalFile); err != nil {
+		return err
 	}
 
 	return nil
