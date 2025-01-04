@@ -32,6 +32,14 @@ type VerticalImageGetter interface {
 	GetVerticalImage() string
 }
 
+type HeroGetter interface {
+	GetHero() string
+}
+
+type LogoGetter interface {
+	GetLogo() string
+}
+
 type ScreenshotsGetter interface {
 	GetScreenshots() []string
 }

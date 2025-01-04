@@ -252,6 +252,14 @@ func (apv2 *ApiProductV2) GetVerticalImage() string {
 	return apv2.Links.BoxArtImage.Href
 }
 
+func (apv2 *ApiProductV2) GetHero() string {
+	return apv2.Links.GalaxyBackgroundImage.Href
+}
+
+func (apv2 *ApiProductV2) GetLogo() string {
+	return apv2.Links.Logo.Href
+}
+
 func (apv2 *ApiProductV2) GetScreenshots() []string {
 	screenshots := make([]string, 0)
 	for _, screenshot := range apv2.Embedded.Screenshots {
