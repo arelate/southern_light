@@ -40,6 +40,14 @@ type LogoGetter interface {
 	GetLogo() string
 }
 
+type IconGetter interface {
+	GetIcon() string
+}
+
+type IconSquareGetter interface {
+	GetIconSquare() string
+}
+
 type ScreenshotsGetter interface {
 	GetScreenshots() []string
 }

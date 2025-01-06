@@ -260,6 +260,10 @@ func (apv2 *ApiProductV2) GetLogo() string {
 	return apv2.Links.Logo.Href
 }
 
+func (apv2 *ApiProductV2) GetIcon() string { return apv2.Links.Icon.Href }
+
+func (apv2 *ApiProductV2) GetIconSquare() string { return apv2.Links.IconSquare.Href }
+
 func (apv2 *ApiProductV2) GetScreenshots() []string {
 	screenshots := make([]string, 0)
 	for _, screenshot := range apv2.Embedded.Screenshots {
