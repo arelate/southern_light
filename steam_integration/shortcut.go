@@ -168,7 +168,7 @@ func (s *Shortcut) DevkitOverrideAppIdKeyValues() *steam_vdf.KeyValues {
 func (s *Shortcut) LastPlayTimeKeyValues() *steam_vdf.KeyValues {
 	return &steam_vdf.KeyValues{
 		Key:        "LastPlayTime",
-		Type:       steam_vdf.BinaryTypeString,
+		Type:       steam_vdf.BinaryTypeInt,
 		TypedValue: s.LastPlayTime,
 	}
 }
