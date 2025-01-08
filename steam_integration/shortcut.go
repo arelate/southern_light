@@ -1,7 +1,9 @@
 package steam_integration
 
 import (
+	"errors"
 	"github.com/arelate/southern_light/steam_vdf"
+	"hash/crc32"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -189,7 +191,7 @@ func (s *Shortcut) FlatpakAppIdKeyValues() *steam_vdf.KeyValues {
 	}
 }
 
-func NewShortcut(id uint32, name string, exe string) *Shortcut {
+func NewShortcut(id uint32, name string, exe string, launchOptions string) *Shortcut {
 	startDir, _ := filepath.Split(exe)
 	return &Shortcut{
 		AppId:               id,
@@ -198,7 +200,7 @@ func NewShortcut(id uint32, name string, exe string) *Shortcut {
 		StartDir:            startDir,
 		Icon:                "",
 		ShortcutPath:        "",
-		LaunchOptions:       "",
+		LaunchOptions:       launchOptions,
 		IsHidden:            0,
 		AllowDesktopConfig:  1,
 		AllowOverlay:        1,
@@ -212,17 +214,17 @@ func NewShortcut(id uint32, name string, exe string) *Shortcut {
 	}
 }
 
-func HasShortcut(kvShortcuts *steam_vdf.KeyValues, appId uint32) bool {
+func GetShortcutByAppId(kvShortcuts *steam_vdf.KeyValues, appId uint32) *steam_vdf.KeyValues {
 	for _, shortcut := range kvShortcuts.Values {
 		for _, kv := range shortcut.Values {
 			if kv.Key == "appid" && kv.Type == steam_vdf.BinaryTypeInt {
 				if kv.TypedValue.(uint32) == appId {
-					return true
+					return shortcut
 				}
 			}
 		}
 	}
-	return false
+	return nil
 }
 
 func AppendShortcut(kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error {
@@ -240,4 +242,26 @@ func AppendShortcut(kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error 
 	kvShortcuts.Values = append(kvShortcuts.Values, shortcut.KeyValues(index))
 
 	return nil
+}
+
+func UpdateShortcut(index string, kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error {
+
+	for ii, kv := range kvShortcuts.Values {
+		if kv.Key == index {
+			kvShortcuts.Values[ii] = shortcut.KeyValues(index)
+			return nil
+		}
+	}
+
+	return errors.New("shortcuts.vdf does not have shortcut index " + index)
+
+}
+
+func ShortcutAppId(executablePath string, appName string) uint32 {
+	key := executablePath + appName
+	crc := uint64(crc32.ChecksumIEEE([]byte(key)))
+	crc = crc | 0x80000000
+	crc = (crc << 32) | 0x02000000
+	result := (crc >> 32) | 0x100000000
+	return uint32(result)
 }
