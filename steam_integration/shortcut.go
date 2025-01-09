@@ -269,7 +269,16 @@ func ShortcutAppId(executablePath string, appName string) uint32 {
 
 func RemoveShortcuts(kvShortcuts *steam_vdf.KeyValues, appIds ...uint32) error {
 
-	filteredKeyValues := make([]*steam_vdf.KeyValues, 0, len(kvShortcuts.Values)-len(appIds))
+	if len(kvShortcuts.Values) == 0 {
+		return nil
+	}
+
+	expCap := len(kvShortcuts.Values)
+	if len(kvShortcuts.Values) > len(appIds) {
+		expCap = len(kvShortcuts.Values) - len(appIds)
+	}
+
+	filteredKeyValues := make([]*steam_vdf.KeyValues, 0, expCap)
 	for _, shortcut := range kvShortcuts.Values {
 		remove := false
 		for _, kv := range shortcut.Values {
