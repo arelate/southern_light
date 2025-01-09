@@ -5,6 +5,7 @@ import (
 	"github.com/arelate/southern_light/steam_vdf"
 	"hash/crc32"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -264,4 +265,29 @@ func ShortcutAppId(executablePath string, appName string) uint32 {
 	crc = (crc << 32) | 0x02000000
 	result := (crc >> 32) | 0x100000000
 	return uint32(result)
+}
+
+func RemoveShortcuts(kvShortcuts *steam_vdf.KeyValues, appIds ...uint32) error {
+
+	filteredKeyValues := make([]*steam_vdf.KeyValues, 0, len(kvShortcuts.Values)-len(appIds))
+	for _, shortcut := range kvShortcuts.Values {
+		remove := false
+		for _, kv := range shortcut.Values {
+			if kv.Key == "appid" && kv.Type == steam_vdf.BinaryTypeInt {
+				shortcutAppId := kv.TypedValue.(uint32)
+				if slices.Contains(appIds, shortcutAppId) {
+					remove = true
+					break
+				}
+			}
+		}
+		if remove {
+			continue
+		}
+		filteredKeyValues = append(filteredKeyValues, shortcut)
+	}
+
+	kvShortcuts.Values = filteredKeyValues
+
+	return nil
 }
