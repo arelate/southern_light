@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/arelate/southern_light/steam_vdf"
 	"hash/crc32"
-	"path/filepath"
 	"slices"
 	"strconv"
 	"strings"
@@ -192,8 +191,7 @@ func (s *Shortcut) FlatpakAppIdKeyValues() *steam_vdf.KeyValues {
 	}
 }
 
-func NewShortcut(id uint32, name string, exe string, launchOptions string) *Shortcut {
-	startDir, _ := filepath.Split(exe)
+func NewShortcut(id uint32, name string, exe string, startDir string, launchOptions string) *Shortcut {
 	return &Shortcut{
 		AppId:               id,
 		AppName:             name,
