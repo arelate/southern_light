@@ -191,15 +191,15 @@ func (s *Shortcut) FlatpakAppIdKeyValues() *steam_vdf.KeyValues {
 	}
 }
 
-func NewShortcut(id uint32, name string, exe string, startDir string, launchOptions string) *Shortcut {
+func NewShortcut() *Shortcut {
 	return &Shortcut{
-		AppId:               id,
-		AppName:             name,
-		Exe:                 exe,
-		StartDir:            startDir,
+		AppId:               0,
+		AppName:             "",
+		Exe:                 "",
+		StartDir:            "",
 		Icon:                "",
 		ShortcutPath:        "",
-		LaunchOptions:       launchOptions,
+		LaunchOptions:       "",
 		IsHidden:            0,
 		AllowDesktopConfig:  1,
 		AllowOverlay:        1,
