@@ -507,9 +507,6 @@ var supportedProperties = map[ProductType][]string{
 	GamesDbProducts: {
 		SteamAppIdProperty,
 		VideoIdProperty,
-		HeroProperty,
-		VerticalImageProperty,
-		IconSquareProperty,
 		AggregatedRatingProperty,
 		ThemesProperty,
 		GameModesProperty,
