@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	formatterPlaceholder = "_{formatter}"
-	PngExt               = ".png"
-	JpgExt               = ".jpg"
+	underscoreFormatterPlaceholder = "_{formatter}"
+	formatterPlaceholder           = "{formatter}"
+	PngExt                         = ".png"
+	JpgExt                         = ".jpg"
 )
 
 func ImageId(imageUrl string) string {
@@ -22,7 +23,10 @@ func ImageId(imageUrl string) string {
 	_, fn := path.Split(imageUrl)
 	fnSansExt := strings.TrimSuffix(fn, path.Ext(fn))
 
-	return strings.TrimSuffix(fnSansExt, formatterPlaceholder)
+	fnSansExt = strings.TrimSuffix(fnSansExt, underscoreFormatterPlaceholder)
+	fnSansExt = strings.TrimSuffix(fnSansExt, formatterPlaceholder)
+
+	return fnSansExt
 }
 
 func ImageUrl(imageId, ext string) (*url.URL, error) {
