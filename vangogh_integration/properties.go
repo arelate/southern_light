@@ -509,7 +509,6 @@ var supportedProperties = map[ProductType][]string{
 		VideoIdProperty,
 		HeroProperty,
 		VerticalImageProperty,
-		LogoProperty,
 		IconProperty,
 		IconSquareProperty,
 		AggregatedRatingProperty,
