@@ -1,11 +1,5 @@
 package vangogh_integration
 
-import (
-	"github.com/boggydigital/kevlar"
-	"os"
-	"path"
-)
-
 func IsGOGPagedProduct(pt ProductType) bool {
 	return containsProductType(GOGPagedProducts(), pt)
 }
@@ -122,11 +116,6 @@ func containsProductType(all []ProductType, pt ProductType) bool {
 	return false
 }
 
-func IsPathSupportingValidation(filePath string) bool {
-	ext := path.Ext(filePath)
-	return validatedExtensions[ext]
-}
-
 func IsSupportedProperty(pt ProductType, property string) bool {
 	for _, supportedProperty := range supportedProperties[pt] {
 		if property == supportedProperty {
@@ -134,26 +123,4 @@ func IsSupportedProperty(pt ProductType, property string) bool {
 		}
 	}
 	return false
-}
-
-func IsProductDownloaded(id string, rdx kevlar.ReadableRedux) (bool, error) {
-	if err := rdx.MustHave(SlugProperty); err != nil {
-		return false, err
-	}
-
-	slug, ok := rdx.GetLastVal(SlugProperty, id)
-	if !ok {
-		return false, nil
-	}
-
-	pDir, err := AbsProductDownloadsDir(slug)
-	if err != nil {
-		return false, err
-	}
-
-	if _, err := os.Stat(pDir); os.IsNotExist(err) {
-		return false, nil
-	}
-
-	return true, nil
 }

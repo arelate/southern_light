@@ -11,12 +11,11 @@ type accountTag struct {
 }
 
 type AccountPage struct {
-	TotalPages      int    `json:"totalPages"`
-	Page            int    `json:"page"`
-	SortBy          string `json:"sortBy"`
-	TotalProducts   int    `json:"totalProducts"`
-	ProductsPerPage int    `json:"productsPerPage"`
-	//ContentSystemCompatibility interface{}      `json:"contentSystemCompatibility"`
+	TotalPages                 int              `json:"totalPages"`
+	Page                       int              `json:"page"`
+	SortBy                     string           `json:"sortBy"`
+	TotalProducts              int              `json:"totalProducts"`
+	ProductsPerPage            int              `json:"productsPerPage"`
 	MoviesCount                int              `json:"moviesCount"`
 	Tags                       []accountTag     `json:"tags"`
 	Products                   []AccountProduct `json:"products"`
