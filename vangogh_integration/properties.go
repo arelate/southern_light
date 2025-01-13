@@ -814,7 +814,7 @@ func intSlice(integer func() int) []string {
 func floatSlice(floater func() float64) []string {
 	values := make([]string, 0)
 	if floater != nil {
-		values = append(values, strconv.FormatFloat(floater(), 'f', -1, 10))
+		values = append(values, strconv.FormatFloat(floater(), 'f', -1, 64))
 	}
 	return values
 }
