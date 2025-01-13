@@ -22,6 +22,7 @@ const (
 	LicenceProducts
 	OrderPage
 	Orders
+	GamesDBProducts
 	// Steam product types
 	SteamAppList
 	SteamAppNews
@@ -55,6 +56,7 @@ var productTypeStrings = map[ProductType]string{
 	LicenceProducts:      "licence-products",
 	OrderPage:            "order-page",
 	Orders:               "orders",
+	GamesDBProducts:      "gamesdb-products",
 	// Steam product types
 	SteamAppList:   "steam-app-list",
 	SteamAppNews:   "steam-app-news",
@@ -153,6 +155,10 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
+	GamesDBProducts: {
+		CatalogProducts,
+		AccountProducts,
+	},
 }
 
 var steamDetailMainProductTypes = map[ProductType][]ProductType{
@@ -204,14 +210,6 @@ var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 	},
 }
-
-//func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
-//	pts := make([]ProductType, 0, len(dmp))
-//	for pt := range dmp {
-//		pts = append(pts, pt)
-//	}
-//	return pts
-//}
 
 func GOGDetailProducts() []ProductType {
 	return maps.Keys(gogDetailMainProductTypes)
@@ -297,10 +295,6 @@ func ProtonDBRemoteProducts() []ProductType {
 
 func LocalProducts() []ProductType {
 	lps := maps.Values(splitProductTypes)
-	//lps := make([]ProductType, 0, len(splitProductTypes))
-	//for _, spt := range splitProductTypes {
-	//	lps = append(lps, spt)
-	//}
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)
@@ -351,6 +345,7 @@ var supportsGetItems = []ProductType{
 	ApiProductsV2,
 	Licences,
 	UserWishlist,
+	GamesDBProducts,
 	SteamAppList,
 	SteamAppNews,
 	SteamReviews,

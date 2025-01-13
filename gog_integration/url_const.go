@@ -16,6 +16,7 @@ const (
 	authHost      = "auth." + GogHost
 	ItemsHost     = "items." + GogHost
 	CatalogHost   = "catalog." + GogHost
+	gamesDbHost   = "gamesdb." + GogHost
 	reCaptchaHost = "www.recaptcha.net"
 )
 
@@ -27,6 +28,7 @@ const (
 	accountPagePath            = accountPath + "/getFilteredProducts"
 	accountWishlistPath        = accountPath + "/wishlist"
 	wishlistSearchPath         = accountWishlistPath + "/search"
+	gamesDbPathTemplate        = "/platforms/gog/external_releases/{id}"
 	userPath                   = "/user"
 	wishlistPath               = userPath + "/wishlist"
 	wishlistAddPathTemplate    = wishlistPath + "/add/{id}"
