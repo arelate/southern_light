@@ -130,10 +130,6 @@ func (gdp *GamesDbProduct) GetVerticalImage() string {
 	return gdp.Game.VerticalCover.UrlFormat
 }
 
-func (gdp *GamesDbProduct) GetIcon() string {
-	return gdp.Game.Icon.UrlFormat
-}
-
 func (gdp *GamesDbProduct) GetIconSquare() string {
 	return gdp.Game.SquareIcon.UrlFormat
 }
