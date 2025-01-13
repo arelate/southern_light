@@ -122,18 +122,6 @@ func (gdp *GamesDbProduct) GetVideoIds() []string {
 	return videoIds
 }
 
-func (gdp *GamesDbProduct) GetHero() string {
-	return gdp.Game.Background.UrlFormat
-}
-
-func (gdp *GamesDbProduct) GetVerticalImage() string {
-	return gdp.Game.VerticalCover.UrlFormat
-}
-
-func (gdp *GamesDbProduct) GetIconSquare() string {
-	return gdp.Game.SquareIcon.UrlFormat
-}
-
 func (gdp *GamesDbProduct) GetAggregatedRating() float64 {
 	return gdp.Game.AggregatedRating
 }
