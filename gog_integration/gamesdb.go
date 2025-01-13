@@ -141,3 +141,23 @@ func (gdp *GamesDbProduct) GetIcon() string {
 func (gdp *GamesDbProduct) GetIconSquare() string {
 	return gdp.Game.SquareIcon.UrlFormat
 }
+
+func (gdp *GamesDbProduct) GetAggregatedRating() float64 {
+	return gdp.Game.AggregatedRating
+}
+
+func (gdp *GamesDbProduct) GetThemes() []string {
+	themes := make([]string, 0, len(gdp.Game.Themes))
+	for _, theme := range gdp.Game.Themes {
+		themes = append(themes, theme.Name.Default)
+	}
+	return themes
+}
+
+func (gdp *GamesDbProduct) GetGameModes() []string {
+	gameModes := make([]string, 0, len(gdp.Game.GameModes))
+	for _, gm := range gdp.Game.GameModes {
+		gameModes = append(gameModes, gm.Name)
+	}
+	return gameModes
+}

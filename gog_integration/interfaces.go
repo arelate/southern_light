@@ -199,3 +199,15 @@ type IsDiscountedGetter interface {
 type DiscountPercentageGetter interface {
 	GetDiscountPercentage() int
 }
+
+type AggregatedRatingGetter interface {
+	GetAggregatedRating() float64
+}
+
+type ThemesGetter interface {
+	GetThemes() []string
+}
+
+type GameModesGetter interface {
+	GetGameModes() []string
+}

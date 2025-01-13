@@ -25,6 +25,7 @@ const (
 	IconProperty                              = "icon"
 	IconSquareProperty                        = "icon-square"
 	RatingProperty                            = "rating"
+	AggregatedRatingProperty                  = "aggregated-rating"
 	IncludesGamesProperty                     = "includes-games"
 	IsIncludedByGamesProperty                 = "is-included-by-games"
 	RequiresGamesProperty                     = "requires-games"
@@ -33,6 +34,8 @@ const (
 	StoreTagsProperty                         = "store-tags"
 	FeaturesProperty                          = "features"
 	SeriesProperty                            = "series"
+	ThemesProperty                            = "themes"
+	GameModesProperty                         = "game-modes"
 	TagIdProperty                             = "tag"
 	TagNameProperty                           = "tag-name"
 	VideoIdProperty                           = "video-id"
@@ -172,6 +175,7 @@ func AllTextProperties() []string {
 		FeaturesProperty,
 		SeriesProperty,
 		RatingProperty,
+		AggregatedRatingProperty,
 		TagIdProperty,
 		TagNameProperty,
 		LocalTagsProperty,
@@ -182,6 +186,8 @@ func AllTextProperties() []string {
 		GOGOrderDateProperty,
 		GOGReleaseDateProperty,
 		CopyrightsProperty,
+		ThemesProperty,
+		GameModesProperty,
 	)
 }
 
@@ -506,6 +512,9 @@ var supportedProperties = map[ProductType][]string{
 		LogoProperty,
 		IconProperty,
 		IconSquareProperty,
+		AggregatedRatingProperty,
+		ThemesProperty,
+		GameModesProperty,
 	},
 }
 
@@ -568,6 +577,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(pcgw_integration.EnginesBuildsGetter).GetEnginesBuilds()
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
+	case ThemesProperty:
+		return value.(gog_integration.ThemesGetter).GetThemes()
+	case GameModesProperty:
+		return value.(gog_integration.GameModesGetter).GetGameModes()
 	case ForumUrlProperty:
 		if gfu, ok := value.(gog_integration.ForumUrlGetter); ok {
 			return getSlice(gfu.GetForumUrl)
@@ -694,6 +707,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		if gr, ok := value.(gog_integration.RatingGetter); ok {
 			return getSlice(gr.GetRating)
 		}
+	case AggregatedRatingProperty:
+		if ar, ok := value.(gog_integration.AggregatedRatingGetter); ok {
+			return floatSlice(ar.GetAggregatedRating)
+		}
 	case RequiresGamesProperty:
 		return value.(gog_integration.RequiresGamesGetter).GetRequiresGames()
 	case SeriesProperty:
@@ -790,6 +807,14 @@ func intSlice(integer func() int) []string {
 	values := make([]string, 0)
 	if integer != nil {
 		values = append(values, strconv.FormatInt(int64(integer()), 10))
+	}
+	return values
+}
+
+func floatSlice(floater func() float64) []string {
+	values := make([]string, 0)
+	if floater != nil {
+		values = append(values, strconv.FormatFloat(floater(), 'f', -1, 10))
 	}
 	return values
 }
