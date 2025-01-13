@@ -242,6 +242,11 @@ func (pr *ProductReader) PCGWExternalLinks(id string) (pel *pcgw_integration.Par
 	return pel, err
 }
 
+func (pr *ProductReader) GamesDbProduct(id string) (gdp *gog_integration.GamesDbProduct, err error) {
+	err = pr.readValue(id, &gdp)
+	return gdp, err
+}
+
 func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 	switch pr.productType {
 	case CatalogProducts:
@@ -290,6 +295,8 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.HLTBData(key)
 	case ProtonDBSummary:
 		return pr.ProtonDBSummary(key)
+	case GamesDbProducts:
+		return pr.GamesDbProduct(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", pr.productType)
 	}

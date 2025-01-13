@@ -22,7 +22,7 @@ const (
 	LicenceProducts
 	OrderPage
 	Orders
-	GamesDBProducts
+	GamesDbProducts
 	// Steam product types
 	SteamAppList
 	SteamAppNews
@@ -56,7 +56,7 @@ var productTypeStrings = map[ProductType]string{
 	LicenceProducts:      "licence-products",
 	OrderPage:            "order-page",
 	Orders:               "orders",
-	GamesDBProducts:      "gamesdb-products",
+	GamesDbProducts:      "gamesdb-products",
 	// Steam product types
 	SteamAppList:   "steam-app-list",
 	SteamAppNews:   "steam-app-news",
@@ -155,7 +155,7 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
-	GamesDBProducts: {
+	GamesDbProducts: {
 		CatalogProducts,
 	},
 }
@@ -344,7 +344,7 @@ var supportsGetItems = []ProductType{
 	ApiProductsV2,
 	Licences,
 	UserWishlist,
-	GamesDBProducts,
+	GamesDbProducts,
 	SteamAppList,
 	SteamAppNews,
 	SteamReviews,
