@@ -157,7 +157,6 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	},
 	GamesDBProducts: {
 		CatalogProducts,
-		AccountProducts,
 	},
 }
 
