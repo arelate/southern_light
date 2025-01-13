@@ -1,5 +1,9 @@
 package gog_integration
 
+import (
+	"strconv"
+)
+
 type PlatformId struct {
 	Id                   string `json:"id"`
 	PlatformId           string `json:"platform_id"`
@@ -94,4 +98,46 @@ type GamesDbProduct struct {
 	GameModes    []IdNameStringSlug `json:"game_modes"`
 	Icon         UrlFormat          `json:"icon"`
 	Logo         UrlFormat          `json:"logo"`
+}
+
+func (gdp *GamesDbProduct) GetSteamAppId() uint32 {
+	for _, release := range gdp.Game.Releases {
+		if release.PlatformId == "steam" {
+			if said, err := strconv.ParseInt(release.ExternalId, 32, 10); err == nil {
+				return uint32(said)
+			}
+		}
+	}
+	return 0
+}
+
+func (gdp *GamesDbProduct) GetVideoIds() []string {
+	videoIds := make([]string, 0, len(gdp.Videos))
+
+	for _, vid := range gdp.Videos {
+		if vid.Provider == "youtube" {
+			videoIds = append(videoIds, vid.VideoId)
+		}
+	}
+	return videoIds
+}
+
+func (gdp *GamesDbProduct) GetHero() string {
+	return gdp.Game.Background.UrlFormat
+}
+
+func (gdp *GamesDbProduct) GetVerticalImage() string {
+	return gdp.Game.VerticalCover.UrlFormat
+}
+
+func (gdp *GamesDbProduct) GetLogo() string {
+	return gdp.Game.Logo.UrlFormat
+}
+
+func (gdp *GamesDbProduct) GetIcon() string {
+	return gdp.Game.Icon.UrlFormat
+}
+
+func (gdp *GamesDbProduct) GetIconSquare() string {
+	return gdp.Game.SquareIcon.UrlFormat
 }

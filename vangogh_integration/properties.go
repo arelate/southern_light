@@ -498,6 +498,15 @@ var supportedProperties = map[ProductType][]string{
 		ProtonDBTierProperty,
 		ProtonDBConfidenceProperty,
 	},
+	GamesDbProducts: {
+		SteamAppIdProperty,
+		VideoIdProperty,
+		HeroProperty,
+		VerticalImageProperty,
+		LogoProperty,
+		IconProperty,
+		IconSquareProperty,
+	},
 }
 
 func GetProperties(
