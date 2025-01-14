@@ -18,6 +18,8 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	case Screenshots:
 		fallthrough
 	case Hero:
+		fallthrough
+	case Background:
 		ext = gog_integration.JpgExt
 	case Icon:
 		fallthrough
@@ -26,7 +28,7 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	case Logo:
 		ext = gog_integration.PngExt
 	default:
-		return nil, errors.New("unknown image type")
+		return nil, errors.New("no url for unknown image type")
 	}
 
 	for _, imageId := range imageIds {
