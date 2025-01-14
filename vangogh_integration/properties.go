@@ -393,6 +393,7 @@ var supportedProperties = map[ProductType][]string{
 		DescriptionFeaturesProperty,
 		InDevelopmentProperty,
 		PreOrderProperty,
+		BackgroundProperty,
 	},
 	ApiProductsV2: {
 		AdditionalRequirementsProperty,
@@ -406,6 +407,7 @@ var supportedProperties = map[ProductType][]string{
 		LogoProperty,
 		IconProperty,
 		IconSquareProperty,
+		BackgroundProperty,
 		ScreenshotsProperty,
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,
