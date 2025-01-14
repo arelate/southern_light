@@ -48,6 +48,10 @@ type IconSquareGetter interface {
 	GetIconSquare() string
 }
 
+type BackgroundGetter interface {
+	GetBackground() string
+}
+
 type ScreenshotsGetter interface {
 	GetScreenshots() []string
 }

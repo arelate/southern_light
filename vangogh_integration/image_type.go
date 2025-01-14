@@ -13,6 +13,7 @@ const (
 	Logo
 	Icon
 	IconSquare
+	Background
 )
 
 var imageTypeStrings = map[ImageType]string{
@@ -24,6 +25,7 @@ var imageTypeStrings = map[ImageType]string{
 	Logo:             "logo",
 	Icon:             "icon",
 	IconSquare:       "icon-square",
+	Background:       "background",
 }
 
 func (it ImageType) String() string {

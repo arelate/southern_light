@@ -17,6 +17,7 @@ type TheoImages struct {
 	Logo          string `json:"logo,omitempty"`
 	Icon          string `json:"icon,omitempty"`
 	IconSquare    string `json:"icon-square,omitempty"`
+	Background    string `json:"background"`
 }
 
 type TheoDownloadLink struct {

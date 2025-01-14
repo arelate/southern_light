@@ -247,3 +247,5 @@ func (apv1 *ApiProductV1) GetInDevelopment() bool {
 func (apv1 *ApiProductV1) GetPreOrder() bool {
 	return apv1.IsPreOrder
 }
+
+func (apv1 *ApiProductV1) GetBackground() string { return apv1.Images.Background }

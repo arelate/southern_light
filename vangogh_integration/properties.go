@@ -24,6 +24,7 @@ const (
 	LogoProperty                              = "logo"
 	IconProperty                              = "icon"
 	IconSquareProperty                        = "icon-square"
+	BackgroundProperty                        = "background"
 	RatingProperty                            = "rating"
 	AggregatedRatingProperty                  = "aggregated-rating"
 	IncludesGamesProperty                     = "includes-games"
@@ -215,6 +216,7 @@ func ImageIdProperties() []string {
 		LogoProperty,
 		IconProperty,
 		IconSquareProperty,
+		BackgroundProperty,
 	}
 }
 
@@ -358,6 +360,7 @@ var imageTypeProperties = map[ImageType]string{
 	Logo:          LogoProperty,
 	Icon:          IconProperty,
 	IconSquare:    IconSquareProperty,
+	Background:    BackgroundProperty,
 }
 
 func PropertyFromImageType(it ImageType) string {
@@ -595,6 +598,10 @@ func getPropertyValues(value interface{}, property string) []string {
 	case HeroProperty:
 		if h, ok := value.(gog_integration.HeroGetter); ok {
 			return getImageIdSlice(h.GetHero)
+		}
+	case BackgroundProperty:
+		if bg, ok := value.(gog_integration.BackgroundGetter); ok {
+			return getImageIdSlice(bg.GetBackground)
 		}
 	case LogoProperty:
 		if l, ok := value.(gog_integration.LogoGetter); ok {
