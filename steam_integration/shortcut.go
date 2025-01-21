@@ -256,8 +256,8 @@ func UpdateShortcut(index string, kvShortcuts *steam_vdf.KeyValues, shortcut *Sh
 
 }
 
-func ShortcutAppId(executablePath string, appName string) uint32 {
-	key := executablePath + appName
+func ShortcutAppId(appName string) uint32 {
+	key := appName
 	crc := uint64(crc32.ChecksumIEEE([]byte(key)))
 	crc = crc | 0x80000000
 	crc = (crc << 32) | 0x02000000
