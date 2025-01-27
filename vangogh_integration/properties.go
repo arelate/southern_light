@@ -8,6 +8,7 @@ import (
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
+	"slices"
 	"strconv"
 	"time"
 )
@@ -829,7 +830,10 @@ func uint32Slice(integer func() []uint32) []string {
 		intValues := integer()
 		for _, intValue := range intValues {
 			if intValue > 0 {
-				values = append(values, strconv.FormatUint(uint64(intValue), 10))
+				valStr := strconv.FormatUint(uint64(intValue), 10)
+				if !slices.Contains(values, valStr) {
+					values = append(values, valStr)
+				}
 			}
 		}
 	}
