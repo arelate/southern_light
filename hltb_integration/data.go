@@ -211,11 +211,14 @@ func (d *Data) GetHoursToComplete100() string {
 	return d.fmtSecondsToHours("100")
 }
 
-func (d *Data) GetSteamAppId() uint32 {
-	if gd := d.PageProps.Game.Data.Game; len(gd) > 0 {
-		return gd[0].ProfileSteam
+func (d *Data) GetSteamAppIds() []uint32 {
+	var appIds []uint32
+	for _, gd := range d.PageProps.Game.Data.Game {
+		if gd.ProfileSteam > 0 {
+			appIds = append(appIds, gd.ProfileSteam)
+		}
 	}
-	return 0
+	return appIds
 }
 
 func (d *Data) GetReviewScore() int {

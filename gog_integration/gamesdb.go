@@ -100,15 +100,16 @@ type GamesDbProduct struct {
 	Logo         UrlFormat          `json:"logo"`
 }
 
-func (gdp *GamesDbProduct) GetSteamAppId() uint32 {
+func (gdp *GamesDbProduct) GetSteamAppIds() []uint32 {
+	var appIds []uint32
 	for _, release := range gdp.Game.Releases {
 		if release.PlatformId == "steam" {
 			if said, err := strconv.ParseInt(release.ExternalId, 10, 32); err == nil {
-				return uint32(said)
+				appIds = append(appIds, uint32(said))
 			}
 		}
 	}
-	return 0
+	return appIds
 }
 
 func (gdp *GamesDbProduct) GetVideoIds() []string {

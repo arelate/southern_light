@@ -73,20 +73,21 @@ func extractSteamAppId(link, pfx string) uint32 {
 	return 0
 }
 
-// GetSteamAppId extracts Steam AppId from PCGamingWiki parse externallinks results
+// GetSteamAppIds extracts Steam AppIds from PCGamingWiki parse externallinks results
 // The same data can be obtained with an original cargo query (see cargoquery_url.go),
 // however it seems like cargoquery will return all editions AppIds, while externallinks
 // seems more focused on a specific product edition (corresponding to that pageId)
-func (pel *ParseExternalLinks) GetSteamAppId() uint32 {
+func (pel *ParseExternalLinks) GetSteamAppIds() []uint32 {
+	var appIds []uint32
 	for _, el := range pel.Parse.ExternalLinks {
 		if steamAppId := extractSteamAppId(el, storeSteamPoweredAppPrefix); steamAppId > 0 {
-			return steamAppId
+			appIds = append(appIds, steamAppId)
 		}
 		if steamAppId := extractSteamAppId(el, steamCommunityAppPrefix); steamAppId > 0 {
-			return steamAppId
+			appIds = append(appIds, steamAppId)
 		}
 	}
-	return 0
+	return appIds
 }
 
 func (pel *ParseExternalLinks) externalLinkSuffixId(pfx string) string {

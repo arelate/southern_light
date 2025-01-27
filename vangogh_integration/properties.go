@@ -728,8 +728,8 @@ func getPropertyValues(value interface{}, property string) []string {
 			return getSlice(gs.GetSlug)
 		}
 	case SteamAppIdProperty:
-		if gsai, ok := value.(steam_integration.SteamAppIdGetter); ok {
-			return uint32Slice(gsai.GetSteamAppId)
+		if gsai, ok := value.(steam_integration.SteamAppIdsGetter); ok {
+			return uint32Slice(gsai.GetSteamAppIds)
 		}
 	case SteamReviewScoreDescProperty:
 		if grsd, ok := value.(steam_integration.ReviewScoreDescGetter); ok {
@@ -823,12 +823,14 @@ func floatSlice(floater func() float64) []string {
 	return values
 }
 
-func uint32Slice(integer func() uint32) []string {
+func uint32Slice(integer func() []uint32) []string {
 	values := make([]string, 0)
 	if integer != nil {
-		value := integer()
-		if value > 0 {
-			values = append(values, strconv.FormatUint(uint64(value), 10))
+		intValues := integer()
+		for _, intValue := range intValues {
+			if intValue > 0 {
+				values = append(values, strconv.FormatUint(uint64(intValue), 10))
+			}
 		}
 	}
 	return values

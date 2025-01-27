@@ -1,5 +1,5 @@
 package steam_integration
 
-type SteamAppIdGetter interface {
-	GetSteamAppId() uint32
+type SteamAppIdsGetter interface {
+	GetSteamAppIds() []uint32
 }
