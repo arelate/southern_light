@@ -528,7 +528,7 @@ func GetProperties(
 }
 
 func fillProperties(value interface{}, properties []string) map[string][]string {
-	propValues := make(map[string][]string, 0)
+	propValues := make(map[string][]string)
 	for _, prop := range properties {
 		propValues[prop] = getPropertyValues(value, prop)
 	}
@@ -826,7 +826,10 @@ func floatSlice(floater func() float64) []string {
 func uint32Slice(integer func() uint32) []string {
 	values := make([]string, 0)
 	if integer != nil {
-		values = append(values, strconv.FormatUint(uint64(integer()), 10))
+		value := integer()
+		if value > 0 {
+			values = append(values, strconv.FormatUint(uint64(value), 10))
+		}
 	}
 	return values
 }

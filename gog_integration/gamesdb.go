@@ -103,7 +103,7 @@ type GamesDbProduct struct {
 func (gdp *GamesDbProduct) GetSteamAppId() uint32 {
 	for _, release := range gdp.Game.Releases {
 		if release.PlatformId == "steam" {
-			if said, err := strconv.ParseInt(release.ExternalId, 32, 10); err == nil {
+			if said, err := strconv.ParseInt(release.ExternalId, 10, 32); err == nil {
 				return uint32(said)
 			}
 		}
