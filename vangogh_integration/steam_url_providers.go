@@ -9,9 +9,8 @@ import (
 )
 
 var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
-	SteamAppNews:   steam_integration.NewsForAppUrl,
-	SteamReviews:   steam_integration.AppReviewsUrl,
-	SteamStorePage: steam_integration.StorePageUrl,
+	SteamAppNews: steam_integration.NewsForAppUrl,
+	SteamReviews: steam_integration.AppReviewsUrl,
 	//SteamAppDetails:              steam_integration.AppDetailsUrl,
 	SteamDeckCompatibilityReport: steam_integration.DeckAppCompatibilityReportUrl,
 	// ProtonDB product types are using Steam AppID

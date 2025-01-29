@@ -22,12 +22,13 @@ const (
 	LicenceProducts
 	OrderPage
 	Orders
-	GamesDbProducts
+	// GamesDB (GOG Galaxy)
+	GamesDbGogProducts
+	GamesDbGenericProducts
 	// Steam product types
 	SteamAppList
 	SteamAppNews
 	SteamReviews
-	SteamStorePage
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
 	PCGWPageId
@@ -43,26 +44,25 @@ const (
 var productTypeStrings = map[ProductType]string{
 	UnknownProductType: "unknown-product-type",
 	// GOG.com product types
-	CatalogPage:          "catalog-page",
-	CatalogProducts:      "catalog-products",
-	AccountPage:          "account-page",
-	AccountProducts:      "account-products",
-	UserWishlist:         "user-wishlist",
-	UserWishlistProducts: "user-wishlist-products",
-	Details:              "details",
-	ApiProductsV1:        "api-products-v1",
-	ApiProductsV2:        "api-products-v2",
-	Licences:             "licences",
-	LicenceProducts:      "licence-products",
-	OrderPage:            "order-page",
-	Orders:               "orders",
-	GamesDbProducts:      "gamesdb-products",
+	CatalogPage:            "catalog-page",
+	CatalogProducts:        "catalog-products",
+	AccountPage:            "account-page",
+	AccountProducts:        "account-products",
+	UserWishlist:           "user-wishlist",
+	UserWishlistProducts:   "user-wishlist-products",
+	Details:                "details",
+	ApiProductsV1:          "api-products-v1",
+	ApiProductsV2:          "api-products-v2",
+	Licences:               "licences",
+	LicenceProducts:        "licence-products",
+	OrderPage:              "order-page",
+	Orders:                 "orders",
+	GamesDbGogProducts:     "gamesdb-gog-products",
+	GamesDbGenericProducts: "gamesdb-generic-products",
 	// Steam product types
-	SteamAppList:   "steam-app-list",
-	SteamAppNews:   "steam-app-news",
-	SteamReviews:   "steam-reviews",
-	SteamStorePage: "steam-store-page",
-	//SteamAppDetails:              "steam-app-details",
+	SteamAppList:                 "steam-app-list",
+	SteamAppNews:                 "steam-app-news",
+	SteamReviews:                 "steam-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
 	PCGWPageId:        "pcgw-pageid",
@@ -155,7 +155,7 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
-	GamesDbProducts: {
+	GamesDbGogProducts: {
 		CatalogProducts,
 	},
 }
@@ -167,10 +167,6 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 	},
 	SteamReviews: {
-		CatalogProducts,
-		AccountProducts,
-	},
-	SteamStorePage: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -344,11 +340,10 @@ var supportsGetItems = []ProductType{
 	ApiProductsV2,
 	Licences,
 	UserWishlist,
-	GamesDbProducts,
+	GamesDbGogProducts,
 	SteamAppList,
 	SteamAppNews,
 	SteamReviews,
-	SteamStorePage,
 	//SteamAppDetails,
 	SteamDeckCompatibilityReport,
 	PCGWPageId,

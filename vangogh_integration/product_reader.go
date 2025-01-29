@@ -191,22 +191,6 @@ func (pr *ProductReader) UserWishlistProduct(id string) (userWishlistProduct str
 	return userWishlistProduct, err
 }
 
-func (pr *ProductReader) SteamStorePage(id string) (*steam_integration.StorePage, error) {
-	spReadCloser, err := pr.keyValues.Get(id)
-	if err != nil {
-		return nil, err
-	}
-
-	if spReadCloser == nil {
-		return nil, nil
-	}
-
-	defer spReadCloser.Close()
-
-	doc, err := html.Parse(spReadCloser)
-	return &steam_integration.StorePage{Doc: doc}, err
-}
-
 func (pr *ProductReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
 	spReadCloser, err := pr.keyValues.Get(HLTBRootPage.String())
 	if err != nil {
@@ -277,8 +261,6 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.SteamGetAppNewsResponse(key)
 	case SteamReviews:
 		return pr.SteamAppReviews(key)
-	case SteamStorePage:
-		return pr.SteamStorePage(key)
 	case SteamAppList:
 		return pr.SteamAppList()
 	case SteamDeckCompatibilityReport:
@@ -295,7 +277,7 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.HLTBData(key)
 	case ProtonDBSummary:
 		return pr.ProtonDBSummary(key)
-	case GamesDbProducts:
+	case GamesDbGogProducts:
 		return pr.GamesDbProduct(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", pr.productType)

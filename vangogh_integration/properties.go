@@ -85,7 +85,6 @@ const (
 	SortProperty                              = "sort"
 	DescendingProperty                        = "desc"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
-	SteamTagsProperty                         = "steam-tags"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
 	DehydratedImageProperty                   = "dehydrated-image"
 	DehydratedImageModifiedProperty           = "dehydrated-image-modified"
@@ -268,7 +267,6 @@ func ExternalDataSourcesProperties() []string {
 	return []string{
 		SteamAppIdProperty,
 		SteamReviewScoreDescProperty,
-		SteamTagsProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
 		PCGWPageIdProperty,
 		HLTBIdProperty,
@@ -343,7 +341,6 @@ func DigestibleProperties() []string {
 		LanguageCodeProperty,
 		OperatingSystemsProperty,
 		SteamReviewScoreDescProperty,
-		SteamTagsProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
 		HLTBPlatformsProperty,
 		HLTBGenresProperty,
@@ -469,9 +466,6 @@ var supportedProperties = map[ProductType][]string{
 	SteamReviews: {
 		SteamReviewScoreDescProperty,
 	},
-	SteamStorePage: {
-		SteamTagsProperty,
-	},
 	SteamDeckCompatibilityReport: {
 		SteamDeckAppCompatibilityCategoryProperty,
 	},
@@ -510,7 +504,7 @@ var supportedProperties = map[ProductType][]string{
 		ProtonDBTierProperty,
 		ProtonDBConfidenceProperty,
 	},
-	GamesDbProducts: {
+	GamesDbGogProducts: {
 		SteamAppIdProperty,
 		VideoIdProperty,
 		AggregatedRatingProperty,
@@ -736,8 +730,6 @@ func getPropertyValues(value interface{}, property string) []string {
 		if grsd, ok := value.(steam_integration.ReviewScoreDescGetter); ok {
 			return getSlice(grsd.GetReviewScoreDesc)
 		}
-	case SteamTagsProperty:
-		return value.(steam_integration.SteamTagsGetter).GetSteamTags()
 	case SteamDeckAppCompatibilityCategoryProperty:
 		if dacr, ok := value.(fmt.Stringer); ok {
 			return getSlice(dacr.String)
