@@ -11,6 +11,7 @@ import (
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/net/html"
 	"io"
+	"iter"
 )
 
 type ProductReader struct {
@@ -56,11 +57,11 @@ func (pr *ProductReader) readValue(id string, val interface{}) error {
 	return nil
 }
 
-func (pr *ProductReader) Keys() ([]string, error) {
+func (pr *ProductReader) Keys() iter.Seq[string] {
 	return pr.keyValues.Keys()
 }
 
-func (pr *ProductReader) Has(id string) (bool, error) {
+func (pr *ProductReader) Has(id string) bool {
 	return pr.keyValues.Has(id)
 }
 
@@ -80,23 +81,19 @@ func (pr *ProductReader) Cut(id string) (bool, error) {
 	return pr.keyValues.Cut(id)
 }
 
-func (pr *ProductReader) IsCurrent() (bool, int64) {
-	return pr.keyValues.IsCurrent()
-}
-
-func (pr *ProductReader) CreatedAfter(timestamp int64) ([]string, error) {
+func (pr *ProductReader) CreatedAfter(timestamp int64) iter.Seq[string] {
 	return pr.keyValues.CreatedAfter(timestamp)
 }
 
-func (pr *ProductReader) UpdatedAfter(timestamp int64) ([]string, error) {
+func (pr *ProductReader) UpdatedAfter(timestamp int64) iter.Seq[string] {
 	return pr.keyValues.UpdatedAfter(timestamp)
 }
 
-func (pr *ProductReader) CreatedOrUpdatedAfter(timestamp int64) ([]string, error) {
+func (pr *ProductReader) CreatedOrUpdatedAfter(timestamp int64) iter.Seq[string] {
 	return pr.keyValues.CreatedOrUpdatedAfter(timestamp)
 }
 
-func (pr *ProductReader) IsUpdatedAfter(id string, timestamp int64) (bool, error) {
+func (pr *ProductReader) IsUpdatedAfter(id string, timestamp int64) bool {
 	return pr.keyValues.IsUpdatedAfter(id, timestamp)
 }
 
@@ -306,6 +303,6 @@ func (pr *ProductReader) ProductsGetter(page string) (productsGetter gog_integra
 	return productsGetter, err
 }
 
-func (pr *ProductReader) ModTime(id string) (int64, error) {
-	return pr.keyValues.ModTime(id)
+func (pr *ProductReader) ModTime(id string) int64 {
+	return pr.keyValues.ValueModTime(id)
 }

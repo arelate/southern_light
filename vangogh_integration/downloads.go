@@ -271,10 +271,7 @@ func MapDownloads(
 
 		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
 
-		has, err := vrDetails.Has(id)
-		if err != nil {
-			return err
-		}
+		has := vrDetails.Has(id)
 
 		if !has || !ok {
 			tpw.Increment()

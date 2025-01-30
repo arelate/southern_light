@@ -2,6 +2,7 @@ package vangogh_integration
 
 import (
 	"fmt"
+	"iter"
 )
 
 var interestingNewProductTypes = map[ProductType]bool{
@@ -28,21 +29,13 @@ func Updates(since int64) (map[string]map[string]bool, error) {
 		}
 
 		if interestingNewProductTypes[pt] {
-			createdAfter, err := vr.CreatedAfter(since)
-			if err != nil {
-				return nil, err
-			}
-			categorize(createdAfter,
+			categorize(vr.CreatedAfter(since),
 				fmt.Sprintf("new in %s", pt.HumanReadableString()),
 				updates)
 		}
 
 		if interestingUpdatedProductTypes[pt] {
-			updatedAfter, err := vr.UpdatedAfter(since)
-			if err != nil {
-				return nil, err
-			}
-			categorize(updatedAfter,
+			categorize(vr.UpdatedAfter(since),
 				fmt.Sprintf("updates in %s", pt.HumanReadableString()),
 				updates)
 		}
@@ -51,8 +44,8 @@ func Updates(since int64) (map[string]map[string]bool, error) {
 	return updates, nil
 }
 
-func categorize(ids []string, cat string, updates map[string]map[string]bool) {
-	for _, id := range ids {
+func categorize(ids iter.Seq[string], cat string, updates map[string]map[string]bool) {
+	for id := range ids {
 		if updates[cat] == nil {
 			updates[cat] = make(map[string]bool, 0)
 		}
