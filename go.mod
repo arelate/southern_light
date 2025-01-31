@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.23.4
 
 require (
-	github.com/boggydigital/kevlar v0.6.0
+	github.com/boggydigital/kevlar v0.6.2
 	github.com/boggydigital/match_node v0.1.18
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/pathways v0.1.14

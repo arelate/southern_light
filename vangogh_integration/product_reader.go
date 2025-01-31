@@ -306,3 +306,5 @@ func (pr *ProductReader) ProductsGetter(page string) (productsGetter gog_integra
 func (pr *ProductReader) ModTime(id string) int64 {
 	return pr.keyValues.ValueModTime(id)
 }
+
+func (pr *ProductReader) Len() int { return pr.keyValues.Len() }
