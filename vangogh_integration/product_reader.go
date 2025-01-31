@@ -2,6 +2,7 @@ package vangogh_integration
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/arelate/southern_light/hltb_integration"
@@ -170,7 +171,8 @@ func (pr *ProductReader) SteamAppReviews(id string) (steamAppReviews *steam_inte
 func (pr *ProductReader) SteamDeckAppCompatibilityReport(id string) (deckAppCompatibilityReport *steam_integration.DeckAppCompatibilityReport, err error) {
 	err = pr.readValue(id, &deckAppCompatibilityReport)
 	// empty results are passed as an empty array [], not a struct
-	if ute, ok := err.(*json.UnmarshalTypeError); ok {
+	var ute *json.UnmarshalTypeError
+	if errors.As(err, &ute) {
 		if ute.Field == "results" && ute.Value == "array" {
 			err = nil
 		}
@@ -303,8 +305,12 @@ func (pr *ProductReader) ProductsGetter(page string) (productsGetter gog_integra
 	return productsGetter, err
 }
 
-func (pr *ProductReader) ModTime(id string) int64 {
-	return pr.keyValues.ValueModTime(id)
+func (pr *ProductReader) LogModTime(id string) int64 {
+	return pr.keyValues.LogModTime(id)
+}
+
+func (pr *ProductReader) FileModTime(id string) (int64, error) {
+	return pr.keyValues.FileModTime(id)
 }
 
 func (pr *ProductReader) Len() int { return pr.keyValues.Len() }
