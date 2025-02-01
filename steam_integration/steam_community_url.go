@@ -13,3 +13,9 @@ func SteamCommunityUrl(appId uint32) *url.URL {
 		Path:   path.Join(appPath, strconv.Itoa(int(appId))),
 	}
 }
+
+func SteamGuidesUrl(appId uint32) *url.URL {
+	scu := SteamCommunityUrl(appId)
+	scu.Path += guidesPath
+	return scu
+}
