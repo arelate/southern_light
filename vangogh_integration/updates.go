@@ -2,6 +2,7 @@ package vangogh_integration
 
 import (
 	"fmt"
+	"github.com/boggydigital/kevlar"
 	"iter"
 )
 
@@ -29,13 +30,13 @@ func Updates(since int64) (map[string]map[string]bool, error) {
 		}
 
 		if interestingNewProductTypes[pt] {
-			categorize(vr.CreatedAfter(since),
+			categorize(vr.Since(since, kevlar.Create),
 				fmt.Sprintf("new in %s", pt.HumanReadableString()),
 				updates)
 		}
 
 		if interestingUpdatedProductTypes[pt] {
-			categorize(vr.UpdatedAfter(since),
+			categorize(vr.Since(since, kevlar.Create, kevlar.Update),
 				fmt.Sprintf("updates in %s", pt.HumanReadableString()),
 				updates)
 		}
@@ -44,7 +45,7 @@ func Updates(since int64) (map[string]map[string]bool, error) {
 	return updates, nil
 }
 
-func categorize(ids iter.Seq[string], cat string, updates map[string]map[string]bool) {
+func categorize(ids iter.Seq2[string, kevlar.MutationType], cat string, updates map[string]map[string]bool) {
 	for id := range ids {
 		if updates[cat] == nil {
 			updates[cat] = make(map[string]bool, 0)

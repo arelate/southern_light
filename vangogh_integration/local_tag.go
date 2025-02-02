@@ -1,11 +1,11 @@
 package vangogh_integration
 
 import (
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
-func addLocalTag(id, tag string, rdx kevlar.WriteableRedux, tpw nod.TotalProgressWriter) error {
+func addLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWriter) error {
 	if err := rdx.MustHave(LocalTagsProperty); err != nil {
 		return err
 	}
@@ -20,7 +20,7 @@ func addLocalTag(id, tag string, rdx kevlar.WriteableRedux, tpw nod.TotalProgres
 	return nil
 }
 
-func removeLocalTag(id, tag string, rdx kevlar.WriteableRedux, tpw nod.TotalProgressWriter) error {
+func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWriter) error {
 	if err := rdx.MustHave(LocalTagsProperty); err != nil {
 		return err
 	}

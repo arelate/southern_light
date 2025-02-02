@@ -3,7 +3,7 @@ package vangogh_integration
 import (
 	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"net/url"
 	"strconv"
 )
@@ -19,10 +19,10 @@ var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
 
 type SteamUrlProvider struct {
 	pt  ProductType
-	rdx kevlar.ReadableRedux
+	rdx redux.Readable
 }
 
-func NewSteamUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (*SteamUrlProvider, error) {
+func NewSteamUrlProvider(pt ProductType, rdx redux.Readable) (*SteamUrlProvider, error) {
 	if err := rdx.MustHave(SteamAppIdProperty); err != nil {
 		return nil, err
 	}

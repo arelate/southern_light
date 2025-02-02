@@ -26,7 +26,7 @@ func NewProductReader(pt ProductType) (*ProductReader, error) {
 		return nil, err
 	}
 
-	kv, err := kevlar.NewKeyValues(dst, kevlar.JsonExt)
+	kv, err := kevlar.New(dst, kevlar.JsonExt)
 	if err != nil {
 		return nil, err
 	}
@@ -78,24 +78,12 @@ func (pr *ProductReader) Set(id string, data io.Reader) error {
 	return pr.keyValues.Set(id, data)
 }
 
-func (pr *ProductReader) Cut(id string) (bool, error) {
+func (pr *ProductReader) Cut(id string) error {
 	return pr.keyValues.Cut(id)
 }
 
-func (pr *ProductReader) CreatedAfter(timestamp int64) iter.Seq[string] {
-	return pr.keyValues.CreatedAfter(timestamp)
-}
-
-func (pr *ProductReader) UpdatedAfter(timestamp int64) iter.Seq[string] {
-	return pr.keyValues.UpdatedAfter(timestamp)
-}
-
-func (pr *ProductReader) CreatedOrUpdatedAfter(timestamp int64) iter.Seq[string] {
-	return pr.keyValues.CreatedOrUpdatedAfter(timestamp)
-}
-
-func (pr *ProductReader) IsUpdatedAfter(id string, timestamp int64) bool {
-	return pr.keyValues.IsUpdatedAfter(id, timestamp)
+func (pr *ProductReader) Since(ts int64, mts ...kevlar.MutationType) iter.Seq2[string, kevlar.MutationType] {
+	return pr.keyValues.Since(ts, mts...)
 }
 
 func (pr *ProductReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {

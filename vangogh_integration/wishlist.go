@@ -93,13 +93,13 @@ func RemoveFromLocalWishlist(
 	if err != nil {
 		return processedIds, err
 	}
-	kvPt, err := kevlar.NewKeyValues(ptDir, kevlar.JsonExt)
+	kvPt, err := kevlar.New(ptDir, kevlar.JsonExt)
 	if err != nil {
 		return processedIds, err
 	}
 
 	for _, id := range processedIds {
-		if _, err := kvPt.Cut(id); err != nil {
+		if err = kvPt.Cut(id); err != nil {
 			return processedIds, err
 		}
 	}

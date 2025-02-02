@@ -3,7 +3,7 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"net/url"
 )
 
@@ -11,7 +11,7 @@ type UrlProvider interface {
 	Url(gogId string) *url.URL
 }
 
-func NewUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (UrlProvider, error) {
+func NewUrlProvider(pt ProductType, rdx redux.Readable) (UrlProvider, error) {
 	if IsGOGProduct(pt) {
 		return NewGOGUrlProvider(pt)
 	} else if IsSteamProduct(pt) {

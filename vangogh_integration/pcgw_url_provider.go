@@ -2,16 +2,16 @@ package vangogh_integration
 
 import (
 	"github.com/arelate/southern_light/pcgw_integration"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"net/url"
 )
 
 type PCGWUrlProvider struct {
 	pt  ProductType
-	rdx kevlar.ReadableRedux
+	rdx redux.Readable
 }
 
-func NewPCGWUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (*PCGWUrlProvider, error) {
+func NewPCGWUrlProvider(pt ProductType, rdx redux.Readable) (*PCGWUrlProvider, error) {
 	if err := rdx.MustHave(PCGWPageIdProperty); err != nil {
 		return nil, err
 	}

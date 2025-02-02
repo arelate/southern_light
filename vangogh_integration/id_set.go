@@ -3,7 +3,7 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"golang.org/x/exp/maps"
 	"sort"
 	"strings"
@@ -14,7 +14,7 @@ const (
 	DefaultDesc = false
 )
 
-func idsFromSlugs(slugs []string, rdx kevlar.ReadableRedux) ([]string, error) {
+func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 
 	var err error
 	if rdx == nil && len(slugs) > 0 {
@@ -35,7 +35,7 @@ func idsFromSlugs(slugs []string, rdx kevlar.ReadableRedux) ([]string, error) {
 	var ids []string
 	for _, slug := range slugs {
 		if slug != "" {
-			matchedIds := rdx.Match(map[string][]string{SlugProperty: {slug}}, kevlar.FullMatch)
+			matchedIds := rdx.Match(map[string][]string{SlugProperty: {slug}}, redux.FullMatch)
 			ids = append(ids, matchedIds...)
 		}
 	}
@@ -47,7 +47,7 @@ func PropertyListsFromIdSet(
 	ids []string,
 	propertyFilter map[string][]string,
 	properties []string,
-	rdx kevlar.ReadableRedux) (map[string][]string, error) {
+	rdx redux.Readable) (map[string][]string, error) {
 
 	propSet := make(map[string]bool)
 	for _, p := range properties {
@@ -82,7 +82,7 @@ func propertyListFromId(
 	id string,
 	propertyFilter map[string][]string,
 	properties []string,
-	rdx kevlar.ReadableRedux) (map[string][]string, error) {
+	rdx redux.Readable) (map[string][]string, error) {
 
 	if err := rdx.MustHave(properties...); err != nil {
 		return nil, err

@@ -2,16 +2,16 @@ package vangogh_integration
 
 import (
 	"github.com/arelate/southern_light/hltb_integration"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"net/url"
 )
 
 type HLTBUrlProvider struct {
 	pt  ProductType
-	rdx kevlar.ReadableRedux
+	rdx redux.Readable
 }
 
-func NewHLTBUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (*HLTBUrlProvider, error) {
+func NewHLTBUrlProvider(pt ProductType, rdx redux.Readable) (*HLTBUrlProvider, error) {
 	if err := rdx.MustHave(HLTBBuildIdProperty, HLTBIdProperty); err != nil {
 		return nil, err
 	}

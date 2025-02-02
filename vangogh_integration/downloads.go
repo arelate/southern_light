@@ -3,8 +3,8 @@ package vangogh_integration
 import (
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 	"log"
 	"math"
 	"path"
@@ -93,11 +93,11 @@ func (dl *Download) String() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux) (DownloadsList, error) {
+func FromDetails(det *gog_integration.Details, rdx redux.Readable) (DownloadsList, error) {
 	return fromGameDetails(det, rdx)
 }
 
-func fromGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux) (DownloadsList, error) {
+func fromGameDetails(det *gog_integration.Details, rdx redux.Readable) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
@@ -121,7 +121,7 @@ func fromGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux) (Do
 	return dlList, nil
 }
 
-func convertGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux, dt DownloadType) (DownloadsList, error) {
+func convertGameDetails(det *gog_integration.Details, rdx redux.Readable, dt DownloadType) (DownloadsList, error) {
 
 	dlList := make(DownloadsList, 0)
 
@@ -138,7 +138,7 @@ func convertGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux, 
 
 		langCodes := rdx.Match(
 			map[string][]string{NativeLanguageNameProperty: {dl.Language}},
-			kevlar.FullMatch)
+			redux.FullMatch)
 		if len(langCodes) != 1 {
 			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
 		}
@@ -242,7 +242,7 @@ type DownloadsListProcessor interface {
 
 func MapDownloads(
 	ids []string,
-	rdx kevlar.ReadableRedux,
+	rdx redux.Readable,
 	operatingSystems []OperatingSystem,
 	langCodes []string,
 	downloadTypes []DownloadType,
