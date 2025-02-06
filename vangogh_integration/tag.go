@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/slices"
 	"net/http"
 	"net/url"
+	"slices"
 )
 
 func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) error {
@@ -32,16 +32,16 @@ func TagIdByName(tagName string) (string, error) {
 	}
 
 	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}})
-	if len(tagIds) == 0 {
+	if tagIds == nil {
 		return "", fmt.Errorf("unknown tag-name %s", tagName)
 	}
-	if len(tagIds) > 1 {
-		return "", fmt.Errorf("ambiguous tag-name %s, matching tag-ids: %v",
-			tagName,
-			tagIds)
-	}
 	tagId := ""
-	for _, ti := range tagIds {
+	for ti := range tagIds {
+		if tagId != "" {
+			return "", fmt.Errorf("ambiguous tag-name %s, matching tag-ids: %v",
+				tagName,
+				tagIds)
+		}
 		tagId = ti
 	}
 	return tagId, nil

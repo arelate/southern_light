@@ -125,10 +125,6 @@ func convertGameDetails(det *gog_integration.Details, rdx redux.Readable, dt Dow
 
 	dlList := make(DownloadsList, 0)
 
-	if err := rdx.MustHave(NativeLanguageNameProperty); err != nil {
-		return dlList, err
-	}
-
 	downloads, err := det.GetGameDownloads()
 	if err != nil {
 		return dlList, err
@@ -136,16 +132,10 @@ func convertGameDetails(det *gog_integration.Details, rdx redux.Readable, dt Dow
 
 	for _, dl := range downloads {
 
-		langCodes := rdx.Match(
-			map[string][]string{NativeLanguageNameProperty: {dl.Language}},
-			redux.FullMatch)
-		if len(langCodes) != 1 {
-			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
-		}
+		langCode := gog_integration.LanguageCodeByNativeName(dl.Language)
 
-		langCode := ""
-		for _, lc := range langCodes {
-			langCode = lc
+		if langCode == "" {
+			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
 		}
 
 		for _, winDl := range dl.Windows {
@@ -254,9 +244,7 @@ func MapDownloads(
 		return fmt.Errorf("vangogh_downloads: map downloads list processor is nil")
 	}
 
-	if err := rdx.MustHave(
-		SlugProperty,
-		NativeLanguageNameProperty); err != nil {
+	if err := rdx.MustHave(SlugProperty); err != nil {
 		return err
 	}
 

@@ -13,15 +13,15 @@ const (
 	gameMediaType = "1"
 )
 
-func DefaultAccountPageUrl(page string) *url.URL {
-	return AccountPageUrl(
+func AccountPageUrl(page string) *url.URL {
+	return accountPageUrl(
 		page,
 		AccountSortByPurchaseDate,
 		false,
 		false)
 }
 
-func AccountPageUrl(
+func accountPageUrl(
 	page string,
 	sortOrder AccountSortOrder,
 	updated bool, /* get only updated products */

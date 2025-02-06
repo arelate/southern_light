@@ -14,63 +14,67 @@ import (
 )
 
 const (
-	IdProperty                                = "id"
-	TitleProperty                             = "title"
-	DevelopersProperty                        = "developers"
-	PublishersProperty                        = "publishers"
-	ImageProperty                             = "image"
-	VerticalImageProperty                     = "vertical-image"
-	ScreenshotsProperty                       = "screenshots"
-	HeroProperty                              = "hero"
-	LogoProperty                              = "logo"
-	IconProperty                              = "icon"
-	IconSquareProperty                        = "icon-square"
-	BackgroundProperty                        = "background"
-	RatingProperty                            = "rating"
-	AggregatedRatingProperty                  = "aggregated-rating"
-	IncludesGamesProperty                     = "includes-games"
-	IsIncludedByGamesProperty                 = "is-included-by-games"
-	RequiresGamesProperty                     = "requires-games"
-	IsRequiredByGamesProperty                 = "is-required-by-games"
-	GenresProperty                            = "genres"
-	StoreTagsProperty                         = "store-tags"
-	FeaturesProperty                          = "features"
-	SeriesProperty                            = "series"
-	ThemesProperty                            = "themes"
-	GameModesProperty                         = "game-modes"
-	TagIdProperty                             = "tag"
-	TagNameProperty                           = "tag-name"
-	VideoIdProperty                           = "video-id"
-	VideoTitleProperty                        = "video-title"
-	VideoDurationProperty                     = "video-duration"
-	VideoErrorProperty                        = "video-error"
-	OperatingSystemsProperty                  = "os"
-	LanguageCodeProperty                      = "lang-code"
-	DownloadTypeProperty                      = "download-type"
-	NoPatchesProperty                         = "no-patches"
-	LanguageNameProperty                      = "lang-name"
-	NativeLanguageNameProperty                = "native-lang-name"
-	SlugProperty                              = "slug"
-	GOGReleaseDateProperty                    = "gog-release-date"
-	GOGOrderDateProperty                      = "gog-order-date"
-	GlobalReleaseDateProperty                 = "global-release-date"
-	TypesProperty                             = "types"
-	LocalManualUrlProperty                    = "local-manual-url"
-	ManualUrlStatusProperty                   = "manual-url-status"
-	ManualUrlValidationResultProperty         = "manual-url-validation-result"
-	ProductValidationResultProperty           = "product-validation-result"
-	ManualUrlGeneratedChecksumProperty        = "manual-url-generated-checksum"
-	DownloadStatusErrorProperty               = "download-status-error"
-	StoreUrlProperty                          = "store-url"
-	ForumUrlProperty                          = "forum-url"
-	SupportUrlProperty                        = "support-url"
-	ChangelogProperty                         = "changelog"
-	DescriptionOverviewProperty               = "description-overview"
-	DescriptionFeaturesProperty               = "description-features"
-	AdditionalRequirementsProperty            = "additional-requirements"
-	CopyrightsProperty                        = "copyrights"
-	WishlistedProperty                        = "wishlisted"
-	OwnedProperty                             = "owned"
+	IdProperty                = "id"
+	TitleProperty             = "title"
+	DevelopersProperty        = "developers"
+	PublishersProperty        = "publishers"
+	ImageProperty             = "image"
+	VerticalImageProperty     = "vertical-image"
+	ScreenshotsProperty       = "screenshots"
+	HeroProperty              = "hero"
+	LogoProperty              = "logo"
+	IconProperty              = "icon"
+	IconSquareProperty        = "icon-square"
+	BackgroundProperty        = "background"
+	RatingProperty            = "rating"
+	AggregatedRatingProperty  = "aggregated-rating"
+	IncludesGamesProperty     = "includes-games"
+	IsIncludedByGamesProperty = "is-included-by-games"
+	RequiresGamesProperty     = "requires-games"
+	IsRequiredByGamesProperty = "is-required-by-games"
+	GenresProperty            = "genres"
+	StoreTagsProperty         = "store-tags"
+	FeaturesProperty          = "features"
+	SeriesProperty            = "series"
+	ThemesProperty            = "themes"
+	GameModesProperty         = "game-modes"
+	TagIdProperty             = "tag"
+	TagNameProperty           = "tag-name"
+	VideoIdProperty           = "video-id"
+	VideoTitleProperty        = "video-title"
+	VideoDurationProperty     = "video-duration"
+	VideoErrorProperty        = "video-error"
+	OperatingSystemsProperty  = "os"
+	LanguageCodeProperty      = "lang-code"
+	DownloadTypeProperty      = "download-type"
+	NoPatchesProperty         = "no-patches"
+
+	//LanguageNameProperty               = "lang-name"
+	//NativeLanguageNameProperty         = "native-lang-name"
+
+	SlugProperty                       = "slug"
+	GOGReleaseDateProperty             = "gog-release-date"
+	GOGOrderDateProperty               = "gog-order-date"
+	GlobalReleaseDateProperty          = "global-release-date"
+	TypesProperty                      = "types"
+	LocalManualUrlProperty             = "local-manual-url"
+	ManualUrlStatusProperty            = "manual-url-status"
+	ManualUrlValidationResultProperty  = "manual-url-validation-result"
+	ProductValidationResultProperty    = "product-validation-result"
+	ManualUrlGeneratedChecksumProperty = "manual-url-generated-checksum"
+	DownloadStatusErrorProperty        = "download-status-error"
+	StoreUrlProperty                   = "store-url"
+	ForumUrlProperty                   = "forum-url"
+	SupportUrlProperty                 = "support-url"
+	ChangelogProperty                  = "changelog"
+	DescriptionOverviewProperty        = "description-overview"
+	DescriptionFeaturesProperty        = "description-features"
+	AdditionalRequirementsProperty     = "additional-requirements"
+	CopyrightsProperty                 = "copyrights"
+
+	//WishlistedProperty                        = "wishlisted"
+	//OwnedProperty                             = "owned"
+
 	ProductTypeProperty                       = "product-type"
 	InDevelopmentProperty                     = "in-development"
 	PreOrderProperty                          = "pre-order"
@@ -114,6 +118,10 @@ const (
 	EnginesBuildsProperty                     = "engines-builds"
 	ProtonDBTierProperty                      = "protondb-tier"
 	ProtonDBConfidenceProperty                = "protondb-confidence"
+
+	// new get-data redux properties
+	LicencesProperty     = "licences"
+	UserWishlistProperty = "user-wishlist"
 )
 
 const (
@@ -228,12 +236,12 @@ func AvailabilityProperties() []string {
 	}
 }
 
-func AccountStatusProperties() []string {
-	return []string{
-		WishlistedProperty,
-		OwnedProperty,
-	}
-}
+//func AccountStatusProperties() []string {
+//	return []string{
+//		WishlistedProperty,
+//		OwnedProperty,
+//	}
+//}
 
 func AdvancedProductProperties() []string {
 	return []string{
@@ -260,6 +268,13 @@ func PriceProperties() []string {
 		IsFreeProperty,
 		IsDiscountedProperty,
 		DiscountPercentageProperty,
+	}
+}
+
+func GOGReducedDataProperties() []string {
+	return []string{
+		LicencesProperty,
+		UserWishlistProperty,
 	}
 }
 
@@ -319,9 +334,10 @@ func ReduxProperties() []string {
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
 	all = append(all, AvailabilityProperties()...)
-	all = append(all, AccountStatusProperties()...)
+	//all = append(all, AccountStatusProperties()...)
 	all = append(all, AdvancedProductProperties()...)
 	all = append(all, PriceProperties()...)
+	all = append(all, GOGReducedDataProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, SyncProperties()...)
 	all = append(all, StatusValidationResultsProperties()...)

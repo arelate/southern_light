@@ -1,6 +1,6 @@
 package vangogh_integration
 
-import "golang.org/x/exp/slices"
+import "slices"
 
 type TheoMetadata struct {
 	Id            string            `json:"id"`

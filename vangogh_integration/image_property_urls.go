@@ -48,14 +48,14 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 //type DefaultProductUrl func(key string) *url.URL
 //
 //var defaultProductUrls = map[ProductType]DefaultProductUrl{
-//	CatalogPage:   gog_integration.DefaultCatalogPageUrl,
-//	AccountPage:   gog_integration.DefaultAccountPageUrl,
+//	CatalogPage:   gog_integration.CatalogPageUrl,
+//	AccountPage:   gog_integration.AccountPageUrl,
 //	UserWishlist:  gog_integration.DefaultUserWishlistUrl,
 //	Details:       gog_integration.DetailsUrl,
 //	ApiProductsV1: gog_integration.ApiProductV1Url,
 //	ApiProductsV2: gog_integration.ApiProductV2Url,
 //	Licences:      gog_integration.DefaultLicencesUrl,
-//	OrderPage:     gog_integration.DefaultOrdersPageUrl,
+//	OrderPage:     gog_integration.OrdersPageUrl,
 //
 //	SteamAppList: steam_integration.DefaultSteamAppListUrl,
 //	// steam data types typically require app level transformation of GOG.com id -> Steam AppID

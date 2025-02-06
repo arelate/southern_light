@@ -35,15 +35,6 @@ func (app *AccountPage) GetTotalPages() int {
 	return app.TotalPages
 }
 
-func (app *AccountPage) GetProducts() []IdGetter {
-	idGetters := make([]IdGetter, 0)
-	for _, ap := range app.Products {
-		ap := ap
-		idGetters = append(idGetters, &ap)
-	}
-	return idGetters
-}
-
 func (app *AccountPage) getAccountTags() []accountTag {
 	return app.Tags
 }

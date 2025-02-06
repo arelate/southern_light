@@ -21,7 +21,7 @@ type ProductReader struct {
 }
 
 func NewProductReader(pt ProductType) (*ProductReader, error) {
-	dst, err := AbsLocalProductTypeDir(pt)
+	dst, err := AbsProductTypeDir(pt)
 	if err != nil {
 		return nil, err
 	}
@@ -273,24 +273,6 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 
 func (pr *ProductReader) ProductType() ProductType {
 	return pr.productType
-}
-
-func (pr *ProductReader) ProductsGetter(page string) (productsGetter gog_integration.ProductsGetter, err error) {
-	switch pr.productType {
-	case CatalogPage:
-		productsGetter, err = pr.CatalogPage(page)
-	case AccountPage:
-		productsGetter, err = pr.AccountPage(page)
-	case UserWishlist:
-		productsGetter, err = pr.UserWishlist()
-	case Licences:
-		productsGetter, err = pr.Licences()
-	case OrderPage:
-		productsGetter, err = pr.OrderPage(page)
-	default:
-		err = fmt.Errorf("%s doesn't implement ProductGetter interface", pr.productType)
-	}
-	return productsGetter, err
 }
 
 func (pr *ProductReader) LogModTime(id string) int64 {

@@ -37,16 +37,3 @@ type NameSlug struct {
 	Name string `json:"name"`
 	Slug string `json:"slug"`
 }
-
-func (cp *CatalogPage) GetTotalPages() int {
-	return cp.Pages
-}
-
-func (cp *CatalogPage) GetProducts() []IdGetter {
-	idGetters := make([]IdGetter, 0)
-	for _, p := range cp.Products {
-		sp := p
-		idGetters = append(idGetters, &sp)
-	}
-	return idGetters
-}

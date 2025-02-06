@@ -21,7 +21,7 @@ type value struct {
 type Order struct {
 	PublicId string `json:"publicId"`
 	//Distributor        interface{} `json:"distributor"`
-	Date               int    `json:"date"`
+	Date               int64  `json:"date"`
 	MoneybackGuarantee bool   `json:"moneybackGuarantee"`
 	Status             string `json:"status"`
 	PaymentMethod      string `json:"paymentMethod"`
@@ -55,10 +55,4 @@ type Order struct {
 	GiftCode      interface{} `json:"giftCode"`
 	IsResendable  bool        `json:"isResendable"`
 	StatusPageUrl string      `json:"statusPageUrl"`
-}
-
-func (ord *Order) GetId() int {
-	//orders in theory are timestamped and you can't have two orders in the same moment,
-	//so this might work great for id and holds more semantic value than PublicId
-	return ord.Date
 }

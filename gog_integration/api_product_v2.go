@@ -224,10 +224,6 @@ type ApiProductV2 struct {
 	} `json:"_embedded"`
 }
 
-func (apv2 *ApiProductV2) GetId() int {
-	return apv2.Embedded.Product.Id
-}
-
 func (apv2 *ApiProductV2) GetTitle() string {
 	return apv2.Embedded.Product.Title
 }
@@ -450,14 +446,14 @@ func (apv2 *ApiProductV2) GetStoreTags() []string {
 	return properties
 }
 
+func (apv2 *ApiProductV2) GetAdditionalRequirements() string {
+	return apv2.AdditionalRequirements
+}
+
 func (apv2 *ApiProductV2) GetInDevelopment() bool {
 	return apv2.InDevelopment.Active
 }
 
 func (apv2 *ApiProductV2) GetPreOrder() bool {
 	return apv2.Embedded.Product.IsPreorder
-}
-
-func (apv2 *ApiProductV2) GetAdditionalRequirements() string {
-	return apv2.AdditionalRequirements
 }

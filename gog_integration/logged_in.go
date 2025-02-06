@@ -6,34 +6,29 @@ package gog_integration
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"errors"
 	"net/http"
 )
 
-func LoggedIn(client *http.Client) (bool, error) {
+var ErrNotLoggedIn = errors.New("user is not logged in, please update cookies.txt")
+
+func IsLoggedIn(client *http.Client) error {
 
 	resp, err := client.Get(UserDataUrl().String())
-
 	if err != nil {
-		return false, err
+		return err
 	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return false, err
-	}
+	defer resp.Body.Close()
 
 	var ud UserData
-
-	err = json.Unmarshal(respBody, &ud)
-	if err != nil {
-		return false, err
+	if err = json.NewDecoder(resp.Body).Decode(&ud); err != nil {
+		return err
 	}
 
-	err = resp.Body.Close()
-	if err != nil {
-		return ud.IsLoggedIn, err
+	switch ud.IsLoggedIn {
+	case true:
+		return nil
+	default:
+		return ErrNotLoggedIn
 	}
-
-	return ud.IsLoggedIn, nil
 }

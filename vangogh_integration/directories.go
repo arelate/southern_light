@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const DefaultVangoghRootDir = "/var/lib/vangogh"
+const DefaultRootDir = "/var/lib/vangogh"
 
 const (
 	Backups    pathways.AbsDir = "backups"
@@ -85,7 +85,7 @@ func AbsItemPath(path string) (string, error) {
 	return filepath.Join(idp, path[0:1], path), nil
 }
 
-func AbsLocalProductTypeDir(pt ProductType) (string, error) {
+func AbsProductTypeDir(pt ProductType) (string, error) {
 	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}

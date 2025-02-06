@@ -31,6 +31,7 @@ type CatalogProduct struct {
 	Tags                  []NameSlug             `json:"tags"`
 	UserPreferredLanguage *UserPreferredLanguage `json:"userPreferredLanguage"`
 	Price                 CatalogPrice           `json:"price"`
+	StoreLink             string                 `json:"storeLink"`
 }
 
 type AmountCurrency struct {
@@ -50,13 +51,6 @@ type CatalogPrice struct {
 	Discount   *string        `json:"discount"`
 	FinalMoney AmountCurrency `json:"finalMoney"`
 	BaseMoney  AmountCurrency `json:"baseMoney"`
-}
-
-func (cp *CatalogProduct) GetId() int {
-	if id, err := strconv.Atoi(cp.Id); err == nil {
-		return id
-	}
-	return 0
 }
 
 func (cp *CatalogProduct) GetTitle() string {
@@ -184,3 +178,5 @@ func (cp *CatalogProduct) GetPreOrder() bool {
 func (cp *CatalogProduct) GetInDevelopment() bool {
 	return cp.ProductState == CatalogProductStateEarlyAccess
 }
+
+func (cp *CatalogProduct) GetStoreLink() string { return cp.StoreLink }

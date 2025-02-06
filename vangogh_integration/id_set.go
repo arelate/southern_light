@@ -4,7 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/boggydigital/redux"
-	"golang.org/x/exp/maps"
+	"maps"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -28,7 +29,7 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 		return nil, errors.New("converting slugs to ids requires redux")
 	}
 
-	if err := rdx.MustHave(SlugProperty); err != nil {
+	if err = rdx.MustHave(SlugProperty); err != nil {
 		return nil, err
 	}
 
@@ -36,7 +37,9 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 	for _, slug := range slugs {
 		if slug != "" {
 			matchedIds := rdx.Match(map[string][]string{SlugProperty: {slug}}, redux.FullMatch)
-			ids = append(ids, matchedIds...)
+			for id := range matchedIds {
+				ids = append(ids, id)
+			}
 		}
 	}
 
@@ -49,15 +52,15 @@ func PropertyListsFromIdSet(
 	properties []string,
 	rdx redux.Readable) (map[string][]string, error) {
 
-	propSet := make(map[string]bool)
+	propSet := make(map[string]any)
 	for _, p := range properties {
 		propSet[p] = true
 	}
-	propSet[TitleProperty] = true
+	propSet[TitleProperty] = nil
 
 	if rdx == nil {
 		var err error
-		rdx, err = NewReduxReader(maps.Keys(propSet)...)
+		rdx, err = NewReduxReader(slices.Collect(maps.Keys(propSet))...)
 		if err != nil {
 			return nil, err
 		}
@@ -66,7 +69,7 @@ func PropertyListsFromIdSet(
 	itps := make(map[string][]string)
 
 	for _, id := range ids {
-		itp, err := propertyListFromId(id, propertyFilter, maps.Keys(propSet), rdx)
+		itp, err := propertyListFromId(id, propertyFilter, slices.Collect(maps.Keys(propSet)), rdx)
 		if err != nil {
 			return itps, err
 		}

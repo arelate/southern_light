@@ -1,7 +1,8 @@
 package vangogh_integration
 
 import (
-	"golang.org/x/exp/maps"
+	"maps"
+	"slices"
 )
 
 type ProductType int
@@ -19,7 +20,6 @@ const (
 	ApiProductsV1
 	ApiProductsV2
 	Licences
-	LicenceProducts
 	OrderPage
 	Orders
 	// GamesDB (GOG Galaxy)
@@ -54,7 +54,6 @@ var productTypeStrings = map[ProductType]string{
 	ApiProductsV1:          "api-products-v1",
 	ApiProductsV2:          "api-products-v2",
 	Licences:               "licences",
-	LicenceProducts:        "licence-products",
 	OrderPage:              "order-page",
 	Orders:                 "orders",
 	GamesDbGogProducts:     "gamesdb-gog-products",
@@ -144,7 +143,7 @@ func FastPageFetchProducts() []ProductType {
 }
 
 var gogDetailMainProductTypes = map[ProductType][]ProductType{
-	Details: {LicenceProducts, AccountProducts},
+	Details: { /*LicenceProducts, */ AccountProducts},
 	ApiProductsV1: {
 		CatalogProducts,
 		AccountProducts,
@@ -207,7 +206,7 @@ var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
 }
 
 func GOGDetailProducts() []ProductType {
-	return maps.Keys(gogDetailMainProductTypes)
+	return slices.Collect(maps.Keys(gogDetailMainProductTypes))
 }
 
 func SteamArrayProducts() []ProductType {
@@ -215,18 +214,20 @@ func SteamArrayProducts() []ProductType {
 }
 
 func SteamDetailProducts() []ProductType {
-	return maps.Keys(steamDetailMainProductTypes)
+	return slices.Collect(maps.Keys(steamDetailMainProductTypes))
 }
 
 func PCGWDetailProducts() []ProductType {
-	return maps.Keys(pcgwDetailMainProductTypes)
+	return slices.Collect(maps.Keys(pcgwDetailMainProductTypes))
 }
 
 func HLTBDetailProducts() []ProductType {
-	return maps.Keys(hltbDetailMainProductTypes)
+	return slices.Collect(maps.Keys(hltbDetailMainProductTypes))
 }
 
-func ProtonDBDetailProducts() []ProductType { return maps.Keys(protonDBDetailMainProductTypes) }
+func ProtonDBDetailProducts() []ProductType {
+	return slices.Collect(maps.Keys(protonDBDetailMainProductTypes))
+}
 
 func MainProductTypes(pt ProductType) []ProductType {
 	if IsGOGDetailProduct(pt) {
@@ -289,7 +290,7 @@ func ProtonDBRemoteProducts() []ProductType {
 }
 
 func LocalProducts() []ProductType {
-	lps := maps.Values(splitProductTypes)
+	lps := slices.Collect(maps.Values(splitProductTypes))
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)
@@ -318,9 +319,9 @@ var requireAuth = []ProductType{
 }
 
 var splitProductTypes = map[ProductType]ProductType{
-	CatalogPage:  CatalogProducts,
-	AccountPage:  AccountProducts,
-	Licences:     LicenceProducts,
+	CatalogPage: CatalogProducts,
+	AccountPage: AccountProducts,
+	//Licences:     LicenceProducts,
 	UserWishlist: UserWishlistProducts,
 	OrderPage:    Orders,
 }

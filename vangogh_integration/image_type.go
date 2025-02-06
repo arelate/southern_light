@@ -1,6 +1,9 @@
 package vangogh_integration
 
-import "golang.org/x/exp/maps"
+import (
+	"maps"
+	"slices"
+)
 
 type ImageType int
 
@@ -111,7 +114,7 @@ func ImageTypeRepColorProperty(it ImageType) string {
 }
 
 func ImageTypesDehydration() []ImageType {
-	return maps.Keys(dehydratedImageProperties)
+	return slices.Collect(maps.Keys(dehydratedImageProperties))
 }
 
 func IsImageTypeDehydrationSupported(it ImageType) bool {

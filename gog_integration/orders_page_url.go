@@ -22,8 +22,8 @@ func boolToIntStr(flag bool) string {
 	return "0"
 }
 
-func DefaultOrdersPageUrl(page string) *url.URL {
-	return OrdersPageUrl(
+func OrdersPageUrl(page string) *url.URL {
+	return ordersPageUrl(
 		page,
 		true,
 		true,
@@ -33,7 +33,7 @@ func DefaultOrdersPageUrl(page string) *url.URL {
 		true)
 }
 
-func OrdersPageUrl(page string, canceled, completed, inProgress, notRedeemed, pending, redeemed bool) *url.URL {
+func ordersPageUrl(page string, canceled, completed, inProgress, notRedeemed, pending, redeemed bool) *url.URL {
 	orderPage := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,

@@ -8,11 +8,11 @@ import (
 
 const limit = 48
 
-func DefaultCatalogPageUrl(page string) *url.URL {
-	return CatalogPageUrl(page, CatalogSortByReleaseDate, true)
+func CatalogPageUrl(page string) *url.URL {
+	return catalogPageUrl(page, CatalogSortByReleaseDate, true)
 }
 
-func CatalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
+func catalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
 
 	catalogPage := &url.URL{
 		Scheme: southern_light.HttpsScheme,
