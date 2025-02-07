@@ -224,6 +224,8 @@ type ApiProductV2 struct {
 	} `json:"_embedded"`
 }
 
+func (apv2 *ApiProductV2) GetId() int { return apv2.Embedded.Product.Id }
+
 func (apv2 *ApiProductV2) GetTitle() string {
 	return apv2.Embedded.Product.Title
 }
@@ -353,14 +355,6 @@ func (apv2 *ApiProductV2) GetIsRequiredByGames() []string {
 
 func (apv2 *ApiProductV2) GetRequiresGames() []string {
 	return apv2.getHrefs(apv2.Links.RequiresGames)
-}
-
-func (apv2 *ApiProductV2) GetLanguages() map[string]string {
-	langs := make(map[string]string, len(apv2.Embedded.Localizations))
-	for _, loc := range apv2.Embedded.Localizations {
-		langs[loc.Embedded.Language.Code] = loc.Embedded.Language.Name
-	}
-	return langs
 }
 
 func (apv2 *ApiProductV2) GetLanguageCodes() []string {
