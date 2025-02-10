@@ -14,9 +14,8 @@ var interestingNewProductTypes = map[ProductType]bool{
 }
 
 var interestingUpdatedProductTypes = map[ProductType]bool{
-	UserWishlistProducts: true,
-	Details:              true,
-	SteamAppNews:         true,
+	Details:      true,
+	SteamAppNews: true,
 }
 
 func Updates(since int64) (map[string]map[string]bool, error) {
