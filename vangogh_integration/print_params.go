@@ -15,7 +15,7 @@ func PrintParams(
 	noPatches bool) {
 
 	ppa := nod.Begin("operating parameters:")
-	defer ppa.EndWithResult("done")
+	defer ppa.Done()
 
 	params := make(map[string][]string)
 
