@@ -9,7 +9,7 @@ func LicencesUrl() *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   menuHost,
-		Path:   licencesPath,
+		Path:   accountLicencesPath,
 	}
 }
 

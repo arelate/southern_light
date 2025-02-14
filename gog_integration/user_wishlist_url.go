@@ -9,7 +9,7 @@ func UserWishlistUrl() *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   WwwGogHost,
-		Path:   userWishlistPath,
+		Path:   userWishlistJsonPath,
 	}
 }
 

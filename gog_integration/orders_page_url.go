@@ -37,7 +37,7 @@ func ordersPageUrl(page string, canceled, completed, inProgress, notRedeemed, pe
 	orderPage := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   ordersPath,
+		Path:   accountOrdersPath,
 	}
 
 	q := orderPage.Query()

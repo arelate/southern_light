@@ -1,6 +1,7 @@
 package gog_integration
 
 import (
+	"net/url"
 	"path"
 	"strings"
 	"time"
@@ -400,6 +401,14 @@ func (apv2 *ApiProductV2) GetGOGRelease() string {
 		return tiw.Format("2006.01.02")
 	}
 	return grd.Format("2006.01.02")
+}
+
+func urlPathFromLink(link string) string {
+	if u, err := url.Parse(link); err != nil {
+		return ""
+	} else {
+		return u.Path
+	}
 }
 
 func (apv2 *ApiProductV2) GetStoreUrl() string {

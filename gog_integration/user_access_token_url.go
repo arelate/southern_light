@@ -5,9 +5,10 @@ import (
 	"net/url"
 )
 
-func ReCaptchaUrl() *url.URL {
+func UserAccessTokenUrl() *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
-		Host:   reCaptchaHost,
-		Path:   reCaptchaPath}
+		Host:   apiHost,
+		Path:   userAccessTokenPath,
+	}
 }

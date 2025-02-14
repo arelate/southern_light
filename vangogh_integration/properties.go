@@ -122,6 +122,8 @@ const (
 	// new get-data redux properties
 	LicencesProperty     = "licences"
 	UserWishlistProperty = "user-wishlist"
+
+	IsDemoProperty = "is-demo"
 )
 
 const (
@@ -268,6 +270,7 @@ func PriceProperties() []string {
 		IsFreeProperty,
 		IsDiscountedProperty,
 		DiscountPercentageProperty,
+		IsDemoProperty,
 	}
 }
 

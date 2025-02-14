@@ -14,7 +14,7 @@ func AddToWishlistUrl(id string) *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   strings.Replace(wishlistAddPathTemplate, "{id}", id, 1),
+		Path:   strings.Replace(userWishlistAddPathTemplate, "{id}", id, 1),
 	}
 }
 
@@ -22,6 +22,6 @@ func RemoveFromWishlistUrl(id string) *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   strings.Replace(wishlistRemovePathTemplate, "{id}", id, 1),
+		Path:   strings.Replace(userWishlistRemovePathTemplate, "{id}", id, 1),
 	}
 }

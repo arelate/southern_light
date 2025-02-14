@@ -6,52 +6,67 @@ package gog_integration
 
 // hosts
 const (
-	GogHost       = "gog.com"
-	WwwGogHost    = "www." + GogHost
-	apiHost       = "api." + GogHost
-	imagesHost    = "images.gog-statics.com"
-	menuHost      = "menu." + GogHost
-	cdnHost       = "cdn." + GogHost
-	loginHost     = "login." + GogHost
-	authHost      = "auth." + GogHost
-	ItemsHost     = "items." + GogHost
-	CatalogHost   = "catalog." + GogHost
-	gamesDbHost   = "gamesdb." + GogHost
-	reCaptchaHost = "www.recaptcha.net"
+	GogHost     = "gog.com"
+	WwwGogHost  = "www." + GogHost
+	apiHost     = "api." + GogHost
+	imagesHost  = "images.gog-statics.com"
+	menuHost    = "menu." + GogHost
+	loginHost   = "login." + GogHost
+	authHost    = "auth." + GogHost
+	ItemsHost   = "items." + GogHost
+	CatalogHost = "catalog." + GogHost
+	gamesDbHost = "gamesdb." + GogHost
 )
 
-// paths
 const (
-	storePagePath                             = "/games/ajax/filtered"
-	accountPath                               = "/account"
-	detailsPathTemplate                       = accountPath + "/" + GameMedia + "Details/{id}.json"
-	accountPagePath                           = accountPath + "/getFilteredProducts"
-	accountWishlistPath                       = accountPath + "/wishlist"
-	wishlistSearchPath                        = accountWishlistPath + "/search"
+	userDataPath = "/userData.json"
+)
+
+const (
+	accountLicencesPath = "/v1/account/licences"
+)
+
+const (
+	userWishlistJsonPath = "/user/wishlist.json"
+)
+
+const (
+	userWishlistAddPathTemplate    = "/user/wishlist/add/{id}"
+	userWishlistRemovePathTemplate = "/user/wishlist/remove/{id}"
+)
+
+const (
+	catalogPath = "/v1/catalog"
+)
+
+const (
+	accountGameDetailsPathTemplate = "/account/gameDetails/{id}.json"
+	accountPagePath                = "/account/getFilteredProducts"
+	accountOrdersPath              = "/account/settings/orders/data"
+)
+
+const (
+	apiV2GamesPath = "/v2/games/"
+)
+
+const (
+	userAccessTokenPath = "/user/accessToken.json"
+)
+
+const (
 	gamesDbGogExternalReleasePathTemplate     = "/platforms/gog/external_releases/{id}"
 	gamesDbGenericExternalReleasePathTemplate = "/platforms/generic/external_releases/{id}"
-	userPath                                  = "/user"
-	wishlistPath                              = userPath + "/wishlist"
-	wishlistAddPathTemplate                   = wishlistPath + "/add/{id}"
-	wishlistRemovePathTemplate                = wishlistPath + "/remove/{id}"
-	ordersPath                                = accountPath + "/settings/orders/data"
-	apiV1PathTemplate                         = "/products/{id}"
-	apiV2GamesPath                            = "/v2/games/"
-	imagesPathTemplate                        = "/{image_id}"
-	licencesPath                              = "/v1/account/licences"
-	catalogPath                               = "/v1/catalog"
-	accountTagsPath                           = "/account/tags"
-	tagsCreatePath                            = accountTagsPath + "/add"
-	tagsDeletePath                            = accountTagsPath + "/delete"
-	tagsUpdatePath                            = accountTagsPath + "/update"
-	tagsAddPath                               = accountTagsPath + "/attach"
-	tagsRemovePath                            = accountTagsPath + "/detach"
-	securePath                                = "/secure"
-	authPath                                  = "/auth"
-	loginCheckPath                            = "/login_check"
-	loginTwoStepPath                          = "/login/two_step"
-	reCaptchaPath                             = "/recaptcha/api.js"
-	userDataPath                              = "/userData.json"
-	userWishlistPath                          = "/user/wishlist.json"
-	onLoginSuccessPath                        = "/on_login_success"
+	gamesDbWishlistedGamesPath                = "/wishlist/user/wishlisted_games"
+)
+
+const (
+	accountTagsCreatePath = "/account/tags/add"
+	accountTagsDeletePath = "/account/tags/delete"
+	accountTagsUpdatePath = "/account/tags/update"
+	accountTagsAttachPath = "/account/tags/attach"
+	accountTagsDetachPath = "/account/tags/detach"
+)
+
+const (
+	imagesPathTemplate = "/{image_id}"
 )

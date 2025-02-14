@@ -9,7 +9,7 @@ func CreateTagUrl(name string) *url.URL {
 	createTag := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   tagsCreatePath,
+		Path:   accountTagsCreatePath,
 	}
 
 	q := createTag.Query()
@@ -23,7 +23,7 @@ func DeleteTagUrl(tagId string) *url.URL {
 	deleteTag := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   tagsDeletePath,
+		Path:   accountTagsDeletePath,
 	}
 
 	q := deleteTag.Query()
@@ -37,7 +37,7 @@ func UpdateTagsUrl(tagsJson string) *url.URL {
 	updateTags := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   tagsUpdatePath,
+		Path:   accountTagsUpdatePath,
 	}
 
 	q := updateTags.Query()
@@ -51,7 +51,7 @@ func AddTagUrl(productId, tagId string) *url.URL {
 	addTag := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   tagsAddPath,
+		Path:   accountTagsAttachPath,
 	}
 
 	q := addTag.Query()
@@ -66,7 +66,7 @@ func RemoveTagUrl(productId, tagId string) *url.URL {
 	removeTag := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   tagsRemovePath,
+		Path:   accountTagsDetachPath,
 	}
 
 	q := removeTag.Query()

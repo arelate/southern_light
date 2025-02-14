@@ -101,11 +101,6 @@ func (pr *ProductReader) Details(id string) (details *gog_integration.Details, e
 	return details, err
 }
 
-func (pr *ProductReader) ApiProductV1(id string) (apiProductV1 *gog_integration.ApiProductV1, err error) {
-	err = pr.readValue(id, &apiProductV1)
-	return apiProductV1, err
-}
-
 func (pr *ProductReader) ApiProductV2(id string) (apiProductV2 *gog_integration.ApiProductV2, err error) {
 	err = pr.readValue(id, &apiProductV2)
 	return apiProductV2, err
@@ -226,8 +221,6 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.AccountProduct(key)
 	case Details:
 		return pr.Details(key)
-	case ApiProductsV1:
-		return pr.ApiProductV1(key)
 	case ApiProductsV2:
 		return pr.ApiProductV2(key)
 	case Orders:

@@ -22,6 +22,8 @@ const (
 	Licences
 	OrderPage
 	Orders
+	UserAccessToken
+	DreamlistPage
 	// GamesDB (GOG Galaxy)
 	GamesDbGogProducts
 	GamesDbGenericProducts
@@ -56,6 +58,8 @@ var productTypeStrings = map[ProductType]string{
 	Licences:               "licences",
 	OrderPage:              "order-page",
 	Orders:                 "orders",
+	UserAccessToken:        "user-access-token",
+	DreamlistPage:          "dreamlist-page",
 	GamesDbGogProducts:     "gamesdb-gog-products",
 	GamesDbGenericProducts: "gamesdb-generic-products",
 	// Steam product types

@@ -14,6 +14,6 @@ func DetailsUrl(id string) *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   GogHost,
-		Path:   strings.Replace(detailsPathTemplate, "{id}", id, 1),
+		Path:   strings.Replace(accountGameDetailsPathTemplate, "{id}", id, 1),
 	}
 }
