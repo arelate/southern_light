@@ -2,10 +2,9 @@ package steam_integration
 
 import (
 	"net/url"
-	"strconv"
 )
 
-func DeckAppCompatibilityReportUrl(appId uint32) *url.URL {
+func DeckAppCompatibilityReportUrl(appId string) *url.URL {
 	u := &url.URL{
 		Scheme: httpsScheme,
 		Host:   StoreHost,
@@ -13,7 +12,7 @@ func DeckAppCompatibilityReportUrl(appId uint32) *url.URL {
 	}
 
 	q := u.Query()
-	q.Add("nAppID", strconv.FormatInt(int64(appId), 10))
+	q.Add("nAppID", appId)
 	u.RawQuery = q.Encode()
 
 	return u

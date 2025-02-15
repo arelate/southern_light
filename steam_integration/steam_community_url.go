@@ -3,18 +3,17 @@ package steam_integration
 import (
 	"net/url"
 	"path"
-	"strconv"
 )
 
-func SteamCommunityUrl(appId uint32) *url.URL {
+func SteamCommunityUrl(appId string) *url.URL {
 	return &url.URL{
 		Scheme: httpsScheme,
 		Host:   SteamCommunityHost,
-		Path:   path.Join(appPath, strconv.Itoa(int(appId))),
+		Path:   path.Join(appPath, appId),
 	}
 }
 
-func SteamGuidesUrl(appId uint32) *url.URL {
+func SteamGuidesUrl(appId string) *url.URL {
 	scu := SteamCommunityUrl(appId)
 	scu.Path += guidesPath
 	return scu

@@ -2,10 +2,9 @@ package steam_integration
 
 import (
 	"net/url"
-	"strconv"
 )
 
-func AppDetailsUrl(appId uint32) *url.URL {
+func AppDetailsUrl(appId string) *url.URL {
 	u := &url.URL{
 		Scheme: httpsScheme,
 		Host:   StoreHost,
@@ -13,7 +12,7 @@ func AppDetailsUrl(appId uint32) *url.URL {
 	}
 
 	q := u.Query()
-	q.Add("appids", strconv.FormatInt(int64(appId), 10))
+	q.Add("appids", appId)
 	u.RawQuery = q.Encode()
 
 	return u

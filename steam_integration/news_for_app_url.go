@@ -2,10 +2,9 @@ package steam_integration
 
 import (
 	"net/url"
-	"strconv"
 )
 
-func NewsForAppUrl(appId uint32) *url.URL {
+func NewsForAppUrl(appId string) *url.URL {
 	//https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
 	u := &url.URL{
 		Scheme: httpsScheme,
@@ -14,7 +13,7 @@ func NewsForAppUrl(appId uint32) *url.URL {
 	}
 
 	q := u.Query()
-	q.Add("appid", strconv.Itoa(int(appId)))
+	q.Add("appid", appId)
 	u.RawQuery = q.Encode()
 
 	return u

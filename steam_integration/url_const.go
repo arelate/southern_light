@@ -35,4 +35,4 @@ const (
 	guidesPath                     = "/guides"
 )
 
-type SteamUrlFunc func(appId uint32) *url.URL
+type SteamUrlFunc func(appId string) *url.URL

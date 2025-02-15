@@ -5,10 +5,9 @@ import (
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/redux"
 	"net/url"
-	"strconv"
 )
 
-var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
+var steamProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
 	SteamAppNews: steam_integration.NewsForAppUrl,
 	SteamReviews: steam_integration.AppReviewsUrl,
 	//SteamAppDetails:              steam_integration.AppDetailsUrl,
@@ -33,13 +32,11 @@ func NewSteamUrlProvider(pt ProductType, rdx redux.Readable) (*SteamUrlProvider,
 	}, nil
 }
 
-func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) uint32 {
-	if appIdStr, ok := sup.rdx.GetLastVal(SteamAppIdProperty, gogId); ok {
-		if appId, err := strconv.ParseUint(appIdStr, 10, 32); err == nil {
-			return uint32(appId)
-		}
+func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) string {
+	if appId, ok := sup.rdx.GetLastVal(SteamAppIdProperty, gogId); ok {
+		return appId
 	}
-	return 0
+	return ""
 }
 
 func (sup *SteamUrlProvider) Url(gogId string) *url.URL {
@@ -47,7 +44,7 @@ func (sup *SteamUrlProvider) Url(gogId string) *url.URL {
 	case SteamAppList:
 		return steam_integration.AppListUrl()
 	default:
-		if appId := sup.GOGIdToSteamAppId(gogId); appId > 0 {
+		if appId := sup.GOGIdToSteamAppId(gogId); appId != "" {
 			if sug, ok := steamProductTypeUrlGetters[sup.pt]; ok {
 				return sug(appId)
 			}

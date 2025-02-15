@@ -29,6 +29,7 @@ const (
 	GamesDbGenericProducts
 	// Steam product types
 	SteamAppList
+	SteamAppDetails
 	SteamAppNews
 	SteamReviews
 	SteamDeckCompatibilityReport
@@ -64,6 +65,7 @@ var productTypeStrings = map[ProductType]string{
 	GamesDbGenericProducts: "gamesdb-generic-products",
 	// Steam product types
 	SteamAppList:                 "steam-app-list",
+	SteamAppDetails:              "steam-app-details",
 	SteamAppNews:                 "steam-app-news",
 	SteamReviews:                 "steam-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
