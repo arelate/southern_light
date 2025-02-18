@@ -124,6 +124,19 @@ const (
 	UserWishlistProperty = "user-wishlist"
 
 	IsDemoProperty = "is-demo"
+
+	// steam-app-details properties
+
+	RequiredAgeProperty       = "required-age"
+	ControllerSupportProperty = "controller-support"
+	ShortDescriptionProperty  = "short-description"
+	WebsiteProperty           = "website"
+	MetacriticScoreProperty   = "metacritic-score"
+	MetacriticUrlProperty     = "metacritic-url"
+	SteamCategoriesProperty   = "steam-categories"
+	SteamGenresProperty       = "steam-genres"
+	SteamSupportUrlProperty   = "steam-support-url"
+	SteamSupportEmailProperty = "steam-support-email"
 )
 
 const (
@@ -301,6 +314,22 @@ func ExternalDataSourcesProperties() []string {
 	}
 }
 
+func SteamAppDetailsProperties() []string {
+	return []string{
+		SteamAppIdProperty,
+		RequiredAgeProperty,
+		ControllerSupportProperty,
+		ShortDescriptionProperty,
+		WebsiteProperty,
+		MetacriticScoreProperty,
+		MetacriticUrlProperty,
+		SteamCategoriesProperty,
+		SteamGenresProperty,
+		SteamSupportUrlProperty,
+		SteamSupportEmailProperty,
+	}
+}
+
 func DehydratedImagesProperties() []string {
 	return []string{
 		DehydratedImageProperty,
@@ -342,6 +371,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, GOGReducedDataProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
+	all = append(all, SteamAppDetailsProperties()...)
 	all = append(all, SyncProperties()...)
 	all = append(all, StatusValidationResultsProperties()...)
 	all = append(all, EnginesProperties()...)
