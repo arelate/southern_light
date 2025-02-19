@@ -319,6 +319,107 @@ func ExternalDataSourcesProperties() []string {
 	}
 }
 
+func GOGCatalogPageProperties() []string {
+	return []string{
+		TitleProperty,
+		DevelopersProperty,
+		PublishersProperty,
+		ImageProperty,
+		VerticalImageProperty,
+		ScreenshotsProperty,
+		GenresProperty,
+		FeaturesProperty,
+		RatingProperty,
+		OperatingSystemsProperty,
+		SlugProperty,
+		GlobalReleaseDateProperty,
+		ProductTypeProperty,
+		StoreTagsProperty,
+		BasePriceProperty,
+		PriceProperty,
+		IsFreeProperty,
+		IsDiscountedProperty,
+		DiscountPercentageProperty,
+		ComingSoonProperty,
+		PreOrderProperty,
+		InDevelopmentProperty,
+		IsDemoProperty,
+	}
+}
+
+func GOGOrderPageProperties() []string {
+	return []string{
+		GOGOrderDateProperty,
+	}
+}
+
+func GOGAccountPageProperties() []string {
+	return []string{
+		TagIdProperty,
+		TagNameProperty,
+	}
+}
+
+func GOGApiProductProperties() []string {
+	return []string{
+		TitleProperty,
+		DevelopersProperty,
+		PublishersProperty,
+		LanguageCodeProperty,
+		ImageProperty,
+		VerticalImageProperty,
+		HeroProperty,
+		LogoProperty,
+		IconProperty,
+		IconSquareProperty,
+		BackgroundProperty,
+		ScreenshotsProperty,
+		GenresProperty,
+		FeaturesProperty,
+		SeriesProperty,
+		VideoIdProperty,
+		OperatingSystemsProperty,
+		RequiresGamesProperty,
+		IsRequiredByGamesProperty,
+		IncludesGamesProperty,
+		IsIncludedByGamesProperty,
+		GlobalReleaseDateProperty,
+		GOGReleaseDateProperty,
+		StoreUrlProperty,
+		ForumUrlProperty,
+		SupportUrlProperty,
+		DescriptionOverviewProperty,
+		DescriptionFeaturesProperty,
+		ProductTypeProperty,
+		CopyrightsProperty,
+		StoreTagsProperty,
+		AdditionalRequirementsProperty,
+		InDevelopmentProperty,
+		PreOrderProperty,
+	}
+}
+
+func GOGDetailsProperties() []string {
+	return []string{
+		TitleProperty,
+		FeaturesProperty,
+		TagIdProperty,
+		GOGReleaseDateProperty,
+		ForumUrlProperty,
+		ChangelogProperty,
+	}
+}
+
+func GOGGamesDbProperties() []string {
+	return []string{
+		SteamAppIdProperty,
+		VideoIdProperty,
+		AggregatedRatingProperty,
+		ThemesProperty,
+		GameModesProperty,
+	}
+}
+
 func SteamAppDetailsProperties() []string {
 	return []string{
 		SteamAppIdProperty,
@@ -332,6 +433,12 @@ func SteamAppDetailsProperties() []string {
 		SteamGenresProperty,
 		SteamSupportUrlProperty,
 		SteamSupportEmailProperty,
+	}
+}
+
+func SteamAppReviewsProperties() []string {
+	return []string{
+		SteamReviewScoreDescProperty,
 	}
 }
 
@@ -383,7 +490,17 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, GOGReducedDataProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
+
+	all = append(all, GOGCatalogPageProperties()...)
+	all = append(all, GOGOrderPageProperties()...)
+	all = append(all, GOGAccountPageProperties()...)
+	all = append(all, GOGApiProductProperties()...)
+	all = append(all, GOGDetailsProperties()...)
+	all = append(all, GOGGamesDbProperties()...)
+
 	all = append(all, SteamAppDetailsProperties()...)
+	all = append(all, SteamAppReviewsProperties()...)
+
 	all = append(all, SyncProperties()...)
 	all = append(all, StatusValidationResultsProperties()...)
 	all = append(all, EnginesProperties()...)
