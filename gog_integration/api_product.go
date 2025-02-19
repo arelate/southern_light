@@ -185,7 +185,7 @@ type video struct {
 	} `json:"_links"`
 }
 
-type ApiProductV2 struct {
+type ApiProduct struct {
 	InDevelopment struct {
 		Active bool `json:"active"`
 	} `json:"inDevelopment"`
@@ -225,49 +225,49 @@ type ApiProductV2 struct {
 	} `json:"_embedded"`
 }
 
-func (apv2 *ApiProductV2) GetId() int { return apv2.Embedded.Product.Id }
+func (ap *ApiProduct) GetId() int { return ap.Embedded.Product.Id }
 
-func (apv2 *ApiProductV2) GetTitle() string {
-	return apv2.Embedded.Product.Title
+func (ap *ApiProduct) GetTitle() string {
+	return ap.Embedded.Product.Title
 }
 
-func (apv2 *ApiProductV2) GetDevelopers() []string {
-	devs := make([]string, 0, len(apv2.Embedded.Developers))
-	for _, dev := range apv2.Embedded.Developers {
+func (ap *ApiProduct) GetDevelopers() []string {
+	devs := make([]string, 0, len(ap.Embedded.Developers))
+	for _, dev := range ap.Embedded.Developers {
 		devs = append(devs, dev.Name)
 	}
 	return devs
 }
 
-func (apv2 *ApiProductV2) GetPublishers() []string {
-	return []string{apv2.Embedded.Publisher.Name}
+func (ap *ApiProduct) GetPublishers() []string {
+	return []string{ap.Embedded.Publisher.Name}
 }
 
-func (apv2 *ApiProductV2) GetImage() string {
-	return apv2.Embedded.Product.Links.Image.Href
+func (ap *ApiProduct) GetImage() string {
+	return ap.Embedded.Product.Links.Image.Href
 }
 
-func (apv2 *ApiProductV2) GetVerticalImage() string {
-	return apv2.Links.BoxArtImage.Href
+func (ap *ApiProduct) GetVerticalImage() string {
+	return ap.Links.BoxArtImage.Href
 }
 
-func (apv2 *ApiProductV2) GetHero() string {
-	return apv2.Links.GalaxyBackgroundImage.Href
+func (ap *ApiProduct) GetHero() string {
+	return ap.Links.GalaxyBackgroundImage.Href
 }
 
-func (apv2 *ApiProductV2) GetLogo() string {
-	return apv2.Links.Logo.Href
+func (ap *ApiProduct) GetLogo() string {
+	return ap.Links.Logo.Href
 }
 
-func (apv2 *ApiProductV2) GetIcon() string { return apv2.Links.Icon.Href }
+func (ap *ApiProduct) GetIcon() string { return ap.Links.Icon.Href }
 
-func (apv2 *ApiProductV2) GetIconSquare() string { return apv2.Links.IconSquare.Href }
+func (ap *ApiProduct) GetIconSquare() string { return ap.Links.IconSquare.Href }
 
-func (apv2 *ApiProductV2) GetBackground() string { return apv2.Links.BackgroundImage.Href }
+func (ap *ApiProduct) GetBackground() string { return ap.Links.BackgroundImage.Href }
 
-func (apv2 *ApiProductV2) GetScreenshots() []string {
+func (ap *ApiProduct) GetScreenshots() []string {
 	screenshots := make([]string, 0)
-	for _, screenshot := range apv2.Embedded.Screenshots {
+	for _, screenshot := range ap.Embedded.Screenshots {
 		screenshots = append(screenshots, screenshot.Links.Self.Href)
 	}
 	return screenshots
@@ -282,7 +282,7 @@ func idFromHref(href string) string {
 	return ""
 }
 
-func (apv2 *ApiProductV2) getHrefs(hrefProperty []href) []string {
+func (ap *ApiProduct) getHrefs(hrefProperty []href) []string {
 	hrefs := make([]string, 0, len(hrefProperty))
 	for _, hp := range hrefProperty {
 		id := idFromHref(hp.Href)
@@ -293,29 +293,29 @@ func (apv2 *ApiProductV2) getHrefs(hrefProperty []href) []string {
 	return hrefs
 }
 
-func (apv2 *ApiProductV2) GetGenres() []string {
-	genres := make([]string, 0, len(apv2.Embedded.Tags))
-	for _, tag := range apv2.Embedded.Tags {
+func (ap *ApiProduct) GetGenres() []string {
+	genres := make([]string, 0, len(ap.Embedded.Tags))
+	for _, tag := range ap.Embedded.Tags {
 		genres = append(genres, tag.Name)
 	}
 	return genres
 }
 
-func (apv2 *ApiProductV2) GetFeatures() []string {
-	features := make([]string, 0, len(apv2.Embedded.Features))
-	for _, feature := range apv2.Embedded.Features {
+func (ap *ApiProduct) GetFeatures() []string {
+	features := make([]string, 0, len(ap.Embedded.Features))
+	for _, feature := range ap.Embedded.Features {
 		features = append(features, feature.Name)
 	}
 	return features
 }
 
-func (apv2 *ApiProductV2) GetSeries() string {
-	return apv2.Embedded.Series.Name
+func (ap *ApiProduct) GetSeries() string {
+	return ap.Embedded.Series.Name
 }
 
-func (apv2 *ApiProductV2) GetVideoIds() []string {
-	videoIds := make([]string, 0, len(apv2.Embedded.Videos))
-	for _, vid := range apv2.Embedded.Videos {
+func (ap *ApiProduct) GetVideoIds() []string {
+	videoIds := make([]string, 0, len(ap.Embedded.Videos))
+	for _, vid := range ap.Embedded.Videos {
 		if vid.Provider != supportedVideoProvider {
 			continue
 		}
@@ -326,9 +326,9 @@ func (apv2 *ApiProductV2) GetVideoIds() []string {
 	return videoIds
 }
 
-func (apv2 *ApiProductV2) GetOperatingSystems() []string {
+func (ap *ApiProduct) GetOperatingSystems() []string {
 	os := make([]string, 0, 3)
-	for _, sos := range apv2.Embedded.SupportedOperatingSystems {
+	for _, sos := range ap.Embedded.SupportedOperatingSystems {
 		switch sos.OperatingSystem.Name {
 		case windows:
 			os = append(os, windows)
@@ -342,25 +342,25 @@ func (apv2 *ApiProductV2) GetOperatingSystems() []string {
 	return os
 }
 
-func (apv2 *ApiProductV2) GetIncludesGames() []string {
-	return apv2.getHrefs(apv2.Links.IncludesGames)
+func (ap *ApiProduct) GetIncludesGames() []string {
+	return ap.getHrefs(ap.Links.IncludesGames)
 }
 
-func (apv2 *ApiProductV2) GetIsIncludedInGames() []string {
-	return apv2.getHrefs(apv2.Links.IsIncludedInGames)
+func (ap *ApiProduct) GetIsIncludedInGames() []string {
+	return ap.getHrefs(ap.Links.IsIncludedInGames)
 }
 
-func (apv2 *ApiProductV2) GetIsRequiredByGames() []string {
-	return apv2.getHrefs(apv2.Links.IsRequiredByGames)
+func (ap *ApiProduct) GetIsRequiredByGames() []string {
+	return ap.getHrefs(ap.Links.IsRequiredByGames)
 }
 
-func (apv2 *ApiProductV2) GetRequiresGames() []string {
-	return apv2.getHrefs(apv2.Links.RequiresGames)
+func (ap *ApiProduct) GetRequiresGames() []string {
+	return ap.getHrefs(ap.Links.RequiresGames)
 }
 
-func (apv2 *ApiProductV2) GetLanguageCodes() []string {
+func (ap *ApiProduct) GetLanguageCodes() []string {
 	lcs := make(map[string]bool, 0)
-	for _, loc := range apv2.Embedded.Localizations {
+	for _, loc := range ap.Embedded.Localizations {
 		lcs[loc.Embedded.Language.Code] = true
 	}
 
@@ -371,8 +371,8 @@ func (apv2 *ApiProductV2) GetLanguageCodes() []string {
 	return codes
 }
 
-func (apv2 *ApiProductV2) GetGlobalRelease() string {
-	grd := apv2.Embedded.Product.GlobalReleaseDate
+func (ap *ApiProduct) GetGlobalRelease() string {
+	grd := ap.Embedded.Product.GlobalReleaseDate
 	if grd.IsZero() {
 		return ""
 	}
@@ -383,8 +383,8 @@ func (apv2 *ApiProductV2) GetGlobalRelease() string {
 	return grd.Format("2006.01.02")
 }
 
-func (apv2 *ApiProductV2) GetGOGRelease() string {
-	grd := apv2.Embedded.Product.GogReleaseDate
+func (ap *ApiProduct) GetGOGRelease() string {
+	grd := ap.Embedded.Product.GogReleaseDate
 	if grd.IsZero() {
 		return ""
 	}
@@ -397,7 +397,7 @@ func (apv2 *ApiProductV2) GetGOGRelease() string {
 	}
 
 	if lw, err := time.LoadLocation("Europe/Nicosia"); err == nil {
-		tiw := apv2.Embedded.Product.GogReleaseDate.In(lw)
+		tiw := ap.Embedded.Product.GogReleaseDate.In(lw)
 		return tiw.Format("2006.01.02")
 	}
 	return grd.Format("2006.01.02")
@@ -411,52 +411,52 @@ func urlPathFromLink(link string) string {
 	}
 }
 
-func (apv2 *ApiProductV2) GetStoreUrl() string {
-	return urlPathFromLink(apv2.Links.Store.Href)
+func (ap *ApiProduct) GetStoreUrl() string {
+	return urlPathFromLink(ap.Links.Store.Href)
 }
 
-func (apv2 *ApiProductV2) GetForumUrl() string {
-	return urlPathFromLink(apv2.Links.Forum.Href)
+func (ap *ApiProduct) GetForumUrl() string {
+	return urlPathFromLink(ap.Links.Forum.Href)
 }
 
-func (apv2 *ApiProductV2) GetSupportUrl() string {
-	return urlPathFromLink(apv2.Links.Support.Href)
+func (ap *ApiProduct) GetSupportUrl() string {
+	return urlPathFromLink(ap.Links.Support.Href)
 }
 
-func (apv2 *ApiProductV2) GetDescriptionOverview() string {
-	return apv2.Overview
+func (ap *ApiProduct) GetDescriptionOverview() string {
+	return ap.Overview
 }
 
-func (apv2 *ApiProductV2) GetDescriptionFeatures() string {
-	return apv2.FeaturesDescription
+func (ap *ApiProduct) GetDescriptionFeatures() string {
+	return ap.FeaturesDescription
 }
 
-func (apv2 *ApiProductV2) GetProductType() string {
-	return apv2.Embedded.ProductType
+func (ap *ApiProduct) GetProductType() string {
+	return ap.Embedded.ProductType
 }
 
-func (apv2 *ApiProductV2) GetCopyrights() string {
-	return apv2.Copyrights
+func (ap *ApiProduct) GetCopyrights() string {
+	return ap.Copyrights
 }
 
 // GetStoreTags returns values displayed in Store as "Tags".
-// ApiProductV2 has store tags in Properties
-func (apv2 *ApiProductV2) GetStoreTags() []string {
-	properties := make([]string, 0, len(apv2.Embedded.Properties))
-	for _, p := range apv2.Embedded.Properties {
+// ApiProduct has store tags in Properties
+func (ap *ApiProduct) GetStoreTags() []string {
+	properties := make([]string, 0, len(ap.Embedded.Properties))
+	for _, p := range ap.Embedded.Properties {
 		properties = append(properties, p.Name)
 	}
 	return properties
 }
 
-func (apv2 *ApiProductV2) GetAdditionalRequirements() string {
-	return apv2.AdditionalRequirements
+func (ap *ApiProduct) GetAdditionalRequirements() string {
+	return ap.AdditionalRequirements
 }
 
-func (apv2 *ApiProductV2) GetInDevelopment() bool {
-	return apv2.InDevelopment.Active
+func (ap *ApiProduct) GetInDevelopment() bool {
+	return ap.InDevelopment.Active
 }
 
-func (apv2 *ApiProductV2) GetPreOrder() bool {
-	return apv2.Embedded.Product.IsPreorder
+func (ap *ApiProduct) GetPreOrder() bool {
+	return ap.Embedded.Product.IsPreorder
 }

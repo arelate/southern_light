@@ -14,7 +14,7 @@ var expandValues = []string{
 	"related_products",
 	"changelog"}
 
-func ApiProductV2Url(id string) *url.URL {
+func ApiProductUrl(id string) *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   apiHost,

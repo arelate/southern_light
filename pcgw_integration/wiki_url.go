@@ -7,10 +7,25 @@ import (
 
 const (
 	pageParam  = "page"
+	appIdParam = "appid"
 	curIdParam = "curid"
 )
 
-func WikiGOGUrl(gogId string) *url.URL {
+func WikiSteamUrl(steamAppId string) *url.URL {
+	u := &url.URL{
+		Scheme: southern_light.HttpsScheme,
+		Host:   pcgwHost,
+		Path:   apiAppIdPath,
+	}
+
+	q := u.Query()
+	q.Add(appIdParam, steamAppId)
+	u.RawQuery = q.Encode()
+
+	return u
+}
+
+func WikiGogUrl(gogId string) *url.URL {
 	u := &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   pcgwHost,

@@ -101,7 +101,7 @@ func (pr *ProductReader) Details(id string) (details *gog_integration.Details, e
 	return details, err
 }
 
-func (pr *ProductReader) ApiProductV2(id string) (apiProductV2 *gog_integration.ApiProductV2, err error) {
+func (pr *ProductReader) ApiProductV2(id string) (apiProductV2 *gog_integration.ApiProduct, err error) {
 	err = pr.readValue(id, &apiProductV2)
 	return apiProductV2, err
 }

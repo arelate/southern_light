@@ -143,7 +143,7 @@ func (det *Details) GetGOGRelease() string {
 	if det.ReleaseTimestamp == 0 {
 		return ""
 	}
-	//see comment for ApiProductV2.GetGOGRelease that explains those special dates
+	//see comment for ApiProduct.GetGOGRelease that explains those special dates
 	if det.ReleaseTimestamp == 693612000 ||
 		det.ReleaseTimestamp == 978299999 {
 		return ""

@@ -7,7 +7,8 @@ const (
 
 // paths
 const (
-	apiPath    = "/w/api.php"
-	apiGOGPath = "/api/gog.php"
-	wikiPath   = "/wiki/"
+	apiPath      = "/w/api.php"
+	apiGOGPath   = "/api/gog.php"
+	apiAppIdPath = "/api/appid.php"
+	wikiPath     = "/wiki/"
 )
