@@ -35,16 +35,16 @@ func IsSteamProduct(pt ProductType) bool {
 	return IsSteamDetailProduct(pt)
 }
 
-func IsPCGWDetailProduct(pt ProductType) bool {
-	return containsProductType(PCGWDetailProducts(), pt)
+func IsPcgwDetailProduct(pt ProductType) bool {
+	return containsProductType(PcgwDetailProducts(), pt)
 }
 
 func IsHltbDetailProduct(pt ProductType) bool {
 	return containsProductType(HltbDetailProducts(), pt)
 }
 
-func IsPCGWProduct(pt ProductType) bool {
-	return IsPCGWDetailProduct(pt)
+func IsPcgwProduct(pt ProductType) bool {
+	return IsPcgwDetailProduct(pt)
 }
 
 func IsHltbProduct(pt ProductType) bool {

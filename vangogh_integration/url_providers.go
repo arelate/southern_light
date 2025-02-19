@@ -16,8 +16,8 @@ func NewUrlProvider(pt ProductType, rdx redux.Readable) (UrlProvider, error) {
 		return NewGOGUrlProvider(pt)
 	} else if IsSteamProduct(pt) {
 		return NewSteamUrlProvider(pt, rdx)
-	} else if IsPCGWProduct(pt) {
-		return NewPCGWUrlProvider(pt, rdx)
+	} else if IsPcgwProduct(pt) {
+		return NewPcgwUrlProvider(pt, rdx)
 	} else if IsHltbProduct(pt) {
 		return NewHltbUrlProvider(pt, rdx)
 	} else if IsProtonDBProduct(pt) {

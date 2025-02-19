@@ -98,7 +98,7 @@ const (
 	RepVerticalImageColorProperty             = "rep-vertical-image-color"
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
-	PCGWPageIdProperty                        = "pcgw-page-id"
+	PcgwPageIdProperty                        = "pcgw-page-id"
 	HltbIdProperty                            = "hltb-id"
 	HltbBuildIdProperty                       = "hltb-next-build"
 	HltbHoursToCompleteMainProperty           = "hltb-comp-main"
@@ -304,7 +304,7 @@ func ExternalDataSourcesProperties() []string {
 		SteamAppIdProperty,
 		SteamReviewScoreDescProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
-		PCGWPageIdProperty,
+		PcgwPageIdProperty,
 		HltbIdProperty,
 		HltbBuildIdProperty,
 		IGDBIdProperty,
@@ -569,24 +569,6 @@ var supportedProperties = map[ProductType][]string{
 		SlugProperty,
 		StoreUrlProperty,
 	},
-	ApiProductsV1: {
-		IdProperty,
-		TitleProperty,
-		ScreenshotsProperty,
-		VideoIdProperty,
-		OperatingSystemsProperty,
-		SlugProperty,
-		GOGReleaseDateProperty,
-		StoreUrlProperty,
-		ForumUrlProperty,
-		SupportUrlProperty,
-		ChangelogProperty,
-		DescriptionOverviewProperty,
-		DescriptionFeaturesProperty,
-		InDevelopmentProperty,
-		PreOrderProperty,
-		BackgroundProperty,
-	},
 	ApiProducts: {
 		AdditionalRequirementsProperty,
 		IdProperty,
@@ -663,14 +645,14 @@ var supportedProperties = map[ProductType][]string{
 	SteamDeckCompatibilityReport: {
 		SteamDeckAppCompatibilityCategoryProperty,
 	},
-	PCGWPageId: {
-		PCGWPageIdProperty,
+	PcgwPageId: {
+		PcgwPageIdProperty,
 	},
-	PCGWEngine: {
+	PcgwEngine: {
 		EnginesProperty,
 		EnginesBuildsProperty,
 	},
-	PCGWExternalLinks: {
+	PcgwExternalLinks: {
 		SteamAppIdProperty,
 		HltbIdProperty,
 		IGDBIdProperty,
@@ -870,7 +852,7 @@ func getPropertyValues(value interface{}, property string) []string {
 		}
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
-	case PCGWPageIdProperty:
+	case PcgwPageIdProperty:
 		if gpi, ok := value.(pcgw_integration.PageIdGetter); ok {
 			return getSlice(gpi.GetPageId)
 		}

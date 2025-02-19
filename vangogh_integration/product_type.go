@@ -32,9 +32,9 @@ const (
 	SteamAppReviews
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
-	PCGWPageId
-	PCGWEngine
-	PCGWExternalLinks
+	PcgwPageId
+	PcgwEngine
+	PcgwExternalLinks
 	// HLTB product types
 	HltbRootPage
 	HltbData
@@ -66,9 +66,9 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
-	PCGWPageId:        "pcgw-pageid",
-	PCGWEngine:        "pcgw-engine",
-	PCGWExternalLinks: "pcgw-external-links",
+	PcgwPageId:        "pcgw-pageid",
+	PcgwEngine:        "pcgw-engine",
+	PcgwExternalLinks: "pcgw-external-links",
 	// HLTB product types
 	HltbRootPage: "hltb-root-page",
 	HltbData:     "hltb-data",
@@ -146,11 +146,6 @@ func FastPageFetchProducts() []ProductType {
 
 var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	Details: { /*LicenceProducts, */ AccountProducts},
-	ApiProductsV1: {
-		CatalogProducts,
-		AccountProducts,
-		ApiProducts,
-	},
 	ApiProducts: {
 		CatalogProducts,
 		AccountProducts,
@@ -179,15 +174,15 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 
 var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 	//PCGamingWiki product types are updated on GOG.com store or account product changes
-	PCGWPageId: {
+	PcgwPageId: {
 		CatalogProducts,
 		AccountProducts,
 	},
-	PCGWEngine: {
+	PcgwEngine: {
 		CatalogProducts,
 		AccountProducts,
 	},
-	PCGWExternalLinks: {
+	PcgwExternalLinks: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -215,7 +210,7 @@ func SteamDetailProducts() []ProductType {
 	return slices.Collect(maps.Keys(steamDetailMainProductTypes))
 }
 
-func PCGWDetailProducts() []ProductType {
+func PcgwDetailProducts() []ProductType {
 	return slices.Collect(maps.Keys(pcgwDetailMainProductTypes))
 }
 
@@ -232,7 +227,7 @@ func MainProductTypes(pt ProductType) []ProductType {
 		return gogMainProductTypes(pt)
 	} else if IsSteamDetailProduct(pt) {
 		return steamMainProductTypes(pt)
-	} else if IsPCGWDetailProduct(pt) {
+	} else if IsPcgwDetailProduct(pt) {
 		return pcgwMainProductTypes(pt)
 	} else if IsHltbDetailProduct(pt) {
 		return hltbMainProductTypes(pt)
@@ -273,8 +268,8 @@ func SteamRemoteProducts() []ProductType {
 	return SteamDetailProducts()
 }
 
-func PCGWRemoteProducts() []ProductType {
-	return PCGWDetailProducts()
+func PcgwRemoteProducts() []ProductType {
+	return PcgwDetailProducts()
 }
 
 func HltbRemoteProducts() []ProductType {
@@ -290,7 +285,7 @@ func LocalProducts() []ProductType {
 	lps := slices.Collect(maps.Values(splitProductTypes))
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
-	lps = append(lps, PCGWRemoteProducts()...)
+	lps = append(lps, PcgwRemoteProducts()...)
 	lps = append(lps, HltbRemoteProducts()...)
 	lps = append(lps, ProtonDBRemoteProducts()...)
 
@@ -300,7 +295,7 @@ func LocalProducts() []ProductType {
 func RemoteProducts() []ProductType {
 	rps := GOGRemoteProducts()
 	rps = append(rps, SteamRemoteProducts()...)
-	rps = append(rps, PCGWRemoteProducts()...)
+	rps = append(rps, PcgwRemoteProducts()...)
 	rps = append(rps, HltbRemoteProducts()...)
 	rps = append(rps, ProtonDBRemoteProducts()...)
 
@@ -334,7 +329,6 @@ func SplitProductType(pt ProductType) ProductType {
 
 var supportsGetItems = []ProductType{
 	Details,
-	ApiProductsV1,
 	ApiProducts,
 	Licences,
 	UserWishlist,
@@ -343,9 +337,9 @@ var supportsGetItems = []ProductType{
 	SteamAppReviews,
 	SteamAppDetails,
 	SteamDeckCompatibilityReport,
-	PCGWPageId,
-	PCGWEngine,
-	PCGWExternalLinks,
+	PcgwPageId,
+	PcgwEngine,
+	PcgwExternalLinks,
 	HltbRootPage,
 	HltbData,
 	ProtonDbSummary,
@@ -354,7 +348,6 @@ var supportsGetItems = []ProductType{
 var supportedImageTypes = map[ProductType][]ImageType{
 	CatalogProducts: {Image, Screenshots},
 	AccountProducts: {Image},
-	ApiProductsV1:   {Screenshots},
 	ApiProducts:     {Image, Screenshots, Hero, Logo},
 }
 

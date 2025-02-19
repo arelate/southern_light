@@ -6,39 +6,39 @@ import (
 	"net/url"
 )
 
-type PCGWUrlProvider struct {
+type PcgwUrlProvider struct {
 	pt  ProductType
 	rdx redux.Readable
 }
 
-func NewPCGWUrlProvider(pt ProductType, rdx redux.Readable) (*PCGWUrlProvider, error) {
-	if err := rdx.MustHave(PCGWPageIdProperty); err != nil {
+func NewPcgwUrlProvider(pt ProductType, rdx redux.Readable) (*PcgwUrlProvider, error) {
+	if err := rdx.MustHave(PcgwPageIdProperty); err != nil {
 		return nil, err
 	}
 
-	return &PCGWUrlProvider{
+	return &PcgwUrlProvider{
 		pt:  pt,
 		rdx: rdx,
 	}, nil
 }
 
-func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
-	if pageId, ok := pcgwup.rdx.GetLastVal(PCGWPageIdProperty, gogId); ok {
+func (pcgwup *PcgwUrlProvider) GOGIdToPcgwPageId(gogId string) string {
+	if pageId, ok := pcgwup.rdx.GetLastVal(PcgwPageIdProperty, gogId); ok {
 		return pageId
 	}
 	return ""
 }
 
-func (pcgwup *PCGWUrlProvider) Url(gogId string) *url.URL {
+func (pcgwup *PcgwUrlProvider) Url(gogId string) *url.URL {
 	switch pcgwup.pt {
-	case PCGWPageId:
+	case PcgwPageId:
 		return pcgw_integration.PageIdCargoQueryUrl(gogId)
-	case PCGWEngine:
-		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
+	case PcgwEngine:
+		if pageId := pcgwup.GOGIdToPcgwPageId(gogId); pageId != "" {
 			return pcgw_integration.EngineCargoQueryUrl(pageId)
 		}
-	case PCGWExternalLinks:
-		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
+	case PcgwExternalLinks:
+		if pageId := pcgwup.GOGIdToPcgwPageId(gogId); pageId != "" {
 			return pcgw_integration.ParseExternalLinksUrl(pageId)
 		}
 	}

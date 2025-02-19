@@ -188,17 +188,17 @@ func (pr *ProductReader) HltbData(id string) (data *hltb_integration.Data, err e
 	return data, err
 }
 
-func (pr *ProductReader) PCGWPageId(id string) (ps *pcgw_integration.PageId, err error) {
+func (pr *ProductReader) PcgwPageId(id string) (ps *pcgw_integration.PageId, err error) {
 	err = pr.readValue(id, &ps)
 	return ps, err
 }
 
-func (pr *ProductReader) PCGWEngine(id string) (e *pcgw_integration.Engine, err error) {
+func (pr *ProductReader) PcgwEngine(id string) (e *pcgw_integration.Engine, err error) {
 	err = pr.readValue(id, &e)
 	return e, err
 }
 
-func (pr *ProductReader) PCGWExternalLinks(id string) (pel *pcgw_integration.ParseExternalLinks, err error) {
+func (pr *ProductReader) PcgwExternalLinks(id string) (pel *pcgw_integration.ParseExternalLinks, err error) {
 	err = pr.readValue(id, &pel)
 	return pel, err
 }
@@ -238,12 +238,12 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.SteamAppReviews(key)
 	case SteamDeckCompatibilityReport:
 		return pr.SteamDeckAppCompatibilityReport(key)
-	case PCGWPageId:
-		return pr.PCGWPageId(key)
-	case PCGWEngine:
-		return pr.PCGWEngine(key)
-	case PCGWExternalLinks:
-		return pr.PCGWExternalLinks(key)
+	case PcgwPageId:
+		return pr.PcgwPageId(key)
+	case PcgwEngine:
+		return pr.PcgwEngine(key)
+	case PcgwExternalLinks:
+		return pr.PcgwExternalLinks(key)
 	case HltbRootPage:
 		return pr.HltbRootPage()
 	case HltbData:
