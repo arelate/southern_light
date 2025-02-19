@@ -34,8 +34,8 @@ type ParseExternalLinks struct {
 	} `json:"parse"`
 }
 
-type HLTBIdGetter interface {
-	GetHLTBId() string
+type HltbIdGetter interface {
+	GetHltbId() string
 }
 
 type IGDBIdGetter interface {
@@ -108,7 +108,7 @@ func (pel *ParseExternalLinks) iwLinkId(pfx string) string {
 	return ""
 }
 
-func (pel *ParseExternalLinks) GetHLTBId() string {
+func (pel *ParseExternalLinks) GetHltbId() string {
 	return pel.externalLinkSuffixId(hltbPrefix)
 }
 

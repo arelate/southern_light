@@ -10,7 +10,7 @@ var gogProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
 	AccountPage:            gog_integration.AccountPageUrl,
 	UserWishlist:           gog_integration.DefaultUserWishlistUrl,
 	Details:                gog_integration.DetailsUrl,
-	ApiProductsV2:          gog_integration.ApiProductV2Url,
+	ApiProducts:            gog_integration.ApiProductV2Url,
 	Licences:               gog_integration.DefaultLicencesUrl,
 	OrderPage:              gog_integration.OrdersPageUrl,
 	GamesDbGogProducts:     gog_integration.GamesDbGogExternalReleaseUrl,

@@ -6,36 +6,36 @@ import (
 	"net/url"
 )
 
-type HLTBUrlProvider struct {
+type HltbUrlProvider struct {
 	pt  ProductType
 	rdx redux.Readable
 }
 
-func NewHLTBUrlProvider(pt ProductType, rdx redux.Readable) (*HLTBUrlProvider, error) {
-	if err := rdx.MustHave(HLTBBuildIdProperty, HLTBIdProperty); err != nil {
+func NewHltbUrlProvider(pt ProductType, rdx redux.Readable) (*HltbUrlProvider, error) {
+	if err := rdx.MustHave(HltbBuildIdProperty, HltbIdProperty); err != nil {
 		return nil, err
 	}
 
-	return &HLTBUrlProvider{
+	return &HltbUrlProvider{
 		pt:  pt,
 		rdx: rdx,
 	}, nil
 }
 
-func (hup *HLTBUrlProvider) GOGIdToHLTBId(gogId string) string {
-	if hltbId, ok := hup.rdx.GetLastVal(HLTBIdProperty, gogId); ok {
+func (hup *HltbUrlProvider) GogIdToHltbId(gogId string) string {
+	if hltbId, ok := hup.rdx.GetLastVal(HltbIdProperty, gogId); ok {
 		return hltbId
 	}
 	return ""
 }
 
-func (hup *HLTBUrlProvider) Url(gogId string) *url.URL {
+func (hup *HltbUrlProvider) Url(gogId string) *url.URL {
 	switch hup.pt {
-	case HLTBRootPage:
+	case HltbRootPage:
 		return hltb_integration.RootUrl()
-	case HLTBData:
-		if buildId, ok := hup.rdx.GetLastVal(HLTBBuildIdProperty, HLTBRootPage.String()); ok {
-			if hltbId := hup.GOGIdToHLTBId(gogId); hltbId != "" {
+	case HltbData:
+		if buildId, ok := hup.rdx.GetLastVal(HltbBuildIdProperty, HltbRootPage.String()); ok {
+			if hltbId := hup.GogIdToHltbId(gogId); hltbId != "" {
 				return hltb_integration.DataUrl(buildId, hltbId)
 			}
 		}

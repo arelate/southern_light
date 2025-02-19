@@ -17,8 +17,7 @@ const (
 	UserWishlist
 	UserWishlistProducts
 	Details
-	ApiProductsV1
-	ApiProductsV2
+	ApiProducts
 	Licences
 	OrderPage
 	Orders
@@ -37,10 +36,10 @@ const (
 	PCGWEngine
 	PCGWExternalLinks
 	// HLTB product types
-	HLTBRootPage
-	HLTBData
+	HltbRootPage
+	HltbData
 	// ProtonDB product types
-	ProtonDBSummary
+	ProtonDbSummary
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -53,8 +52,7 @@ var productTypeStrings = map[ProductType]string{
 	UserWishlist:           "user-wishlist",
 	UserWishlistProducts:   "user-wishlist-products",
 	Details:                "details",
-	ApiProductsV1:          "api-products-v1",
-	ApiProductsV2:          "api-products-v2",
+	ApiProducts:            "api-products",
 	Licences:               "licences",
 	OrderPage:              "order-page",
 	Orders:                 "orders",
@@ -72,10 +70,10 @@ var productTypeStrings = map[ProductType]string{
 	PCGWEngine:        "pcgw-engine",
 	PCGWExternalLinks: "pcgw-external-links",
 	// HLTB product types
-	HLTBRootPage: "hltb-root-page",
-	HLTBData:     "hltb-data",
+	HltbRootPage: "hltb-root-page",
+	HltbData:     "hltb-data",
 	// ProtonDB product types
-	ProtonDBSummary: "protondb-summary",
+	ProtonDbSummary: "protondb-summary",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -134,9 +132,9 @@ func GOGArrayProducts() []ProductType {
 	}
 }
 
-func HLTBArrayProducts() []ProductType {
+func HltbArrayProducts() []ProductType {
 	return []ProductType{
-		HLTBRootPage,
+		HltbRootPage,
 	}
 }
 
@@ -151,12 +149,12 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	ApiProductsV1: {
 		CatalogProducts,
 		AccountProducts,
-		ApiProductsV2,
+		ApiProducts,
 	},
-	ApiProductsV2: {
+	ApiProducts: {
 		CatalogProducts,
 		AccountProducts,
-		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
+		ApiProducts, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
 	GamesDbGogProducts: {
 		CatalogProducts,
@@ -196,14 +194,14 @@ var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 }
 
 var hltbDetailMainProductTypes = map[ProductType][]ProductType{
-	HLTBData: {
+	HltbData: {
 		CatalogProducts,
 		AccountProducts,
 	},
 }
 
 var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
-	ProtonDBSummary: {
+	ProtonDbSummary: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -221,7 +219,7 @@ func PCGWDetailProducts() []ProductType {
 	return slices.Collect(maps.Keys(pcgwDetailMainProductTypes))
 }
 
-func HLTBDetailProducts() []ProductType {
+func HltbDetailProducts() []ProductType {
 	return slices.Collect(maps.Keys(hltbDetailMainProductTypes))
 }
 
@@ -236,7 +234,7 @@ func MainProductTypes(pt ProductType) []ProductType {
 		return steamMainProductTypes(pt)
 	} else if IsPCGWDetailProduct(pt) {
 		return pcgwMainProductTypes(pt)
-	} else if IsHLTBDetailProduct(pt) {
+	} else if IsHltbDetailProduct(pt) {
 		return hltbMainProductTypes(pt)
 	} else if IsProtonDBDetailProduct(pt) {
 		return protonDBMainProductTypes(pt)
@@ -279,9 +277,9 @@ func PCGWRemoteProducts() []ProductType {
 	return PCGWDetailProducts()
 }
 
-func HLTBRemoteProducts() []ProductType {
-	remote := HLTBArrayProducts()
-	return append(remote, HLTBDetailProducts()...)
+func HltbRemoteProducts() []ProductType {
+	remote := HltbArrayProducts()
+	return append(remote, HltbDetailProducts()...)
 }
 
 func ProtonDBRemoteProducts() []ProductType {
@@ -293,7 +291,7 @@ func LocalProducts() []ProductType {
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)
-	lps = append(lps, HLTBRemoteProducts()...)
+	lps = append(lps, HltbRemoteProducts()...)
 	lps = append(lps, ProtonDBRemoteProducts()...)
 
 	return lps
@@ -303,7 +301,7 @@ func RemoteProducts() []ProductType {
 	rps := GOGRemoteProducts()
 	rps = append(rps, SteamRemoteProducts()...)
 	rps = append(rps, PCGWRemoteProducts()...)
-	rps = append(rps, HLTBRemoteProducts()...)
+	rps = append(rps, HltbRemoteProducts()...)
 	rps = append(rps, ProtonDBRemoteProducts()...)
 
 	return rps
@@ -337,7 +335,7 @@ func SplitProductType(pt ProductType) ProductType {
 var supportsGetItems = []ProductType{
 	Details,
 	ApiProductsV1,
-	ApiProductsV2,
+	ApiProducts,
 	Licences,
 	UserWishlist,
 	GamesDbGogProducts,
@@ -348,16 +346,16 @@ var supportsGetItems = []ProductType{
 	PCGWPageId,
 	PCGWEngine,
 	PCGWExternalLinks,
-	HLTBRootPage,
-	HLTBData,
-	ProtonDBSummary,
+	HltbRootPage,
+	HltbData,
+	ProtonDbSummary,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{
 	CatalogProducts: {Image, Screenshots},
 	AccountProducts: {Image},
 	ApiProductsV1:   {Screenshots},
-	ApiProductsV2:   {Image, Screenshots, Hero, Logo},
+	ApiProducts:     {Image, Screenshots, Hero, Logo},
 }
 
 func ProductTypesSupportingImageType(imageType ImageType) []ProductType {

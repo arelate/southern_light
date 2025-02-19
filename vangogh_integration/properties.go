@@ -99,14 +99,14 @@ const (
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
 	PCGWPageIdProperty                        = "pcgw-page-id"
-	HLTBIdProperty                            = "hltb-id"
-	HLTBBuildIdProperty                       = "hltb-next-build"
-	HLTBHoursToCompleteMainProperty           = "hltb-comp-main"
-	HLTBHoursToCompletePlusProperty           = "hltb-comp-plus"
-	HLTBHoursToComplete100Property            = "hltb-comp-100"
-	HLTBReviewScoreProperty                   = "hltb-review-score"
-	HLTBGenresProperty                        = "hltb-genres"
-	HLTBPlatformsProperty                     = "hltb-platforms"
+	HltbIdProperty                            = "hltb-id"
+	HltbBuildIdProperty                       = "hltb-next-build"
+	HltbHoursToCompleteMainProperty           = "hltb-comp-main"
+	HltbHoursToCompletePlusProperty           = "hltb-comp-plus"
+	HltbHoursToComplete100Property            = "hltb-comp-100"
+	HltbReviewScoreProperty                   = "hltb-review-score"
+	HltbGenresProperty                        = "hltb-genres"
+	HltbPlatformsProperty                     = "hltb-platforms"
 	IGDBIdProperty                            = "igdb-id"
 	StrategyWikiIdProperty                    = "strategy-wiki-id"
 	MobyGamesIdProperty                       = "moby-games-id"
@@ -199,7 +199,7 @@ func AllTextProperties() []string {
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
-		HLTBGenresProperty,
+		HltbGenresProperty,
 		StoreTagsProperty,
 		FeaturesProperty,
 		SeriesProperty,
@@ -266,11 +266,11 @@ func AvailabilityProperties() []string {
 func AdvancedProductProperties() []string {
 	return []string{
 		ProductTypeProperty,
-		HLTBHoursToCompleteMainProperty,
-		HLTBHoursToCompletePlusProperty,
-		HLTBHoursToComplete100Property,
-		HLTBPlatformsProperty,
-		HLTBReviewScoreProperty,
+		HltbHoursToCompleteMainProperty,
+		HltbHoursToCompletePlusProperty,
+		HltbHoursToComplete100Property,
+		HltbPlatformsProperty,
+		HltbReviewScoreProperty,
 	}
 }
 
@@ -305,8 +305,8 @@ func ExternalDataSourcesProperties() []string {
 		SteamReviewScoreDescProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
 		PCGWPageIdProperty,
-		HLTBIdProperty,
-		HLTBBuildIdProperty,
+		HltbIdProperty,
+		HltbBuildIdProperty,
 		IGDBIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -536,8 +536,8 @@ func DigestibleProperties() []string {
 		OperatingSystemsProperty,
 		SteamReviewScoreDescProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
-		HLTBPlatformsProperty,
-		HLTBGenresProperty,
+		HltbPlatformsProperty,
+		HltbGenresProperty,
 		EnginesProperty,
 		ProtonDBTierProperty,
 		ProtonDBConfidenceProperty,
@@ -587,7 +587,7 @@ var supportedProperties = map[ProductType][]string{
 		PreOrderProperty,
 		BackgroundProperty,
 	},
-	ApiProductsV2: {
+	ApiProducts: {
 		AdditionalRequirementsProperty,
 		IdProperty,
 		TitleProperty,
@@ -672,7 +672,7 @@ var supportedProperties = map[ProductType][]string{
 	},
 	PCGWExternalLinks: {
 		SteamAppIdProperty,
-		HLTBIdProperty,
+		HltbIdProperty,
 		IGDBIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -680,21 +680,21 @@ var supportedProperties = map[ProductType][]string{
 		WineHQIdProperty,
 		VNDBIdProperty,
 	},
-	HLTBRootPage: {
-		HLTBBuildIdProperty,
+	HltbRootPage: {
+		HltbBuildIdProperty,
 	},
-	HLTBData: {
-		HLTBHoursToCompleteMainProperty,
-		HLTBHoursToCompletePlusProperty,
-		HLTBHoursToComplete100Property,
+	HltbData: {
+		HltbHoursToCompleteMainProperty,
+		HltbHoursToCompletePlusProperty,
+		HltbHoursToComplete100Property,
 		SteamAppIdProperty,
 		GlobalReleaseDateProperty,
-		HLTBGenresProperty,
-		HLTBPlatformsProperty,
-		HLTBReviewScoreProperty,
+		HltbGenresProperty,
+		HltbPlatformsProperty,
+		HltbReviewScoreProperty,
 		IGNWikiSlugProperty,
 	},
-	ProtonDBSummary: {
+	ProtonDbSummary: {
 		ProtonDBTierProperty,
 		ProtonDBConfidenceProperty,
 	},
@@ -834,33 +834,33 @@ func getPropertyValues(value interface{}, property string) []string {
 		if ggr, ok := value.(gog_integration.GOGReleaseGetter); ok {
 			return getSlice(ggr.GetGOGRelease)
 		}
-	case HLTBIdProperty:
-		if ghi, ok := value.(pcgw_integration.HLTBIdGetter); ok {
-			return getSlice(ghi.GetHLTBId)
+	case HltbIdProperty:
+		if ghi, ok := value.(pcgw_integration.HltbIdGetter); ok {
+			return getSlice(ghi.GetHltbId)
 		}
-	case HLTBBuildIdProperty:
+	case HltbBuildIdProperty:
 		if gbi, ok := value.(hltb_integration.BuildIdGetter); ok {
 			return getSlice(gbi.GetBuildId)
 		}
-	case HLTBHoursToCompleteMainProperty:
+	case HltbHoursToCompleteMainProperty:
 		if ghcm, ok := value.(hltb_integration.HoursToCompleteMainGetter); ok {
 			return getSlice(ghcm.GetHoursToCompleteMain)
 		}
-	case HLTBHoursToCompletePlusProperty:
+	case HltbHoursToCompletePlusProperty:
 		if ghcp, ok := value.(hltb_integration.HoursToCompletePlusGetter); ok {
 			return getSlice(ghcp.GetHoursToCompletePlus)
 		}
-	case HLTBHoursToComplete100Property:
+	case HltbHoursToComplete100Property:
 		if ghc100, ok := value.(hltb_integration.HoursToComplete100Getter); ok {
 			return getSlice(ghc100.GetHoursToComplete100)
 		}
-	case HLTBReviewScoreProperty:
+	case HltbReviewScoreProperty:
 		if grs, ok := value.(hltb_integration.ReviewScoreGetter); ok {
 			return intSlice(grs.GetReviewScore)
 		}
-	case HLTBGenresProperty:
+	case HltbGenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
-	case HLTBPlatformsProperty:
+	case HltbPlatformsProperty:
 		return value.(hltb_integration.PlatformsGetter).GetPlatforms()
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()

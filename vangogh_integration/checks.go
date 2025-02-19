@@ -6,15 +6,15 @@ func IsGOGPagedProduct(pt ProductType) bool {
 
 func IsArrayProduct(pt ProductType) bool {
 	return IsGOGArrayProduct(pt) ||
-		IsHLTBArrayProduct(pt)
+		IsHltbArrayProduct(pt)
 }
 
 func IsGOGArrayProduct(pt ProductType) bool {
 	return containsProductType(GOGArrayProducts(), pt)
 }
 
-func IsHLTBArrayProduct(pt ProductType) bool {
-	return containsProductType(HLTBArrayProducts(), pt)
+func IsHltbArrayProduct(pt ProductType) bool {
+	return containsProductType(HltbArrayProducts(), pt)
 }
 
 func IsGOGDetailProduct(pt ProductType) bool {
@@ -39,17 +39,17 @@ func IsPCGWDetailProduct(pt ProductType) bool {
 	return containsProductType(PCGWDetailProducts(), pt)
 }
 
-func IsHLTBDetailProduct(pt ProductType) bool {
-	return containsProductType(HLTBDetailProducts(), pt)
+func IsHltbDetailProduct(pt ProductType) bool {
+	return containsProductType(HltbDetailProducts(), pt)
 }
 
 func IsPCGWProduct(pt ProductType) bool {
 	return IsPCGWDetailProduct(pt)
 }
 
-func IsHLTBProduct(pt ProductType) bool {
-	return IsHLTBArrayProduct(pt) ||
-		IsHLTBDetailProduct(pt)
+func IsHltbProduct(pt ProductType) bool {
+	return IsHltbArrayProduct(pt) ||
+		IsHltbDetailProduct(pt)
 }
 
 func IsProtonDBDetailProduct(pt ProductType) bool {

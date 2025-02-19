@@ -13,7 +13,7 @@ var steamProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
 	//SteamAppDetails:              steam_integration.AppDetailsUrl,
 	SteamDeckCompatibilityReport: steam_integration.DeckAppCompatibilityReportUrl,
 	// ProtonDB product types are using Steam AppID
-	ProtonDBSummary: protondb_integration.SummaryUrl,
+	ProtonDbSummary: protondb_integration.SummaryUrl,
 }
 
 type SteamUrlProvider struct {

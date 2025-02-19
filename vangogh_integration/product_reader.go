@@ -168,8 +168,8 @@ func (pr *ProductReader) UserWishlistProduct(id string) (userWishlistProduct str
 	return userWishlistProduct, err
 }
 
-func (pr *ProductReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
-	spReadCloser, err := pr.keyValues.Get(HLTBRootPage.String())
+func (pr *ProductReader) HltbRootPage() (*hltb_integration.RootPage, error) {
+	spReadCloser, err := pr.keyValues.Get(HltbRootPage.String())
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (pr *ProductReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
 	return &hltb_integration.RootPage{Doc: doc}, err
 }
 
-func (pr *ProductReader) HLTBData(id string) (data *hltb_integration.Data, err error) {
+func (pr *ProductReader) HltbData(id string) (data *hltb_integration.Data, err error) {
 	err = pr.readValue(id, &data)
 	return data, err
 }
@@ -216,7 +216,7 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.AccountProduct(key)
 	case Details:
 		return pr.Details(key)
-	case ApiProductsV2:
+	case ApiProducts:
 		return pr.ApiProductV2(key)
 	case Orders:
 		return pr.Order(key)
@@ -244,11 +244,11 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.PCGWEngine(key)
 	case PCGWExternalLinks:
 		return pr.PCGWExternalLinks(key)
-	case HLTBRootPage:
-		return pr.HLTBRootPage()
-	case HLTBData:
-		return pr.HLTBData(key)
-	case ProtonDBSummary:
+	case HltbRootPage:
+		return pr.HltbRootPage()
+	case HltbData:
+		return pr.HltbData(key)
+	case ProtonDbSummary:
 		return pr.ProtonDBSummary(key)
 	case GamesDbGogProducts:
 		return pr.GamesDbProduct(key)
