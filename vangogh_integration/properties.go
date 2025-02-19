@@ -442,6 +442,19 @@ func SteamAppReviewsProperties() []string {
 	}
 }
 
+func SteamDeckCompatibilityReportProperties() []string {
+	return []string{
+		SteamDeckAppCompatibilityCategoryProperty,
+	}
+}
+
+func ProtonDbSummaryProperties() []string {
+	return []string{
+		ProtonDBTierProperty,
+		ProtonDBConfidenceProperty,
+	}
+}
+
 func TypeErrorProperties() []string {
 	return []string{
 		TypeErrorMessageProperty,
@@ -500,6 +513,9 @@ func ReduxProperties() []string {
 
 	all = append(all, SteamAppDetailsProperties()...)
 	all = append(all, SteamAppReviewsProperties()...)
+	all = append(all, SteamDeckCompatibilityReportProperties()...)
+
+	all = append(all, ProtonDbSummaryProperties()...)
 
 	all = append(all, SyncProperties()...)
 	all = append(all, StatusValidationResultsProperties()...)
