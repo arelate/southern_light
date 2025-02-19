@@ -8,8 +8,8 @@ import (
 )
 
 var steamProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
-	SteamAppNews: steam_integration.NewsForAppUrl,
-	SteamReviews: steam_integration.AppReviewsUrl,
+	SteamAppNews:    steam_integration.NewsForAppUrl,
+	SteamAppReviews: steam_integration.AppReviewsUrl,
 	//SteamAppDetails:              steam_integration.AppDetailsUrl,
 	SteamDeckCompatibilityReport: steam_integration.DeckAppCompatibilityReportUrl,
 	// ProtonDB product types are using Steam AppID
@@ -41,8 +41,6 @@ func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) string {
 
 func (sup *SteamUrlProvider) Url(gogId string) *url.URL {
 	switch sup.pt {
-	case SteamAppList:
-		return steam_integration.AppListUrl()
 	default:
 		if appId := sup.GOGIdToSteamAppId(gogId); appId != "" {
 			if sug, ok := steamProductTypeUrlGetters[sup.pt]; ok {

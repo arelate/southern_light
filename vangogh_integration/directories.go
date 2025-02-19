@@ -36,15 +36,17 @@ var AllAbsDirs = []pathways.AbsDir{
 }
 
 const (
-	Redux  pathways.RelDir = "_redux"
-	DLCs   pathways.RelDir = "dlc"
-	Extras pathways.RelDir = "extras"
+	Redux      pathways.RelDir = "_redux"
+	TypeErrors pathways.RelDir = "_type_errors"
+	DLCs       pathways.RelDir = "dlc"
+	Extras     pathways.RelDir = "extras"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-	Redux:  Metadata,
-	DLCs:   Downloads,
-	Extras: Downloads,
+	Redux:      Metadata,
+	TypeErrors: Metadata,
+	DLCs:       Downloads,
+	Extras:     Downloads,
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {

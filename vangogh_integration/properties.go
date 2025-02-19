@@ -137,6 +137,11 @@ const (
 	SteamGenresProperty       = "steam-genres"
 	SteamSupportUrlProperty   = "steam-support-url"
 	SteamSupportEmailProperty = "steam-support-email"
+
+	// per-type properties
+
+	TypeErrorMessageProperty = "type-error-message"
+	TypeErrorDateProperty    = "type-error-date"
 )
 
 const (
@@ -330,6 +335,13 @@ func SteamAppDetailsProperties() []string {
 	}
 }
 
+func TypeErrorProperties() []string {
+	return []string{
+		TypeErrorMessageProperty,
+		TypeErrorDateProperty,
+	}
+}
+
 func DehydratedImagesProperties() []string {
 	return []string{
 		DehydratedImageProperty,
@@ -512,7 +524,7 @@ var supportedProperties = map[ProductType][]string{
 		PreOrderProperty,
 		InDevelopmentProperty,
 	},
-	SteamReviews: {
+	SteamAppReviews: {
 		SteamReviewScoreDescProperty,
 	},
 	SteamDeckCompatibilityReport: {

@@ -6,16 +6,11 @@ func IsGOGPagedProduct(pt ProductType) bool {
 
 func IsArrayProduct(pt ProductType) bool {
 	return IsGOGArrayProduct(pt) ||
-		IsSteamArrayProduct(pt) ||
 		IsHLTBArrayProduct(pt)
 }
 
 func IsGOGArrayProduct(pt ProductType) bool {
 	return containsProductType(GOGArrayProducts(), pt)
-}
-
-func IsSteamArrayProduct(pt ProductType) bool {
-	return containsProductType(SteamArrayProducts(), pt)
 }
 
 func IsHLTBArrayProduct(pt ProductType) bool {
@@ -37,8 +32,7 @@ func IsSteamDetailProduct(pt ProductType) bool {
 }
 
 func IsSteamProduct(pt ProductType) bool {
-	return IsSteamArrayProduct(pt) ||
-		IsSteamDetailProduct(pt)
+	return IsSteamDetailProduct(pt)
 }
 
 func IsPCGWDetailProduct(pt ProductType) bool {

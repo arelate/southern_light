@@ -28,10 +28,9 @@ const (
 	GamesDbGogProducts
 	GamesDbGenericProducts
 	// Steam product types
-	SteamAppList
 	SteamAppDetails
 	SteamAppNews
-	SteamReviews
+	SteamAppReviews
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
 	PCGWPageId
@@ -64,10 +63,9 @@ var productTypeStrings = map[ProductType]string{
 	GamesDbGogProducts:     "gamesdb-gog-products",
 	GamesDbGenericProducts: "gamesdb-generic-products",
 	// Steam product types
-	SteamAppList:                 "steam-app-list",
 	SteamAppDetails:              "steam-app-details",
 	SteamAppNews:                 "steam-app-news",
-	SteamReviews:                 "steam-reviews",
+	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
 	PCGWPageId:        "pcgw-pageid",
@@ -171,7 +169,7 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 		CatalogProducts,
 		AccountProducts,
 	},
-	SteamReviews: {
+	SteamAppReviews: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -213,10 +211,6 @@ var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
 
 func GOGDetailProducts() []ProductType {
 	return slices.Collect(maps.Keys(gogDetailMainProductTypes))
-}
-
-func SteamArrayProducts() []ProductType {
-	return []ProductType{SteamAppList}
 }
 
 func SteamDetailProducts() []ProductType {
@@ -278,8 +272,7 @@ func GOGRemoteProducts() []ProductType {
 }
 
 func SteamRemoteProducts() []ProductType {
-	remote := SteamArrayProducts()
-	return append(remote, SteamDetailProducts()...)
+	return SteamDetailProducts()
 }
 
 func PCGWRemoteProducts() []ProductType {
@@ -348,10 +341,9 @@ var supportsGetItems = []ProductType{
 	Licences,
 	UserWishlist,
 	GamesDbGogProducts,
-	SteamAppList,
 	SteamAppNews,
-	SteamReviews,
-	//SteamAppDetails,
+	SteamAppReviews,
+	SteamAppDetails,
 	SteamDeckCompatibilityReport,
 	PCGWPageId,
 	PCGWEngine,

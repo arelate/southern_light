@@ -136,11 +136,6 @@ func (pr *ProductReader) Order(id string) (order *gog_integration.Order, err err
 	return order, err
 }
 
-func (pr *ProductReader) SteamAppList() (steamAppListResponse *steam_integration.GetAppListResponse, err error) {
-	err = pr.readValue(SteamAppList.String(), &steamAppListResponse)
-	return steamAppListResponse, err
-}
-
 func (pr *ProductReader) SteamGetAppNewsResponse(id string) (steamAppNewsResponse *steam_integration.GetNewsForAppResponse, err error) {
 	err = pr.readValue(id, &steamAppNewsResponse)
 	return steamAppNewsResponse, err
@@ -239,10 +234,8 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.Licences()
 	case SteamAppNews:
 		return pr.SteamGetAppNewsResponse(key)
-	case SteamReviews:
+	case SteamAppReviews:
 		return pr.SteamAppReviews(key)
-	case SteamAppList:
-		return pr.SteamAppList()
 	case SteamDeckCompatibilityReport:
 		return pr.SteamDeckAppCompatibilityReport(key)
 	case PCGWPageId:
