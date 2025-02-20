@@ -107,12 +107,12 @@ const (
 	HltbReviewScoreProperty                   = "hltb-review-score"
 	HltbGenresProperty                        = "hltb-genres"
 	HltbPlatformsProperty                     = "hltb-platforms"
-	IGDBIdProperty                            = "igdb-id"
+	IgdbIdProperty                            = "igdb-id"
 	StrategyWikiIdProperty                    = "strategy-wiki-id"
 	MobyGamesIdProperty                       = "moby-games-id"
 	WikipediaIdProperty                       = "wikipedia-id"
 	WineHQIdProperty                          = "winehq-id"
-	VNDBIdProperty                            = "vndb-id"
+	VndbIdProperty                            = "vndb-id"
 	IGNWikiSlugProperty                       = "ign-wiki-slug"
 	EnginesProperty                           = "engines"
 	EnginesBuildsProperty                     = "engines-builds"
@@ -307,12 +307,12 @@ func ExternalDataSourcesProperties() []string {
 		PcgwPageIdProperty,
 		HltbIdProperty,
 		HltbBuildIdProperty,
-		IGDBIdProperty,
+		IgdbIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
 		WikipediaIdProperty,
 		WineHQIdProperty,
-		VNDBIdProperty,
+		VndbIdProperty,
 		IGNWikiSlugProperty,
 		ProtonDBTierProperty,
 		ProtonDBConfidenceProperty,
@@ -645,7 +645,10 @@ var supportedProperties = map[ProductType][]string{
 	SteamDeckCompatibilityReport: {
 		SteamDeckAppCompatibilityCategoryProperty,
 	},
-	PcgwPageId: {
+	PcgwSteamPageId: {
+		PcgwPageIdProperty,
+	},
+	PcgwGogPageId: {
 		PcgwPageIdProperty,
 	},
 	PcgwEngine: {
@@ -655,12 +658,12 @@ var supportedProperties = map[ProductType][]string{
 	PcgwExternalLinks: {
 		SteamAppIdProperty,
 		HltbIdProperty,
-		IGDBIdProperty,
+		IgdbIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
 		WikipediaIdProperty,
 		WineHQIdProperty,
-		VNDBIdProperty,
+		VndbIdProperty,
 	},
 	HltbRootPage: {
 		HltbBuildIdProperty,
@@ -756,9 +759,9 @@ func getPropertyValues(value interface{}, property string) []string {
 		if gfu, ok := value.(gog_integration.ForumUrlGetter); ok {
 			return getSlice(gfu.GetForumUrl)
 		}
-	case IGDBIdProperty:
-		if gii, ok := value.(pcgw_integration.IGDBIdGetter); ok {
-			return getSlice(gii.GetIGDBId)
+	case IgdbIdProperty:
+		if gii, ok := value.(pcgw_integration.IgdbIdGetter); ok {
+			return getSlice(gii.GetIgdbId)
 		}
 	case IGNWikiSlugProperty:
 		if gis, ok := value.(ign_integration.IGNWikiSlugGetter); ok {
@@ -936,9 +939,9 @@ func getPropertyValues(value interface{}, property string) []string {
 		}
 	case VideoIdProperty:
 		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
-	case VNDBIdProperty:
-		if gvi, ok := value.(pcgw_integration.VNDBIdGetter); ok {
-			return getSlice(gvi.GetVNDBId)
+	case VndbIdProperty:
+		if gvi, ok := value.(pcgw_integration.VndbIdGetter); ok {
+			return getSlice(gvi.GetVndbId)
 		}
 	case WikipediaIdProperty:
 		if gwi, ok := value.(pcgw_integration.WikipediaIdGetter); ok {

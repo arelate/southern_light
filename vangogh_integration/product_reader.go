@@ -7,7 +7,6 @@ import (
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/arelate/southern_light/hltb_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
-	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/net/html"
@@ -158,11 +157,6 @@ func (pr *ProductReader) SteamDeckAppCompatibilityReport(id string) (deckAppComp
 	return deckAppCompatibilityReport, err
 }
 
-func (pr *ProductReader) ProtonDBSummary(id string) (summary *protondb_integration.Summary, err error) {
-	err = pr.readValue(id, &summary)
-	return summary, err
-}
-
 func (pr *ProductReader) UserWishlistProduct(id string) (userWishlistProduct string, err error) {
 	userWishlistProduct, err = id, nil
 	return userWishlistProduct, err
@@ -186,11 +180,6 @@ func (pr *ProductReader) HltbRootPage() (*hltb_integration.RootPage, error) {
 func (pr *ProductReader) HltbData(id string) (data *hltb_integration.Data, err error) {
 	err = pr.readValue(id, &data)
 	return data, err
-}
-
-func (pr *ProductReader) PcgwPageId(id string) (ps *pcgw_integration.PageId, err error) {
-	err = pr.readValue(id, &ps)
-	return ps, err
 }
 
 func (pr *ProductReader) PcgwEngine(id string) (e *pcgw_integration.Engine, err error) {
@@ -238,8 +227,6 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.SteamAppReviews(key)
 	case SteamDeckCompatibilityReport:
 		return pr.SteamDeckAppCompatibilityReport(key)
-	case PcgwPageId:
-		return pr.PcgwPageId(key)
 	case PcgwEngine:
 		return pr.PcgwEngine(key)
 	case PcgwExternalLinks:
@@ -248,8 +235,6 @@ func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 		return pr.HltbRootPage()
 	case HltbData:
 		return pr.HltbData(key)
-	case ProtonDbSummary:
-		return pr.ProtonDBSummary(key)
 	case GamesDbGogProducts:
 		return pr.GamesDbProduct(key)
 	default:

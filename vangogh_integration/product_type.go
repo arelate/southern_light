@@ -32,7 +32,8 @@ const (
 	SteamAppReviews
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
-	PcgwPageId
+	PcgwSteamPageId
+	PcgwGogPageId
 	PcgwEngine
 	PcgwExternalLinks
 	// HLTB product types
@@ -66,7 +67,8 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
-	PcgwPageId:        "pcgw-pageid",
+	PcgwSteamPageId:   "pcgw-steam-page-id",
+	PcgwGogPageId:     "pcgw-gog-page-id",
 	PcgwEngine:        "pcgw-engine",
 	PcgwExternalLinks: "pcgw-external-links",
 	// HLTB product types
@@ -174,7 +176,11 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 
 var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 	//PCGamingWiki product types are updated on GOG.com store or account product changes
-	PcgwPageId: {
+	PcgwSteamPageId: {
+		CatalogProducts,
+		AccountProducts,
+	},
+	PcgwGogPageId: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -337,7 +343,8 @@ var supportsGetItems = []ProductType{
 	SteamAppReviews,
 	SteamAppDetails,
 	SteamDeckCompatibilityReport,
-	PcgwPageId,
+	PcgwSteamPageId,
+	PcgwGogPageId,
 	PcgwEngine,
 	PcgwExternalLinks,
 	HltbRootPage,

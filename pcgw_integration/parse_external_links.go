@@ -38,8 +38,8 @@ type HltbIdGetter interface {
 	GetHltbId() string
 }
 
-type IGDBIdGetter interface {
-	GetIGDBId() string
+type IgdbIdGetter interface {
+	GetIgdbId() string
 }
 
 type StrategyWikiIdGetter interface {
@@ -58,8 +58,8 @@ type WineHQIdGetter interface {
 	GetWineHQId() string
 }
 
-type VNDBIdGetter interface {
-	GetVNDBId() string
+type VndbIdGetter interface {
+	GetVndbId() string
 }
 
 func extractSteamAppId(link, pfx string) uint32 {
@@ -112,7 +112,7 @@ func (pel *ParseExternalLinks) GetHltbId() string {
 	return pel.externalLinkSuffixId(hltbPrefix)
 }
 
-func (pel *ParseExternalLinks) GetIGDBId() string {
+func (pel *ParseExternalLinks) GetIgdbId() string {
 	return pel.externalLinkSuffixId(igdbPrefix)
 }
 
@@ -124,7 +124,7 @@ func (pel *ParseExternalLinks) GetWineHQId() string {
 	return pel.externalLinkSuffixId(wineHQPrefix)
 }
 
-func (pel *ParseExternalLinks) GetVNDBId() string {
+func (pel *ParseExternalLinks) GetVndbId() string {
 	return pel.externalLinkSuffixId(vndbPrefix)
 }
 

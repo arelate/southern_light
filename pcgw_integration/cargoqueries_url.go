@@ -15,7 +15,7 @@ const (
 	formatParam = "format"
 )
 
-func PageIdCargoQueryUrl(gogId string) *url.URL {
+func GogPageIdCargoQueryUrl(gogId string) *url.URL {
 
 	u := &url.URL{
 		Scheme: southern_light.HttpsScheme,
@@ -28,6 +28,25 @@ func PageIdCargoQueryUrl(gogId string) *url.URL {
 	q.Set(tablesParam, "Infobox_game")
 	q.Set(fieldsParam, "_pageID=PageID")
 	q.Set(whereParam, fmt.Sprintf("Infobox_game.GOGcom_ID HOLDS \"%s\"", gogId))
+	q.Set(formatParam, "json")
+	u.RawQuery = q.Encode()
+
+	return u
+}
+
+func SteamPageIdCargoQueryUrl(steamAppId string) *url.URL {
+
+	u := &url.URL{
+		Scheme: southern_light.HttpsScheme,
+		Host:   pcgwHost,
+		Path:   apiPath,
+	}
+
+	q := u.Query()
+	q.Set(actionParam, "cargoquery")
+	q.Set(tablesParam, "Infobox_game")
+	q.Set(fieldsParam, "_pageID=PageID")
+	q.Set(whereParam, fmt.Sprintf("Infobox_game.Steam_AppID HOLDS \"%s\"", steamAppId))
 	q.Set(formatParam, "json")
 	u.RawQuery = q.Encode()
 
