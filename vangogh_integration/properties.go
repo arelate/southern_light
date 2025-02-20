@@ -448,6 +448,30 @@ func SteamDeckCompatibilityReportProperties() []string {
 	}
 }
 
+func PcgwPageIdProperties() []string {
+	return []string{
+		PcgwPageIdProperty,
+	}
+}
+
+func PcgwExternalLinksProperties() []string {
+	return []string{
+		HltbIdProperty,
+		IgdbIdProperty,
+		MobyGamesIdProperty,
+		VndbIdProperty,
+		WikipediaIdProperty,
+		StrategyWikiIdProperty,
+	}
+}
+
+func PcgwEngineProperties() []string {
+	return []string{
+		EnginesProperty,
+		EnginesBuildsProperty,
+	}
+}
+
 func ProtonDbSummaryProperties() []string {
 	return []string{
 		ProtonDBTierProperty,
@@ -514,6 +538,10 @@ func ReduxProperties() []string {
 	all = append(all, SteamAppDetailsProperties()...)
 	all = append(all, SteamAppReviewsProperties()...)
 	all = append(all, SteamDeckCompatibilityReportProperties()...)
+
+	all = append(all, PcgwPageIdProperties()...)
+	all = append(all, PcgwExternalLinksProperties()...)
+	all = append(all, PcgwEngineProperties()...)
 
 	all = append(all, ProtonDbSummaryProperties()...)
 
