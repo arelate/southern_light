@@ -12,9 +12,9 @@ type HltbUrlProvider struct {
 }
 
 func NewHltbUrlProvider(pt ProductType, rdx redux.Readable) (*HltbUrlProvider, error) {
-	if err := rdx.MustHave(HltbBuildIdProperty, HltbIdProperty); err != nil {
-		return nil, err
-	}
+	//if err := rdx.MustHave(HltbBuildIdProperty, HltbIdProperty); err != nil {
+	//	return nil, err
+	//}
 
 	return &HltbUrlProvider{
 		pt:  pt,
@@ -34,11 +34,11 @@ func (hup *HltbUrlProvider) Url(gogId string) *url.URL {
 	case HltbRootPage:
 		return hltb_integration.RootUrl()
 	case HltbData:
-		if buildId, ok := hup.rdx.GetLastVal(HltbBuildIdProperty, HltbRootPage.String()); ok {
-			if hltbId := hup.GogIdToHltbId(gogId); hltbId != "" {
-				return hltb_integration.DataUrl(buildId, hltbId)
-			}
-		}
+		//if buildId, ok := hup.rdx.GetLastVal(HltbBuildIdProperty, HltbRootPage.String()); ok {
+		//	if hltbId := hup.GogIdToHltbId(gogId); hltbId != "" {
+		//		return hltb_integration.DataUrl(buildId, hltbId)
+		//	}
+		//}
 	}
 	return nil
 }

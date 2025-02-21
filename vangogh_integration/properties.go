@@ -99,25 +99,27 @@ const (
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
 	PcgwPageIdProperty                        = "pcgw-page-id"
-	HltbIdProperty                            = "hltb-id"
-	HltbBuildIdProperty                       = "hltb-next-build"
-	HltbHoursToCompleteMainProperty           = "hltb-comp-main"
-	HltbHoursToCompletePlusProperty           = "hltb-comp-plus"
-	HltbHoursToComplete100Property            = "hltb-comp-100"
-	HltbReviewScoreProperty                   = "hltb-review-score"
-	HltbGenresProperty                        = "hltb-genres"
-	HltbPlatformsProperty                     = "hltb-platforms"
-	IgdbIdProperty                            = "igdb-id"
-	StrategyWikiIdProperty                    = "strategy-wiki-id"
-	MobyGamesIdProperty                       = "moby-games-id"
-	WikipediaIdProperty                       = "wikipedia-id"
-	WineHQIdProperty                          = "winehq-id"
-	VndbIdProperty                            = "vndb-id"
-	IGNWikiSlugProperty                       = "ign-wiki-slug"
-	EnginesProperty                           = "engines"
-	EnginesBuildsProperty                     = "engines-builds"
-	ProtonDBTierProperty                      = "protondb-tier"
-	ProtonDBConfidenceProperty                = "protondb-confidence"
+
+	//HltbBuildIdProperty                       = "hltb-next-build"
+
+	HltbIdProperty                  = "hltb-id"
+	HltbHoursToCompleteMainProperty = "hltb-comp-main"
+	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
+	HltbHoursToComplete100Property  = "hltb-comp-100"
+	HltbReviewScoreProperty         = "hltb-review-score"
+	HltbGenresProperty              = "hltb-genres"
+	HltbPlatformsProperty           = "hltb-platforms"
+	IgdbIdProperty                  = "igdb-id"
+	StrategyWikiIdProperty          = "strategy-wiki-id"
+	MobyGamesIdProperty             = "moby-games-id"
+	WikipediaIdProperty             = "wikipedia-id"
+	WineHQIdProperty                = "winehq-id"
+	VndbIdProperty                  = "vndb-id"
+	IGNWikiSlugProperty             = "ign-wiki-slug"
+	EnginesProperty                 = "engines"
+	EnginesBuildsProperty           = "engines-builds"
+	ProtonDBTierProperty            = "protondb-tier"
+	ProtonDBConfidenceProperty      = "protondb-confidence"
 
 	// new get-data redux properties
 	LicencesProperty     = "licences"
@@ -306,7 +308,6 @@ func ExternalDataSourcesProperties() []string {
 		SteamDeckAppCompatibilityCategoryProperty,
 		PcgwPageIdProperty,
 		HltbIdProperty,
-		HltbBuildIdProperty,
 		IgdbIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -472,6 +473,18 @@ func PcgwEngineProperties() []string {
 	}
 }
 
+func HltbDataProperties() []string {
+	return []string{
+		HltbHoursToCompleteMainProperty,
+		HltbHoursToCompletePlusProperty,
+		HltbHoursToComplete100Property,
+		HltbReviewScoreProperty,
+		HltbGenresProperty,
+		HltbPlatformsProperty,
+		IGNWikiSlugProperty,
+	}
+}
+
 func ProtonDbSummaryProperties() []string {
 	return []string{
 		ProtonDBTierProperty,
@@ -542,6 +555,8 @@ func ReduxProperties() []string {
 	all = append(all, PcgwPageIdProperties()...)
 	all = append(all, PcgwExternalLinksProperties()...)
 	all = append(all, PcgwEngineProperties()...)
+
+	all = append(all, HltbDataProperties()...)
 
 	all = append(all, ProtonDbSummaryProperties()...)
 
@@ -693,9 +708,6 @@ var supportedProperties = map[ProductType][]string{
 		WineHQIdProperty,
 		VndbIdProperty,
 	},
-	HltbRootPage: {
-		HltbBuildIdProperty,
-	},
 	HltbData: {
 		HltbHoursToCompleteMainProperty,
 		HltbHoursToCompletePlusProperty,
@@ -793,7 +805,7 @@ func getPropertyValues(value interface{}, property string) []string {
 		}
 	case IGNWikiSlugProperty:
 		if gis, ok := value.(ign_integration.IGNWikiSlugGetter); ok {
-			return getSlice(gis.GetIGNWikiSlug)
+			return getSlice(gis.GetIgnWikiSlug)
 		}
 	case ImageProperty:
 		if gi, ok := value.(gog_integration.ImageGetter); ok {
@@ -850,10 +862,6 @@ func getPropertyValues(value interface{}, property string) []string {
 	case HltbIdProperty:
 		if ghi, ok := value.(pcgw_integration.HltbIdGetter); ok {
 			return getSlice(ghi.GetHltbId)
-		}
-	case HltbBuildIdProperty:
-		if gbi, ok := value.(hltb_integration.BuildIdGetter); ok {
-			return getSlice(gbi.GetBuildId)
 		}
 	case HltbHoursToCompleteMainProperty:
 		if ghcm, ok := value.(hltb_integration.HoursToCompleteMainGetter); ok {

@@ -249,6 +249,6 @@ func (d *Data) GetGlobalRelease() string {
 	return ""
 }
 
-func (d *Data) GetIGNWikiSlug() string {
+func (d *Data) GetIgnWikiSlug() string {
 	return d.PageProps.IgnWikiSlug
 }
