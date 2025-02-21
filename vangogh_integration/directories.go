@@ -88,7 +88,7 @@ func AbsItemPath(path string) (string, error) {
 }
 
 func AbsProductTypeDir(pt ProductType) (string, error) {
-	if !IsValidProductType(pt) {
+	if pt == UnknownProductType {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
 	amd, err := pathways.GetAbsDir(Metadata)

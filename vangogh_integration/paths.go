@@ -74,11 +74,6 @@ func relRecycleBinPath(p string) (string, error) {
 	return filepath.Rel(rbdp, p)
 }
 
-func AbsSkipListPath() (string, error) {
-	ifdp, err := pathways.GetAbsDir(Input)
-	return filepath.Join(ifdp, skipListFilename), err
-}
-
 func AbsLocalImagePath(imageId string) (string, error) {
 	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
 	idp, err := AbsImagesDirByImageId(imageId)

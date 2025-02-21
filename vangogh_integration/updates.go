@@ -1,7 +1,6 @@
 package vangogh_integration
 
 import (
-	"fmt"
 	"github.com/boggydigital/kevlar"
 	"iter"
 )
@@ -21,25 +20,26 @@ var interestingUpdatedProductTypes = map[ProductType]bool{
 func Updates(since int64) (map[string]map[string]bool, error) {
 	updates := make(map[string]map[string]bool)
 
-	for _, pt := range LocalProducts() {
-
-		vr, err := NewProductReader(pt)
-		if err != nil {
-			return nil, err
-		}
-
-		if interestingNewProductTypes[pt] {
-			categorize(vr.Since(since, kevlar.Create),
-				fmt.Sprintf("new in %s", pt.HumanReadableString()),
-				updates)
-		}
-
-		if interestingUpdatedProductTypes[pt] {
-			categorize(vr.Since(since, kevlar.Create, kevlar.Update),
-				fmt.Sprintf("updates in %s", pt.HumanReadableString()),
-				updates)
-		}
-	}
+	// TODO: rewrite this with the new data model
+	//for _, pt := range LocalProducts() {
+	//
+	//	vr, err := NewProductReader(pt)
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//
+	//	if interestingNewProductTypes[pt] {
+	//		categorize(vr.Since(since, kevlar.Create),
+	//			fmt.Sprintf("new in %s", pt.HumanReadableString()),
+	//			updates)
+	//	}
+	//
+	//	if interestingUpdatedProductTypes[pt] {
+	//		categorize(vr.Since(since, kevlar.Create, kevlar.Update),
+	//			fmt.Sprintf("updates in %s", pt.HumanReadableString()),
+	//			updates)
+	//	}
+	//}
 
 	return updates, nil
 }
