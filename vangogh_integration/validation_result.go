@@ -26,8 +26,8 @@ var validationResultsStrings = map[ValidationResult]string{
 
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
 	ValidationResultUnknown:        "Not Validated",
-	ValidatedSuccessfully:          "Successfully Validated",
-	ValidatedWithGeneratedChecksum: "Validated with Generated Checksum",
+	ValidatedSuccessfully:          "Validated OK",
+	ValidatedWithGeneratedChecksum: "Validated Gen-OK",
 	ValidatedUnresolvedManualUrl:   "Unresolved Manual-Url",
 	ValidatedMissingLocalFile:      "Missing Local File",
 	ValidatedMissingChecksum:       "Missing Checksum",
