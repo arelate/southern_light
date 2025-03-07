@@ -19,6 +19,7 @@ type CatalogProduct struct {
 	Developers            []string               `json:"developers"`
 	Publishers            []string               `json:"publishers"`
 	Features              []NameSlug             `json:"features"`
+	Editions              []Edition              `json:"editions"`
 	Genres                []NameSlug             `json:"genres"`
 	ProductType           string                 `json:"productType"`
 	ReleaseDate           *string                `json:"releaseDate"`
@@ -32,6 +33,12 @@ type CatalogProduct struct {
 	UserPreferredLanguage *UserPreferredLanguage `json:"userPreferredLanguage"`
 	Price                 CatalogPrice           `json:"price"`
 	StoreLink             string                 `json:"storeLink"`
+}
+
+type Edition struct {
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	IsRootEdition bool   `json:"isRootEdition"`
 }
 
 type AmountCurrency struct {
@@ -180,3 +187,11 @@ func (cp *CatalogProduct) GetInDevelopment() bool {
 }
 
 func (cp *CatalogProduct) GetStoreLink() string { return cp.StoreLink }
+
+func (cp *CatalogProduct) GetEditions() []string {
+	eds := make([]string, 0, len(cp.Editions))
+	for _, ed := range cp.Editions {
+		eds = append(eds, strconv.Itoa(ed.Id))
+	}
+	return eds
+}

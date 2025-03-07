@@ -29,6 +29,14 @@ func ImageId(imageUrl string) string {
 	return fnSansExt
 }
 
+func ImageIds(imageUrls ...string) []string {
+	imageIds := make([]string, 0, len(imageUrls))
+	for _, imageUrl := range imageUrls {
+		imageIds = append(imageIds, ImageId(imageUrl))
+	}
+	return imageIds
+}
+
 func ImageUrl(imageId, ext string) (*url.URL, error) {
 	if imageId == "" {
 		return nil, fmt.Errorf("gog_urls: empty image-id")

@@ -67,9 +67,12 @@ const (
 	CopyrightsProperty                 = "copyrights"
 
 	//WishlistedProperty                        = "wishlisted"
-	//OwnedProperty                             = "owned"
 
-	ProductTypeProperty                       = "product-type"
+	OwnedProperty = "owned"
+
+	ProductTypeProperty = "product-type"
+	EditionsProperty    = "editions"
+
 	InDevelopmentProperty                     = "in-development"
 	PreOrderProperty                          = "pre-order"
 	ComingSoonProperty                        = "coming-soon"
@@ -339,6 +342,7 @@ func GOGCatalogPageProperties() []string {
 		PreOrderProperty,
 		InDevelopmentProperty,
 		IsDemoProperty,
+		EditionsProperty,
 	}
 }
 
@@ -486,6 +490,12 @@ func ProtonDbSummaryProperties() []string {
 	}
 }
 
+func OwnedProperties() []string {
+	return []string{
+		OwnedProperty,
+	}
+}
+
 func TypeErrorProperties() []string {
 	return []string{
 		TypeErrorMessageProperty,
@@ -553,6 +563,8 @@ func ReduxProperties() []string {
 	all = append(all, HltbDataProperties()...)
 
 	all = append(all, ProtonDbSummaryProperties()...)
+
+	all = append(all, OwnedProperties()...)
 
 	all = append(all, SyncProperties()...)
 	all = append(all, StatusValidationResultsProperties()...)
