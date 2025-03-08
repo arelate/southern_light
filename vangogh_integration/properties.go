@@ -43,6 +43,9 @@ const (
 	DownloadTypeProperty      = "download-type"
 	NoPatchesProperty         = "no-patches"
 
+	AccountPageProductsProperty = "account-page-products"
+	CatalogPageProductsProperty = "catalog-page-products"
+	OrderPageProductsProperty   = "order-page-products"
 	//LanguageNameProperty               = "lang-name"
 	//NativeLanguageNameProperty         = "native-lang-name"
 
@@ -343,12 +346,14 @@ func GOGCatalogPageProperties() []string {
 		InDevelopmentProperty,
 		IsDemoProperty,
 		EditionsProperty,
+		CatalogPageProductsProperty,
 	}
 }
 
 func GOGOrderPageProperties() []string {
 	return []string{
 		GOGOrderDateProperty,
+		OrderPageProductsProperty,
 	}
 }
 
@@ -356,6 +361,7 @@ func GOGAccountPageProperties() []string {
 	return []string{
 		TagIdProperty,
 		TagNameProperty,
+		AccountPageProductsProperty,
 	}
 }
 

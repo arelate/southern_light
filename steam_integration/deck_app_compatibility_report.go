@@ -1,17 +1,19 @@
 package steam_integration
 
 type DeckAppCompatibilityReport struct {
-	Success int `json:"success"`
-	Results struct {
-		AppID            uint32 `json:"appid"`
-		ResolvedCategory int    `json:"resolved_category"`
-		ResolvedItems    []struct {
-			DisplayType int    `json:"display_type"`
-			LocToken    string `json:"loc_token"`
-		} `json:"resolved_items"`
-		SteamDeckBlogUrl string      `json:"steam_deck_blog_url"`
-		SearchId         interface{} `json:"search_id"`
-	} `json:"results"`
+	Success int                         `json:"success"`
+	Results DeckAppCompatibilityResults `json:"results"`
+}
+
+type DeckAppCompatibilityResults struct {
+	AppID            uint32 `json:"appid"`
+	ResolvedCategory int    `json:"resolved_category"`
+	ResolvedItems    []struct {
+		DisplayType int    `json:"display_type"`
+		LocToken    string `json:"loc_token"`
+	} `json:"resolved_items"`
+	SteamDeckBlogUrl string      `json:"steam_deck_blog_url"`
+	SearchId         interface{} `json:"search_id"`
 }
 
 func (dacr *DeckAppCompatibilityReport) IsSuccess() bool {
