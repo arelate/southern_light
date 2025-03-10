@@ -1,7 +1,6 @@
 package vangogh_integration
 
 import (
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 )
 
@@ -89,20 +88,22 @@ func RemoveFromLocalWishlist(
 		}
 	}
 
-	ptDir, err := AbsProductTypeDir(UserWishlistProducts)
-	if err != nil {
-		return processedIds, err
-	}
-	kvPt, err := kevlar.New(ptDir, kevlar.JsonExt)
-	if err != nil {
-		return processedIds, err
-	}
+	// TODO: rewrite with UserWishlist property
 
-	for _, id := range processedIds {
-		if err = kvPt.Cut(id); err != nil {
-			return processedIds, err
-		}
-	}
+	//ptDir, err := AbsProductTypeDir(UserWishlistProducts)
+	//if err != nil {
+	//	return processedIds, err
+	//}
+	//kvPt, err := kevlar.New(ptDir, kevlar.JsonExt)
+	//if err != nil {
+	//	return processedIds, err
+	//}
+	//
+	//for _, id := range processedIds {
+	//	if err = kvPt.Cut(id); err != nil {
+	//		return processedIds, err
+	//	}
+	//}
 
 	// don't check err because we're immediately returning it
 	return processedIds, err

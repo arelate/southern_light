@@ -6,15 +6,14 @@ import (
 )
 
 var gogProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
-	CatalogPage:            gog_integration.CatalogPageUrl,
-	AccountPage:            gog_integration.AccountPageUrl,
-	UserWishlist:           gog_integration.DefaultUserWishlistUrl,
-	Details:                gog_integration.DetailsUrl,
-	ApiProducts:            gog_integration.ApiProductUrl,
-	Licences:               gog_integration.DefaultLicencesUrl,
-	OrderPage:              gog_integration.OrdersPageUrl,
-	GamesDbGogProducts:     gog_integration.GamesDbGogExternalReleaseUrl,
-	GamesDbGenericProducts: gog_integration.GamesDbGenericExternalReleaseUrl,
+	CatalogPage:        gog_integration.CatalogPageUrl,
+	AccountPage:        gog_integration.AccountPageUrl,
+	UserWishlist:       gog_integration.DefaultUserWishlistUrl,
+	Details:            gog_integration.DetailsUrl,
+	ApiProducts:        gog_integration.ApiProductUrl,
+	Licences:           gog_integration.DefaultLicencesUrl,
+	OrderPage:          gog_integration.OrdersPageUrl,
+	GamesDbGogProducts: gog_integration.GamesDbGogExternalReleaseUrl,
 }
 
 type GOGUrlProvider struct {

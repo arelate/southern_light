@@ -11,29 +11,23 @@ const (
 	UnknownProductType ProductType = iota
 	// GOG.com product types
 	CatalogPage
-	CatalogProducts
 	AccountPage
-	AccountProducts
 	UserWishlist
-	UserWishlistProducts
 	Details
 	ApiProducts
 	Licences
 	OrderPage
-	Orders
 	UserAccessToken
-	DreamlistPage
 	// GamesDB (GOG Galaxy)
 	GamesDbGogProducts
-	GamesDbGenericProducts
 	// Steam product types
 	SteamAppDetails
 	SteamAppNews
 	SteamAppReviews
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
-	PcgwSteamPageId
 	PcgwGogPageId
+	PcgwSteamPageId
 	PcgwEngine
 	PcgwExternalLinks
 	// HLTB product types
@@ -104,23 +98,4 @@ func ParseProductType(productType string) ProductType {
 		}
 	}
 	return UnknownProductType
-}
-
-var supportedImageTypes = map[ProductType][]ImageType{
-	CatalogProducts: {Image, Screenshots},
-	AccountProducts: {Image},
-	ApiProducts:     {Image, Screenshots, Hero, Logo},
-}
-
-func ProductTypesSupportingImageType(imageType ImageType) []ProductType {
-	pts := make([]ProductType, 0)
-	for pt, its := range supportedImageTypes {
-		for _, it := range its {
-			if it == imageType {
-				pts = append(pts, pt)
-				break
-			}
-		}
-	}
-	return pts
 }

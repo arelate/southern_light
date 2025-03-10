@@ -85,16 +85,6 @@ func (pr *ProductReader) Since(ts int64, mts ...kevlar.MutationType) iter.Seq2[s
 	return pr.keyValues.Since(ts, mts...)
 }
 
-func (pr *ProductReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {
-	err = pr.readValue(id, &catalogProduct)
-	return catalogProduct, err
-}
-
-func (pr *ProductReader) AccountProduct(id string) (accountProduct *gog_integration.AccountProduct, err error) {
-	err = pr.readValue(id, &accountProduct)
-	return accountProduct, err
-}
-
 func (pr *ProductReader) Details(id string) (details *gog_integration.Details, err error) {
 	err = pr.readValue(id, &details)
 	return details, err
@@ -130,11 +120,6 @@ func (pr *ProductReader) OrderPage(page string) (orderPage *gog_integration.Orde
 	return orderPage, err
 }
 
-func (pr *ProductReader) Order(id string) (order *gog_integration.Order, err error) {
-	err = pr.readValue(id, &order)
-	return order, err
-}
-
 func (pr *ProductReader) SteamGetAppNewsResponse(id string) (steamAppNewsResponse *steam_integration.GetNewsForAppResponse, err error) {
 	err = pr.readValue(id, &steamAppNewsResponse)
 	return steamAppNewsResponse, err
@@ -155,11 +140,6 @@ func (pr *ProductReader) SteamDeckAppCompatibilityReport(id string) (deckAppComp
 		}
 	}
 	return deckAppCompatibilityReport, err
-}
-
-func (pr *ProductReader) UserWishlistProduct(id string) (userWishlistProduct string, err error) {
-	userWishlistProduct, err = id, nil
-	return userWishlistProduct, err
 }
 
 func (pr *ProductReader) HltbRootPage() (*hltb_integration.RootPage, error) {
@@ -199,24 +179,16 @@ func (pr *ProductReader) GamesDbProduct(id string) (gdp *gog_integration.GamesDb
 
 func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 	switch pr.productType {
-	case CatalogProducts:
-		return pr.CatalogProduct(key)
-	case AccountProducts:
-		return pr.AccountProduct(key)
 	case Details:
 		return pr.Details(key)
 	case ApiProducts:
 		return pr.ApiProductV2(key)
-	case Orders:
-		return pr.Order(key)
 	case CatalogPage:
 		return pr.CatalogPage(key)
 	case AccountPage:
 		return pr.AccountPage(key)
 	case UserWishlist:
 		return pr.UserWishlist()
-	case UserWishlistProducts:
-		return pr.UserWishlistProduct(key)
 	case OrderPage:
 		return pr.OrderPage(key)
 	case Licences:
