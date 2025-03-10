@@ -10,16 +10,16 @@ import (
 const DefaultRootDir = "/var/lib/vangogh"
 
 const (
-	Backups    pathways.AbsDir = "backups"
-	Metadata   pathways.AbsDir = "metadata"
-	Input      pathways.AbsDir = "input"
-	Output     pathways.AbsDir = "output"
-	Images     pathways.AbsDir = "images"
-	Items      pathways.AbsDir = "items"
-	Downloads  pathways.AbsDir = "downloads"
-	Checksums  pathways.AbsDir = "checksums"
-	RecycleBin pathways.AbsDir = "recycle_bin"
-	Logs       pathways.AbsDir = "logs"
+	Backups           pathways.AbsDir = "backups"
+	Metadata          pathways.AbsDir = "metadata"
+	Input             pathways.AbsDir = "input"
+	Output            pathways.AbsDir = "output"
+	Images            pathways.AbsDir = "images"
+	DescriptionImages pathways.AbsDir = "description_images"
+	Downloads         pathways.AbsDir = "downloads"
+	Checksums         pathways.AbsDir = "checksums"
+	RecycleBin        pathways.AbsDir = "recycle_bin"
+	Logs              pathways.AbsDir = "logs"
 )
 
 var AllAbsDirs = []pathways.AbsDir{
@@ -28,7 +28,7 @@ var AllAbsDirs = []pathways.AbsDir{
 	Input,
 	Output,
 	Images,
-	Items,
+	DescriptionImages,
 	Downloads,
 	Checksums,
 	RecycleBin,
@@ -64,9 +64,9 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 	return filepath.Join(idp, imageId[0:2]), err
 }
 
-func AbsItemPath(path string) (string, error) {
+func AbsDescriptionImagePath(path string) (string, error) {
 	if path == "" {
-		return "", fmt.Errorf("item path cannot be empty")
+		return "", fmt.Errorf("description image path cannot be empty")
 	}
 
 	//GOG.com quirk - some item URLs path has multiple slashes
@@ -76,10 +76,10 @@ func AbsItemPath(path string) (string, error) {
 		path = strings.TrimPrefix(path, "/")
 	}
 	if len(path) < 1 {
-		return "", fmt.Errorf("sanitized item path cannot be empty")
+		return "", fmt.Errorf("sanitized description image path cannot be empty")
 	}
 
-	idp, err := pathways.GetAbsDir(Items)
+	idp, err := pathways.GetAbsDir(DescriptionImages)
 	if err != nil {
 		return "", err
 	}
