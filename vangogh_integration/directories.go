@@ -5,6 +5,7 @@ import (
 	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strings"
+	"unicode/utf8"
 )
 
 const DefaultRootDir = "/var/lib/vangogh"
@@ -84,7 +85,9 @@ func AbsDescriptionImagePath(path string) (string, error) {
 		return "", err
 	}
 
-	return filepath.Join(idp, path[0:1], path), nil
+	x, _ := utf8.DecodeRuneInString(path)
+
+	return filepath.Join(idp, string(x), path), nil
 }
 
 func AbsProductTypeDir(pt ProductType) (string, error) {
