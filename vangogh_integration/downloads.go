@@ -1,8 +1,10 @@
 package vangogh_integration
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 	"log"
@@ -248,7 +250,12 @@ func MapDownloads(
 		return err
 	}
 
-	vrDetails, err := NewProductReader(Details)
+	detailsDir, err := AbsProductTypeDir(Details)
+	if err != nil {
+		return err
+	}
+
+	kvDetails, err := kevlar.New(detailsDir, kevlar.JsonExt)
 	if err != nil {
 		return err
 	}
@@ -259,16 +266,19 @@ func MapDownloads(
 
 		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
 
-		has := vrDetails.Has(id)
-
-		if !has || !ok {
+		if !kvDetails.Has(id) || !ok {
 			tpw.Increment()
 			continue
 		}
 
-		det, err := vrDetails.Details(id)
+		det, err := UnmarshalDetails(id, kvDetails)
 		if err != nil {
 			return err
+		}
+
+		if det == nil {
+			tpw.Increment()
+			continue
 		}
 
 		downloads, err := FromDetails(det, rdx)
@@ -305,4 +315,24 @@ func MapDownloads(
 	}
 
 	return nil
+}
+
+func UnmarshalDetails(id string, kvDetails kevlar.KeyValues) (*gog_integration.Details, error) {
+
+	rcDetails, err := kvDetails.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	defer rcDetails.Close()
+
+	var det gog_integration.Details
+
+	if err = json.NewDecoder(rcDetails).Decode(&det); err != nil {
+		if strings.Contains(err.Error(), "cannot unmarshal array into Go value of type gog_integration.Details") {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return &det, nil
 }

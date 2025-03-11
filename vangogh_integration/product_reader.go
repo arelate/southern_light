@@ -85,11 +85,6 @@ func (pr *ProductReader) Since(ts int64, mts ...kevlar.MutationType) iter.Seq2[s
 	return pr.keyValues.Since(ts, mts...)
 }
 
-func (pr *ProductReader) Details(id string) (details *gog_integration.Details, err error) {
-	err = pr.readValue(id, &details)
-	return details, err
-}
-
 func (pr *ProductReader) ApiProductV2(id string) (apiProductV2 *gog_integration.ApiProduct, err error) {
 	err = pr.readValue(id, &apiProductV2)
 	return apiProductV2, err
@@ -179,8 +174,6 @@ func (pr *ProductReader) GamesDbProduct(id string) (gdp *gog_integration.GamesDb
 
 func (pr *ProductReader) ReadValue(key string) (interface{}, error) {
 	switch pr.productType {
-	case Details:
-		return pr.Details(key)
 	case ApiProducts:
 		return pr.ApiProductV2(key)
 	case CatalogPage:
