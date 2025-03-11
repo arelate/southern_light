@@ -210,6 +210,7 @@ func GOGCatalogPageProperties() []string {
 		IsDemoProperty,
 		EditionsProperty,
 		CatalogPageProductsProperty,
+		UserWishlistProperty,
 	}
 }
 
