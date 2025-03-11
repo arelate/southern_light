@@ -392,6 +392,12 @@ func DehydratedImagesProperties() []string {
 	}
 }
 
+func LocalProperties() []string {
+	return []string{
+		LocalTagsProperty,
+	}
+}
+
 func SyncProperties() []string {
 	return []string{
 		LastSyncUpdatesProperty,
@@ -434,6 +440,7 @@ func ReduxProperties() []string {
 	// other properties
 
 	all = append(all, ReducedProperties()...)
+	all = append(all, LocalProperties()...)
 
 	all = append(all, VideoProperties()...)
 	all = append(all, DehydratedImagesProperties()...)
