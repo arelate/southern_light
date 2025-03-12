@@ -70,6 +70,19 @@ func ProductTypeFromUrl(u *url.URL) ProductType {
 	return ParseProductType(ValueFromUrl(u, productTypeParam))
 }
 
+func ProductTypesFromUrl(u *url.URL) []ProductType {
+	productTypes := make([]ProductType, 0)
+	if !u.Query().Has(productTypeParam) {
+		return productTypes
+	}
+	ptParam := u.Query().Get(productTypeParam)
+	pts := strings.Split(ptParam, ",")
+	for _, pt := range pts {
+		productTypes = append(productTypes, ParseProductType(pt))
+	}
+	return productTypes
+}
+
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
 	osStrings := ValuesFromUrl(u, operatingSystemParam)
 	return ParseManyOperatingSystems(osStrings)
