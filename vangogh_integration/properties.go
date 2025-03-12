@@ -320,6 +320,7 @@ func SteamDeckCompatibilityReportProperties() []string {
 func PcgwPageIdProperties() []string {
 	return []string{
 		PcgwPageIdProperty,
+		SteamAppIdProperty,
 	}
 }
 
