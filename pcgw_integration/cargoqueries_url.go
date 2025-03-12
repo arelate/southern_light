@@ -26,7 +26,7 @@ func GogPageIdCargoQueryUrl(gogId string) *url.URL {
 	q := u.Query()
 	q.Set(actionParam, "cargoquery")
 	q.Set(tablesParam, "Infobox_game")
-	q.Set(fieldsParam, "_pageID=PageID")
+	q.Set(fieldsParam, "_pageID=PageID,Steam_AppID")
 	q.Set(whereParam, fmt.Sprintf("Infobox_game.GOGcom_ID HOLDS \"%s\"", gogId))
 	q.Set(formatParam, "json")
 	u.RawQuery = q.Encode()
