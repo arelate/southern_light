@@ -2,7 +2,6 @@ package github_integration
 
 import (
 	"encoding/json"
-	"github.com/arelate/southern_light/vangogh_integration"
 	"github.com/boggydigital/kevlar"
 	"path"
 	"strings"
@@ -65,13 +64,4 @@ func (ghs *GitHubSource) GetAsset(release *GitHubRelease) *GitHubAsset {
 	}
 
 	return nil
-}
-
-func OsGitHubSources(os vangogh_integration.OperatingSystem) []*GitHubSource {
-	switch os {
-	case vangogh_integration.Linux:
-		return []*GitHubSource{UmuProton, UmuLauncher}
-	default:
-		return nil
-	}
 }

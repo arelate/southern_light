@@ -2,7 +2,10 @@ package vangogh_integration
 
 import (
 	"fmt"
+	"github.com/arelate/southern_light/github_integration"
+	"github.com/boggydigital/busan"
 	"github.com/boggydigital/pathways"
+	"path"
 	"path/filepath"
 	"strings"
 	"unicode/utf8"
@@ -37,17 +40,21 @@ var AllAbsDirs = []pathways.AbsDir{
 }
 
 const (
-	Redux      pathways.RelDir = "_redux"
-	TypeErrors pathways.RelDir = "_type_errors"
-	DLCs       pathways.RelDir = "dlc"
-	Extras     pathways.RelDir = "extras"
+	Redux          pathways.RelDir = "_redux"
+	GitHubReleases pathways.RelDir = "github-releases"
+	GitHubAssets   pathways.RelDir = "_github-assets"
+	TypeErrors     pathways.RelDir = "_type_errors"
+	DLCs           pathways.RelDir = "dlc"
+	Extras         pathways.RelDir = "extras"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-	Redux:      Metadata,
-	TypeErrors: Metadata,
-	DLCs:       Downloads,
-	Extras:     Downloads,
+	Redux:          Metadata,
+	GitHubReleases: Metadata,
+	GitHubAssets:   Downloads,
+	TypeErrors:     Metadata,
+	DLCs:           Downloads,
+	Extras:         Downloads,
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
@@ -125,4 +132,24 @@ func AbsDownloadDirFromRel(p string) (string, error) {
 		return "", err
 	}
 	return filepath.Join(adp, p), nil
+}
+
+func AbsGitHubReleasesDir(ghs *github_integration.GitHubSource, release *github_integration.GitHubRelease) (string, error) {
+	assetsDir, err := pathways.GetAbsRelDir(GitHubAssets)
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(assetsDir, ghs.OwnerRepo, busan.Sanitize(release.TagName)), nil
+}
+
+func AbsGitHubReleaseAssetPath(ghs *github_integration.GitHubSource, release *github_integration.GitHubRelease, asset *github_integration.GitHubAsset) (string, error) {
+	relDir, err := AbsGitHubReleasesDir(ghs, release)
+	if err != nil {
+		return "", err
+	}
+
+	_, fn := path.Split(asset.BrowserDownloadUrl)
+
+	return filepath.Join(relDir, fn), nil
 }

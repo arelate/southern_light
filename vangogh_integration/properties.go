@@ -139,6 +139,10 @@ const (
 	RepImageColorProperty                   = "rep-image-color"
 	RepVerticalImageColorProperty           = "rep-vertical-image-color"
 
+	// GitHub releases properties
+
+	GitHubReleasesUpdatedProperty = "github-releases-updated"
+
 	// sort properties
 
 	SortProperty       = "sort"
