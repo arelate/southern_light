@@ -134,17 +134,17 @@ func AbsDownloadDirFromRel(p string) (string, error) {
 	return filepath.Join(adp, p), nil
 }
 
-func AbsGitHubReleasesDir(ghs *github_integration.GitHubSource, release *github_integration.GitHubRelease) (string, error) {
+func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease) (string, error) {
 	assetsDir, err := pathways.GetAbsRelDir(GitHubAssets)
 	if err != nil {
 		return "", err
 	}
 
-	return filepath.Join(assetsDir, ghs.OwnerRepo, busan.Sanitize(release.TagName)), nil
+	return filepath.Join(assetsDir, repo, busan.Sanitize(release.TagName)), nil
 }
 
-func AbsGitHubReleaseAssetPath(ghs *github_integration.GitHubSource, release *github_integration.GitHubRelease, asset *github_integration.GitHubAsset) (string, error) {
-	relDir, err := AbsGitHubReleasesDir(ghs, release)
+func AbsGitHubReleaseAssetPath(repo string, release *github_integration.GitHubRelease, asset *github_integration.GitHubAsset) (string, error) {
+	relDir, err := AbsGitHubReleasesDir(repo, release)
 	if err != nil {
 		return "", err
 	}

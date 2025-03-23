@@ -2,12 +2,12 @@ package vangogh_integration
 
 import "github.com/arelate/southern_light/github_integration"
 
-func OperatingSystemGitHubSources(os OperatingSystem) []*github_integration.GitHubSource {
+func OperatingSystemGitHubRepos(os OperatingSystem) []string {
 	switch os {
 	case Linux:
-		return []*github_integration.GitHubSource{
-			github_integration.UmuProton,
-			github_integration.UmuLauncher,
+		return []string{
+			github_integration.UmuProtonRepo,
+			github_integration.UmuLauncherRepo,
 		}
 	default:
 		return nil
