@@ -2,15 +2,15 @@ package vangogh_integration
 
 import "slices"
 
-type TheoMetadata struct {
-	Id            string            `json:"id"`
-	Slug          string            `json:"slug"`
-	Title         string            `json:"title"`
-	Images        TheoImages        `json:"images"`
-	DownloadLinks TheoDownloadLinks `json:"download-links,omitempty"`
+type DownloadsManifest struct {
+	Id            string                `json:"id"`
+	Slug          string                `json:"slug"`
+	Title         string                `json:"title"`
+	Images        ManifestImages        `json:"images"`
+	DownloadLinks ManifestDownloadLinks `json:"download-links,omitempty"`
 }
 
-type TheoImages struct {
+type ManifestImages struct {
 	VerticalImage string `json:"vertical-image,omitempty"`
 	Image         string `json:"image,omitempty"`
 	Hero          string `json:"hero,omitempty"`
@@ -20,7 +20,7 @@ type TheoImages struct {
 	Background    string `json:"background"`
 }
 
-type TheoDownloadLink struct {
+type ManifestDownloadLink struct {
 	ManualUrl        string `json:"manual-url"`
 	Name             string `json:"name"`
 	Status           string `json:"status"`
@@ -34,19 +34,19 @@ type TheoDownloadLink struct {
 	EstimatedBytes   int    `json:"estimated-bytes"`
 }
 
-type TheoDownloadLinks []TheoDownloadLink
+type ManifestDownloadLinks []ManifestDownloadLink
 
-func (tdl TheoDownloadLinks) FilterOperatingSystems(operatingSystems ...OperatingSystem) TheoDownloadLinks {
+func (mdl ManifestDownloadLinks) FilterOperatingSystems(operatingSystems ...OperatingSystem) ManifestDownloadLinks {
 	if len(operatingSystems) == 0 {
-		return tdl
+		return mdl
 	}
 
 	if slices.Contains(operatingSystems, AnyOperatingSystem) {
-		return tdl
+		return mdl
 	}
 
-	filteredLinks := make(TheoDownloadLinks, 0)
-	for _, dl := range tdl {
+	filteredLinks := make(ManifestDownloadLinks, 0)
+	for _, dl := range mdl {
 		os := ParseOperatingSystem(dl.OS)
 		if os == AnyOperatingSystem || slices.Contains(operatingSystems, os) {
 			filteredLinks = append(filteredLinks, dl)
@@ -56,13 +56,13 @@ func (tdl TheoDownloadLinks) FilterOperatingSystems(operatingSystems ...Operatin
 	return filteredLinks
 }
 
-func (tdl TheoDownloadLinks) FilterLanguageCodes(languageCodes ...string) TheoDownloadLinks {
+func (mdl ManifestDownloadLinks) FilterLanguageCodes(languageCodes ...string) ManifestDownloadLinks {
 	if len(languageCodes) == 0 {
-		return tdl
+		return mdl
 	}
 
-	filteredLinks := make(TheoDownloadLinks, 0)
-	for _, dl := range tdl {
+	filteredLinks := make(ManifestDownloadLinks, 0)
+	for _, dl := range mdl {
 		if dl.LanguageCode == "" || slices.Contains(languageCodes, dl.LanguageCode) {
 			filteredLinks = append(filteredLinks, dl)
 		}
@@ -71,17 +71,17 @@ func (tdl TheoDownloadLinks) FilterLanguageCodes(languageCodes ...string) TheoDo
 	return filteredLinks
 }
 
-func (tdl TheoDownloadLinks) FilterDownloadTypes(downloadTypes ...DownloadType) TheoDownloadLinks {
+func (mdl ManifestDownloadLinks) FilterDownloadTypes(downloadTypes ...DownloadType) ManifestDownloadLinks {
 	if len(downloadTypes) == 0 {
-		return tdl
+		return mdl
 	}
 
 	if slices.Contains(downloadTypes, AnyDownloadType) {
-		return tdl
+		return mdl
 	}
 
-	filteredLinks := make(TheoDownloadLinks, 0)
-	for _, dl := range tdl {
+	filteredLinks := make(ManifestDownloadLinks, 0)
+	for _, dl := range mdl {
 		dt := ParseDownloadType(dl.Type)
 		if dt == AnyDownloadType || slices.Contains(downloadTypes, dt) {
 			filteredLinks = append(filteredLinks, dl)
