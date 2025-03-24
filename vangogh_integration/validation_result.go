@@ -25,14 +25,14 @@ var validationResultsStrings = map[ValidationResult]string{
 }
 
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
-	ValidationResultUnknown:        "Not Validated",
-	ValidatedSuccessfully:          "Validated OK",
-	ValidatedWithGeneratedChecksum: "Validated Gen-OK",
-	ValidatedUnresolvedManualUrl:   "Unresolved Manual-Url",
-	ValidatedMissingLocalFile:      "Missing Local File",
-	ValidatedMissingChecksum:       "Missing Checksum",
+	ValidationResultUnknown:        "Unknown",
+	ValidatedSuccessfully:          "Validated",
+	ValidatedWithGeneratedChecksum: "Gen-Valid",
+	ValidatedUnresolvedManualUrl:   "Unresolved",
+	ValidatedMissingLocalFile:      "No File",
+	ValidatedMissingChecksum:       "No Checksum",
 	ValidationError:                "Error",
-	ValidatedChecksumMismatch:      "Checksum Mismatch",
+	ValidatedChecksumMismatch:      "Corrupted",
 }
 
 var ValidationResultsOrder = []ValidationResult{
