@@ -78,6 +78,9 @@ const (
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
 
+	SummaryRatingProperty  = "summary-rating"
+	SummaryReviewsProperty = "summary-reviews"
+
 	PcgwPageIdProperty = "pcgw-page-id"
 
 	HltbIdProperty                  = "hltb-id"
@@ -376,6 +379,8 @@ func ReducedProperties() []string {
 	return []string{
 		OwnedProperty,
 		TypesProperty,
+		SummaryRatingProperty,
+		SummaryReviewsProperty,
 	}
 }
 
