@@ -48,8 +48,8 @@ type Review struct {
 	PrimarilySteamDeck       bool `json:"primarily_steam_deck"`
 }
 
-type ReviewScoreDescGetter interface {
-	GetReviewScoreDesc() string
+func (ar *AppReviews) GetReviewScore() int {
+	return ar.QuerySummary.ReviewScore
 }
 
 func (ar *AppReviews) GetReviewScoreDesc() string {

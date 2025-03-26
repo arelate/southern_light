@@ -75,6 +75,7 @@ const (
 	SteamAppIdProperty                 = "steam-app-id"
 	LocalTagsProperty                  = "local-tags"
 
+	SteamReviewScoreProperty                  = "steam-review-score"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
 
@@ -314,6 +315,7 @@ func SteamAppDetailsProperties() []string {
 
 func SteamAppReviewsProperties() []string {
 	return []string{
+		SteamReviewScoreProperty,
 		SteamReviewScoreDescProperty,
 	}
 }
