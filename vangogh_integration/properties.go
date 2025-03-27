@@ -136,10 +136,8 @@ const (
 
 	// dehydrated images properties
 
-	DehydratedImageProperty         = "dehydrated-image"
-	DehydratedVerticalImageProperty = "dehydrated-vertical-image"
-	RepImageColorProperty           = "rep-image-color"
-	RepVerticalImageColorProperty   = "rep-vertical-image-color"
+	DehydratedImageProperty = "dehydrated-image"
+	RepColorProperty        = "rep-color"
 
 	// GitHub releases properties
 
@@ -396,9 +394,7 @@ func VideoProperties() []string {
 func DehydratedImagesProperties() []string {
 	return []string{
 		DehydratedImageProperty,
-		DehydratedVerticalImageProperty,
-		RepImageColorProperty,
-		RepVerticalImageColorProperty,
+		RepColorProperty,
 	}
 }
 

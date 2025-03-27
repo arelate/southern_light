@@ -1,10 +1,5 @@
 package vangogh_integration
 
-import (
-	"maps"
-	"slices"
-)
-
 type ImageType int
 
 const (
@@ -75,39 +70,6 @@ func ImageTypeFromProperty(property string) ImageType {
 		}
 	}
 	return UnknownImageType
-}
-
-var dehydratedImageProperties = map[ImageType]string{
-	Image:         DehydratedImageProperty,
-	VerticalImage: DehydratedVerticalImageProperty,
-}
-
-var repColorImageProperties = map[ImageType]string{
-	Image:         RepImageColorProperty,
-	VerticalImage: RepVerticalImageColorProperty,
-}
-
-func ImageTypeDehydratedProperty(it ImageType) string {
-	if dip, ok := dehydratedImageProperties[it]; ok {
-		return dip
-	}
-	return ""
-}
-
-func ImageTypeRepColorProperty(it ImageType) string {
-	if rcip, ok := repColorImageProperties[it]; ok {
-		return rcip
-	}
-	return ""
-}
-
-func ImageTypesDehydration() []ImageType {
-	return slices.Collect(maps.Keys(dehydratedImageProperties))
-}
-
-func IsImageTypeDehydrationSupported(it ImageType) bool {
-	_, ok := dehydratedImageProperties[it]
-	return ok
 }
 
 // values are result of running issa dehydration on an image set and finding
