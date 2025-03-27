@@ -82,11 +82,6 @@ var dehydratedImageProperties = map[ImageType]string{
 	VerticalImage: DehydratedVerticalImageProperty,
 }
 
-var dehydratedImageModifiedProperties = map[ImageType]string{
-	Image:         DehydratedImageModifiedProperty,
-	VerticalImage: DehydratedVerticalImageModifiedProperty,
-}
-
 var repColorImageProperties = map[ImageType]string{
 	Image:         RepImageColorProperty,
 	VerticalImage: RepVerticalImageColorProperty,
@@ -94,13 +89,6 @@ var repColorImageProperties = map[ImageType]string{
 
 func ImageTypeDehydratedProperty(it ImageType) string {
 	if dip, ok := dehydratedImageProperties[it]; ok {
-		return dip
-	}
-	return ""
-}
-
-func ImageTypeDehydratedModifiedProperty(it ImageType) string {
-	if dip, ok := dehydratedImageModifiedProperties[it]; ok {
 		return dip
 	}
 	return ""

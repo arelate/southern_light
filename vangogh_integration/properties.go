@@ -136,12 +136,10 @@ const (
 
 	// dehydrated images properties
 
-	DehydratedImageProperty                 = "dehydrated-image"
-	DehydratedImageModifiedProperty         = "dehydrated-image-modified"
-	DehydratedVerticalImageProperty         = "dehydrated-vertical-image"
-	DehydratedVerticalImageModifiedProperty = "dehydrated-vertical-image-modified"
-	RepImageColorProperty                   = "rep-image-color"
-	RepVerticalImageColorProperty           = "rep-vertical-image-color"
+	DehydratedImageProperty         = "dehydrated-image"
+	DehydratedVerticalImageProperty = "dehydrated-vertical-image"
+	RepImageColorProperty           = "rep-image-color"
+	RepVerticalImageColorProperty   = "rep-vertical-image-color"
 
 	// GitHub releases properties
 
