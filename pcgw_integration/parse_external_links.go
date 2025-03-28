@@ -109,10 +109,10 @@ func (pel *ParseExternalLinks) GetStrategyWikiId() string {
 	return pel.iwLinkId(strategyWikiPrefix)
 }
 
-func (pel *ParseExternalLinks) GetOpenCriticId() string {
+func (pel *ParseExternalLinks) GetOpenCriticIdSlug() (string, string) {
 	idSlug := pel.externalLinkSuffixId(openCriticPrefix)
-	if id, _, ok := strings.Cut(idSlug, "/"); ok {
-		return id
+	if id, slug, ok := strings.Cut(idSlug, "/"); ok {
+		return id, slug
 	}
-	return ""
+	return "", ""
 }

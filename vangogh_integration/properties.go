@@ -100,6 +100,7 @@ const (
 	VndbIdProperty         = "vndb-id"
 	IGNWikiSlugProperty    = "ign-wiki-slug"
 	OpenCriticIdProperty   = "opencritic-id"
+	OpenCriticSlugProperty = "opencritic-slug"
 
 	EnginesProperty       = "engines"
 	EnginesBuildsProperty = "engines-builds"
@@ -339,6 +340,7 @@ func PcgwExternalLinksProperties() []string {
 		WikipediaIdProperty,
 		StrategyWikiIdProperty,
 		OpenCriticIdProperty,
+		OpenCriticSlugProperty,
 	}
 }
 
