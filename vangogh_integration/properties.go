@@ -456,27 +456,6 @@ func ReduxProperties() []string {
 	return all
 }
 
-func DigestibleProperties() []string {
-	return []string{
-		DevelopersProperty,
-		PublishersProperty,
-		GenresProperty,
-		StoreTagsProperty,
-		FeaturesProperty,
-		SeriesProperty,
-		TagIdProperty,
-		LanguageCodeProperty,
-		OperatingSystemsProperty,
-		SteamReviewScoreDescProperty,
-		SteamDeckAppCompatibilityCategoryProperty,
-		HltbPlatformsProperty,
-		HltbGenresProperty,
-		EnginesProperty,
-		ProtonDBTierProperty,
-		ProtonDBConfidenceProperty,
-	}
-}
-
 var imageTypeProperties = map[ImageType]string{
 	Image:         ImageProperty,
 	Screenshots:   ScreenshotsProperty,

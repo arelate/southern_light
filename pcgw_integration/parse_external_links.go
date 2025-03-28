@@ -34,34 +34,6 @@ type ParseExternalLinks struct {
 	} `json:"parse"`
 }
 
-type HltbIdGetter interface {
-	GetHltbId() string
-}
-
-type IgdbIdGetter interface {
-	GetIgdbId() string
-}
-
-type StrategyWikiIdGetter interface {
-	GetStrategyWikiId() string
-}
-
-type MobyGamesIdGetter interface {
-	GetMobyGamesId() string
-}
-
-type WikipediaIdGetter interface {
-	GetWikipediaId() string
-}
-
-type WineHQIdGetter interface {
-	GetWineHQId() string
-}
-
-type VndbIdGetter interface {
-	GetVndbId() string
-}
-
 func extractSteamAppId(link, pfx string) uint32 {
 	if strings.HasPrefix(link, pfx) {
 		if parts := strings.Split(strings.TrimPrefix(link, pfx), "/"); len(parts) > 0 {

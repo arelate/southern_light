@@ -58,8 +58,3 @@ func ParseManyOperatingSystems(osStrings []string) []OperatingSystem {
 	}
 	return operatingSystems
 }
-
-func IsValidOperatingSystem(os OperatingSystem) bool {
-	_, ok := operatingSystemStrings[os]
-	return ok
-}

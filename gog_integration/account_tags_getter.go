@@ -1,5 +1,9 @@
 package gog_integration
 
+type accountTagsGetter interface {
+	getAccountTags() []accountTag
+}
+
 func getTagIds(atg accountTagsGetter) []string {
 	at := atg.getAccountTags()
 	tagIds := make([]string, 0, len(at))

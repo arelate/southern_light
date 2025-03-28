@@ -15,10 +15,6 @@ type RootPage struct {
 	Doc *html.Node
 }
 
-type BuildIdGetter interface {
-	GetBuildId() string
-}
-
 func (rp *RootPage) GetBuildId() string {
 	if rp.Doc == nil {
 		return ""

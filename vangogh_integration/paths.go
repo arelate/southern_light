@@ -11,7 +11,6 @@ import (
 
 const (
 	xmlExt           = ".xml"
-	skipListFilename = "skiplist.txt"
 	cookiesFilename  = "cookies.txt"
 	atomFeedFilename = "atom.xml"
 )

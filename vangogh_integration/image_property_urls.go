@@ -44,35 +44,3 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 
 	return urls, nil
 }
-
-//type DefaultProductUrl func(key string) *url.URL
-//
-//var defaultProductUrls = map[ProductType]DefaultProductUrl{
-//	CatalogPage:   gog_integration.CatalogPageUrl,
-//	AccountPage:   gog_integration.AccountPageUrl,
-//	UserWishlist:  gog_integration.DefaultUserWishlistUrl,
-//	Details:       gog_integration.DetailsUrl,
-//	ApiProductsV1: gog_integration.ApiProductV1Url,
-//	ApiProducts: gog_integration.ApiProductV2Url,
-//	Licences:      gog_integration.DefaultLicencesUrl,
-//	OrderPage:     gog_integration.OrdersPageUrl,
-//
-//	SteamAppList: steam_integration.DefaultSteamAppListUrl,
-//	// steam data types typically require app level transformation of GOG.com id -> Steam AppID
-//	SteamAppNews:   nil,
-//	SteamReviews:   nil,
-//	SteamStorePage: nil,
-//}
-
-//func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
-//	if !IsValidProductType(pt) {
-//		return nil, fmt.Errorf("vangogh_urls: no remote source for %s\n", pt)
-//	}
-//
-//	ptUrl, ok := defaultProductUrls[pt]
-//	if !ok {
-//		err = fmt.Errorf("vangogh_urls: no remote source for %s\n", pt)
-//	}
-//
-//	return ptUrl, err
-//}
