@@ -13,6 +13,7 @@ const (
 	mobyGamesPrefix            = "https://www.mobygames.com/game/"
 	wineHQPrefix               = "https://appdb.winehq.org/objectManager.php?sClass=application&iId="
 	vndbPrefix                 = "https://vndb.org/"
+	openCriticPrefix           = "https://opencritic.com/game/"
 
 	strategyWikiPrefix = "strategywiki"
 	wikipediaPrefix    = "wikipedia"
@@ -106,4 +107,12 @@ func (pel *ParseExternalLinks) GetWikipediaId() string {
 
 func (pel *ParseExternalLinks) GetStrategyWikiId() string {
 	return pel.iwLinkId(strategyWikiPrefix)
+}
+
+func (pel *ParseExternalLinks) GetOpenCriticId() string {
+	idSlug := pel.externalLinkSuffixId(openCriticPrefix)
+	if id, _, ok := strings.Cut(idSlug, "/"); ok {
+		return id
+	}
+	return ""
 }
