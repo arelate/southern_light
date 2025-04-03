@@ -6,14 +6,12 @@ import (
 	"strings"
 )
 
-func GameUrl(id, slug string) *url.URL {
-
-	path := strings.Replace(gamePathTemplate, "{id}", id, 1)
-	path = strings.Replace(path, "{slug}", slug, 1)
+func ApiArticleGameUrl(id string) *url.URL {
+	path := strings.Replace(apiArticleGamePathTemplate, "{id}", id, 1)
 
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
-		Host:   openCriticHost,
+		Host:   openCriticApiHost,
 		Path:   path,
 	}
 }

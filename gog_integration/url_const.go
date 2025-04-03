@@ -13,8 +13,8 @@ const (
 	menuHost    = "menu." + GogHost
 	loginHost   = "login." + GogHost
 	authHost    = "auth." + GogHost
-	ItemsHost   = "items." + GogHost
-	CatalogHost = "catalog." + GogHost
+	itemsHost   = "items." + GogHost
+	catalogHost = "catalog." + GogHost
 	gamesDbHost = "gamesdb." + GogHost
 )
 

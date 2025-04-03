@@ -16,7 +16,7 @@ func catalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
 
 	catalogPage := &url.URL{
 		Scheme: southern_light.HttpsScheme,
-		Host:   CatalogHost,
+		Host:   catalogHost,
 		Path:   catalogPath,
 	}
 
