@@ -114,5 +114,8 @@ func (pel *ParseExternalLinks) GetOpenCriticIdSlug() (string, string) {
 	if id, slug, ok := strings.Cut(idSlug, "/"); ok {
 		return id, slug
 	}
+	if idSlug != "" {
+		return idSlug, ""
+	}
 	return "", ""
 }
