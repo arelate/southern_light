@@ -121,6 +121,13 @@ const (
 	SteamSupportUrlProperty   = "steam-support-url"
 	SteamSupportEmailProperty = "steam-support-email"
 
+	// opencritic properties
+
+	OpenCriticMedianScoreProperty     = "opencritic-median-score"
+	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score"
+	OpenCriticPercentileProperty      = "opencritic-percentile"
+	OpenCriticTierProperty            = "opencritic-tier"
+
 	// per-type properties
 
 	TypeErrorMessageProperty = "type-error-message"
@@ -175,6 +182,7 @@ var ProductTypeProperties = map[ProductType][]string{
 	PcgwEngine:                   PcgwEngineProperties(),
 	HltbData:                     HltbDataProperties(),
 	ProtonDbSummary:              ProtonDbSummaryProperties(),
+	OpenCriticApiGame:            OpenCriticApiGameProperties(),
 }
 
 func GOGLicencesProperties() []string {
@@ -370,6 +378,15 @@ func ProtonDbSummaryProperties() []string {
 	}
 }
 
+func OpenCriticApiGameProperties() []string {
+	return []string{
+		OpenCriticMedianScoreProperty,
+		OpenCriticTopCriticsScoreProperty,
+		OpenCriticPercentileProperty,
+		OpenCriticTierProperty,
+	}
+}
+
 func TypeErrorProperties() []string {
 	return []string{
 		TypeErrorMessageProperty,
@@ -446,6 +463,7 @@ func ReduxProperties() []string {
 	all = append(all, PcgwEngineProperties()...)
 	all = append(all, HltbDataProperties()...)
 	all = append(all, ProtonDbSummaryProperties()...)
+	all = append(all, OpenCriticApiGameProperties()...)
 
 	// other properties
 
