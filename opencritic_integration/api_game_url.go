@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func ApiGame(id string) *url.URL {
+func ApiGameUrl(id string) *url.URL {
 	path := strings.Replace(apiGamePathTemplate, "{id}", id, 1)
 
 	return &url.URL{
