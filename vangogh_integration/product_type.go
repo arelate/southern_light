@@ -35,6 +35,10 @@ const (
 	HltbData
 	// ProtonDB product types
 	ProtonDbSummary
+	// OpenCritic product types
+	OpenCriticApiGame
+	OpenCriticApiArticle
+	OpenCriticApiRating
 )
 
 var (
@@ -75,6 +79,12 @@ var (
 		// ProtonDB product types
 
 		ProtonDbSummary: "protondb-summary",
+
+		// OpenCritic product types
+
+		OpenCriticApiGame:    "opencritic-api-game",
+		OpenCriticApiArticle: "opencritic-api-article",
+		OpenCriticApiRating:  "opencritic-api-rating",
 	}
 )
 
