@@ -38,7 +38,7 @@ const (
 	// OpenCritic product types
 	OpenCriticApiGame
 	OpenCriticApiArticle
-	OpenCriticApiRating
+	OpenCriticApiRatings
 )
 
 var (
@@ -84,7 +84,7 @@ var (
 
 		OpenCriticApiGame:    "opencritic-api-game",
 		OpenCriticApiArticle: "opencritic-api-article",
-		OpenCriticApiRating:  "opencritic-api-rating",
+		OpenCriticApiRatings: "opencritic-api-ratings",
 	}
 )
 
