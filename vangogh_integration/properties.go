@@ -135,9 +135,9 @@ const (
 
 	// reduced properties
 
-	OwnedProperty         = "owned"
-	TypesProperty         = "types"
-	TopTenPercentProperty = "top-ten-percent"
+	OwnedProperty      = "owned"
+	TypesProperty      = "types"
+	TopPercentProperty = "top-percent"
 
 	// sync properties
 
@@ -399,7 +399,7 @@ func ReducedProperties() []string {
 	return []string{
 		OwnedProperty,
 		TypesProperty,
-		TopTenPercentProperty,
+		TopPercentProperty,
 		SummaryRatingProperty,
 		SummaryReviewsProperty,
 	}
