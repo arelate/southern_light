@@ -52,3 +52,13 @@ func WikiUrl(pageId string) *url.URL {
 
 	return u
 }
+
+func WikiRawUrl(pageId string) *url.URL {
+	u := WikiUrl(pageId)
+
+	q := u.Query()
+	q.Add("action", "raw")
+	u.RawQuery = q.Encode()
+
+	return u
+}

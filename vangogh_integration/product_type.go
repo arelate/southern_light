@@ -30,6 +30,7 @@ const (
 	PcgwSteamPageId
 	PcgwEngine
 	PcgwExternalLinks
+	PcgwRaw
 	// HLTB product types
 	HltbRootPage
 	HltbData
@@ -37,8 +38,6 @@ const (
 	ProtonDbSummary
 	// OpenCritic product types
 	OpenCriticApiGame
-	OpenCriticApiArticle
-	OpenCriticApiRatings
 )
 
 var (
@@ -70,6 +69,7 @@ var (
 		PcgwGogPageId:     "pcgw-gog-page-id",
 		PcgwExternalLinks: "pcgw-external-links",
 		PcgwEngine:        "pcgw-engine",
+		PcgwRaw:           "pcgw-raw",
 
 		// HLTB product types
 
@@ -82,9 +82,7 @@ var (
 
 		// OpenCritic product types
 
-		OpenCriticApiGame:    "opencritic-api-game",
-		OpenCriticApiArticle: "opencritic-api-article",
-		OpenCriticApiRatings: "opencritic-api-ratings",
+		OpenCriticApiGame: "opencritic-api-game",
 	}
 )
 
