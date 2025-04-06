@@ -105,6 +105,14 @@ const (
 	EnginesProperty       = "engines"
 	EnginesBuildsProperty = "engines-builds"
 
+	WindowsConfigProperty = "windows-config"
+	MacOsConfigProperty   = "macos-config"
+	LinuxConfigProperty   = "linux-config"
+
+	WindowsSavesProperty = "windows-saves"
+	MacOsSavesProperty   = "macos-saves"
+	LinuxSavesProperty   = "linux-saves"
+
 	ProtonDBTierProperty       = "protondb-tier"
 	ProtonDBConfidenceProperty = "protondb-confidence"
 
@@ -360,6 +368,17 @@ func PcgwEngineProperties() []string {
 	}
 }
 
+func PcgwRawProperties() []string {
+	return []string{
+		WindowsConfigProperty,
+		MacOsConfigProperty,
+		LinuxConfigProperty,
+		WindowsSavesProperty,
+		MacOsSavesProperty,
+		LinuxSavesProperty,
+	}
+}
+
 func HltbDataProperties() []string {
 	return []string{
 		HltbHoursToCompleteMainProperty,
@@ -463,6 +482,7 @@ func ReduxProperties() []string {
 	all = append(all, PcgwPageIdProperties()...)
 	all = append(all, PcgwExternalLinksProperties()...)
 	all = append(all, PcgwEngineProperties()...)
+	all = append(all, PcgwRawProperties()...)
 	all = append(all, HltbDataProperties()...)
 	all = append(all, ProtonDbSummaryProperties()...)
 	all = append(all, OpenCriticApiGameProperties()...)
