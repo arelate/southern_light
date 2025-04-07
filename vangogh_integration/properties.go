@@ -105,10 +105,12 @@ const (
 	EnginesProperty       = "engines"
 	EnginesBuildsProperty = "engines-builds"
 
+	DosConfigProperty     = "dos-config"
 	WindowsConfigProperty = "windows-config"
 	MacOsConfigProperty   = "macos-config"
 	LinuxConfigProperty   = "linux-config"
 
+	DosSavesProperty     = "dos-saves"
 	WindowsSavesProperty = "windows-saves"
 	MacOsSavesProperty   = "macos-saves"
 	LinuxSavesProperty   = "linux-saves"
@@ -370,9 +372,11 @@ func PcgwEngineProperties() []string {
 
 func PcgwRawProperties() []string {
 	return []string{
+		DosConfigProperty,
 		WindowsConfigProperty,
 		MacOsConfigProperty,
 		LinuxConfigProperty,
+		DosSavesProperty,
 		WindowsSavesProperty,
 		MacOsSavesProperty,
 		LinuxSavesProperty,
