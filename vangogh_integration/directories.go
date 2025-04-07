@@ -1,14 +1,13 @@
 package vangogh_integration
 
 import (
+	"errors"
 	"fmt"
 	"github.com/arelate/southern_light/github_integration"
 	"github.com/boggydigital/busan"
 	"github.com/boggydigital/pathways"
-	"path"
 	"path/filepath"
 	"strings"
-	"unicode/utf8"
 )
 
 const DefaultRootDir = "/var/lib/vangogh"
@@ -72,31 +71,6 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 	return filepath.Join(idp, imageId[0:2]), err
 }
 
-func AbsDescriptionImagePath(path string) (string, error) {
-	if path == "" {
-		return "", fmt.Errorf("description image path cannot be empty")
-	}
-
-	//GOG.com quirk - some item URLs path has multiple slashes
-	//e.g. https://items.gog.com//atom_rpg_trudograd/mp4/TGWMap_Night_%281%29.gif.mp4
-	//so we need to keep trimming while there is something to trim
-	for strings.HasPrefix(path, "/") {
-		path = strings.TrimPrefix(path, "/")
-	}
-	if len(path) < 1 {
-		return "", fmt.Errorf("sanitized description image path cannot be empty")
-	}
-
-	idp, err := pathways.GetAbsDir(DescriptionImages)
-	if err != nil {
-		return "", err
-	}
-
-	x, _ := utf8.DecodeRuneInString(path)
-
-	return filepath.Join(idp, string(x), path), nil
-}
-
 func AbsProductTypeDir(pt ProductType) (string, error) {
 	if pt == UnknownProductType {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
@@ -108,18 +82,24 @@ func AbsProductTypeDir(pt ProductType) (string, error) {
 	return filepath.Join(amd, pt.String()), nil
 }
 
-func RelProductDownloadsDir(slug string) (string, error) {
+func RelProductDownloadsDir(slug string, dl DownloadsLayout) (string, error) {
 	if slug == "" {
 		return "", fmt.Errorf("vangogh_urls: empty slug")
 	}
-	if len(slug) < 1 {
-		return "", fmt.Errorf("vangogh_urls: slug is too short")
+	var relDir string
+	switch dl {
+	case FlatDownloadsLayout:
+		relDir = strings.ToLower(slug)
+	case ShardedDownloadsLayout:
+		relDir = filepath.Join(strings.ToLower(slug[0:1]), slug)
+	default:
+		return "", errors.New("unsupported downloads layout: " + dl.String())
 	}
-	return filepath.Join(strings.ToLower(slug[0:1]), slug), nil
+	return relDir, nil
 }
 
-func AbsProductDownloadsDir(slug string) (string, error) {
-	rDir, err := RelProductDownloadsDir(slug)
+func AbsProductDownloadsDir(slug string, dl DownloadsLayout) (string, error) {
+	rDir, err := RelProductDownloadsDir(slug, dl)
 	if err != nil {
 		return rDir, err
 	}
@@ -141,15 +121,4 @@ func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease
 	}
 
 	return filepath.Join(assetsDir, repo, busan.Sanitize(release.TagName)), nil
-}
-
-func AbsGitHubReleaseAssetPath(repo string, release *github_integration.GitHubRelease, asset *github_integration.GitHubAsset) (string, error) {
-	relDir, err := AbsGitHubReleasesDir(repo, release)
-	if err != nil {
-		return "", err
-	}
-
-	_, fn := path.Split(asset.BrowserDownloadUrl)
-
-	return filepath.Join(relDir, fn), nil
 }

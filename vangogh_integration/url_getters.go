@@ -120,3 +120,14 @@ func SinceFromUrl(u *url.URL) (int64, error) {
 	}
 	return time.Now().Unix() - int64(sha*60*60), err
 }
+
+func DownloadsLayoutFromUrl(u *url.URL) DownloadsLayout {
+	downloadsLayout := DefaultDownloadsLayout
+	q := u.Query()
+	if q.Has("downloads-layout") {
+		if dl := ParseDownloadsLayout(q.Get("downloads-layout")); dl != UnknownDownloadsLayout {
+			downloadsLayout = dl
+		}
+	}
+	return downloadsLayout
+}

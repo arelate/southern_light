@@ -62,8 +62,8 @@ func LocalDownloadDirs() (map[string]bool, error) {
 	return walkDirectories(ddp)
 }
 
-func LocalSlugDownloads(slug string) (map[string]bool, error) {
-	pDir, err := AbsProductDownloadsDir(slug)
+func LocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]bool, error) {
+	pDir, err := AbsProductDownloadsDir(slug, dl)
 	if err != nil {
 		return nil, err
 	}
