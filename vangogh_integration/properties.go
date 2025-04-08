@@ -55,6 +55,7 @@ const (
 	ProductValidationResultProperty    = "product-validation-result"
 	ManualUrlGeneratedChecksumProperty = "manual-url-generated-checksum"
 	DownloadStatusErrorProperty        = "download-status-error"
+	DownloadQueuedProperty             = "download-queued"
 	StoreUrlProperty                   = "store-url"
 	ForumUrlProperty                   = "forum-url"
 	SupportUrlProperty                 = "support-url"
