@@ -5,7 +5,6 @@ type DownloadsLayout int
 const (
 	UnknownDownloadsLayout DownloadsLayout = iota
 	ShardedDownloadsLayout                 // order is important here given this will be used for clo default parameter
-
 	FlatDownloadsLayout
 )
 
@@ -35,8 +34,10 @@ func ParseDownloadsLayout(downloadsLayout string) DownloadsLayout {
 
 func AllDownloadsLayouts() []DownloadsLayout {
 	dls := make([]DownloadsLayout, 0, len(downloadsLayoutsStrings)-1)
+	dls = append(dls, DefaultDownloadsLayout)
 	for dl := range downloadsLayoutsStrings {
-		if dl == UnknownDownloadsLayout {
+		if dl == UnknownDownloadsLayout ||
+			dl == DefaultDownloadsLayout {
 			continue
 		}
 		dls = append(dls, dl)
