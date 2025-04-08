@@ -18,6 +18,10 @@ const (
 	sinceHoursAgoParam   = "since-hours-ago"
 )
 
+const (
+	defaultLanguageCode = "en"
+)
+
 func ValueFromUrl(u *url.URL, arg string) string {
 	if u == nil {
 		return ""
@@ -86,6 +90,14 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
 	osStrings := ValuesFromUrl(u, operatingSystemParam)
 	return ParseManyOperatingSystems(osStrings)
+}
+
+func LanguageCodesFromUrl(u *url.URL) []string {
+	if langCodes := ValuesFromUrl(u, LanguageCodeProperty); len(langCodes) > 0 {
+		return langCodes
+	} else {
+		return []string{defaultLanguageCode}
+	}
 }
 
 func DownloadTypesFromUrl(u *url.URL) []DownloadType {
