@@ -50,6 +50,7 @@ const (
 	GOGOrderDateProperty               = "gog-order-date"
 	GlobalReleaseDateProperty          = "global-release-date"
 	LocalManualUrlProperty             = "local-manual-url"
+	ManualUrlFilenameProperty          = "manual-url-filename"
 	ManualUrlStatusProperty            = "manual-url-status"
 	ManualUrlValidationResultProperty  = "manual-url-validation-result"
 	ProductValidationResultProperty    = "product-validation-result"
@@ -149,6 +150,10 @@ const (
 	OwnedProperty      = "owned"
 	TypesProperty      = "types"
 	TopPercentProperty = "top-percent"
+
+	// data scheme version
+
+	DataSchemeVersionProperty = "data-scheme-version"
 
 	// sync properties
 
@@ -461,6 +466,7 @@ func SyncProperties() []string {
 func ValidationResultsProperties() []string {
 	return []string{
 		LocalManualUrlProperty,
+		ManualUrlFilenameProperty,
 		ManualUrlStatusProperty,
 		ManualUrlValidationResultProperty,
 		ManualUrlGeneratedChecksumProperty,
