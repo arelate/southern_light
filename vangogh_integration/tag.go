@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/http"
 	"net/url"
 	"slices"
@@ -25,13 +27,17 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 }
 
 func TagIdByName(tagName string) (string, error) {
-
-	rxa, err := NewReduxReader(TagNameProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
 	if err != nil {
 		return "", err
 	}
 
-	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}})
+	rdx, err := redux.NewReader(reduxDir, TagNameProperty)
+	if err != nil {
+		return "", err
+	}
+
+	tagIds := rdx.Match(map[string][]string{TagNameProperty: {tagName}})
 	if tagIds == nil {
 		return "", fmt.Errorf("unknown tag-name %s", tagName)
 	}
@@ -49,7 +55,12 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	rdx, err := NewReduxWriter(TagNameProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -74,7 +85,12 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	rdx, err := NewReduxWriter(TagNameProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -102,7 +118,12 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := NewReduxWriter(TagIdProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -112,7 +133,7 @@ func AddTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if rxa.HasValue(TagIdProperty, id, tag) {
+			if rdx.HasValue(TagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -130,7 +151,7 @@ func AddTags(
 				return fmt.Errorf("failed to add tag %s", tag)
 			}
 
-			if err := rxa.AddValues(TagIdProperty, id, tag); err != nil {
+			if err := rdx.AddValues(TagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -147,7 +168,12 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := NewReduxWriter(TagIdProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -157,7 +183,7 @@ func RemoveTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if !rxa.HasValue(TagIdProperty, id, tag) {
+			if !rdx.HasValue(TagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -173,7 +199,7 @@ func RemoveTags(
 				return fmt.Errorf("failed to remove tag %s", tag)
 			}
 
-			if err := rxa.CutValues(TagIdProperty, id, tag); err != nil {
+			if err := rdx.CutValues(TagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -193,13 +219,18 @@ func diffTagProperty(
 	add = make([]string, 0)
 	rem = make([]string, 0)
 
-	rxa, err := NewReduxReader(tagProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rdx, err := redux.NewReader(reduxDir, tagProperty)
 	if err != nil {
 		return add, rem, err
 	}
 
 	//we need empty slice to detect new values
-	currentVals, _ := rxa.GetAllValues(tagProperty, id)
+	currentVals, _ := rdx.GetAllValues(tagProperty, id)
 
 	for _, tag := range newTags {
 		if !slices.Contains(currentVals, tag) {

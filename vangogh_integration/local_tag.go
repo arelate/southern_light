@@ -2,6 +2,7 @@ package vangogh_integration
 
 import (
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -37,7 +38,12 @@ func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWr
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := NewReduxWriter(LocalTagsProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -46,7 +52,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 
 	for _, id := range ids {
 		for _, tag := range tags {
-			if err := addLocalTag(id, tag, rxa, tpw); err != nil {
+			if err = addLocalTag(id, tag, rdx, tpw); err != nil {
 				return err
 			}
 		}
@@ -56,7 +62,12 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := NewReduxWriter(LocalTagsProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -65,7 +76,7 @@ func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 
 	for _, id := range ids {
 		for _, tag := range tags {
-			if err := removeLocalTag(id, tag, rxa, tpw); err != nil {
+			if err = removeLocalTag(id, tag, rdx, tpw); err != nil {
 				return err
 			}
 		}

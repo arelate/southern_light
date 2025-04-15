@@ -3,6 +3,7 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
+	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 	"maps"
 	"slices"
@@ -19,7 +20,13 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 
 	var err error
 	if rdx == nil && len(slugs) > 0 {
-		rdx, err = NewReduxReader(SlugProperty)
+
+		reduxDir, err := pathways.GetAbsRelDir(Redux)
+		if err != nil {
+			return nil, err
+		}
+
+		rdx, err = redux.NewReader(reduxDir, SlugProperty)
 		if err != nil {
 			return nil, err
 		}
@@ -59,8 +66,12 @@ func PropertyListsFromIdSet(
 	propSet[TitleProperty] = nil
 
 	if rdx == nil {
-		var err error
-		rdx, err = NewReduxReader(slices.Collect(maps.Keys(propSet))...)
+		reduxDir, err := pathways.GetAbsRelDir(Redux)
+		if err != nil {
+			return nil, err
+		}
+
+		rdx, err = redux.NewReader(reduxDir, slices.Collect(maps.Keys(propSet))...)
 		if err != nil {
 			return nil, err
 		}

@@ -2,6 +2,8 @@ package vangogh_integration
 
 import (
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 )
 
 func AddToLocalWishlist(
@@ -10,7 +12,12 @@ func AddToLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rdx, err := NewReduxWriter(UserWishlistProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return nil, err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, UserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -43,7 +50,12 @@ func RemoveFromLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rdx, err := NewReduxWriter(UserWishlistProperty)
+	reduxDir, err := pathways.GetAbsRelDir(Redux)
+	if err != nil {
+		return nil, err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, UserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}
