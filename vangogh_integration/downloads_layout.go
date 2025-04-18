@@ -8,12 +8,12 @@ const (
 	FlatDownloadsLayout
 )
 
-const DefaultDownloadsLayout = ShardedDownloadsLayout
+const DefaultDownloadsLayout = FlatDownloadsLayout
 
 var downloadsLayoutsStrings = map[DownloadsLayout]string{
 	UnknownDownloadsLayout: "unknown",
-	ShardedDownloadsLayout: "sharded",
 	FlatDownloadsLayout:    "flat",
+	ShardedDownloadsLayout: "sharded",
 }
 
 func (dl DownloadsLayout) String() string {
