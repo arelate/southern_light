@@ -76,6 +76,8 @@ const (
 	SteamAppIdProperty                = "steam-app-id"
 	LocalTagsProperty                 = "local-tags"
 
+	SteamLastCommunityUpdateProperty = "steam-last-community-update"
+
 	SteamReviewScoreProperty                  = "steam-review-score"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
@@ -335,6 +337,12 @@ func SteamAppDetailsProperties() []string {
 	}
 }
 
+func SteamAppNewsProperties() []string {
+	return []string{
+		SteamLastCommunityUpdateProperty,
+	}
+}
+
 func SteamAppReviewsProperties() []string {
 	return []string{
 		SteamReviewScoreProperty,
@@ -486,6 +494,7 @@ func ReduxProperties() []string {
 	all = append(all, GOGDetailsProperties()...)
 	all = append(all, GOGGamesDbProperties()...)
 	all = append(all, SteamAppDetailsProperties()...)
+	all = append(all, SteamAppNewsProperties()...)
 	all = append(all, SteamAppReviewsProperties()...)
 	all = append(all, SteamDeckCompatibilityReportProperties()...)
 	all = append(all, PcgwPageIdProperties()...)
