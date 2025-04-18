@@ -246,7 +246,7 @@ func MapDownloads(
 		return fmt.Errorf("vangogh_downloads: map downloads list processor is nil")
 	}
 
-	if err := rdx.MustHave(SlugProperty); err != nil {
+	if err := rdx.MustHave(SlugProperty, ProductTypeProperty); err != nil {
 		return err
 	}
 
@@ -260,9 +260,23 @@ func MapDownloads(
 		return err
 	}
 
-	tpw.TotalInt(len(ids))
+	packDlcProducts := make([]string, 0)
+	gameProducts := make([]string, 0, len(ids))
 
 	for _, id := range ids {
+		if pt, ok := rdx.GetLastVal(ProductTypeProperty, id); ok && pt != "GAME" {
+			packDlcProducts = append(packDlcProducts, id)
+			continue
+		}
+		gameProducts = append(gameProducts, id)
+	}
+
+	pdpa := nod.Begin(" PACK, DLC products do not contain downloads:")
+	pdpa.EndWithResult(strings.Join(packDlcProducts, ", "))
+
+	tpw.TotalInt(len(gameProducts))
+
+	for _, id := range gameProducts {
 
 		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
 
