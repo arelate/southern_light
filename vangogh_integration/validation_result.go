@@ -5,7 +5,6 @@ type ValidationResult int
 const (
 	ValidationResultUnknown ValidationResult = iota
 	ValidatedSuccessfully
-	ValidatedWithGeneratedChecksum
 	ValidatedUnresolvedManualUrl
 	ValidatedMissingLocalFile
 	ValidatedMissingChecksum
@@ -14,30 +13,27 @@ const (
 )
 
 var validationResultsStrings = map[ValidationResult]string{
-	ValidationResultUnknown:        "unknown",
-	ValidatedSuccessfully:          "valid",
-	ValidatedWithGeneratedChecksum: "valid-with-gen-checksum",
-	ValidatedUnresolvedManualUrl:   "unresolved-manual-url",
-	ValidatedMissingLocalFile:      "missing-local-file",
-	ValidatedMissingChecksum:       "missing-checksum",
-	ValidationError:                "error",
-	ValidatedChecksumMismatch:      "checksum-mismatch",
+	ValidationResultUnknown:      "unknown",
+	ValidatedSuccessfully:        "valid",
+	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
+	ValidatedMissingLocalFile:    "missing-local-file",
+	ValidatedMissingChecksum:     "missing-checksum",
+	ValidationError:              "error",
+	ValidatedChecksumMismatch:    "checksum-mismatch",
 }
 
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
-	ValidationResultUnknown:        "Unknown",
-	ValidatedSuccessfully:          "Validated",
-	ValidatedWithGeneratedChecksum: "Gen-Valid",
-	ValidatedUnresolvedManualUrl:   "Unresolved",
-	ValidatedMissingLocalFile:      "No File",
-	ValidatedMissingChecksum:       "No Checksum",
-	ValidationError:                "Error",
-	ValidatedChecksumMismatch:      "Corrupted",
+	ValidationResultUnknown:      "Unknown",
+	ValidatedSuccessfully:        "Validated",
+	ValidatedUnresolvedManualUrl: "Unresolved",
+	ValidatedMissingLocalFile:    "No File",
+	ValidatedMissingChecksum:     "No Checksum",
+	ValidationError:              "Error",
+	ValidatedChecksumMismatch:    "Corrupted",
 }
 
 var ValidationResultsOrder = []ValidationResult{
 	ValidatedSuccessfully,
-	ValidatedWithGeneratedChecksum,
 	ValidatedUnresolvedManualUrl,
 	ValidatedMissingLocalFile,
 	ValidatedMissingChecksum,

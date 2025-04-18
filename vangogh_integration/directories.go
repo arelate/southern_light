@@ -82,7 +82,7 @@ func AbsProductTypeDir(pt ProductType) (string, error) {
 	return filepath.Join(amd, pt.String()), nil
 }
 
-func RelProductDownloadsDir(slug string, dl DownloadsLayout) (string, error) {
+func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {
 	if slug == "" {
 		return "", fmt.Errorf("vangogh_urls: empty slug")
 	}
@@ -94,33 +94,49 @@ func RelProductDownloadsDir(slug string, dl DownloadsLayout) (string, error) {
 	if len(slug) == 1 {
 		slug = fmt.Sprintf("%s_", slug)
 	}
-	var relDir string
-	switch dl {
+	var relSlugDir string
+	switch layout {
 	case FlatDownloadsLayout:
-		relDir = strings.ToLower(slug)
+		relSlugDir = strings.ToLower(slug)
 	case ShardedDownloadsLayout:
 		shard := strings.ToLower(slug[0:1])
-		relDir = filepath.Join(shard, slug)
+		relSlugDir = filepath.Join(shard, slug)
 	default:
-		return "", errors.New("unsupported downloads layout: " + dl.String())
+		return "", errors.New("unsupported downloads layout: " + layout.String())
 	}
-	return relDir, nil
-}
 
-func AbsProductDownloadsDir(slug string, dl DownloadsLayout) (string, error) {
-	rDir, err := RelProductDownloadsDir(slug, dl)
-	if err != nil {
-		return rDir, err
+	var err error
+	relDownloadTypeDir := ""
+
+	switch dt {
+	case DLC:
+		relDownloadTypeDir, err = pathways.GetRelDir(DLCs)
+	case Extra:
+		relDownloadTypeDir, err = pathways.GetRelDir(Extras)
+	default:
+		// do nothing - use base product downloads dir
 	}
-	return AbsDownloadDirFromRel(rDir)
-}
 
-func AbsDownloadDirFromRel(p string) (string, error) {
-	adp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(adp, p), nil
+
+	return filepath.Join(relSlugDir, relDownloadTypeDir), nil
+}
+
+func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {
+	if rsdtd, err := relSlugDownloadTypeDir(slug, dt, layout); err == nil {
+
+		downloadsDir, err := pathways.GetAbsDir(Downloads)
+		if err != nil {
+			return "", err
+		}
+
+		return filepath.Join(downloadsDir, rsdtd), nil
+
+	} else {
+		return "", err
+	}
 }
 
 func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease) (string, error) {

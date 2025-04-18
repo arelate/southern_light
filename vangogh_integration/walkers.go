@@ -30,7 +30,7 @@ func filenameAsId(p string) (string, error) {
 	return "", nil
 }
 
-func LocalImageIds() (map[string]bool, error) {
+func LocalImageIds() (map[string]any, error) {
 	idp, err := pathways.GetAbsDir(Images)
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func LocalImageIds() (map[string]bool, error) {
 	return walkFiles(idp, filenameAsId)
 }
 
-func RecycleBinDirs() (map[string]bool, error) {
+func RecycleBinDirs() (map[string]any, error) {
 	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func RecycleBinDirs() (map[string]bool, error) {
 	return walkDirectories(rbdp)
 }
 
-func RecycleBinFiles() (map[string]bool, error) {
+func RecycleBinFiles() (map[string]any, error) {
 	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func RecycleBinFiles() (map[string]bool, error) {
 	return walkFiles(rbdp, relRecycleBinPath)
 }
 
-func LocalDownloadDirs() (map[string]bool, error) {
+func LocalDownloadDirs() (map[string]any, error) {
 	ddp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return nil, err
@@ -62,23 +62,24 @@ func LocalDownloadDirs() (map[string]bool, error) {
 	return walkDirectories(ddp)
 }
 
-func LocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]bool, error) {
-	pDir, err := AbsProductDownloadsDir(slug, dl)
+func AbsLocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]any, error) {
+	// using root product slug download dir to walk all files under it
+	absSlugDownloadDir, err := AbsSlugDownloadDir(slug, Installer, dl)
 	if err != nil {
 		return nil, err
 	}
-	if _, err := os.Stat(pDir); os.IsNotExist(err) {
-		return map[string]bool{}, nil
+	if _, err := os.Stat(absSlugDownloadDir); os.IsNotExist(err) {
+		return map[string]any{}, nil
 	}
 	return walkFiles(
-		pDir,
+		absSlugDownloadDir,
 		func(p string) (string, error) {
-			return filepath.Rel(pDir, p)
+			return p, nil
 		})
 }
 
-func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[string]bool, error) {
-	fileSet := make(map[string]bool)
+func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[string]any, error) {
+	fileSet := make(map[string]any)
 	err := filepath.WalkDir(
 		dir,
 		func(p string, de fs.DirEntry, err error) error {
@@ -98,7 +99,7 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 				return err
 			}
 			if tPath != "" {
-				fileSet[tPath] = true
+				fileSet[tPath] = nil
 			}
 			return err
 		})
@@ -106,12 +107,12 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 	return fileSet, err
 }
 
-func walkDirectories(rootDir string) (map[string]bool, error) {
+func walkDirectories(rootDir string) (map[string]any, error) {
 	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}
-	dirSet := make(map[string]bool)
+	dirSet := make(map[string]any)
 	err = filepath.WalkDir(
 		rootDir,
 		func(p string, de fs.DirEntry, err error) error {
@@ -121,7 +122,7 @@ func walkDirectories(rootDir string) (map[string]bool, error) {
 			if p == "" || p == rbdp {
 				return nil
 			}
-			dirSet[p] = true
+			dirSet[p] = nil
 			return nil
 		})
 

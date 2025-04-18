@@ -26,35 +26,24 @@ var validatedExtensions = map[string]bool{
 	".sh":  true,
 }
 
-func RemoteChecksumPath(p string) string {
-	ext := path.Ext(p)
-	if validatedExtensions[ext] {
-		return p + xmlExt
-	}
-	return ""
-}
+func AbsChecksumPath(absDownloadPath string) (string, error) {
 
-func AbsLocalChecksumPath(p string) (string, error) {
-	//ext := path.Ext(p)
-	//if !validatedExtensions[ext] {
-	//	return "", nil
-	//}
-	dir, filename := path.Split(p)
-	adp, err := pathways.GetAbsDir(Downloads)
-	if err != nil {
-		return "", err
-	}
-	cdp, err := pathways.GetAbsDir(Checksums)
+	downloadsDir, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}
 
-	if strings.HasPrefix(dir, adp) {
-		dir = strings.Replace(dir, adp, cdp, 1)
-	} else {
-		dir = filepath.Join(cdp, dir)
+	relDownloadPath, err := filepath.Rel(downloadsDir, absDownloadPath)
+	if err != nil {
+		return "", err
 	}
-	return filepath.Join(dir, filename+xmlExt), nil
+
+	checksumsDir, err := pathways.GetAbsDir(Checksums)
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(checksumsDir, relDownloadPath+xmlExt), nil
 }
 
 func absLocalVideoPath(videoId string, videoDir string, ext string) string {
