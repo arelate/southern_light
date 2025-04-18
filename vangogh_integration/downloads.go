@@ -271,8 +271,10 @@ func MapDownloads(
 		gameProducts = append(gameProducts, id)
 	}
 
-	pdpa := nod.Begin(" PACK, DLC products do not contain downloads:")
-	pdpa.EndWithResult(strings.Join(packDlcProducts, ", "))
+	if len(packDlcProducts) > 0 {
+		pdpa := nod.Begin(" PACK, DLC products do not contain downloads:")
+		pdpa.EndWithResult(strings.Join(packDlcProducts, ", "))
+	}
 
 	tpw.TotalInt(len(gameProducts))
 
