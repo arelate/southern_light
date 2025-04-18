@@ -339,6 +339,7 @@ func SteamAppDetailsProperties() []string {
 
 func SteamAppNewsProperties() []string {
 	return []string{
+		SteamAppIdProperty,
 		SteamLastCommunityUpdateProperty,
 	}
 }
