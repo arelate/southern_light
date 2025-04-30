@@ -118,7 +118,7 @@ const (
 	ShortDescriptionProperty  = "short-description"
 	WebsiteProperty           = "website"
 	MetacriticScoreProperty   = "metacritic-score"
-	MetacriticUrlProperty     = "metacritic-url"
+	MetacriticIdProperty      = "metacritic-id"
 	SteamCategoriesProperty   = "steam-categories"
 	SteamGenresProperty       = "steam-genres"
 	SteamSupportUrlProperty   = "steam-support-url"
@@ -319,7 +319,7 @@ func SteamAppDetailsProperties() []string {
 		ShortDescriptionProperty,
 		WebsiteProperty,
 		MetacriticScoreProperty,
-		MetacriticUrlProperty,
+		MetacriticIdProperty,
 		SteamCategoriesProperty,
 		SteamGenresProperty,
 		SteamSupportUrlProperty,

@@ -1,6 +1,9 @@
 package steam_integration
 
-import "strconv"
+import (
+	"github.com/arelate/southern_light/metacritic_integration"
+	"strconv"
+)
 
 type AppDetails struct {
 	Type                string   `json:"type"`
@@ -171,8 +174,12 @@ func (ad *AppDetails) GetMetacriticScore() int {
 	return ad.Metacritic.Score
 }
 
-func (ad *AppDetails) GetMetacriticUrl() string {
-	return ad.Metacritic.Url
+//func (ad *AppDetails) GetMetacriticUrl() string {
+//	return ad.Metacritic.Url
+//}
+
+func (ad *AppDetails) GetMetacriticId() (string, error) {
+	return metacritic_integration.ParseId(ad.Metacritic.Url)
 }
 
 func (ad *AppDetails) GetCategories() []string {
