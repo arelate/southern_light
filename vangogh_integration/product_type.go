@@ -29,6 +29,8 @@ const (
 	PcgwGogPageId
 	PcgwSteamPageId
 	PcgwRaw
+	// Wikipedia product types
+	WikipediaRaw
 	// HLTB product types
 	HltbRootPage
 	HltbData
@@ -66,6 +68,10 @@ var (
 		PcgwSteamPageId: "pcgw-steam-page-id",
 		PcgwGogPageId:   "pcgw-gog-page-id",
 		PcgwRaw:         "pcgw-raw",
+
+		// Wikipedia product types
+
+		WikipediaRaw: "wikipedia-raw",
 
 		// HLTB product types
 
