@@ -186,8 +186,6 @@ var ProductTypeProperties = map[ProductType][]string{
 	SteamDeckCompatibilityReport: SteamDeckCompatibilityReportProperties(),
 	PcgwGogPageId:                PcgwPageIdProperties(),
 	PcgwSteamPageId:              PcgwPageIdProperties(),
-	PcgwExternalLinks:            PcgwExternalLinksProperties(),
-	PcgwEngine:                   PcgwEngineProperties(),
 	HltbData:                     HltbDataProperties(),
 	ProtonDbSummary:              ProtonDbSummaryProperties(),
 	OpenCriticApiGame:            OpenCriticApiGameProperties(),
@@ -354,28 +352,27 @@ func PcgwPageIdProperties() []string {
 	}
 }
 
-func PcgwExternalLinksProperties() []string {
+func PcgwRawProperties() []string {
 	return []string{
+		SteamAppIdProperty,
 		HltbIdProperty,
 		IgdbIdProperty,
-		MobyGamesIdProperty,
-		VndbIdProperty,
-		WikipediaIdProperty,
 		StrategyWikiIdProperty,
+		MobyGamesIdProperty,
+		WikipediaIdProperty,
+		WineHQIdProperty,
+		WebsiteProperty,
+		VndbIdProperty,
+
+		MetacriticIdProperty,
+		MetacriticScoreProperty,
 		OpenCriticIdProperty,
 		OpenCriticSlugProperty,
-	}
-}
+		OpenCriticMedianScoreProperty,
 
-func PcgwEngineProperties() []string {
-	return []string{
 		EnginesProperty,
 		EnginesBuildsProperty,
 	}
-}
-
-func PcgwRawProperties() []string {
-	return []string{}
 }
 
 func HltbDataProperties() []string {
@@ -480,8 +477,6 @@ func ReduxProperties() []string {
 	all = append(all, SteamAppReviewsProperties()...)
 	all = append(all, SteamDeckCompatibilityReportProperties()...)
 	all = append(all, PcgwPageIdProperties()...)
-	all = append(all, PcgwExternalLinksProperties()...)
-	all = append(all, PcgwEngineProperties()...)
 	all = append(all, PcgwRawProperties()...)
 	all = append(all, HltbDataProperties()...)
 	all = append(all, ProtonDbSummaryProperties()...)

@@ -28,8 +28,6 @@ const (
 	// PCGamingWiki product types
 	PcgwGogPageId
 	PcgwSteamPageId
-	PcgwEngine
-	PcgwExternalLinks
 	PcgwRaw
 	// HLTB product types
 	HltbRootPage
@@ -65,11 +63,9 @@ var (
 
 		// PCGamingWiki product types
 
-		PcgwSteamPageId:   "pcgw-steam-page-id",
-		PcgwGogPageId:     "pcgw-gog-page-id",
-		PcgwExternalLinks: "pcgw-external-links",
-		PcgwEngine:        "pcgw-engine",
-		PcgwRaw:           "pcgw-raw",
+		PcgwSteamPageId: "pcgw-steam-page-id",
+		PcgwGogPageId:   "pcgw-gog-page-id",
+		PcgwRaw:         "pcgw-raw",
 
 		// HLTB product types
 
