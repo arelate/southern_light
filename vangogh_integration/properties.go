@@ -186,6 +186,7 @@ var ProductTypeProperties = map[ProductType][]string{
 	SteamDeckCompatibilityReport: SteamDeckCompatibilityReportProperties(),
 	PcgwGogPageId:                PcgwPageIdProperties(),
 	PcgwSteamPageId:              PcgwPageIdProperties(),
+	PcgwRaw:                      PcgwRawProperties(),
 	HltbData:                     HltbDataProperties(),
 	ProtonDbSummary:              ProtonDbSummaryProperties(),
 	OpenCriticApiGame:            OpenCriticApiGameProperties(),
