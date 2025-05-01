@@ -87,6 +87,8 @@ const (
 
 	PcgwPageIdProperty = "pcgw-page-id"
 
+	// hltb-data properties
+
 	HltbIdProperty                  = "hltb-id"
 	HltbHoursToCompleteMainProperty = "hltb-comp-main"
 	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
@@ -94,6 +96,8 @@ const (
 	HltbReviewScoreProperty         = "hltb-review-score"
 	HltbGenresProperty              = "hltb-genres"
 	HltbPlatformsProperty           = "hltb-platforms"
+
+	// pcgw-raw properties
 
 	IgdbIdProperty         = "igdb-id"
 	StrategyWikiIdProperty = "strategy-wiki-id"
@@ -107,6 +111,21 @@ const (
 
 	EnginesProperty       = "engines"
 	EnginesBuildsProperty = "engines-builds"
+
+	// wikipedia-raw properties
+
+	CreditsProperty = "credits"
+
+	CreatorsProperty    = "creators"
+	DirectorsProperty   = "directors"
+	ProducersProperty   = "producers"
+	DesignersProperty   = "designers"
+	ProgrammersProperty = "programmers"
+	ArtistsProperty     = "artists"
+	WritersProperty     = "writers"
+	ComposersProperty   = "composers"
+
+	// proton-summary properties
 
 	ProtonDBTierProperty       = "protondb-tier"
 	ProtonDBConfidenceProperty = "protondb-confidence"
@@ -187,6 +206,7 @@ var ProductTypeProperties = map[ProductType][]string{
 	PcgwGogPageId:                PcgwPageIdProperties(),
 	PcgwSteamPageId:              PcgwPageIdProperties(),
 	PcgwRaw:                      PcgwRawProperties(),
+	WikipediaRaw:                 WikipediaRawProperties(),
 	HltbData:                     HltbDataProperties(),
 	ProtonDbSummary:              ProtonDbSummaryProperties(),
 	OpenCriticApiGame:            OpenCriticApiGameProperties(),
@@ -376,6 +396,20 @@ func PcgwRawProperties() []string {
 	}
 }
 
+func WikipediaRawProperties() []string {
+	return []string{
+		CreditsProperty,
+		CreatorsProperty,
+		DirectorsProperty,
+		ProducersProperty,
+		DesignersProperty,
+		ProgrammersProperty,
+		ArtistsProperty,
+		WritersProperty,
+		ComposersProperty,
+	}
+}
+
 func HltbDataProperties() []string {
 	return []string{
 		HltbHoursToCompleteMainProperty,
@@ -479,6 +513,7 @@ func ReduxProperties() []string {
 	all = append(all, SteamDeckCompatibilityReportProperties()...)
 	all = append(all, PcgwPageIdProperties()...)
 	all = append(all, PcgwRawProperties()...)
+	all = append(all, WikipediaRawProperties()...)
 	all = append(all, HltbDataProperties()...)
 	all = append(all, ProtonDbSummaryProperties()...)
 	all = append(all, OpenCriticApiGameProperties()...)
