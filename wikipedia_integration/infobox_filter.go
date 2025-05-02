@@ -18,8 +18,7 @@ func FilterInfoboxLines(r io.Reader) ([]string, error) {
 
 	ts := bufio.NewScanner(r)
 
-	scanning := false
-	previousLine := ""
+	collecting := false
 	listCounter := 0
 
 	for ts.Scan() {
@@ -29,22 +28,17 @@ func FilterInfoboxLines(r io.Reader) ([]string, error) {
 		listCounter += strings.Count(line, ListPfx)
 		listCounter -= strings.Count(line, ListSfx)
 
-		if !scanning && strings.Contains(line, InfoboxPfx) {
-			scanning = true
+		if !collecting && strings.Contains(line, InfoboxPfx) {
+			collecting = true
 			continue
 		}
-		if listCounter == 0 && strings.HasPrefix(line, ListSfx) {
-			break
-		}
-		if scanning && line == "" && strings.HasSuffix(previousLine, ListSfx) {
+		if listCounter == 0 && strings.Contains(line, ListSfx) {
 			break
 		}
 
-		if scanning {
+		if collecting {
 			infoboxLines = append(infoboxLines, line)
 		}
-
-		previousLine = line
 	}
 
 	if err := ts.Err(); err != nil {
