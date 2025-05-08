@@ -19,6 +19,7 @@ func FilterInfoboxLines(r io.Reader) ([]string, error) {
 	ts := bufio.NewScanner(r)
 
 	collecting := false
+	collected := false
 	listCounter := 0
 
 	for ts.Scan() {
@@ -32,12 +33,13 @@ func FilterInfoboxLines(r io.Reader) ([]string, error) {
 			collecting = true
 			continue
 		}
-		if listCounter == 0 && strings.Contains(line, ListSfx) {
+		if collected && listCounter == 0 && strings.Contains(line, ListSfx) {
 			break
 		}
 
 		if collecting {
 			infoboxLines = append(infoboxLines, line)
+			collected = true
 		}
 	}
 
