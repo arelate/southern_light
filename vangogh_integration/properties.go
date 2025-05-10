@@ -114,7 +114,8 @@ const (
 
 	// wikipedia-raw properties
 
-	CreditsProperty = "credits"
+	CreditsProperty            = "credits"
+	HasMultipleCreditsProperty = "has-multiple-credits"
 
 	CreatorsProperty    = "creators"
 	DirectorsProperty   = "directors"
@@ -396,9 +397,10 @@ func PcgwRawProperties() []string {
 	}
 }
 
-func WikipediaRawProperties() []string {
+func CreditsProperties() []string {
 	return []string{
 		CreditsProperty,
+		HasMultipleCreditsProperty,
 		CreatorsProperty,
 		DirectorsProperty,
 		ProducersProperty,
@@ -408,6 +410,15 @@ func WikipediaRawProperties() []string {
 		WritersProperty,
 		ComposersProperty,
 	}
+}
+
+func WikipediaRawProperties() []string {
+	// currently it's just the credits properties
+	// however since credit properties are used for reduction,
+	// we'll keep them separate and wikipedia-raw
+	// might add more properties in the future in
+	// addition to credits
+	return CreditsProperties()
 }
 
 func HltbDataProperties() []string {
