@@ -34,16 +34,6 @@ var validationResultsHumanReadableStrings = map[ValidationResult]string{
 	ValidatedChecksumMismatch:    "Corrupted",
 }
 
-var ValidationResultsOrder = []ValidationResult{
-	ValidatedSuccessfully,
-	ValidatedUnresolvedManualUrl,
-	ValidationResultUnknown,
-	ValidatedMissingChecksum,
-	ValidatedMissingLocalFile,
-	ValidationError,
-	ValidatedChecksumMismatch,
-}
-
 func (vr ValidationResult) String() string {
 	return validationResultsStrings[vr]
 }
