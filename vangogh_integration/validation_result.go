@@ -1,33 +1,35 @@
 package vangogh_integration
 
+import "slices"
+
 type ValidationResult int
 
 const (
-	ValidationResultUnknown ValidationResult = iota
-	ValidatedSuccessfully
+	ValidatedSuccessfully ValidationResult = iota
 	ValidatedUnresolvedManualUrl
-	ValidatedMissingLocalFile
+	ValidationResultUnknown
 	ValidatedMissingChecksum
+	ValidatedMissingLocalFile
 	ValidationError
 	ValidatedChecksumMismatch
 )
 
 var validationResultsStrings = map[ValidationResult]string{
-	ValidationResultUnknown:      "unknown",
 	ValidatedSuccessfully:        "valid",
 	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
-	ValidatedMissingLocalFile:    "missing-local-file",
+	ValidationResultUnknown:      "unknown",
 	ValidatedMissingChecksum:     "missing-checksum",
+	ValidatedMissingLocalFile:    "missing-local-file",
 	ValidationError:              "error",
 	ValidatedChecksumMismatch:    "checksum-mismatch",
 }
 
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
-	ValidationResultUnknown:      "Unknown",
 	ValidatedSuccessfully:        "Validated",
 	ValidatedUnresolvedManualUrl: "Unresolved",
-	ValidatedMissingLocalFile:    "No File",
+	ValidationResultUnknown:      "Unknown",
 	ValidatedMissingChecksum:     "No Checksum",
+	ValidatedMissingLocalFile:    "No File",
 	ValidationError:              "Error",
 	ValidatedChecksumMismatch:    "Corrupted",
 }
@@ -35,11 +37,11 @@ var validationResultsHumanReadableStrings = map[ValidationResult]string{
 var ValidationResultsOrder = []ValidationResult{
 	ValidatedSuccessfully,
 	ValidatedUnresolvedManualUrl,
-	ValidatedMissingLocalFile,
+	ValidationResultUnknown,
 	ValidatedMissingChecksum,
+	ValidatedMissingLocalFile,
 	ValidationError,
 	ValidatedChecksumMismatch,
-	ValidationResultUnknown,
 }
 
 func (vr ValidationResult) String() string {
@@ -57,4 +59,13 @@ func ParseValidationResult(vrs string) ValidationResult {
 		}
 	}
 	return ValidationResultUnknown
+}
+
+func WorstValidationResult(vrs ...ValidationResult) ValidationResult {
+	if len(vrs) == 0 {
+		return ValidationResultUnknown
+	}
+
+	slices.Sort(vrs)
+	return vrs[len(vrs)-1]
 }
