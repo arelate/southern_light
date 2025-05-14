@@ -267,6 +267,7 @@ func GOGAccountPageProperties() []string {
 	return []string{
 		TagIdProperty,
 		TagNameProperty,
+		SlugProperty,
 		AccountPageProductsProperty,
 	}
 }
