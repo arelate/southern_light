@@ -1,6 +1,7 @@
 package vangogh_integration
 
 import (
+	"errors"
 	"iter"
 	"maps"
 )
@@ -40,53 +41,76 @@ const (
 	OpenCriticApiGame
 )
 
-var (
-	productTypeStrings = map[ProductType]string{
-		UnknownProductType: "unknown-product-type",
+var productTypeStrings = map[ProductType]string{
+	UnknownProductType: "unknown-product-type",
 
-		// GOG.com product types
+	// GOG.com product types
 
-		UserAccessToken:    "user-access-token",
-		Licences:           "licences",
-		UserWishlist:       "user-wishlist",
-		CatalogPage:        "catalog-page",
-		OrderPage:          "order-page",
-		AccountPage:        "account-page",
-		ApiProducts:        "api-products",
-		Details:            "details",
-		GamesDbGogProducts: "gamesdb-gog-products",
+	UserAccessToken:    "user-access-token",
+	Licences:           "licences",
+	UserWishlist:       "user-wishlist",
+	CatalogPage:        "catalog-page",
+	OrderPage:          "order-page",
+	AccountPage:        "account-page",
+	ApiProducts:        "api-products",
+	Details:            "details",
+	GamesDbGogProducts: "gamesdb-gog-products",
 
-		// Steam product types
+	// Steam product types
 
-		SteamAppDetails:              "steam-app-details",
-		SteamAppNews:                 "steam-app-news",
-		SteamAppReviews:              "steam-app-reviews",
-		SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
+	SteamAppDetails:              "steam-app-details",
+	SteamAppNews:                 "steam-app-news",
+	SteamAppReviews:              "steam-app-reviews",
+	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 
-		// PCGamingWiki product types
+	// PCGamingWiki product types
 
-		PcgwSteamPageId: "pcgw-steam-page-id",
-		PcgwGogPageId:   "pcgw-gog-page-id",
-		PcgwRaw:         "pcgw-raw",
+	PcgwSteamPageId: "pcgw-steam-page-id",
+	PcgwGogPageId:   "pcgw-gog-page-id",
+	PcgwRaw:         "pcgw-raw",
 
-		// Wikipedia product types
+	// Wikipedia product types
 
-		WikipediaRaw: "wikipedia-raw",
+	WikipediaRaw: "wikipedia-raw",
 
-		// HLTB product types
+	// HLTB product types
 
-		HltbRootPage: "hltb-root-page",
-		HltbData:     "hltb-data",
+	HltbRootPage: "hltb-root-page",
+	HltbData:     "hltb-data",
 
-		// ProtonDB product types
+	// ProtonDB product types
 
-		ProtonDbSummary: "protondb-summary",
+	ProtonDbSummary: "protondb-summary",
 
-		// OpenCritic product types
+	// OpenCritic product types
 
-		OpenCriticApiGame: "opencritic-api-game",
-	}
-)
+	OpenCriticApiGame: "opencritic-api-game",
+}
+
+var productTypePfx = map[ProductType]string{
+	UnknownProductType:           "upt",
+	UserAccessToken:              "uat",
+	Licences:                     "l",
+	UserWishlist:                 "uw",
+	CatalogPage:                  "cp",
+	OrderPage:                    "op",
+	AccountPage:                  "ap",
+	ApiProducts:                  "api",
+	Details:                      "d",
+	GamesDbGogProducts:           "ggp",
+	SteamAppDetails:              "sd",
+	SteamAppNews:                 "sn",
+	SteamAppReviews:              "sr",
+	SteamDeckCompatibilityReport: "sd",
+	PcgwSteamPageId:              "pcs",
+	PcgwGogPageId:                "pcg",
+	PcgwRaw:                      "pcr",
+	WikipediaRaw:                 "wr",
+	HltbRootPage:                 "hr",
+	HltbData:                     "hd",
+	ProtonDbSummary:              "prs",
+	OpenCriticApiGame:            "oa",
+}
 
 func AllProductTypes() iter.Seq[ProductType] {
 	return maps.Keys(productTypeStrings)
@@ -108,4 +132,13 @@ func ParseProductType(productType string) ProductType {
 		}
 	}
 	return UnknownProductType
+}
+
+func ProductTypeId(pt ProductType, id string) (string, error) {
+	pfx, ok := productTypePfx[pt]
+	if ok {
+		return pfx + id, nil
+	}
+
+	return "", errors.New("no prefix for " + pt.String())
 }

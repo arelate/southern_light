@@ -42,7 +42,6 @@ const (
 	Redux          pathways.RelDir = "_redux"
 	GitHubReleases pathways.RelDir = "github-releases"
 	GitHubAssets   pathways.RelDir = "_github-assets"
-	TypeErrors     pathways.RelDir = "_type_errors"
 	DLCs           pathways.RelDir = "dlc"
 	Extras         pathways.RelDir = "extras"
 )
@@ -51,7 +50,6 @@ var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:          Metadata,
 	GitHubReleases: Metadata,
 	GitHubAssets:   Downloads,
-	TypeErrors:     Metadata,
 	DLCs:           Downloads,
 	Extras:         Downloads,
 }

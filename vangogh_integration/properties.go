@@ -151,10 +151,11 @@ const (
 	OpenCriticPercentileProperty      = "opencritic-percentile"
 	OpenCriticTierProperty            = "opencritic-tier"
 
-	// per-type properties
+	// get-data properties
 
-	TypeErrorMessageProperty = "type-error-message"
-	TypeErrorDateProperty    = "type-error-date"
+	GetDataErrorDateProperty    = "get-data-error-date"
+	GetDataErrorMessageProperty = "get-data-error-message"
+	GetDataLastUpdatedProperty  = "get-data-last-updated"
 
 	// reduced properties
 
@@ -450,10 +451,11 @@ func OpenCriticApiGameProperties() []string {
 	}
 }
 
-func TypeErrorProperties() []string {
+func GetDataProperties() []string {
 	return []string{
-		TypeErrorMessageProperty,
-		TypeErrorDateProperty,
+		GetDataErrorDateProperty,
+		GetDataErrorMessageProperty,
+		GetDataLastUpdatedProperty,
 	}
 }
 
