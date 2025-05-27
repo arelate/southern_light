@@ -7,11 +7,14 @@ type ProductDetails struct {
 	Slug             string               `json:"slug"`
 	SteamAppId       string               `json:"steam-app-id,omitempty"`
 	Title            string               `json:"title"`
+	ProductType      string               `json:"product-type"`
 	OperatingSystems []OperatingSystem    `json:"operating-systems"`
 	Developers       []string             `json:"developers"`
 	Publishers       []string             `json:"publishers"`
 	Images           ProductImages        `json:"images"`
 	DownloadLinks    ProductDownloadLinks `json:"download-links,omitempty"`
+	IncludesGames    []string             `json:"includes-games,omitempty"`
+	RequiresGames    []string             `json:"requires-games,omitempty"`
 }
 
 type ProductImages struct {

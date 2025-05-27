@@ -2,6 +2,7 @@ package vangogh_integration
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/kevlar"
@@ -20,6 +21,11 @@ const (
 	bytesInGB = 1024 * 1024 * 1024
 	bytesInMB = 1024 * 1024
 	patchStr  = "patch"
+)
+
+const (
+	detailsNotFoundError = "details not found for "
+	nilDetailsError      = "details are nil for "
 )
 
 type Download struct {
@@ -351,4 +357,20 @@ func UnmarshalDetails(id string, kvDetails kevlar.KeyValues) (*gog_integration.D
 	}
 
 	return &det, nil
+}
+
+func DetailsNotFoundErr(id string) error {
+	return errors.New(detailsNotFoundError + id)
+}
+
+func NilDetailsErr(id string) error {
+	return errors.New(nilDetailsError + id)
+}
+
+func IsDetailsNotFound(err error) bool {
+	return strings.HasPrefix(err.Error(), detailsNotFoundError)
+}
+
+func IsNilDetails(err error) bool {
+	return strings.HasPrefix(err.Error(), nilDetailsError)
 }
