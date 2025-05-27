@@ -264,7 +264,7 @@ func MapDownloads(
 	gameProducts := make([]string, 0, len(ids))
 
 	for _, id := range ids {
-		if pt, ok := rdx.GetLastVal(ProductTypeProperty, id); ok && pt != "GAME" {
+		if pt, ok := rdx.GetLastVal(ProductTypeProperty, id); ok && pt != GameProductType {
 			packDlcProducts = append(packDlcProducts, id)
 			continue
 		}
