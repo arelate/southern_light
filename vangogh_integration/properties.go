@@ -505,6 +505,7 @@ func ValidationResultsProperties() []string {
 		ManualUrlStatusProperty,
 		ManualUrlValidationResultProperty,
 		ProductValidationResultProperty,
+		DownloadQueuedProperty,
 	}
 }
 
