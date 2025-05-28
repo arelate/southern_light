@@ -37,7 +37,7 @@ type Download struct {
 	OS             OperatingSystem
 	LanguageCode   string
 	Type           DownloadType
-	EstimatedBytes int
+	EstimatedBytes int64
 }
 
 func convertManualDownload(
@@ -59,17 +59,17 @@ func convertManualDownload(
 	}
 }
 
-func convertToBytes(size string, suffix string, bytesInUnit int) int {
+func convertToBytes(size string, suffix string, bytesInUnit int) int64 {
 	sizeStr := strings.TrimSuffix(size, " "+suffix)
 	sz, err := strconv.ParseFloat(sizeStr, 0)
 	if err != nil {
 		log.Printf("error parsing size: %s", size)
 		return 0
 	}
-	return int(sz * float64(bytesInUnit))
+	return int64(sz * float64(bytesInUnit))
 }
 
-func SizeToEstimatedBytes(size string) int {
+func SizeToEstimatedBytes(size string) int64 {
 	if strings.HasSuffix(size, gbSuffix) {
 		return convertToBytes(size, gbSuffix, bytesInGB)
 	} else if strings.HasSuffix(size, mbSuffix) {
@@ -222,8 +222,8 @@ func (list DownloadsList) Only(
 	return matchingList
 }
 
-func (list DownloadsList) TotalBytesEstimate() int {
-	totalBytes := 0
+func (list DownloadsList) TotalBytesEstimate() int64 {
+	var totalBytes int64
 	for _, dl := range list {
 		totalBytes += dl.EstimatedBytes
 	}
@@ -373,4 +373,18 @@ func IsDetailsNotFound(err error) bool {
 
 func IsNilDetails(err error) bool {
 	return strings.HasPrefix(err.Error(), nilDetailsError)
+}
+
+func FormatBytes(b int64) string {
+	const unit = 1000
+	if b < unit {
+		return fmt.Sprintf("%d B", b)
+	}
+	div, exp := int64(unit), 0
+	for n := b / unit; n >= unit; n /= unit {
+		div *= unit
+		exp++
+	}
+	return fmt.Sprintf("%.1f %cB",
+		float64(b)/float64(div), "kMGTPE"[exp])
 }

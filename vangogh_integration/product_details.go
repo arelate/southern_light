@@ -38,7 +38,7 @@ type ProductDownloadLink struct {
 	Type             DownloadType     `json:"type"`
 	LanguageCode     string           `json:"language-code"`
 	Version          string           `json:"version"`
-	EstimatedBytes   int              `json:"estimated-bytes"`
+	EstimatedBytes   int64            `json:"estimated-bytes"`
 }
 
 type ProductDownloadLinks []ProductDownloadLink
