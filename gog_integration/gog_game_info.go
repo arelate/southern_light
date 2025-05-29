@@ -14,13 +14,15 @@ type GogGameInfo struct {
 }
 
 type PlayTask struct {
-	Category  string   `json:"category"`
-	IsPrimary bool     `json:"isPrimary"`
-	Languages []string `json:"languages"`
-	Name      string   `json:"name"`
-	OsBitness []string `json:"osBitness"`
-	Path      string   `json:"path"`
-	Type      string   `json:"type"`
+	Arguments  string   `json:"arguments,omitempty"`
+	Category   string   `json:"category"`
+	IsPrimary  bool     `json:"isPrimary,omitempty"`
+	Languages  []string `json:"languages"`
+	Name       string   `json:"name"`
+	Path       string   `json:"path,omitempty"`
+	Type       string   `json:"type"`
+	WorkingDir string   `json:"workingDir,omitempty"`
+	Link       string   `json:"link,omitempty"`
 }
 
 func (ggi *GogGameInfo) GetPrimaryPlayTaskPath() string {
