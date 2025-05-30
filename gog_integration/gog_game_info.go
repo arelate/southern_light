@@ -17,12 +17,14 @@ type PlayTask struct {
 	Arguments  string   `json:"arguments,omitempty"`
 	Category   string   `json:"category"`
 	IsPrimary  bool     `json:"isPrimary,omitempty"`
+	IsHidden   bool     `json:"isHidden,omitempty"`
 	Languages  []string `json:"languages"`
+	Link       string   `json:"link,omitempty"`
 	Name       string   `json:"name"`
+	OsBitness  []string `json:"osBitness"`
 	Path       string   `json:"path,omitempty"`
 	Type       string   `json:"type"`
 	WorkingDir string   `json:"workingDir,omitempty"`
-	Link       string   `json:"link,omitempty"`
 }
 
 func (ggi *GogGameInfo) GetPrimaryPlayTaskPath() string {
