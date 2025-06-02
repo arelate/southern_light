@@ -3,6 +3,7 @@ package gog_integration
 import (
 	"encoding/json"
 	"os"
+	"strings"
 )
 
 const (
@@ -36,12 +37,28 @@ type PlayTask struct {
 	WorkingDir string   `json:"workingDir,omitempty"`
 }
 
-func (ggi *GogGameInfo) PrimaryPlayTask() *PlayTask {
+func (ggi *GogGameInfo) GetPlayTask(playTask string) *PlayTask {
+
+	if playTask == "" {
+		for _, pt := range ggi.PlayTasks {
+			if pt.IsPrimary {
+				return &pt
+			}
+		}
+	}
+
 	for _, pt := range ggi.PlayTasks {
-		if pt.IsPrimary {
+		if pt.Name == playTask {
 			return &pt
 		}
 	}
+
+	for _, pt := range ggi.PlayTasks {
+		if strings.Contains(pt.Name, playTask) {
+			return &pt
+		}
+	}
+
 	return nil
 }
 
