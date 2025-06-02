@@ -1,6 +1,9 @@
 package vangogh_integration
 
-import "strings"
+import (
+	"errors"
+	"strings"
+)
 
 type OperatingSystem int
 
@@ -38,6 +41,10 @@ func (os OperatingSystem) String() string {
 	}
 
 	return operatingSystemStrings[AnyOperatingSystem]
+}
+
+func (os OperatingSystem) ErrUnsupported() error {
+	return errors.New("unsupported operating system " + os.String())
 }
 
 func ParseOperatingSystem(operatingSystem string) OperatingSystem {
