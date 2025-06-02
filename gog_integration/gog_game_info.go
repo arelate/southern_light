@@ -1,5 +1,10 @@
 package gog_integration
 
+import (
+	"encoding/json"
+	"os"
+)
+
 type GogGameInfo struct {
 	BuildId    string     `json:"buildId"`
 	ClientId   string     `json:"clientId"`
@@ -27,11 +32,27 @@ type PlayTask struct {
 	WorkingDir string   `json:"workingDir,omitempty"`
 }
 
-func (ggi *GogGameInfo) GetPrimaryPlayTaskPath() string {
+func (ggi *GogGameInfo) PrimaryPlayTask() *PlayTask {
 	for _, pt := range ggi.PlayTasks {
 		if pt.IsPrimary {
-			return pt.Path
+			return &pt
 		}
 	}
-	return ""
+	return nil
+}
+
+func GetGogGameInfo(path string) (*GogGameInfo, error) {
+
+	gogGameInfoFile, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer gogGameInfoFile.Close()
+
+	var gogGameInfo GogGameInfo
+	if err = json.NewDecoder(gogGameInfoFile).Decode(&gogGameInfo); err != nil {
+		return nil, err
+	}
+
+	return &gogGameInfo, nil
 }
