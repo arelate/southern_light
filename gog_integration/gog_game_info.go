@@ -5,6 +5,10 @@ import (
 	"os"
 )
 
+const (
+	GogGameInfoFilenameTemplate = "goggame-{id}.info"
+)
+
 type GogGameInfo struct {
 	BuildId    string     `json:"buildId"`
 	ClientId   string     `json:"clientId"`
