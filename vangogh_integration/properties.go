@@ -56,6 +56,8 @@ const (
 	ProductValidationResultProperty   = "product-validation-result"
 	DownloadStatusErrorProperty       = "download-status-error"
 	DownloadQueuedProperty            = "download-queued"
+	DownloadStartedProperty           = "download-started"
+	DownloadCompletedProperty         = "download-completed"
 	StoreUrlProperty                  = "store-url"
 	ForumUrlProperty                  = "forum-url"
 	SupportUrlProperty                = "support-url"
@@ -498,7 +500,7 @@ func SyncProperties() []string {
 	}
 }
 
-func ValidationResultsProperties() []string {
+func DownloadsLifecycleProperties() []string {
 	return []string{
 		LocalManualUrlProperty,
 		ManualUrlFilenameProperty,
@@ -506,6 +508,8 @@ func ValidationResultsProperties() []string {
 		ManualUrlValidationResultProperty,
 		ProductValidationResultProperty,
 		DownloadQueuedProperty,
+		DownloadStartedProperty,
+		DownloadCompletedProperty,
 	}
 }
 
@@ -542,7 +546,7 @@ func ReduxProperties() []string {
 	all = append(all, DehydratedImagesProperties()...)
 
 	all = append(all, SyncProperties()...)
-	all = append(all, ValidationResultsProperties()...)
+	all = append(all, DownloadsLifecycleProperties()...)
 	return all
 }
 
