@@ -2,6 +2,7 @@ package gog_integration
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"strings"
 )
@@ -37,29 +38,33 @@ type PlayTask struct {
 	WorkingDir string   `json:"workingDir,omitempty"`
 }
 
-func (ggi *GogGameInfo) GetPlayTask(playTask string) *PlayTask {
+func (ggi *GogGameInfo) GetPlayTask(playTask string) (*PlayTask, error) {
+
+	if len(ggi.PlayTasks) == 0 {
+		return nil, errors.New("goggame.info has no playtasks")
+	}
 
 	if playTask == "" {
 		for _, pt := range ggi.PlayTasks {
 			if pt.IsPrimary {
-				return &pt
+				return &pt, nil
 			}
 		}
 	}
 
 	for _, pt := range ggi.PlayTasks {
 		if pt.Name == playTask {
-			return &pt
+			return &pt, nil
 		}
 	}
 
 	for _, pt := range ggi.PlayTasks {
 		if strings.Contains(pt.Name, playTask) {
-			return &pt
+			return &pt, nil
 		}
 	}
 
-	return nil
+	return nil, errors.New("playtask not found: " + playTask)
 }
 
 func GetGogGameInfo(path string) (*GogGameInfo, error) {
