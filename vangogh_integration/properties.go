@@ -300,6 +300,8 @@ func GOGApiProductProperties() []string {
 		IsRequiredByGamesProperty,
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,
+		ModifiesGamesProperty,
+		IsModifiedByGamesProperty,
 		GlobalReleaseDateProperty,
 		GOGReleaseDateProperty,
 		StoreUrlProperty,
