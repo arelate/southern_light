@@ -75,6 +75,7 @@ const (
 	PriceProperty                     = "price"
 	IsFreeProperty                    = "is-free"
 	IsDemoProperty                    = "is-demo"
+	IsModProperty                     = "is-mod"
 	IsDiscountedProperty              = "is-discounted"
 	DiscountPercentageProperty        = "discount-percentage"
 	SteamAppIdProperty                = "steam-app-id"
@@ -255,6 +256,7 @@ func GOGCatalogPageProperties() []string {
 		PreOrderProperty,
 		InDevelopmentProperty,
 		IsDemoProperty,
+		IsModProperty,
 		EditionsProperty,
 		CatalogPageProductsProperty,
 		UserWishlistProperty,
