@@ -28,6 +28,8 @@ const (
 	IsIncludedByGamesProperty         = "is-included-by-games"
 	RequiresGamesProperty             = "requires-games"
 	IsRequiredByGamesProperty         = "is-required-by-games"
+	ModifiesGamesProperty             = "modifies-games"
+	IsModifiedByGamesProperty         = "is-modified-by-games"
 	EditionsProperty                  = "editions"
 	GenresProperty                    = "genres"
 	StoreTagsProperty                 = "store-tags"

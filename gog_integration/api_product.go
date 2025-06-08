@@ -34,6 +34,8 @@ type links struct {
 	IsIncludedInGames     []href `json:"isIncludedInGames"`
 	RequiresGames         []href `json:"requiresGames"`
 	IsRequiredByGames     []href `json:"isRequiredByGames"`
+	ModifiesGames         []href `json:"modifiesGames"`
+	IsModifiedByGames     []href `json:"isModifiedByGames"`
 }
 
 type supportedOperatingSystem struct {
@@ -357,6 +359,10 @@ func (ap *ApiProduct) GetIsRequiredByGames() []string {
 func (ap *ApiProduct) GetRequiresGames() []string {
 	return ap.getHrefs(ap.Links.RequiresGames)
 }
+
+func (ap *ApiProduct) GetModifiesGames() []string { return ap.getHrefs(ap.Links.ModifiesGames) }
+
+func (ap *ApiProduct) GetIsModifiedByGames() []string { return ap.getHrefs(ap.Links.IsModifiedByGames) }
 
 func (ap *ApiProduct) GetLanguageCodes() []string {
 	lcs := make(map[string]bool, 0)
