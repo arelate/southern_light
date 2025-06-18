@@ -517,6 +517,7 @@ func DownloadsLifecycleProperties() []string {
 		DownloadQueuedProperty,
 		DownloadStartedProperty,
 		DownloadCompletedProperty,
+		DownloadStatusErrorProperty,
 	}
 }
 
