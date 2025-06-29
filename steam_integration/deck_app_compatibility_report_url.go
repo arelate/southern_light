@@ -13,6 +13,7 @@ func DeckAppCompatibilityReportUrl(appId string) *url.URL {
 
 	q := u.Query()
 	q.Add("nAppID", appId)
+	q.Add("l", "english")
 	u.RawQuery = q.Encode()
 
 	return u
