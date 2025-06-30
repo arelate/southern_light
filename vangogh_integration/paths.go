@@ -57,14 +57,6 @@ func absLocalVideoPath(videoId string, videoDir string, ext string) string {
 
 }
 
-func relRecycleBinPath(p string) (string, error) {
-	rbdp, err := pathways.GetAbsDir(RecycleBin)
-	if err != nil {
-		return "", err
-	}
-	return filepath.Rel(rbdp, p)
-}
-
 func AbsLocalImagePath(imageId string) (string, error) {
 	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
 	idp, err := AbsImagesDirByImageId(imageId)

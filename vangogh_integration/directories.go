@@ -21,7 +21,6 @@ const (
 	DescriptionImages pathways.AbsDir = "description_images"
 	Downloads         pathways.AbsDir = "downloads"
 	Checksums         pathways.AbsDir = "checksums"
-	RecycleBin        pathways.AbsDir = "recycle_bin"
 	Logs              pathways.AbsDir = "logs"
 )
 
@@ -34,7 +33,6 @@ var AllAbsDirs = []pathways.AbsDir{
 	DescriptionImages,
 	Downloads,
 	Checksums,
-	RecycleBin,
 	Logs,
 }
 

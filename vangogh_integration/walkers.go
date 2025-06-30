@@ -38,22 +38,6 @@ func LocalImageIds() (map[string]any, error) {
 	return walkFiles(idp, filenameAsId)
 }
 
-func RecycleBinDirs() (map[string]any, error) {
-	rbdp, err := pathways.GetAbsDir(RecycleBin)
-	if err != nil {
-		return nil, err
-	}
-	return walkDirectories(rbdp)
-}
-
-func RecycleBinFiles() (map[string]any, error) {
-	rbdp, err := pathways.GetAbsDir(RecycleBin)
-	if err != nil {
-		return nil, err
-	}
-	return walkFiles(rbdp, relRecycleBinPath)
-}
-
 func LocalDownloadDirs() (map[string]any, error) {
 	ddp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
@@ -108,18 +92,14 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 }
 
 func walkDirectories(rootDir string) (map[string]any, error) {
-	rbdp, err := pathways.GetAbsDir(RecycleBin)
-	if err != nil {
-		return nil, err
-	}
 	dirSet := make(map[string]any)
-	err = filepath.WalkDir(
+	err := filepath.WalkDir(
 		rootDir,
 		func(p string, de fs.DirEntry, err error) error {
 			if de != nil && !de.IsDir() {
 				return nil
 			}
-			if p == "" || p == rbdp {
+			if p == "" {
 				return nil
 			}
 			dirSet[p] = nil
