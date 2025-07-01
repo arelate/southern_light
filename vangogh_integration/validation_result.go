@@ -1,14 +1,12 @@
 package vangogh_integration
 
-import "slices"
-
 type ValidationResult int
 
 const (
 	ValidatedSuccessfully ValidationResult = iota
-	ValidatedUnresolvedManualUrl
 	ValidationResultUnknown
 	ValidatedMissingChecksum
+	ValidatedUnresolvedManualUrl
 	ValidatedMissingLocalFile
 	ValidationError
 	ValidatedChecksumMismatch
@@ -16,9 +14,9 @@ const (
 
 var validationResultsStrings = map[ValidationResult]string{
 	ValidatedSuccessfully:        "valid",
-	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
 	ValidationResultUnknown:      "unknown",
 	ValidatedMissingChecksum:     "missing-checksum",
+	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
 	ValidatedMissingLocalFile:    "missing-local-file",
 	ValidationError:              "error",
 	ValidatedChecksumMismatch:    "checksum-mismatch",
@@ -26,9 +24,9 @@ var validationResultsStrings = map[ValidationResult]string{
 
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
 	ValidatedSuccessfully:        "Validated",
-	ValidatedUnresolvedManualUrl: "Unresolved",
 	ValidationResultUnknown:      "Unknown",
 	ValidatedMissingChecksum:     "No Checksum",
+	ValidatedUnresolvedManualUrl: "Unresolved",
 	ValidatedMissingLocalFile:    "No File",
 	ValidationError:              "Error",
 	ValidatedChecksumMismatch:    "Corrupted",
@@ -52,10 +50,17 @@ func ParseValidationResult(vrs string) ValidationResult {
 }
 
 func WorstValidationResult(vrs ...ValidationResult) ValidationResult {
+
+	wvr := ValidatedSuccessfully
 	if len(vrs) == 0 {
-		return ValidationResultUnknown
+		wvr = ValidationResultUnknown
 	}
 
-	slices.Sort(vrs)
-	return vrs[len(vrs)-1]
+	for _, vr := range vrs {
+		if vr > wvr {
+			wvr = vr
+		}
+	}
+
+	return wvr
 }
