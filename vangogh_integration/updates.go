@@ -8,7 +8,7 @@ const (
 )
 
 var UpdatesShorterTitles = map[string]string{
-	UpdatesInstallers:    "Files",
+	UpdatesInstallers:    "Installers",
 	UpdatesReleasedToday: "Today",
 	UpdatesNewProducts:   "New",
 	UpdatesSteamNews:     "Steam",
