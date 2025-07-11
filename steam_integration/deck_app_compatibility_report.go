@@ -50,7 +50,7 @@ func (dacr *DeckAppCompatibilityReport) SteamOsString() string {
 
 func (dacr *DeckAppCompatibilityReport) GetSteamOsDisplayTypes() []string {
 	ridt := make([]string, 0, len(dacr.Results.SteamOsResolvedItems))
-	for _, ri := range dacr.Results.ResolvedItems {
+	for _, ri := range dacr.Results.SteamOsResolvedItems {
 		ridt = append(ridt, DecodeCategory(ri.DisplayType-1))
 	}
 	return ridt
@@ -58,7 +58,7 @@ func (dacr *DeckAppCompatibilityReport) GetSteamOsDisplayTypes() []string {
 
 func (dacr *DeckAppCompatibilityReport) GetSteamOsResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.SteamOsResolvedItems))
-	for _, ri := range dacr.Results.ResolvedItems {
+	for _, ri := range dacr.Results.SteamOsResolvedItems {
 		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
 	}
 	return rilt
