@@ -86,6 +86,7 @@ const (
 	SteamReviewScoreProperty                  = "steam-review-score"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
+	SteamOsAppCompatibilityCategoryProperty   = "steamos-app-compatibility-category" // no space in SteamOS
 
 	SummaryRatingProperty  = "summary-rating"
 	SummaryReviewsProperty = "summary-reviews"
