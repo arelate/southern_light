@@ -5,9 +5,12 @@ import (
 	"strings"
 )
 
-const locTokenPrefix = "#SteamDeckVerified_TestResult_"
+const (
+	steamDeckLocTokenPrefix = "#SteamDeckVerified_TestResult_"
+	steamOsLocTokenPrefix   = "#SteamOS_TestResult_"
+)
 
-var locTokensStrings = map[string]string{
+var steamDeckLocTokensStrings = map[string]string{
 	"audioOutputHasNonblockingIssues":                      "This game has minor audio issues on Steam Deck",
 	"auxFunctionalityNotAccessibleMapEditor":               "Some auxilliary functionality is not accessible on Steam Deck: map editor",
 	"auxFunctionalityNotAccessible_MapEditor":              "Some auxilliary functionality is not accessible on Steam Deck: map editor",
@@ -48,6 +51,8 @@ var locTokensStrings = map[string]string{
 	"videoPlaybackHasNonblockingIssues":                    "Some in-game movie content may be missing",
 }
 
+var steamOsLocTokensStrings = map[string]string{}
+
 var categoryTitles = map[int]string{
 	0: "Unknown",
 	1: "Unsupported",
@@ -59,11 +64,20 @@ func DecodeCategory(category int) string {
 	return categoryTitles[category]
 }
 
-func TrimLocToken(token string) string {
-	return strings.TrimPrefix(token, locTokenPrefix)
+func SteamDeckTrimLocToken(token string) string {
+	return strings.TrimPrefix(token, steamDeckLocTokenPrefix)
 }
 
-func DecodeLocToken(token string) string {
+func SteamDeckDecodeLocToken(token string) string {
 	token = southern_light.FirstToLower(token)
-	return locTokensStrings[token]
+	return steamDeckLocTokensStrings[token]
+}
+
+func SteamOsTrimLocToken(token string) string {
+	return strings.TrimPrefix(token, steamOsLocTokenPrefix)
+}
+
+func SteamOsDecodeLocToken(token string) string {
+	token = southern_light.FirstToLower(token)
+	return steamOsLocTokensStrings[token]
 }
