@@ -376,6 +376,7 @@ func SteamAppReviewsProperties() []string {
 func SteamDeckCompatibilityReportProperties() []string {
 	return []string{
 		SteamDeckAppCompatibilityCategoryProperty,
+		SteamOsAppCompatibilityCategoryProperty,
 	}
 }
 
