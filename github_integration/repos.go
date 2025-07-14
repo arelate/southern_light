@@ -7,16 +7,6 @@ import (
 	"strings"
 )
 
-const (
-	UmuLauncherRepo = "Open-Wine-Components/umu-launcher"
-	UmuProtonRepo   = "Open-Wine-Components/umu-proton"
-)
-
-var assetGlobs = map[string]string{
-	UmuLauncherRepo: "umu-launcher-*-zipapp.tar",
-	UmuProtonRepo:   "UMU-Proton-*.tar.gz",
-}
-
 func GetLatestRelease(repo string, kvGitHubReleases kevlar.KeyValues) (*GitHubRelease, error) {
 
 	rcReleases, err := kvGitHubReleases.Get(repo)
@@ -42,15 +32,10 @@ func GetLatestRelease(repo string, kvGitHubReleases kevlar.KeyValues) (*GitHubRe
 	return latestRelease, nil
 }
 
-func GetReleaseAsset(repo string, release *GitHubRelease) *GitHubAsset {
+func GetReleaseAsset(release *GitHubRelease, assetGlob string) *GitHubAsset {
 
 	if len(release.Assets) == 1 {
 		return &release.Assets[0]
-	}
-
-	assetGlob, ok := assetGlobs[repo]
-	if !ok {
-		return nil
 	}
 
 	if prefix, suffix, sure := strings.Cut(assetGlob, "*"); sure {

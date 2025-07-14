@@ -2,11 +2,9 @@ package vangogh_integration
 
 import (
 	"fmt"
-	"github.com/arelate/southern_light/github_integration"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/pathways"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 	"unicode/utf8"
@@ -107,15 +105,4 @@ func AbsDescriptionImagePath(path string) (string, error) {
 	x, _ := utf8.DecodeRuneInString(path)
 
 	return filepath.Join(idp, string(x), path), nil
-}
-
-func AbsGitHubReleaseAssetPath(repo string, release *github_integration.GitHubRelease, asset *github_integration.GitHubAsset) (string, error) {
-	relDir, err := AbsGitHubReleasesDir(repo, release)
-	if err != nil {
-		return "", err
-	}
-
-	_, fn := path.Split(asset.BrowserDownloadUrl)
-
-	return filepath.Join(relDir, fn), nil
 }

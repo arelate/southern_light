@@ -3,8 +3,6 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
-	"github.com/arelate/southern_light/github_integration"
-	"github.com/boggydigital/busan"
 	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strings"
@@ -39,17 +37,19 @@ var AllAbsDirs = []pathways.AbsDir{
 const (
 	Redux          pathways.RelDir = "_redux"
 	GitHubReleases pathways.RelDir = "github-releases"
-	GitHubAssets   pathways.RelDir = "_github-assets"
-	DLCs           pathways.RelDir = "dlc"
-	Extras         pathways.RelDir = "extras"
+	//GitHubAssets   pathways.RelDir = "_github-assets"
+	Binaries pathways.RelDir = "_binaries"
+	DLCs     pathways.RelDir = "dlc"
+	Extras   pathways.RelDir = "extras"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:          Metadata,
 	GitHubReleases: Metadata,
-	GitHubAssets:   Downloads,
-	DLCs:           Downloads,
-	Extras:         Downloads,
+	//GitHubAssets:   Downloads,
+	Binaries: Downloads,
+	DLCs:     Downloads,
+	Extras:   Downloads,
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
@@ -135,11 +135,11 @@ func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (s
 	}
 }
 
-func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease) (string, error) {
-	assetsDir, err := pathways.GetAbsRelDir(GitHubAssets)
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Join(assetsDir, repo, busan.Sanitize(release.TagName)), nil
-}
+//func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease) (string, error) {
+//	assetsDir, err := pathways.GetAbsRelDir(GitHubAssets)
+//	if err != nil {
+//		return "", err
+//	}
+//
+//	return filepath.Join(assetsDir, repo, busan.Sanitize(release.TagName)), nil
+//}

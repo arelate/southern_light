@@ -183,10 +183,6 @@ const (
 	DehydratedImageProperty = "dehydrated-image"
 	RepColorProperty        = "rep-color"
 
-	// GitHub releases properties
-
-	GitHubReleasesUpdatedProperty = "github-releases-updated"
-
 	// sort properties
 
 	SortProperty       = "sort"
