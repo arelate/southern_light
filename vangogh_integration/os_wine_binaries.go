@@ -1,23 +1,6 @@
 package vangogh_integration
 
-type Binary struct {
-	Title           string
-	Version         string
-	DownloadUrl     string
-	GitHubOwnerRepo string
-	GitHubAssetGlob string
-}
-
-func (bin *Binary) String() string {
-	switch bin.Title {
-	case "":
-		return bin.GitHubOwnerRepo
-	default:
-		return bin.Title
-	}
-}
-
-var OsBinaries = map[OperatingSystem][]Binary{
+var OsWineBinaries = map[OperatingSystem][]Binary{
 	Linux: {
 		{
 			GitHubOwnerRepo: "Open-Wine-Components/umu-launcher",
@@ -49,13 +32,13 @@ var OsBinaries = map[OperatingSystem][]Binary{
 	},
 	Windows: {
 		{
-			Title:       "Microsoft Visual C++ Redistributable X64",
-			Version:     "17",
+			Title:       "vc_redist.x64.exe",
+			Version:     "v14.44.35211.0",
 			DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x64.exe",
 		},
 		{
-			Title:       "Microsoft Visual C++ Redistributable X86",
-			Version:     "17",
+			Title:       "vc_redist.x86.exe",
+			Version:     "v14.44.35211.0",
 			DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x86.exe",
 		},
 	},
