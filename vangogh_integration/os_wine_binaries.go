@@ -1,43 +1,59 @@
 package vangogh_integration
 
+const (
+	UmuLauncher = "Open-Wine-Components/umu-launcher"
+	UmuProton   = "Open-Wine-Components/umu-proton"
+	ProtonGe    = "GloriousEggroll/proton-ge-custom"
+	CrossOver   = "CrossOver"
+	WineMacOs   = "Gcenx/macOS_Wine_builds"
+	DxMt        = "3Shain/dxmt"
+	VcRedistX64 = "vc_redist.x64.exe"
+	VcRedistX86 = "vc_redist.x86.exe"
+)
+
+const (
+	tarGz = "*.tar.gz"
+	tarXz = "*.tar.xz"
+)
+
 var OsWineBinaries = map[OperatingSystem][]Binary{
 	Linux: {
 		{
-			GitHubOwnerRepo: "Open-Wine-Components/umu-launcher",
+			GitHubOwnerRepo: UmuLauncher,
 			GitHubAssetGlob: "*-zipapp.tar",
 		},
 		{
-			GitHubOwnerRepo: "GloriousEggroll/proton-ge-custom",
-			GitHubAssetGlob: "*.tar.gz",
+			GitHubOwnerRepo: ProtonGe,
+			GitHubAssetGlob: tarGz,
 		},
 		{
-			GitHubOwnerRepo: "Open-Wine-Components/umu-proton",
-			GitHubAssetGlob: "*.tar.gz",
+			GitHubOwnerRepo: UmuProton,
+			GitHubAssetGlob: tarGz,
 		},
 	},
 	MacOS: {
 		{
-			Title:       "CrossOver",
+			Title:       CrossOver,
 			Version:     "25.0.1",
 			DownloadUrl: "https://media.codeweavers.com/pub/crossover/cxmac/demo/crossover-25.0.1.zip",
 		},
 		{
-			GitHubOwnerRepo: "Gcenx/macOS_Wine_builds",
-			GitHubAssetGlob: "*.tar.xz",
+			GitHubOwnerRepo: WineMacOs,
+			GitHubAssetGlob: tarXz,
 		},
 		{
-			GitHubOwnerRepo: "3Shain/dxmt",
-			GitHubAssetGlob: "*.tar.gz",
+			GitHubOwnerRepo: DxMt,
+			GitHubAssetGlob: tarGz,
 		},
 	},
 	Windows: {
 		{
-			Title:       "vc_redist.x64.exe",
+			Title:       VcRedistX64,
 			Version:     "v14.44.35211.0",
 			DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x64.exe",
 		},
 		{
-			Title:       "vc_redist.x86.exe",
+			Title:       VcRedistX86,
 			Version:     "v14.44.35211.0",
 			DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x86.exe",
 		},
