@@ -162,3 +162,33 @@ func (det *Details) GetForumUrl() string {
 func (det *Details) GetChangelog() string {
 	return det.Changelog
 }
+
+func (det *Details) GetOperatingSystems() ([]string, error) {
+
+	downloads, err := det.GetGameDownloads()
+	if err != nil {
+		return nil, err
+	}
+
+	osm := make(map[string]any)
+
+	for _, langDownload := range downloads {
+		if len(langDownload.Windows) > 0 {
+			osm["Windows"] = nil
+		}
+		if len(langDownload.Mac) > 0 {
+			osm["macOS"] = nil
+		}
+		if len(langDownload.Linux) > 0 {
+			osm["Linux"] = nil
+		}
+	}
+
+	operatingSystems := make([]string, 0, len(osm))
+
+	for ios := range osm {
+		operatingSystems = append(operatingSystems, ios)
+	}
+
+	return operatingSystems, nil
+}

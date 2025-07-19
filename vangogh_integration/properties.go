@@ -326,6 +326,7 @@ func GOGDetailsProperties() []string {
 		GOGReleaseDateProperty,
 		ForumUrlProperty,
 		ChangelogProperty,
+		OperatingSystemsProperty,
 	}
 }
 
