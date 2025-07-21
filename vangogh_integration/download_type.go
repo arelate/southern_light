@@ -58,7 +58,11 @@ func ParseManyDownloadTypes(dtStrings []string) []DownloadType {
 	return downloadTypes
 }
 
-func IsValidDownloadType(dt DownloadType) bool {
-	_, ok := downloadTypeStrings[dt]
-	return ok
+func DownloadTypesCloValues() []string {
+	dts := AllDownloadTypes()
+	dtsStr := make([]string, 0, len(dts))
+	for _, dt := range dts {
+		dtsStr = append(dtsStr, dt.String())
+	}
+	return dtsStr
 }

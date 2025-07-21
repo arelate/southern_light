@@ -105,3 +105,15 @@ func LanguageCodeByNativeName(name string) string {
 func AllLanguageCodes() iter.Seq[string] {
 	return maps.Keys(languageNames)
 }
+
+func LanguageCodesCloValues() []string {
+	defaultLangCode := "en"
+	langCodes := []string{defaultLangCode}
+	for lc := range AllLanguageCodes() {
+		if lc == defaultLangCode {
+			continue
+		}
+		langCodes = append(langCodes, lc)
+	}
+	return langCodes
+}

@@ -142,3 +142,11 @@ func ProductTypeId(pt ProductType, id string) (string, error) {
 
 	return "", errors.New("no prefix for " + pt.String())
 }
+
+func ProductTypesCloValues() []string {
+	ptsStr := make([]string, 0)
+	for pt := range AllProductTypes() {
+		ptsStr = append(ptsStr, pt.String())
+	}
+	return ptsStr
+}

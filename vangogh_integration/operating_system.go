@@ -65,3 +65,12 @@ func ParseManyOperatingSystems(osStrings []string) []OperatingSystem {
 	}
 	return operatingSystems
 }
+
+func OperatingSystemsCloValues() []string {
+	oss := AllOperatingSystems()
+	ossStr := make([]string, 0, len(oss))
+	for _, os := range oss {
+		ossStr = append(ossStr, strings.ToLower(os.String()))
+	}
+	return ossStr
+}

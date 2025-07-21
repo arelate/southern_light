@@ -85,3 +85,12 @@ func ImageTypeDehydrationSamples(it ImageType) int {
 	}
 	return -1
 }
+
+func ImageTypesCloValues() []string {
+	its := AllImageTypes()
+	itsStr := make([]string, 0, len(its))
+	for _, it := range its {
+		itsStr = append(itsStr, it.String())
+	}
+	return itsStr
+}

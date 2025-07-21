@@ -44,3 +44,12 @@ func AllDownloadsLayouts() []DownloadsLayout {
 	}
 	return dls
 }
+
+func DownloadsLayoutsCloValues() []string {
+	dls := AllDownloadsLayouts()
+	dlsStr := make([]string, 0, len(dls))
+	for _, dl := range dls {
+		dlsStr = append(dlsStr, dl.String())
+	}
+	return dlsStr
+}
