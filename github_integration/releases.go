@@ -29,11 +29,12 @@ type GitHubAsset struct {
 	Id                 int          `json:"id"`
 	NodeId             string       `json:"node_id"`
 	Name               string       `json:"name"`
-	Label              *string      `json:"label"`
+	Label              interface{}  `json:"label"`
 	Uploader           GitHubPerson `json:"uploader"`
 	ContentType        string       `json:"content_type"`
 	State              string       `json:"state"`
 	Size               int          `json:"size"`
+	Digest             *string      `json:"digest"`
 	DownloadCount      int          `json:"download_count"`
 	CreatedAt          time.Time    `json:"created_at"`
 	UpdatedAt          time.Time    `json:"updated_at"`
