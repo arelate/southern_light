@@ -3,6 +3,7 @@ package vangogh_integration
 type Binary struct {
 	Title           string
 	Version         string
+	Digest          string
 	DownloadUrl     string
 	GitHubOwnerRepo string
 	GitHubAssetGlob string
