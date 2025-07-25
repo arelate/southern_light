@@ -37,19 +37,17 @@ var AllAbsDirs = []pathways.AbsDir{
 const (
 	Redux          pathways.RelDir = "_redux"
 	GitHubReleases pathways.RelDir = "github-releases"
-	//GitHubAssets   pathways.RelDir = "_github-assets"
-	Binaries pathways.RelDir = "_binaries"
-	DLCs     pathways.RelDir = "dlc"
-	Extras   pathways.RelDir = "extras"
+	WineBinaries   pathways.RelDir = "_wine-binaries"
+	DLCs           pathways.RelDir = "dlc"
+	Extras         pathways.RelDir = "extras"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:          Metadata,
 	GitHubReleases: Metadata,
-	//GitHubAssets:   Downloads,
-	Binaries: Downloads,
-	DLCs:     Downloads,
-	Extras:   Downloads,
+	WineBinaries:   Downloads,
+	DLCs:           Downloads,
+	Extras:         Downloads,
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
