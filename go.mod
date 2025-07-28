@@ -12,4 +12,7 @@ require (
 	golang.org/x/net v0.38.0
 )
 
-require github.com/boggydigital/wits v0.2.3 // indirect
+require (
+	github.com/boggydigital/dolo v0.2.23 // indirect
+	github.com/boggydigital/wits v0.2.3 // indirect
+)

@@ -1,7 +1,8 @@
-package vangogh_integration
+package wine_integration
 
 import (
 	"github.com/arelate/southern_light/github_integration"
+	"github.com/arelate/southern_light/vangogh_integration"
 	"github.com/boggydigital/kevlar"
 )
 
@@ -9,6 +10,7 @@ type Binary struct {
 	Title           string
 	Version         string
 	Digest          string
+	OS              vangogh_integration.OperatingSystem
 	DownloadUrl     string
 	GitHubOwnerRepo string
 	GitHubAssetGlob string
