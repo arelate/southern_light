@@ -70,7 +70,7 @@ func OperatingSystemsCloValues() []string {
 	oss := AllOperatingSystems()
 	ossStr := make([]string, 0, len(oss))
 	for _, os := range oss {
-		ossStr = append(ossStr, strings.ToLower(os.String()))
+		ossStr = append(ossStr, os.String())
 	}
 	return ossStr
 }
