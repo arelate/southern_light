@@ -8,6 +8,7 @@ import (
 
 type Binary struct {
 	Title           string
+	Code            string
 	Version         string
 	Digest          string
 	OS              vangogh_integration.OperatingSystem
