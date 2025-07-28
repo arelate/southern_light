@@ -7,8 +7,8 @@ const (
 	CrossOver   = "CrossOver"
 	WineMacOs   = "Gcenx/macOS_Wine_builds"
 	DxMt        = "3Shain/dxmt"
-	VcRedistX64 = "vc_redist.x64.exe"
-	VcRedistX86 = "vc_redist.x86.exe"
+	VcRedistX64 = "Visual C++ Redistributable X64"
+	VcRedistX86 = "Visual C++ Redistributable X86"
 )
 
 const (
