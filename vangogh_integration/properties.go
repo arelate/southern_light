@@ -22,7 +22,6 @@ const (
 	IconSquareProperty                = "icon-square"
 	BackgroundProperty                = "background"
 	RatingProperty                    = "rating"
-	AggregatedRatingProperty          = "aggregated-rating"
 	ProductTypeProperty               = "product-type"
 	IncludesGamesProperty             = "includes-games"
 	IsIncludedByGamesProperty         = "is-included-by-games"
@@ -334,7 +333,6 @@ func GOGGamesDbProperties() []string {
 	return []string{
 		SteamAppIdProperty,
 		VideoIdProperty,
-		AggregatedRatingProperty,
 		ThemesProperty,
 		GameModesProperty,
 	}
