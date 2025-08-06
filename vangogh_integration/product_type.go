@@ -10,7 +10,9 @@ type ProductType int
 
 const (
 	UnknownProductType ProductType = iota
+
 	// GOG.com product types
+
 	CatalogPage
 	AccountPage
 	UserWishlist
@@ -19,25 +21,40 @@ const (
 	Licences
 	OrderPage
 	UserAccessToken
+
 	// GamesDB (GOG Galaxy)
+
 	GamesDbGogProducts
+
 	// Steam product types
+
+	SteamAppList
 	SteamAppDetails
 	SteamAppNews
 	SteamAppReviews
 	SteamDeckCompatibilityReport
+
 	// PCGamingWiki product types
+
 	PcgwGogPageId
 	PcgwSteamPageId
 	PcgwRaw
+
 	// Wikipedia product types
+
 	WikipediaRaw
+
 	// HLTB product types
+
 	HltbRootPage
 	HltbData
+
 	// ProtonDB product types
+
 	ProtonDbSummary
+
 	// OpenCritic product types
+
 	OpenCriticApiGame
 )
 
@@ -58,6 +75,7 @@ var productTypeStrings = map[ProductType]string{
 
 	// Steam product types
 
+	SteamAppList:                 "steam-app-list",
 	SteamAppDetails:              "steam-app-details",
 	SteamAppNews:                 "steam-app-news",
 	SteamAppReviews:              "steam-app-reviews",
@@ -98,6 +116,7 @@ var productTypePfx = map[ProductType]string{
 	ApiProducts:                  "api",
 	Details:                      "d",
 	GamesDbGogProducts:           "ggp",
+	SteamAppList:                 "sl",
 	SteamAppDetails:              "sd",
 	SteamAppNews:                 "sn",
 	SteamAppReviews:              "sr",

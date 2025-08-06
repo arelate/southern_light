@@ -10,3 +10,7 @@ func AppListUrl() *url.URL {
 		Path:   getAppsListV2,
 	}
 }
+
+func AppListParamUrl(_ string) *url.URL {
+	return AppListUrl()
+}
