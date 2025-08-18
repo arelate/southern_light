@@ -102,6 +102,14 @@ func LanguageCodeByNativeName(name string) string {
 	return ""
 }
 
+func LanguageNativeName(langCode string) string {
+	if nln, ok := nativeLanguageNames[langCode]; ok {
+		return nln
+	} else {
+		return "Unknown"
+	}
+}
+
 func AllLanguageCodes() iter.Seq[string] {
 	return maps.Keys(languageNames)
 }
