@@ -18,6 +18,14 @@ var downloadTypeStrings = map[DownloadType]string{
 	Extra:           "extra",
 }
 
+var downloadTypeHumanReadableStrings = map[DownloadType]string{
+	AnyDownloadType: "Any",
+	Installer:       "Installer",
+	Movie:           "Movie",
+	DLC:             "DLC",
+	Extra:           "Extra",
+}
+
 func AllDownloadTypes() []DownloadType {
 	all := make([]DownloadType, 1, len(downloadTypeStrings))
 	// order is important here given this will be used for clo default parameter
@@ -38,6 +46,15 @@ func (dt DownloadType) String() string {
 	}
 
 	return downloadTypeStrings[AnyDownloadType]
+}
+
+func (dt DownloadType) HumanReadableString() string {
+	str, ok := downloadTypeHumanReadableStrings[dt]
+	if ok {
+		return str
+	}
+
+	return downloadTypeHumanReadableStrings[AnyDownloadType]
 }
 
 func ParseDownloadType(downloadType string) DownloadType {
