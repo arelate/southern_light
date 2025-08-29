@@ -12,6 +12,7 @@ const (
 	SyncWineBinaries         = "sync-wine-binaries"
 	SyncBackup               = "sync-backup"
 	SyncCompleteKey          = "sync-complete"
+	SyncInterruptedKey       = "sync-interrupted"
 )
 
 var SyncEventsKeys = []string{
@@ -26,6 +27,7 @@ var SyncEventsKeys = []string{
 	SyncWineBinaries,
 	SyncBackup,
 	SyncCompleteKey,
+	SyncInterruptedKey,
 }
 
 var SyncEventsTitles = map[string]string{
@@ -40,4 +42,5 @@ var SyncEventsTitles = map[string]string{
 	SyncWineBinaries:         "WINE binaries updated",
 	SyncBackup:               "Data backed up",
 	SyncCompleteKey:          "Completed",
+	SyncInterruptedKey:       "Interrupted",
 }
