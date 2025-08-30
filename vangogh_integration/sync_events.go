@@ -38,7 +38,7 @@ var SyncEventsTitles = map[string]string{
 	SyncDehydrateKey:         "Images dehydrated",
 	SyncVideoMetadataKey:     "Video metadata updated",
 	SyncDownloadsKey:         "Downloads updated",
-	SyncCleanupKey:           "Download cleaned up",
+	SyncCleanupKey:           "Downloads cleaned up",
 	SyncWineBinaries:         "WINE binaries updated",
 	SyncBackup:               "Data backed up",
 	SyncCompleteKey:          "Completed",
