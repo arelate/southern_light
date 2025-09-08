@@ -10,7 +10,7 @@ const (
 const (
 	CatalogSortByTitle       CatalogSortOrder = "title"
 	CatalogSortByDiscount    CatalogSortOrder = "discount"
-	CatalogSortByReleaseDate CatalogSortOrder = "releaseDate"
+	CatalogSortByReleaseDate CatalogSortOrder = "storeReleaseDate"
 	CatalogSortByRating      CatalogSortOrder = "reviewsRating"
 	CatalogSortByPrice       CatalogSortOrder = "price"
 	CatalogSortByBestselling CatalogSortOrder = "bestselling"
