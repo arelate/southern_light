@@ -1,18 +1,19 @@
 package gog_integration
 
 import (
-	"github.com/arelate/southern_light"
 	"net/url"
 	"strconv"
+
+	"github.com/arelate/southern_light"
 )
 
-const limit = 48
+const CatalogPagesProductsLimit = 100
 
-func CatalogPageUrl(page string) *url.URL {
-	return catalogPageUrl(page, CatalogSortByReleaseDate, true)
+func CatalogPageUrl(searchAfter string) *url.URL {
+	return catalogPageUrl(searchAfter, CatalogSortByExternalProductId, true)
 }
 
-func catalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
+func catalogPageUrl(searchAfter string, sortBy CatalogSortOrder, desc bool) *url.URL {
 
 	catalogPage := &url.URL{
 		Scheme: southern_light.HttpsScheme,
@@ -21,8 +22,10 @@ func catalogPageUrl(page string, sortBy CatalogSortOrder, desc bool) *url.URL {
 	}
 
 	q := catalogPage.Query()
-	q.Add("page", page)
-	q.Add("limit", strconv.Itoa(limit))
+	if searchAfter != "" {
+		q.Add("searchAfter", searchAfter)
+	}
+	q.Add("limit", strconv.Itoa(CatalogPagesProductsLimit))
 	q.Add("order", CatalogOrder(sortBy, desc))
 	catalogPage.RawQuery = q.Encode()
 

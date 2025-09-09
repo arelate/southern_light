@@ -1,10 +1,11 @@
 package gog_integration
 
 type CatalogPage struct {
-	Pages        int              `json:"pages"`
-	ProductCount int              `json:"productCount"`
-	Products     []CatalogProduct `json:"products"`
-	Filters      CatalogFilters   `json:"filters"`
+	Pages                      int              `json:"pages"`
+	CurrentlyShownProductCount int              `json:"currentlyShownProductCount"`
+	ProductCount               int              `json:"productCount"`
+	Products                   []CatalogProduct `json:"products"`
+	Filters                    CatalogFilters   `json:"filters"`
 }
 
 type CatalogFilters struct {

@@ -8,12 +8,13 @@ const (
 )
 
 const (
-	CatalogSortByTitle       CatalogSortOrder = "title"
-	CatalogSortByDiscount    CatalogSortOrder = "discount"
-	CatalogSortByReleaseDate CatalogSortOrder = "storeReleaseDate"
-	CatalogSortByRating      CatalogSortOrder = "reviewsRating"
-	CatalogSortByPrice       CatalogSortOrder = "price"
-	CatalogSortByBestselling CatalogSortOrder = "bestselling"
+	CatalogSortByTitle             CatalogSortOrder = "title"
+	CatalogSortByDiscount          CatalogSortOrder = "discount"
+	CatalogSortByReleaseDate       CatalogSortOrder = "storeReleaseDate"
+	CatalogSortByRating            CatalogSortOrder = "reviewsRating"
+	CatalogSortByPrice             CatalogSortOrder = "price"
+	CatalogSortByBestselling       CatalogSortOrder = "bestselling"
+	CatalogSortByExternalProductId CatalogSortOrder = "externalProductId"
 )
 
 func CatalogOrder(sortBy CatalogSortOrder, desc bool) string {
