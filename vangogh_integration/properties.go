@@ -263,6 +263,7 @@ func GOGOrderPageProperties() []string {
 	return []string{
 		GOGOrderDateProperty,
 		OrderPageProductsProperty,
+		ImageProperty,
 	}
 }
 
