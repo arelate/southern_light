@@ -7,7 +7,7 @@ import (
 	"github.com/arelate/southern_light"
 )
 
-const CatalogPagesProductsLimit = 100
+const CatalogPagesProductsLimit = 48
 
 func CatalogPageUrl(searchAfter string) *url.URL {
 	return catalogPageUrl(searchAfter, CatalogSortByExternalProductId, true)
