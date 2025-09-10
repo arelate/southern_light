@@ -30,17 +30,17 @@ var SyncEventsKeys = []string{
 	SyncInterruptedKey,
 }
 
-var SyncEventsTitles = map[string]string{
+var CurrentSyncEventsTitles = map[string]string{
 	SyncStartKey:             "Started",
-	SyncDataKey:              "Data updated",
-	SyncDescriptionImagesKey: "Description images updated",
-	SyncImagesKey:            "Images updated",
-	SyncDehydrateKey:         "Images dehydrated",
-	SyncVideoMetadataKey:     "Video metadata updated",
-	SyncDownloadsKey:         "Downloads updated",
-	SyncCleanupKey:           "Downloads cleaned up",
-	SyncWineBinaries:         "WINE binaries updated",
-	SyncBackup:               "Data backed up",
+	SyncDataKey:              "Updating data",
+	SyncDescriptionImagesKey: "Updating description images",
+	SyncImagesKey:            "Updating images",
+	SyncDehydrateKey:         "Dehydrating images",
+	SyncVideoMetadataKey:     "Updating video metadata",
+	SyncDownloadsKey:         "Downloading and validating files",
+	SyncCleanupKey:           "Cleaning up downloads",
+	SyncWineBinaries:         "Updating WINE binaries",
+	SyncBackup:               "Backing up data",
 	SyncCompleteKey:          "Completed",
 	SyncInterruptedKey:       "Interrupted",
 }
