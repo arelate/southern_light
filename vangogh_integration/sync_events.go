@@ -1,6 +1,7 @@
 package vangogh_integration
 
 const (
+	SyncInterruptedKey       = "sync-interrupted"
 	SyncStartKey             = "sync-start"
 	SyncDataKey              = "sync-data"
 	SyncDescriptionImagesKey = "sync-description-images"
@@ -12,10 +13,10 @@ const (
 	SyncWineBinaries         = "sync-wine-binaries"
 	SyncBackup               = "sync-backup"
 	SyncCompleteKey          = "sync-complete"
-	SyncInterruptedKey       = "sync-interrupted"
 )
 
 var SyncEventsKeys = []string{
+	SyncInterruptedKey,
 	SyncStartKey,
 	SyncDataKey,
 	SyncDescriptionImagesKey,
@@ -26,11 +27,11 @@ var SyncEventsKeys = []string{
 	SyncCleanupKey,
 	SyncWineBinaries,
 	SyncBackup,
-	SyncCompleteKey,
-	SyncInterruptedKey,
+	SyncCompleteKey, // this should be the last key
 }
 
 var CurrentSyncEventsTitles = map[string]string{
+	SyncInterruptedKey:       "Interrupted",
 	SyncStartKey:             "Started",
 	SyncDataKey:              "Updating data",
 	SyncDescriptionImagesKey: "Updating description images",
@@ -41,6 +42,5 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncCleanupKey:           "Cleaning up downloads",
 	SyncWineBinaries:         "Updating WINE binaries",
 	SyncBackup:               "Backing up data",
-	SyncCompleteKey:          "Completed",
-	SyncInterruptedKey:       "Interrupted",
+	SyncCompleteKey:          "Completed", // this should be the last key
 }
