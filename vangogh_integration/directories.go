@@ -3,9 +3,10 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
-	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strings"
+
+	"github.com/boggydigital/pathways"
 )
 
 const DefaultRootDir = "/var/lib/vangogh"
@@ -40,11 +41,13 @@ const (
 	WineBinaries   pathways.RelDir = "_wine-binaries"
 	DLCs           pathways.RelDir = "dlc"
 	Extras         pathways.RelDir = "extras"
+	Author         pathways.RelDir = "_author"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:          Metadata,
 	GitHubReleases: Metadata,
+	Author:         Metadata,
 	WineBinaries:   Downloads,
 	DLCs:           Downloads,
 	Extras:         Downloads,
@@ -132,12 +135,3 @@ func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (s
 		return "", err
 	}
 }
-
-//func AbsGitHubReleasesDir(repo string, release *github_integration.GitHubRelease) (string, error) {
-//	assetsDir, err := pathways.GetAbsRelDir(GitHubAssets)
-//	if err != nil {
-//		return "", err
-//	}
-//
-//	return filepath.Join(assetsDir, repo, busan.Sanitize(release.TagName)), nil
-//}
