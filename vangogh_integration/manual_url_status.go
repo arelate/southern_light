@@ -5,15 +5,28 @@ type ManualUrlStatus int
 const (
 	ManualUrlStatusUnknown ManualUrlStatus = iota
 	ManualUrlQueued
+	ManualUrlDownloading
+	ManualUrlDownloadInterrupted
 	ManualUrlDownloaded
 	ManualUrlValidated
 )
 
 var manualUrlStatusStrings = map[ManualUrlStatus]string{
-	ManualUrlStatusUnknown: "unknown",
-	ManualUrlQueued:        "queued",
-	ManualUrlDownloaded:    "downloaded",
-	ManualUrlValidated:     "validated",
+	ManualUrlStatusUnknown:       "unknown",
+	ManualUrlQueued:              "download-queued",
+	ManualUrlDownloading:         "downloading",
+	ManualUrlDownloadInterrupted: "download-interrupted",
+	ManualUrlDownloaded:          "downloaded",
+	ManualUrlValidated:           "validated",
+}
+
+var manualUrlStatusHumanReadableStrings = map[ManualUrlStatus]string{
+	ManualUrlStatusUnknown:       "Unknown",
+	ManualUrlQueued:              "Download Queued",
+	ManualUrlDownloading:         "Downloading",
+	ManualUrlDownloadInterrupted: "Download Interrupted",
+	ManualUrlDownloaded:          "Downloaded",
+	ManualUrlValidated:           "Validated",
 }
 
 func (mus ManualUrlStatus) String() string {
@@ -21,6 +34,10 @@ func (mus ManualUrlStatus) String() string {
 		return muss
 	}
 	return manualUrlStatusStrings[ManualUrlStatusUnknown]
+}
+
+func (mus ManualUrlStatus) HumanReadableString() string {
+	return manualUrlStatusHumanReadableStrings[mus]
 }
 
 func ParseManualUrlStatus(muss string) ManualUrlStatus {
