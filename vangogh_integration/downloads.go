@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/redux"
 	"log"
 	"math"
 	"path"
 	"strconv"
 	"strings"
+
+	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 const (
@@ -321,8 +322,8 @@ func MapDownloads(
 		}
 
 		if det.IsPreOrder && len(filteredDownloads) == 0 {
-			fmt.Printf("(%s is a pre-order and has no downloads)\n", id)
-			return nil
+			nod.Log("%s is a pre-order and has no downloads", id)
+			continue
 		}
 
 		// already checked for nil earlier in the function
