@@ -9,7 +9,7 @@ const (
 	CatalogProductStateDefault     = "default"
 	CatalogProductStateComingSoon  = "coming-soon"
 	CatalogProductStateEarlyAccess = "early-access"
-	CatalogProductStatePreOrder    = "pre-order"
+	CatalogProductStatePreOrder    = "preorder"
 )
 
 type CatalogProduct struct {
