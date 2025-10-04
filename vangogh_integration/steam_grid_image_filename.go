@@ -28,3 +28,7 @@ func SteamGridImageFilename(shortcutId uint32, imageType ImageType) string {
 	}
 	return filename + ext
 }
+
+func SteamGridLogoPositionFilename(shortcutId uint32) string {
+	return strconv.FormatInt(int64(shortcutId), 10) + ".json"
+}
