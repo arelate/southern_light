@@ -5,6 +5,8 @@ type ValidationResult int
 const (
 	ValidatedSuccessfully ValidationResult = iota
 	ValidationResultUnknown
+	ValidationQueued
+	ValidationValidating
 	ValidatedMissingChecksum
 	ValidatedUnresolvedManualUrl
 	ValidatedMissingLocalFile
@@ -15,6 +17,8 @@ const (
 var validationResultsStrings = map[ValidationResult]string{
 	ValidatedSuccessfully:        "valid",
 	ValidationResultUnknown:      "unknown",
+	ValidationQueued:             "validation-queued",
+	ValidationValidating:         "validating",
 	ValidatedMissingChecksum:     "missing-checksum",
 	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
 	ValidatedMissingLocalFile:    "missing-local-file",
