@@ -30,7 +30,7 @@ type ProductImages struct {
 type ProductDownloadLink struct {
 	ManualUrl        string           `json:"manual-url"`
 	Name             string           `json:"name"`
-	Status           string           `json:"status"`
+	ManualUrlStatus  ManualUrlStatus  `json:"manual-url-status"`
 	ValidationResult ValidationResult `json:"validation-result"`
 	LocalFilename    string           `json:"local-filename"`
 	Md5              string           `json:"md5"`
