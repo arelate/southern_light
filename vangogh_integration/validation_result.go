@@ -3,10 +3,10 @@ package vangogh_integration
 type ValidationResult int
 
 const (
-	ValidationQueued ValidationResult = iota
-	ValidationValidating
-	ValidatedSuccessfully
+	ValidatedSuccessfully ValidationResult = iota
 	ValidationResultUnknown
+	ValidationQueued
+	ValidationValidating
 	ValidatedMissingChecksum
 	ValidatedUnresolvedManualUrl
 	ValidatedMissingLocalFile
@@ -15,10 +15,10 @@ const (
 )
 
 var validationResultsStrings = map[ValidationResult]string{
-	ValidationQueued:             "validation-queued",
-	ValidationValidating:         "validating",
 	ValidatedSuccessfully:        "valid",
 	ValidationResultUnknown:      "unknown",
+	ValidationQueued:             "validation-queued",
+	ValidationValidating:         "validating",
 	ValidatedMissingChecksum:     "missing-checksum",
 	ValidatedUnresolvedManualUrl: "unresolved-manual-url",
 	ValidatedMissingLocalFile:    "missing-local-file",
@@ -29,6 +29,8 @@ var validationResultsStrings = map[ValidationResult]string{
 var validationResultsHumanReadableStrings = map[ValidationResult]string{
 	ValidatedSuccessfully:        "Validated",
 	ValidationResultUnknown:      "Unknown",
+	ValidationQueued:             "Validation Queued",
+	ValidationValidating:         "Validating",
 	ValidatedMissingChecksum:     "No Checksum",
 	ValidatedUnresolvedManualUrl: "Unresolved",
 	ValidatedMissingLocalFile:    "No File",
