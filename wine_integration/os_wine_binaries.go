@@ -3,14 +3,15 @@ package wine_integration
 import "github.com/arelate/southern_light/vangogh_integration"
 
 const (
-	UmuLauncher = "Open-Wine-Components/umu-launcher"
-	UmuProton   = "Open-Wine-Components/umu-proton"
-	ProtonGe    = "GloriousEggroll/proton-ge-custom"
-	CrossOver   = "CrossOver"
-	WineMacOs   = "Gcenx/macOS_Wine_builds"
-	DxMt        = "3Shain/dxmt"
-	VcRedistX64 = "Visual C++ Redistributable X64"
-	VcRedistX86 = "Visual C++ Redistributable X86"
+	UmuLauncher        = "Open-Wine-Components/umu-launcher"
+	UmuProton          = "Open-Wine-Components/umu-proton"
+	ProtonGe           = "GloriousEggroll/proton-ge-custom"
+	CrossOver          = "CrossOver"
+	WineMacOs          = "Gcenx/macOS_Wine_builds"
+	GamePortingToolkit = "Gcenx/game-porting-toolkit"
+	DxMt               = "3Shain/dxmt"
+	VcRedistX64        = "Visual C++ Redistributable X64"
+	VcRedistX86        = "Visual C++ Redistributable X86"
 )
 
 const (
@@ -44,6 +45,11 @@ var OsWineBinaries = []Binary{
 	},
 	{
 		GitHubOwnerRepo: WineMacOs,
+		GitHubAssetGlob: tarXz,
+		OS:              vangogh_integration.MacOS,
+	},
+	{
+		GitHubOwnerRepo: GamePortingToolkit,
 		GitHubAssetGlob: tarXz,
 		OS:              vangogh_integration.MacOS,
 	},
