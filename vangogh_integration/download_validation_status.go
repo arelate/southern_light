@@ -18,7 +18,7 @@ func NewDvs(manualUrl string, rdx redux.Readable) *DownloadValidationStatus {
 		validationResult: ValidationResultUnknown,
 	}
 
-	if muss, ok := rdx.GetLastVal(ManualUrlValidationResultProperty, manualUrl); ok {
+	if muss, ok := rdx.GetLastVal(ManualUrlStatusProperty, manualUrl); ok {
 		dvs.manualUrlStatus = ParseManualUrlStatus(muss)
 	}
 
