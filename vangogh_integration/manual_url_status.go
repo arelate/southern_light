@@ -3,30 +3,30 @@ package vangogh_integration
 type ManualUrlStatus int
 
 const (
-	ManualUrlStatusUnknown ManualUrlStatus = iota
+	ManualUrlValidated ManualUrlStatus = iota
+	ManualUrlDownloaded
+	ManualUrlStatusUnknown
 	ManualUrlQueued
 	ManualUrlDownloading
 	ManualUrlDownloadInterrupted
-	ManualUrlDownloaded
-	ManualUrlValidated
 )
 
 var manualUrlStatusStrings = map[ManualUrlStatus]string{
-	ManualUrlStatusUnknown:       "unknown",
-	ManualUrlQueued:              "download-queued",
-	ManualUrlDownloading:         "downloading",
-	ManualUrlDownloadInterrupted: "download-interrupted",
-	ManualUrlDownloaded:          "downloaded",
 	ManualUrlValidated:           "validated",
+	ManualUrlDownloaded:          "downloaded",
+	ManualUrlStatusUnknown:       "unknown",
+	ManualUrlDownloading:         "downloading",
+	ManualUrlQueued:              "download-queued",
+	ManualUrlDownloadInterrupted: "download-interrupted",
 }
 
 var manualUrlStatusHumanReadableStrings = map[ManualUrlStatus]string{
-	ManualUrlStatusUnknown:       "Unknown",
-	ManualUrlQueued:              "Download Queued",
-	ManualUrlDownloading:         "Downloading",
-	ManualUrlDownloadInterrupted: "Download Interrupted",
-	ManualUrlDownloaded:          "Downloaded",
 	ManualUrlValidated:           "Validated",
+	ManualUrlDownloaded:          "Downloaded",
+	ManualUrlStatusUnknown:       "Unknown",
+	ManualUrlDownloading:         "Downloading",
+	ManualUrlQueued:              "Download Queued",
+	ManualUrlDownloadInterrupted: "Download Interrupted",
 }
 
 func (mus ManualUrlStatus) String() string {
