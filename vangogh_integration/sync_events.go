@@ -44,7 +44,7 @@ var CurrentSyncEventForCompleted = map[string]string{
 
 var CurrentSyncEventsTitles = map[string]string{
 	SyncInterruptedKey:       "Interrupted",
-	SyncStartKey:             "Started",
+	SyncStartKey:             "Started sync",
 	SyncDataKey:              "Updating data",
 	SyncDescriptionImagesKey: "Updating description images",
 	SyncImagesKey:            "Updating images",
@@ -54,5 +54,5 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncCleanupKey:           "Cleaning up downloads",
 	SyncWineBinaries:         "Updating WINE binaries",
 	SyncBackup:               "Backing up data",
-	SyncCompleteKey:          "Completed", // this should be the last key
+	SyncCompleteKey:          "OK", // this should be the last key
 }
