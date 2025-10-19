@@ -54,5 +54,5 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncCleanupKey:           "Cleaning up downloads",
 	SyncWineBinaries:         "Updating WINE binaries",
 	SyncBackup:               "Backing up data",
-	SyncCompleteKey:          "OK", // this should be the last key
+	SyncCompleteKey:          "Sync complete", // this should be the last key
 }
