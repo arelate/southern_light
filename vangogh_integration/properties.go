@@ -30,6 +30,7 @@ const (
 	ModifiesGamesProperty             = "modifies-games"
 	IsModifiedByGamesProperty         = "is-modified-by-games"
 	EditionsProperty                  = "editions"
+	RootEditionsProperty              = "root-editions"
 	GenresProperty                    = "genres"
 	StoreTagsProperty                 = "store-tags"
 	FeaturesProperty                  = "features"
@@ -254,6 +255,7 @@ func GOGCatalogPageProperties() []string {
 		IsDemoProperty,
 		IsModProperty,
 		EditionsProperty,
+		RootEditionsProperty,
 		CatalogPageProductsProperty,
 		UserWishlistProperty,
 	}

@@ -10,6 +10,7 @@ const (
 	CatalogProductStateComingSoon  = "coming-soon"
 	CatalogProductStateEarlyAccess = "early-access"
 	CatalogProductStatePreOrder    = "preorder"
+	// verified that the above are the only possible states on 2025-11-09
 )
 
 type CatalogProduct struct {
@@ -194,4 +195,15 @@ func (cp *CatalogProduct) GetEditions() []string {
 		eds = append(eds, strconv.Itoa(ed.Id))
 	}
 	return eds
+}
+
+func (cp *CatalogProduct) GetRootEditions() []string {
+	var res []string
+	for _, ed := range cp.Editions {
+		if !ed.IsRootEdition {
+			continue
+		}
+		res = append(res, strconv.Itoa(ed.Id))
+	}
+	return res
 }
