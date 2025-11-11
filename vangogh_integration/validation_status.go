@@ -70,3 +70,16 @@ func WorstValidationStatus(vrs ...ValidationStatus) ValidationStatus {
 
 	return wvr
 }
+
+func (vr ValidationStatus) IsValidated() bool {
+	switch vr {
+	case ValidationStatusUnknown:
+		fallthrough
+	case ValidationStatusQueued:
+		fallthrough
+	case ValidationStatusValidating:
+		return false
+	default:
+		return true
+	}
+}
