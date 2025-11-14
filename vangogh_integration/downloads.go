@@ -37,7 +37,7 @@ type Download struct {
 	Date           string
 	OS             OperatingSystem
 	LanguageCode   string
-	Type           DownloadType
+	DownloadType   DownloadType
 	EstimatedBytes int64
 }
 
@@ -55,7 +55,7 @@ func convertManualDownload(
 		Date:           mdl.Date,
 		OS:             os,
 		LanguageCode:   langCode,
-		Type:           dt,
+		DownloadType:   dt,
 		EstimatedBytes: SizeToEstimatedBytes(mdl.Size),
 	}
 }
@@ -82,7 +82,7 @@ func SizeToEstimatedBytes(size string) int64 {
 }
 
 func (dl *Download) String() string {
-	switch dl.Type {
+	switch dl.DownloadType {
 	case Installer:
 		fallthrough
 	case Movie:
@@ -201,8 +201,8 @@ func (list DownloadsList) Only(
 			continue
 		}
 
-		if dl.Type != AnyDownloadType &&
-			!dtSet[dl.Type] {
+		if dl.DownloadType != AnyDownloadType &&
+			!dtSet[dl.DownloadType] {
 			continue
 		}
 

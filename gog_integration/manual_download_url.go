@@ -1,8 +1,9 @@
 package gog_integration
 
 import (
-	"github.com/arelate/southern_light"
 	"net/url"
+
+	"github.com/arelate/southern_light"
 )
 
 func ManualDownloadUrl(manualDownload string) *url.URL {

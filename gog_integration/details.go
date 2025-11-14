@@ -16,6 +16,8 @@ type ManualDownload struct {
 	Name      string `json:"name"`
 	Version   string `json:"version"`
 	Date      string `json:"date"`
+	Type      string `json:"type"`
+	Info      int    `json:"info"`
 	Size      string `json:"size"`
 }
 
@@ -118,25 +120,6 @@ func (det *Details) GetGameDownloads() ([]LangOSManualDownloads, error) {
 	}
 
 	return langOsManDls, nil
-}
-
-func (det *Details) GetMovieDownloads() ([]ManualDownload, error) {
-	manualDls := make([]ManualDownload, 0, len(det.Downloads))
-
-	for _, dl := range det.Downloads {
-		//GOG.com has the following formats in details:
-		//- movies:
-		//	[ManualDownload,...]
-		//to handle this we need to cast interface{} into either of those
-		var movieManualDl *ManualDownload
-		if err := encodeDecode(dl, &movieManualDl); err != nil {
-			return manualDls, err
-		}
-
-		manualDls = append(manualDls, *movieManualDl)
-	}
-
-	return manualDls, nil
 }
 
 func (det *Details) GetGOGRelease() string {
