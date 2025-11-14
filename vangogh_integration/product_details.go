@@ -35,7 +35,7 @@ type ProductDownloadLink struct {
 	LocalFilename    string           `json:"local-filename"`
 	Md5              string           `json:"md5"`
 	OperatingSystem  OperatingSystem  `json:"os"`
-	Type             DownloadType     `json:"type"`
+	DownloadType     DownloadType     `json:"download-type"`
 	LanguageCode     string           `json:"language-code"`
 	Version          string           `json:"version"`
 	EstimatedBytes   int64            `json:"estimated-bytes"`
@@ -88,7 +88,7 @@ func (mdl ProductDownloadLinks) FilterDownloadTypes(downloadTypes ...DownloadTyp
 
 	filteredLinks := make(ProductDownloadLinks, 0)
 	for _, dl := range mdl {
-		if dl.Type == AnyDownloadType || slices.Contains(downloadTypes, dl.Type) {
+		if dl.DownloadType == AnyDownloadType || slices.Contains(downloadTypes, dl.DownloadType) {
 			filteredLinks = append(filteredLinks, dl)
 		}
 	}
