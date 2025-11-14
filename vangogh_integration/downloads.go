@@ -35,6 +35,8 @@ type Download struct {
 	Name           string
 	Version        string
 	Date           string
+	Type           string
+	Info           int
 	OS             OperatingSystem
 	LanguageCode   string
 	DownloadType   DownloadType
@@ -53,6 +55,8 @@ func convertManualDownload(
 		Name:           mdl.Name,
 		Version:        mdl.Version,
 		Date:           mdl.Date,
+		Type:           mdl.Type,
+		Info:           mdl.Info,
 		OS:             os,
 		LanguageCode:   langCode,
 		DownloadType:   dt,
