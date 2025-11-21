@@ -10,14 +10,14 @@ const (
 var UpdatesShorterTitles = map[string]string{
 	UpdatesInstallers:    "Files",
 	UpdatesNewProducts:   "Store",
-	UpdatesReleasedToday: "Today",
+	UpdatesReleasedToday: "That day",
 	UpdatesSteamNews:     "Steam",
 }
 
 var UpdatesLongerTitles = map[string]string{
 	UpdatesInstallers:    "Updated Installers",
 	UpdatesNewProducts:   "New in Store",
-	UpdatesReleasedToday: "Released Today",
+	UpdatesReleasedToday: "Released on {month} {day}",
 	UpdatesSteamNews:     "Steam News",
 }
 
