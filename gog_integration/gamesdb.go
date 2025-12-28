@@ -56,9 +56,16 @@ type GamesDbProduct struct {
 	} `json:"available_languages"`
 	FirstReleaseDate string `json:"first_release_date"`
 	Game             struct {
-		Id                      string                `json:"id"`
-		ParentId                interface{}           `json:"parent_id"`
-		DLCsIds                 []string              `json:"dlcs_ids"`
+		Id       string      `json:"id"`
+		ParentId interface{} `json:"parent_id"`
+		// GOG.com source data has inconsistent types:
+		// 1199956349 is "dlcs_ids": [],
+		// 1207666353 is "dlcs_ids": {
+		//            "0": "51141465398619058",
+		//            "1": "51141465407337843",
+		//            "4": "51721481110251475"
+		//        },
+		DLCsIds                 any                   `json:"dlcs_ids"`
 		FirstReleaseDate        string                `json:"first_release_date"`
 		Releases                []PlatformId          `json:"releases"`
 		Title                   DefaultEnglish        `json:"title"`
