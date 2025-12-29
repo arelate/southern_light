@@ -4,15 +4,10 @@ go 1.25.5
 
 require (
 	github.com/boggydigital/dolo v0.2.24
-	github.com/boggydigital/kevlar v0.6.9
+	github.com/boggydigital/kevlar v0.6.10
 	github.com/boggydigital/match_node v0.1.19
 	github.com/boggydigital/nod v0.1.30
-	github.com/boggydigital/pathways v0.2.0
-	github.com/boggydigital/redux v0.1.10
+	github.com/boggydigital/pathways v0.2.1
+	github.com/boggydigital/redux v0.1.11
 	golang.org/x/net v0.48.0
-)
-
-require (
-	github.com/boggydigital/busan v0.1.1 // indirect
-	github.com/boggydigital/wits v0.2.3 // indirect
 )
