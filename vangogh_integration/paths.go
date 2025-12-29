@@ -2,17 +2,18 @@ package vangogh_integration
 
 import (
 	"fmt"
-	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/pathways"
 	"os"
 	"path/filepath"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/pathways"
 )
 
 const (
 	xmlExt           = ".xml"
-	cookiesFilename  = "cookies.txt"
+	cookiesFilename  = "cookies_gog_com.json"
 	atomFeedFilename = "atom.xml"
 )
 

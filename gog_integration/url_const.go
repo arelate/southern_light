@@ -4,6 +4,12 @@
 
 package gog_integration
 
+import (
+	"net/url"
+
+	"github.com/arelate/southern_light"
+)
+
 // hosts
 const (
 	GogHost     = "gog.com"
@@ -70,3 +76,7 @@ const (
 const (
 	imagesPathTemplate = "/{image_id}"
 )
+
+func DefaultUrl() *url.URL {
+	return &url.URL{Scheme: southern_light.HttpsScheme, Host: GogHost}
+}

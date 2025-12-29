@@ -8,8 +8,8 @@ require (
 	github.com/boggydigital/match_node v0.1.19
 	github.com/boggydigital/nod v0.1.30
 	github.com/boggydigital/pathways v0.1.15
-	github.com/boggydigital/redux v0.1.9
-	golang.org/x/net v0.46.0
+	github.com/boggydigital/redux v0.1.10
+	golang.org/x/net v0.48.0
 )
 
 require (

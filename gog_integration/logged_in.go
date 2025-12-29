@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-var ErrNotLoggedIn = errors.New("user is not logged in, please update cookies.txt")
+var ErrNotLoggedIn = errors.New("user is not logged in, run import-cookies")
 
 func IsLoggedIn(client *http.Client) error {
 
