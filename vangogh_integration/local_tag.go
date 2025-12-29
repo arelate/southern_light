@@ -37,9 +37,7 @@ func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWr
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), LocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -58,9 +56,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), LocalTagsProperty)
 	if err != nil {
 		return err
 	}

@@ -21,9 +21,7 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 	var err error
 	if rdx == nil && len(slugs) > 0 {
 
-		reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-		rdx, err = redux.NewReader(reduxDir, SlugProperty)
+		rdx, err = redux.NewReader(AbsReduxDir(), SlugProperty)
 		if err != nil {
 			return nil, err
 		}
@@ -63,10 +61,8 @@ func PropertyListsFromIdSet(
 	propSet[TitleProperty] = nil
 
 	if rdx == nil {
-		reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
 		var err error
-		rdx, err = redux.NewReader(reduxDir, slices.Collect(maps.Keys(propSet))...)
+		rdx, err = redux.NewReader(AbsReduxDir(), slices.Collect(maps.Keys(propSet))...)
 		if err != nil {
 			return nil, err
 		}

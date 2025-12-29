@@ -11,9 +11,7 @@ func AddToLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, UserWishlistProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), UserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -46,9 +44,7 @@ func RemoveFromLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, UserWishlistProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), UserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}

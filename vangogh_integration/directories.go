@@ -3,6 +3,7 @@ package vangogh_integration
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -10,8 +11,8 @@ import (
 )
 
 const (
-	rootPathwayDir     = "/var/lib/vangogh"
-	setPathwayFilename = "directories.txt"
+	rootPathwaysDir     = "/var/lib/vangogh"
+	setPathwaysFilename = "directories.txt"
 )
 
 const (
@@ -26,18 +27,6 @@ const (
 	Logs              pathways.AbsDir = "logs"
 )
 
-//var AllAbsDirs = []pathways.AbsDir{
-//	Backups,
-//	Metadata,
-//	Input,
-//	Output,
-//	Images,
-//	DescriptionImages,
-//	Downloads,
-//	Checksums,
-//	Logs,
-//}
-
 const (
 	Redux          pathways.RelDir = "_redux"          // Metadata
 	GitHubReleases pathways.RelDir = "github-releases" // Metadata
@@ -46,15 +35,6 @@ const (
 	DLCs           pathways.RelDir = "dlc"             // Downloads
 	Extras         pathways.RelDir = "extras"          // Downloads
 )
-
-//var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-//	Redux:          Metadata,
-//	GitHubReleases: Metadata,
-//	Author:         Metadata,
-//	WineBinaries:   Downloads,
-//	DLCs:           Downloads,
-//	Extras:         Downloads,
-//}
 
 var Pwd pathways.Pathway
 
@@ -126,4 +106,25 @@ func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (s
 
 	downloadsDir := Pwd.AbsDirPath(Downloads)
 	return filepath.Join(downloadsDir, rsdtd), nil
+}
+
+func AbsReduxDir() string {
+	return Pwd.AbsRelDirPath(Redux, Metadata)
+}
+
+func InitPathways() error {
+	var setExists bool
+	if _, err := os.Stat(setPathwaysFilename); err == nil {
+		setExists = true
+	}
+
+	var err error
+	switch setExists {
+	case true:
+		Pwd, err = pathways.ReadSet(setPathwaysFilename)
+	default:
+		Pwd, err = pathways.NewRoot(rootPathwaysDir)
+	}
+
+	return err
 }

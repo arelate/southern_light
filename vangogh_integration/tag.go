@@ -27,9 +27,8 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 }
 
 func TagIdByName(tagName string) (string, error) {
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
-	rdx, err := redux.NewReader(reduxDir, TagNameProperty)
+	rdx, err := redux.NewReader(AbsReduxDir(), TagNameProperty)
 	if err != nil {
 		return "", err
 	}
@@ -52,9 +51,7 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -79,9 +76,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -109,9 +104,7 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -156,9 +149,7 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -204,9 +195,7 @@ func diffTagProperty(
 	add = make([]string, 0)
 	rem = make([]string, 0)
 
-	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
-
-	rdx, err := redux.NewReader(reduxDir, tagProperty)
+	rdx, err := redux.NewReader(AbsReduxDir(), tagProperty)
 	if err != nil {
 		return add, rem, err
 	}
