@@ -8,7 +8,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/pathways"
 )
 
 const (
@@ -27,20 +26,14 @@ var validatedExtensions = map[string]bool{
 
 func AbsChecksumPath(absDownloadPath string) (string, error) {
 
-	downloadsDir, err := pathways.GetAbsDir(Downloads)
-	if err != nil {
-		return "", err
-	}
+	downloadsDir := Pwd.AbsDirPath(Downloads)
 
 	relDownloadPath, err := filepath.Rel(downloadsDir, absDownloadPath)
 	if err != nil {
 		return "", err
 	}
 
-	checksumsDir, err := pathways.GetAbsDir(Checksums)
-	if err != nil {
-		return "", err
-	}
+	checksumsDir := Pwd.AbsDirPath(Checksums)
 
 	return filepath.Join(checksumsDir, relDownloadPath+xmlExt), nil
 }
@@ -73,14 +66,12 @@ func AbsLocalImagePath(imageId string) (string, error) {
 	return "", err
 }
 
-func AbsCookiePath() (string, error) {
-	ifdp, err := pathways.GetAbsDir(Input)
-	return filepath.Join(ifdp, cookiesFilename), err
+func AbsCookiePath() string {
+	return filepath.Join(Pwd.AbsDirPath(Input), cookiesFilename)
 }
 
-func AbsAtomFeedPath() (string, error) {
-	ofdp, err := pathways.GetAbsDir(Output)
-	return filepath.Join(ofdp, atomFeedFilename), err
+func AbsAtomFeedPath() string {
+	return filepath.Join(Pwd.AbsDirPath(Output), atomFeedFilename)
 }
 
 func AbsDescriptionImagePath(path string) (string, error) {
@@ -98,10 +89,7 @@ func AbsDescriptionImagePath(path string) (string, error) {
 		return "", fmt.Errorf("sanitized description image path cannot be empty")
 	}
 
-	idp, err := pathways.GetAbsDir(DescriptionImages)
-	if err != nil {
-		return "", err
-	}
+	idp := Pwd.AbsDirPath(DescriptionImages)
 
 	x, _ := utf8.DecodeRuneInString(path)
 

@@ -9,7 +9,10 @@ import (
 	"github.com/boggydigital/pathways"
 )
 
-const DefaultRootDir = "/var/lib/vangogh"
+const (
+	rootPathwayDir     = "/var/lib/vangogh"
+	setPathwayFilename = "directories.txt"
+)
 
 const (
 	Backups           pathways.AbsDir = "backups"
@@ -23,35 +26,37 @@ const (
 	Logs              pathways.AbsDir = "logs"
 )
 
-var AllAbsDirs = []pathways.AbsDir{
-	Backups,
-	Metadata,
-	Input,
-	Output,
-	Images,
-	DescriptionImages,
-	Downloads,
-	Checksums,
-	Logs,
-}
+//var AllAbsDirs = []pathways.AbsDir{
+//	Backups,
+//	Metadata,
+//	Input,
+//	Output,
+//	Images,
+//	DescriptionImages,
+//	Downloads,
+//	Checksums,
+//	Logs,
+//}
 
 const (
-	Redux          pathways.RelDir = "_redux"
-	GitHubReleases pathways.RelDir = "github-releases"
-	WineBinaries   pathways.RelDir = "_wine-binaries"
-	DLCs           pathways.RelDir = "dlc"
-	Extras         pathways.RelDir = "extras"
-	Author         pathways.RelDir = "_author"
+	Redux          pathways.RelDir = "_redux"          // Metadata
+	GitHubReleases pathways.RelDir = "github-releases" // Metadata
+	Author         pathways.RelDir = "_author"         // Metadata
+	WineBinaries   pathways.RelDir = "_wine-binaries"  // Downloads
+	DLCs           pathways.RelDir = "dlc"             // Downloads
+	Extras         pathways.RelDir = "extras"          // Downloads
 )
 
-var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-	Redux:          Metadata,
-	GitHubReleases: Metadata,
-	Author:         Metadata,
-	WineBinaries:   Downloads,
-	DLCs:           Downloads,
-	Extras:         Downloads,
-}
+//var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
+//	Redux:          Metadata,
+//	GitHubReleases: Metadata,
+//	Author:         Metadata,
+//	WineBinaries:   Downloads,
+//	DLCs:           Downloads,
+//	Extras:         Downloads,
+//}
+
+var Pwd pathways.Pathway
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
 	if imageId == "" {
@@ -64,18 +69,15 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 		return "", fmt.Errorf("imageId is too short")
 	}
 
-	idp, err := pathways.GetAbsDir(Images)
-	return filepath.Join(idp, imageId[0:2]), err
+	idp := Pwd.AbsDirPath(Images)
+	return filepath.Join(idp, imageId[0:2]), nil
 }
 
 func AbsProductTypeDir(pt ProductType) (string, error) {
 	if pt == UnknownProductType {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-	amd, err := pathways.GetAbsDir(Metadata)
-	if err != nil {
-		return "", err
-	}
+	amd := Pwd.AbsDirPath(Metadata)
 	return filepath.Join(amd, pt.String()), nil
 }
 
@@ -102,36 +104,26 @@ func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout
 		return "", errors.New("unsupported downloads layout: " + layout.String())
 	}
 
-	var err error
 	relDownloadTypeDir := ""
 
 	switch dt {
 	case DLC:
-		relDownloadTypeDir, err = pathways.GetRelDir(DLCs)
+		relDownloadTypeDir = Pwd.AbsRelDirPath(DLCs, Downloads)
 	case Extra:
-		relDownloadTypeDir, err = pathways.GetRelDir(Extras)
+		relDownloadTypeDir = Pwd.AbsRelDirPath(Extras, Downloads)
 	default:
 		// do nothing - use base product downloads dir
-	}
-
-	if err != nil {
-		return "", err
 	}
 
 	return filepath.Join(relSlugDir, relDownloadTypeDir), nil
 }
 
 func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {
-	if rsdtd, err := relSlugDownloadTypeDir(slug, dt, layout); err == nil {
-
-		downloadsDir, err := pathways.GetAbsDir(Downloads)
-		if err != nil {
-			return "", err
-		}
-
-		return filepath.Join(downloadsDir, rsdtd), nil
-
-	} else {
+	rsdtd, err := relSlugDownloadTypeDir(slug, dt, layout)
+	if err != nil {
 		return "", err
 	}
+
+	downloadsDir := Pwd.AbsDirPath(Downloads)
+	return filepath.Join(downloadsDir, rsdtd), nil
 }

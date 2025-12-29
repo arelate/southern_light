@@ -2,7 +2,6 @@ package vangogh_integration
 
 import (
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -38,10 +37,7 @@ func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWr
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
 	if err != nil {
@@ -62,10 +58,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, LocalTagsProperty)
 	if err != nil {

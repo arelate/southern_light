@@ -1,7 +1,6 @@
 package vangogh_integration
 
 import (
-	"github.com/boggydigital/pathways"
 	"io/fs"
 	"os"
 	"path"
@@ -31,19 +30,11 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]any, error) {
-	idp, err := pathways.GetAbsDir(Images)
-	if err != nil {
-		return nil, err
-	}
-	return walkFiles(idp, filenameAsId)
+	return walkFiles(Pwd.AbsDirPath(Images), filenameAsId)
 }
 
 func LocalDownloadDirs() (map[string]any, error) {
-	ddp, err := pathways.GetAbsDir(Downloads)
-	if err != nil {
-		return nil, err
-	}
-	return walkDirectories(ddp)
+	return walkDirectories(Pwd.AbsDirPath(Downloads))
 }
 
 func AbsLocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]any, error) {
@@ -52,7 +43,7 @@ func AbsLocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]any, err
 	if err != nil {
 		return nil, err
 	}
-	if _, err := os.Stat(absSlugDownloadDir); os.IsNotExist(err) {
+	if _, err = os.Stat(absSlugDownloadDir); os.IsNotExist(err) {
 		return map[string]any{}, nil
 	}
 	return walkFiles(

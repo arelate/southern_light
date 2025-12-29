@@ -3,13 +3,13 @@ package vangogh_integration
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	"net/http"
 	"net/url"
 	"slices"
+
+	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) error {
@@ -27,10 +27,7 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 }
 
 func TagIdByName(tagName string) (string, error) {
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return "", err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, TagNameProperty)
 	if err != nil {
@@ -55,10 +52,7 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
 	if err != nil {
@@ -85,10 +79,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, TagNameProperty)
 	if err != nil {
@@ -118,10 +109,7 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
 	if err != nil {
@@ -168,10 +156,7 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, TagIdProperty)
 	if err != nil {
@@ -219,10 +204,7 @@ func diffTagProperty(
 	add = make([]string, 0)
 	rem = make([]string, 0)
 
-	reduxDir, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return nil, nil, err
-	}
+	reduxDir := Pwd.AbsRelDirPath(Redux, Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, tagProperty)
 	if err != nil {
