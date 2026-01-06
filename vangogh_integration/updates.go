@@ -21,6 +21,10 @@ var UpdatesLongerTitles = map[string]string{
 	UpdatesSteamNews:     "Steam News",
 }
 
+var UpdatesAtomTitles = map[string]string{
+	UpdatesReleasedToday: "Released T-Day",
+}
+
 var UpdatesOrder = []string{
 	UpdatesInstallers,
 	UpdatesNewProducts,
