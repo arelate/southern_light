@@ -10,7 +10,7 @@ const (
 	SyncVideoMetadataKey     = "sync-video-metadata"
 	SyncDownloadsKey         = "sync-downloads"
 	SyncCleanupKey           = "sync-cleanup"
-	SyncWineBinaries         = "sync-wine-binaries"
+	SyncBinaries             = "sync-binaries"
 	SyncBackup               = "sync-backup"
 	SyncCompleteKey          = "sync-complete"
 )
@@ -25,7 +25,7 @@ var SyncEventsKeys = []string{
 	SyncVideoMetadataKey,
 	SyncDownloadsKey,
 	SyncCleanupKey,
-	SyncWineBinaries,
+	SyncBinaries,
 	SyncBackup,
 	SyncCompleteKey, // this should be the last key
 }
@@ -38,8 +38,8 @@ var CurrentSyncEventForCompleted = map[string]string{
 	SyncDehydrateKey:         SyncVideoMetadataKey,
 	SyncVideoMetadataKey:     SyncDownloadsKey,
 	SyncDownloadsKey:         SyncCleanupKey,
-	SyncCleanupKey:           SyncWineBinaries,
-	SyncWineBinaries:         SyncBackup,
+	SyncCleanupKey:           SyncBinaries,
+	SyncBinaries:             SyncBackup,
 }
 
 var CurrentSyncEventsTitles = map[string]string{
@@ -52,7 +52,7 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncVideoMetadataKey:     "Updating videos",
 	SyncDownloadsKey:         "Downloading files",
 	SyncCleanupKey:           "Cleaning up downloads",
-	SyncWineBinaries:         "Updating WINE binaries",
+	SyncBinaries:             "Updating binaries",
 	SyncBackup:               "Backing up data",
 	SyncCompleteKey:          "Sync complete", // this should be the last key
 }
