@@ -28,12 +28,13 @@ const (
 )
 
 const (
-	Redux          pathways.RelDir = "_redux"          // Metadata
-	GitHubReleases pathways.RelDir = "github-releases" // Metadata
-	Author         pathways.RelDir = "_author"         // Metadata
-	WineBinaries   pathways.RelDir = "_wine-binaries"  // Downloads
-	DLCs           pathways.RelDir = "dlc"             // Downloads
-	Extras         pathways.RelDir = "extras"          // Downloads
+	Redux            pathways.RelDir = "_redux"          // Metadata
+	GitHubReleases   pathways.RelDir = "github-releases" // Metadata
+	Author           pathways.RelDir = "_author"         // Metadata
+	WineBinaries     pathways.RelDir = "_wine-binaries"  // Downloads
+	SteamCmdBinaries pathways.RelDir = "_steamcmd"       // Downloads
+	DLCs             pathways.RelDir = "dlc"             // Downloads
+	Extras           pathways.RelDir = "extras"          // Downloads
 )
 
 var Pwd pathways.Pathway
