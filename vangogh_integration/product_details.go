@@ -33,7 +33,6 @@ type ProductDownloadLink struct {
 	DownloadStatus   DownloadStatus   `json:"download-status"`
 	ValidationStatus ValidationStatus `json:"validation-status"`
 	LocalFilename    string           `json:"local-filename"`
-	Md5              string           `json:"md5"`
 	OperatingSystem  OperatingSystem  `json:"os"`
 	DownloadType     DownloadType     `json:"download-type"`
 	LanguageCode     string           `json:"language-code"`
