@@ -38,7 +38,8 @@ func (tp *textParser) run() error {
 func parseTextKey(tp *textParser) textParseStateFn {
 	for {
 		item := tp.lex.nextItem()
-		if item.typ == textItemKeyValue {
+		switch item.typ {
+		case textItemKeyValue:
 			tp.last = &KeyValues{Key: item.val}
 			if len(tp.stack) == 0 {
 				tp.kv = append(tp.kv, tp.last)
@@ -46,38 +47,47 @@ func parseTextKey(tp *textParser) textParseStateFn {
 				tp.stack[len(tp.stack)-1].Values = append(tp.stack[len(tp.stack)-1].Values, tp.last)
 			}
 			return parseTextValue
-		}
-		if item.typ == textItemRightMeta {
+		case textItemRightMeta:
 			if len(tp.stack) > 0 {
 				tp.stack = tp.stack[:len(tp.stack)-1]
 			}
 			return parseTextKey
-		}
-		if item.typ == textItemEOF {
-			break
-		}
-		if item.typ == textItemError {
+		case textItemEOF:
+			return breakParse
+		case textItemError:
 			tp.err = errors.New(item.val)
+			return breakParse
+		default:
+			tp.err = errors.New("unhandled parseTextKey item type")
+			return breakParse
 		}
 	}
+}
+
+func breakParse(_ *textParser) textParseStateFn {
 	return nil
 }
 
 func parseTextValue(tp *textParser) textParseStateFn {
 	item := tp.lex.nextItem()
-	if item.typ == textItemKeyValue {
+	switch item.typ {
+	case textItemKeyValue:
 		if len(tp.stack) > 0 {
 			tp.last.Value = &item.val
 			return parseTextKey
 		}
 		tp.err = errors.New("vdf cannot start with a value")
 		return nil
-	}
-	if item.typ == textItemLeftMeta {
+	case textItemLeftMeta:
 		tp.stack = append(tp.stack, tp.last)
 		return parseTextKey
+	case textItemError:
+		tp.err = errors.New(item.val)
+		return breakParse
+	default:
+		tp.err = errors.New("unhandled parseTextValue item type")
+		return breakParse
 	}
-	return nil
 }
 
 func ParseText(path string) ([]*KeyValues, error) {

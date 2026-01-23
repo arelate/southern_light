@@ -147,5 +147,6 @@ func isText(r rune) bool {
 	return unicode.IsNumber(r) ||
 		unicode.IsLetter(r) ||
 		unicode.IsPunct(r) ||
-		unicode.IsSpace(r)
+		unicode.IsSpace(r) ||
+		unicode.IsSymbol(r)
 }
