@@ -21,6 +21,8 @@ const (
 
 const defaultVdfIndent = "\t"
 
+const Ext = ".vdf"
+
 func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) error {
 
 	if slices.Contains(wo, VdfTabsIndent) && slices.Contains(wo, VdfSpacesIndent) {
