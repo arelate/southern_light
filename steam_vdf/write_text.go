@@ -1,18 +1,46 @@
 package steam_vdf
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
 )
 
-func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
+type VdfWriteOptions int
+
+const (
+	VdfBackupExisting VdfWriteOptions = iota
+	VdfTabsIndent
+	VdfSpacesIndent
+)
+
+const defaultVdfIndent = "\t"
+
+func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) error {
+
+	if slices.Contains(wo, VdfTabsIndent) && slices.Contains(wo, VdfSpacesIndent) {
+		return errors.New("cannot use both tabs and spaces as VDF indent")
+	}
+
+	var indent string
+	if slices.Contains(wo, VdfTabsIndent) {
+		indent = "\t"
+	}
+	if slices.Contains(wo, VdfSpacesIndent) {
+		indent = " "
+	}
+
+	if indent == "" {
+		indent = defaultVdfIndent
+	}
 
 	// (depth times \t)"key"
-	if _, err := io.WriteString(w, strings.Repeat("\t", depth)); err != nil {
+	if _, err := io.WriteString(w, strings.Repeat(indent, depth)); err != nil {
 		return err
 	}
 	if _, err := io.WriteString(w, fmt.Sprintf("\"%s\"", kv.Key)); err != nil {
@@ -21,7 +49,7 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 
 	// \t\t"value"
 	if kv.Value != nil {
-		if _, err := io.WriteString(w, strings.Repeat("\t", 2)); err != nil {
+		if _, err := io.WriteString(w, strings.Repeat(indent, 2)); err != nil {
 			return err
 		}
 		if _, err := io.WriteString(w, fmt.Sprintf("\"%s\"", *kv.Value)); err != nil {
@@ -36,10 +64,10 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 
 	// (depth times \t){\n
 	if kv.Values != nil || (kv.Values == nil && kv.Value == nil) {
-		if _, err := io.WriteString(w, strings.Repeat("\t", depth)); err != nil {
+		if _, err := io.WriteString(w, strings.Repeat(indent, depth)); err != nil {
 			return err
 		}
-		if _, err := io.WriteString(w, "{"); err != nil {
+		if _, err := io.WriteString(w, string(leftCurlyBracket)); err != nil {
 			return err
 		}
 		if _, err := io.WriteString(w, "\n"); err != nil {
@@ -56,10 +84,10 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 
 	// (depth times \t)}\n
 	if kv.Values != nil || (kv.Values == nil && kv.Value == nil) {
-		if _, err := io.WriteString(w, strings.Repeat("\t", depth)); err != nil {
+		if _, err := io.WriteString(w, strings.Repeat(indent, depth)); err != nil {
 			return err
 		}
-		if _, err := io.WriteString(w, "}"); err != nil {
+		if _, err := io.WriteString(w, string(rightCurlyBracket)); err != nil {
 			return err
 		}
 		if _, err := io.WriteString(w, "\n"); err != nil {
@@ -70,27 +98,34 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int) error {
 	return nil
 }
 
-func WriteText(p string, keyValues []*KeyValues) error {
-
-	if _, err := os.Stat(p); err == nil {
-		if err := backup(p); err != nil {
-			return err
-		}
-	}
-
-	vdfFile, err := os.Create(p)
-	if err != nil {
-		return err
-	}
-	defer vdfFile.Close()
+func WriteText(writer io.Writer, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
 
 	for _, kv := range keyValues {
-		if err := kv.WriteString(vdfFile, 0); err != nil {
+		if err := kv.WriteString(writer, 0, wo...); err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func CreateText(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
+
+	if slices.Contains(wo, VdfBackupExisting) {
+		if _, err := os.Stat(dstPath); err == nil {
+			if err = backup(dstPath); err != nil {
+				return err
+			}
+		}
+	}
+
+	vdfFile, err := os.Create(dstPath)
+	if err != nil {
+		return err
+	}
+	defer vdfFile.Close()
+
+	return WriteText(vdfFile, keyValues)
 }
 
 func backup(path string) error {
@@ -111,7 +146,7 @@ func backup(path string) error {
 	}
 	defer backupFile.Close()
 
-	if _, err := io.Copy(backupFile, originalFile); err != nil {
+	if _, err = io.Copy(backupFile, originalFile); err != nil {
 		return err
 	}
 

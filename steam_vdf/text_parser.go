@@ -3,7 +3,6 @@ package steam_vdf
 import (
 	"errors"
 	"io"
-	"os"
 	"strings"
 )
 
@@ -47,7 +46,7 @@ func parseTextKey(tp *textParser) textParseStateFn {
 				tp.stack[len(tp.stack)-1].Values = append(tp.stack[len(tp.stack)-1].Values, tp.last)
 			}
 			return parseTextValue
-		case textItemRightMeta:
+		case textItemRightCurlyBracket:
 			if len(tp.stack) > 0 {
 				tp.stack = tp.stack[:len(tp.stack)-1]
 			}
@@ -78,7 +77,7 @@ func parseTextValue(tp *textParser) textParseStateFn {
 		}
 		tp.err = errors.New("vdf cannot start with a value")
 		return nil
-	case textItemLeftMeta:
+	case textItemLeftCurlyBracket:
 		tp.stack = append(tp.stack, tp.last)
 		return parseTextKey
 	case textItemError:
@@ -90,17 +89,11 @@ func parseTextValue(tp *textParser) textParseStateFn {
 	}
 }
 
-func ParseText(path string) ([]*KeyValues, error) {
-
-	vdfFile, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer vdfFile.Close()
+func ReadText(reader io.Reader) ([]*KeyValues, error) {
 
 	sb := &strings.Builder{}
 
-	if _, err := io.Copy(sb, vdfFile); err != nil {
+	if _, err := io.Copy(sb, reader); err != nil {
 		return nil, err
 	}
 

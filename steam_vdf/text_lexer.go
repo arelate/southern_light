@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	leftMeta  = '{'
-	rightMeta = '}'
-	quote     = '"'
+	leftCurlyBracket  = '{'
+	rightCurlyBracket = '}'
+	quotationMark     = '"'
 )
 
 type textLexItem struct {
@@ -24,8 +24,8 @@ const (
 	textItemEOF textItemType = iota - 1
 	textItemError
 	textItemKeyValue
-	textItemLeftMeta
-	textItemRightMeta
+	textItemLeftCurlyBracket
+	textItemRightCurlyBracket
 )
 
 type textLexStateFn func(*textLexer) textLexStateFn
@@ -63,14 +63,14 @@ func lexText(tl *textLexer) textLexStateFn {
 	for {
 		r := tl.next()
 		switch r {
-		case quote:
+		case quotationMark:
 			tl.ignore()
 			return lexTextKeyValue
-		case leftMeta:
-			tl.emit(textItemLeftMeta)
+		case leftCurlyBracket:
+			tl.emit(textItemLeftCurlyBracket)
 			return lexText
-		case rightMeta:
-			tl.emit(textItemRightMeta)
+		case rightCurlyBracket:
+			tl.emit(textItemRightCurlyBracket)
 			return lexText
 		}
 		if unicode.IsSpace(r) {
@@ -86,7 +86,7 @@ func lexText(tl *textLexer) textLexStateFn {
 
 func lexTextKeyValue(tl *textLexer) textLexStateFn {
 	for {
-		if tl.peek() == quote {
+		if tl.peek() == quotationMark {
 			tl.emit(textItemKeyValue)
 			tl.next()
 			return lexText

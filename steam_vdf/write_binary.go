@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"io"
 	"os"
+	"slices"
 )
 
 func (kv *KeyValues) writeBinaryString(w io.Writer, s string) error {
@@ -56,30 +57,32 @@ func (kv *KeyValues) WriteBinary(w io.Writer) error {
 	return nil
 }
 
-func WriteBinary(p string, keyValues []*KeyValues) error {
-
-	if _, err := os.Stat(p); err == nil {
-		if err := backup(p); err != nil {
-			return err
-		}
-	}
-
-	vdfFile, err := os.Create(p)
-	if err != nil {
-		return err
-	}
-	defer vdfFile.Close()
-
+func WriteBinary(writer io.Writer, keyValues []*KeyValues) error {
 	for _, kv := range keyValues {
-		if err := kv.WriteBinary(vdfFile); err != nil {
+		if err := kv.WriteBinary(writer); err != nil {
 			return err
 		}
 	}
 
 	// write top level null marker
-	if err := binary.Write(vdfFile, binary.LittleEndian, BinaryTypeNullMarker); err != nil {
-		return err
+	return binary.Write(writer, binary.LittleEndian, BinaryTypeNullMarker)
+}
+
+func CreateBinary(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
+
+	if slices.Contains(wo, VdfBackupExisting) {
+		if _, err := os.Stat(dstPath); err == nil {
+			if err = backup(dstPath); err != nil {
+				return err
+			}
+		}
 	}
 
-	return nil
+	vdfFile, err := os.Create(dstPath)
+	if err != nil {
+		return err
+	}
+	defer vdfFile.Close()
+
+	return WriteBinary(vdfFile, keyValues)
 }

@@ -2,7 +2,7 @@ package steam_vdf
 
 import (
 	"errors"
-	"os"
+	"io"
 )
 
 type binaryParseStateFn func(parser *binaryParser) binaryParseStateFn
@@ -104,15 +104,9 @@ func parseNextValue(bp *binaryParser) binaryParseStateFn {
 	}
 }
 
-func ParseBinary(path string) ([]*KeyValues, error) {
+func ReadBinary(reader io.Reader) ([]*KeyValues, error) {
 
-	vdfFile, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer vdfFile.Close()
-
-	p := newBinaryParser(newBinaryLexer(vdfFile))
+	p := newBinaryParser(newBinaryLexer(reader))
 	if err := p.run(); err != nil {
 		return nil, p.err
 	}
