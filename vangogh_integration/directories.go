@@ -33,8 +33,8 @@ const (
 	Author           pathways.RelDir = "_author"         // Metadata
 	WineBinaries     pathways.RelDir = "_wine-binaries"  // Downloads
 	SteamCmdBinaries pathways.RelDir = "_steamcmd"       // Downloads
-	DLCs             pathways.RelDir = "dlc"             // Downloads
-	Extras           pathways.RelDir = "extras"          // Downloads
+	DLCs             pathways.RelDir = "dlc"             // (slug Downloads)
+	Extras           pathways.RelDir = "extras"          // (slug Downloads)
 )
 
 var Pwd pathways.Pathway
@@ -89,9 +89,9 @@ func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout
 
 	switch dt {
 	case DLC:
-		relDownloadTypeDir = Pwd.AbsRelDirPath(DLCs, Downloads)
+		relDownloadTypeDir = string(DLCs)
 	case Extra:
-		relDownloadTypeDir = Pwd.AbsRelDirPath(Extras, Downloads)
+		relDownloadTypeDir = string(Extras)
 	default:
 		// do nothing - use base product downloads dir
 	}
