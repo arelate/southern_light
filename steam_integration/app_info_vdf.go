@@ -387,9 +387,9 @@ func steamDeckCompatibilityVdf(kv *steam_vdf.KeyValues) *SteamDeckCompatibility 
 		case "tested_build_id":
 			sdc.TestBuildId, err = strconv.ParseInt(strVal, 10, 64)
 		case "tests":
-			sdc.Tests = testResultssVdf(sdcKv)
+			sdc.Tests = testResultsVdf(sdcKv)
 		case "steamos_tests":
-			sdc.SteamOsTests = testResultssVdf(sdcKv)
+			sdc.SteamOsTests = testResultsVdf(sdcKv)
 		case "configuration":
 			sdc.Configuration = mapFromValues(sdcKv)
 		default:
@@ -404,10 +404,39 @@ func steamDeckCompatibilityVdf(kv *steam_vdf.KeyValues) *SteamDeckCompatibility 
 	return sdc
 }
 
-func testResultssVdf(kv *steam_vdf.KeyValues) []SteamTestResult {
+func testResultsVdf(kv *steam_vdf.KeyValues) []SteamTestResult {
 	strs := make([]SteamTestResult, 0, len(kv.Values))
 
-	// TODO
+	for _, testKv := range kv.Values {
+
+		tr := SteamTestResult{}
+
+		for _, testResultsKv := range testKv.Values {
+
+			var strVal string
+			if testResultsKv.Value != nil {
+				strVal = *testResultsKv.Value
+			}
+
+			var err error
+
+			switch testResultsKv.Key {
+			case "display":
+				tr.Display, err = strconv.Atoi(strVal)
+			case "token":
+				tr.Token = strVal
+			default:
+				panic("unknown test result key: " + testResultsKv.Key)
+			}
+
+			if err != nil {
+				panic(err)
+			}
+
+		}
+
+		strs = append(strs, tr)
+	}
 
 	return strs
 }
