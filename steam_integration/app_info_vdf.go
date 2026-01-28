@@ -26,35 +26,15 @@ func AppInfoVdf(keyValues []*steam_vdf.KeyValues) (*AppInfo, error) {
 		for _, rootValues := range rootKv.Values {
 			switch rootValues.Key {
 			case "common":
-				if aiCommon, err := appInfoCommonVdf(rootValues); err == nil {
-					appInfo.Common = aiCommon
-				} else {
-					return nil, err
-				}
+				appInfo.Common = appInfoCommonVdf(rootValues)
 			case "extended":
-				if aiExtended, err := appInfoExtendedVdf(rootValues); err == nil {
-					appInfo.Extended = aiExtended
-				} else {
-					return nil, err
-				}
+				appInfo.Extended = appInfoExtendedVdf(rootValues)
 			case "config":
-				if aiConfig, err := appInfoConfigVdf(rootValues); err == nil {
-					appInfo.Config = aiConfig
-				} else {
-					return nil, err
-				}
+				appInfo.Config = appInfoConfigVdf(rootValues)
 			case "depots":
-				if aiDepots, err := appInfoDepotsVdf(rootValues); err == nil {
-					appInfo.Depots = aiDepots
-				} else {
-					return nil, err
-				}
+				appInfo.Depots = appInfoDepotsVdf(rootValues)
 			case "ufs":
-				if aiUfs, err := appInfoUfsVdf(rootValues); err == nil {
-					appInfo.Ufs = aiUfs
-				} else {
-					return nil, err
-				}
+				appInfo.Ufs = appInfoUfsVdf(rootValues)
 			default:
 				return nil, errors.New("unknown root appinfo key: " + rootValues.Key)
 			}
@@ -64,7 +44,7 @@ func AppInfoVdf(keyValues []*steam_vdf.KeyValues) (*AppInfo, error) {
 	return appInfo, nil
 }
 
-func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) (*AppInfoCommon, error) {
+func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 
 	appInfoCommon := &AppInfoCommon{}
 
@@ -147,14 +127,14 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) (*AppInfoCommon, err
 		case "review_percentage":
 			appInfoCommon.ReviewPercentage, err = strconv.Atoi(strVal)
 		default:
-			return nil, errors.New("unknown appinfo common key: " + commonKv.Key)
+			panic(errors.New("unknown appinfo common key: " + commonKv.Key))
 		}
 
 		if err != nil {
-			return nil, err
+			panic(err)
 		}
 	}
-	return appInfoCommon, nil
+	return appInfoCommon
 }
 
 func mapFromValues(kv *steam_vdf.KeyValues) map[string]string {
@@ -441,18 +421,40 @@ func testResultsVdf(kv *steam_vdf.KeyValues) []SteamTestResult {
 	return strs
 }
 
-func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) (*AppInfoExtended, error) {
-	return nil, nil
+func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended {
+
+	aie := new(AppInfoExtended)
+
+	for _, ekv := range extendedKeyValues.Values {
+
+		var strVal string
+		if ekv.Value != nil {
+			strVal = *ekv.Value
+		}
+
+		switch ekv.Key {
+		case "developer":
+			aie.Developer = strVal
+		case "publisher":
+			aie.Publisher = strVal
+		case "homepage":
+			aie.Homepage = strVal
+		default:
+			panic("unknown extended key: " + ekv.Key)
+		}
+	}
+
+	return aie
 }
 
-func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) (*AppInfoConfig, error) {
-	return nil, nil
+func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
+	return nil
 }
 
-func appInfoDepotsVdf(depotsKeyValues *steam_vdf.KeyValues) (*AppInfoDepots, error) {
-	return nil, nil
+func appInfoDepotsVdf(depotsKeyValues *steam_vdf.KeyValues) *AppInfoDepots {
+	return nil
 }
 
-func appInfoUfsVdf(ufsKeyValues *steam_vdf.KeyValues) (*AppInfoUfs, error) {
-	return nil, nil
+func appInfoUfsVdf(ufsKeyValues *steam_vdf.KeyValues) *AppInfoUfs {
+	return nil
 }
