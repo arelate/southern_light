@@ -56,6 +56,7 @@ const (
 	ManualUrlStatusProperty           = "manual-url-status"
 	ManualUrlValidationResultProperty = "manual-url-validation-result"
 	ProductValidationResultProperty   = "product-validation-result"
+	ProductValidationDateProperty     = "product-validation-date"
 	DownloadStatusErrorProperty       = "download-status-error"
 	DownloadQueuedProperty            = "download-queued"
 	DownloadStartedProperty           = "download-started"
