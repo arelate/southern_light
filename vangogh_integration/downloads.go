@@ -306,14 +306,10 @@ func MapDownloads(
 		var downloads DownloadsList
 
 		if det != nil {
-
 			downloads, err = FromDetails(det, rdx)
 			if err != nil {
 				return err
 			}
-
-			tpw.Increment()
-			continue
 		}
 
 		filteredDownloads := make([]Download, 0)
