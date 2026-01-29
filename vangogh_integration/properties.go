@@ -515,6 +515,7 @@ func DownloadsLifecycleProperties() []string {
 		ManualUrlStatusProperty,
 		ManualUrlValidationResultProperty,
 		ProductValidationResultProperty,
+		ProductValidationDateProperty,
 		DownloadQueuedProperty,
 		DownloadStartedProperty,
 		DownloadCompletedProperty,
