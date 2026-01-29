@@ -303,14 +303,17 @@ func MapDownloads(
 			return err
 		}
 
-		if det == nil {
+		var downloads DownloadsList
+
+		if det != nil {
+
+			downloads, err = FromDetails(det, rdx)
+			if err != nil {
+				return err
+			}
+
 			tpw.Increment()
 			continue
-		}
-
-		downloads, err := FromDetails(det, rdx)
-		if err != nil {
-			return err
 		}
 
 		filteredDownloads := make([]Download, 0)
@@ -325,13 +328,13 @@ func MapDownloads(
 			filteredDownloads = append(filteredDownloads, dl)
 		}
 
-		if det.IsPreOrder && len(filteredDownloads) == 0 {
+		if det != nil && det.IsPreOrder && len(filteredDownloads) == 0 {
 			nod.Log("%s is a pre-order and has no downloads", id)
 			continue
 		}
 
 		// already checked for nil earlier in the function
-		if err := dlProcessor.Process(
+		if err = dlProcessor.Process(
 			id,
 			detSlug,
 			filteredDownloads); err != nil {
