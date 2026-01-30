@@ -1,5 +1,10 @@
 package vangogh_integration
 
+import (
+	"maps"
+	"slices"
+)
+
 type ValidationStatus int
 
 const (
@@ -44,6 +49,14 @@ func (vr ValidationStatus) String() string {
 
 func (vr ValidationStatus) HumanReadableString() string {
 	return validationStatusHumanReadableStrings[vr]
+}
+
+func AllValidationStatuses() []ValidationStatus {
+	return slices.Collect(maps.Keys(validationStatusStrings))
+}
+
+func AllValidationStatusCloValues() []string {
+	return slices.Collect(maps.Values(validationStatusStrings))
 }
 
 func ParseValidationStatus(vrs string) ValidationStatus {
