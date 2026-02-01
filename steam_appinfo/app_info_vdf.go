@@ -72,6 +72,10 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 			aic.LogoSmall = strVal
 		case "clienticon":
 			aic.ClientIcon = strVal
+		case "linuxclienticon":
+			aic.LinuxClientIcon = strVal
+		case "clienticns":
+			aic.ClientIcns = strVal
 		case "clienttga":
 			aic.ClientTga = strVal
 		case "icon":

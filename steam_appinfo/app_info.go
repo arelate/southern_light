@@ -17,6 +17,8 @@ type AppInfoCommon struct {
 	Logo                           string
 	LogoSmall                      string
 	ClientIcon                     string
+	LinuxClientIcon                string
+	ClientIcns                     string
 	ClientTga                      string
 	Icon                           string
 	OsList                         string
