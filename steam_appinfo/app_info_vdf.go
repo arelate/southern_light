@@ -1,4 +1,4 @@
-package steam_integration
+package steam_appinfo
 
 import (
 	"errors"
@@ -46,7 +46,7 @@ func AppInfoVdf(keyValues []*steam_vdf.KeyValues) (*AppInfo, error) {
 
 func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 
-	appInfoCommon := &AppInfoCommon{}
+	aic := &AppInfoCommon{}
 
 	var err error
 
@@ -59,73 +59,77 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 
 		switch commonKv.Key {
 		case "name":
-			appInfoCommon.Name = strVal
+			aic.Name = strVal
+		case "name_localized":
+			aic.NameLocalized = mapFromValues(commonKv)
 		case "type":
-			appInfoCommon.Type = strVal
+			aic.Type = strVal
 		case "ReleaseState":
-			appInfoCommon.ReleaseState = strVal
+			aic.ReleaseState = strVal
 		case "logo":
-			appInfoCommon.Logo = strVal
+			aic.Logo = strVal
 		case "logo_small":
-			appInfoCommon.LogoSmall = strVal
+			aic.LogoSmall = strVal
 		case "clienticon":
-			appInfoCommon.ClientIcon = strVal
+			aic.ClientIcon = strVal
 		case "clienttga":
-			appInfoCommon.ClientTga = strVal
+			aic.ClientTga = strVal
 		case "icon":
-			appInfoCommon.Icon = strVal
+			aic.Icon = strVal
 		case "oslist":
-			appInfoCommon.OsList = strVal
+			aic.OsList = strVal
 		case "osarch":
-			appInfoCommon.OsArch = strVal
+			aic.OsArch = strVal
 		case "osextended":
-			appInfoCommon.OsExtended = strVal
+			aic.OsExtended = strVal
 		case "languages":
-			appInfoCommon.Languages = sliceFromKeys(commonKv)
+			aic.Languages = sliceFromKeys(commonKv)
 		case "steam_deck_compatibility":
-			appInfoCommon.SteamDeckCompatibility = steamDeckCompatibilityVdf(commonKv)
+			aic.SteamDeckCompatibility = steamDeckCompatibilityVdf(commonKv)
+		case "controllertagwizard":
+			aic.ControllerTagWizard = strVal
 		case "metacritic_name":
-			appInfoCommon.MetacriticName = strVal
+			aic.MetacriticName = strVal
 		case "controller_support":
-			appInfoCommon.ControllerSupport = strVal
+			aic.ControllerSupport = strVal
 		case "small_capsule":
-			appInfoCommon.SmallCapsule = mapFromValues(commonKv)
+			aic.SmallCapsule = mapFromValues(commonKv)
 		case "header_image":
-			appInfoCommon.HeaderImage = mapFromValues(commonKv)
+			aic.HeaderImage = mapFromValues(commonKv)
 		case "library_assets":
-			appInfoCommon.LibraryAssets = libraryAssetsVdf(commonKv)
+			aic.LibraryAssets = libraryAssetsVdf(commonKv)
 		case "library_assets_full":
-			appInfoCommon.LibraryAssetsFull = libraryAssetsFullVdf(commonKv)
+			aic.LibraryAssetsFull = libraryAssetsFullVdf(commonKv)
 		case "store_asset_mtime":
-			appInfoCommon.StoreAssetMtime, err = strconv.ParseInt(strVal, 10, 64)
+			aic.StoreAssetMtime, err = strconv.ParseInt(strVal, 10, 64)
 		case "associations":
-			appInfoCommon.Associations = commonAssociationsVdf(commonKv)
+			aic.Associations = commonAssociationsVdf(commonKv)
 		case "primary_genre":
-			appInfoCommon.PrimaryGenre = strVal
+			aic.PrimaryGenre = strVal
 		case "genres":
-			appInfoCommon.Genres = sliceFromValues(commonKv)
+			aic.Genres = sliceFromValues(commonKv)
 		case "category":
-			appInfoCommon.Category = sliceFromKeys(commonKv)
+			aic.Category = sliceFromKeys(commonKv)
 		case "supported_languages":
-			appInfoCommon.SupportedLanguages = supportedLanguagesVdf(commonKv)
+			aic.SupportedLanguages = supportedLanguagesVdf(commonKv)
 		case "steam_release_date":
-			appInfoCommon.SteamReleaseDate, err = strconv.ParseInt(strVal, 10, 64)
+			aic.SteamReleaseDate, err = strconv.ParseInt(strVal, 10, 64)
 		case "metacritic_score":
-			appInfoCommon.MetacriticScore, err = strconv.Atoi(strVal)
+			aic.MetacriticScore, err = strconv.Atoi(strVal)
 		case "metacritic_fullurl":
-			appInfoCommon.MetacriticFullUrl = strVal
+			aic.MetacriticFullUrl = strVal
 		case "community_visible_stats":
-			appInfoCommon.CommunityVisibleStats, err = strconv.Atoi(strVal)
+			aic.CommunityVisibleStats, err = strconv.Atoi(strVal)
 		case "community_hub_visible":
-			appInfoCommon.CommunityHubVisible, err = strconv.Atoi(strVal)
+			aic.CommunityHubVisible, err = strconv.Atoi(strVal)
 		case "gameid":
-			appInfoCommon.GameId, err = strconv.ParseInt(strVal, 10, 32)
+			aic.GameId, err = strconv.ParseInt(strVal, 10, 32)
 		case "store_tags":
-			appInfoCommon.StoreTags = sliceFromValues(commonKv)
+			aic.StoreTags = sliceFromValues(commonKv)
 		case "review_score":
-			appInfoCommon.ReviewScore, err = strconv.Atoi(strVal)
+			aic.ReviewScore, err = strconv.Atoi(strVal)
 		case "review_percentage":
-			appInfoCommon.ReviewPercentage, err = strconv.Atoi(strVal)
+			aic.ReviewPercentage, err = strconv.Atoi(strVal)
 		default:
 			panic(errors.New("unknown appinfo common key: " + commonKv.Key))
 		}
@@ -134,7 +138,7 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 			panic(err)
 		}
 	}
-	return appInfoCommon
+	return aic
 }
 
 func mapFromValues(kv *steam_vdf.KeyValues) map[string]string {
@@ -204,8 +208,12 @@ func libraryAssetsVdf(kv *steam_vdf.KeyValues) *LibraryAssets {
 			la.LibraryCapsule = strVal
 		case "library_hero":
 			la.LibraryHero = strVal
+		case "library_hero_blur":
+			la.LibraryHeroBlur = strVal
 		case "library_logo":
 			la.LibraryLogo = strVal
+		case "library_header":
+			la.LibraryHeader = strVal
 		case "logo_position":
 			la.LogoPosition = logoPositionVdf(libraryKv)
 		default:
@@ -226,6 +234,10 @@ func libraryAssetsFullVdf(kv *steam_vdf.KeyValues) *LibraryAssetsFull {
 			laf.LibraryCapsule = image2xAssetsVdf(lafKv)
 		case "library_hero":
 			laf.LibraryHero = image2xAssetsVdf(lafKv)
+		case "library_hero_blur":
+			laf.LibraryHeroBlur = image2xAssetsVdf(lafKv)
+		case "library_header":
+			laf.LibraryHeader = image2xAssetsVdf(lafKv)
 		case "library_logo":
 			laf.LibraryLogo = libraryLogoAssetsFullVdf(lafKv)
 		default:
@@ -448,7 +460,100 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 }
 
 func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
-	return nil
+
+	aic := new(AppInfoConfig)
+
+	for _, ckv := range configKeyValues.Values {
+
+		var strVal string
+		if ckv.Value != nil {
+			strVal = *ckv.Value
+		}
+
+		var err error
+
+		switch ckv.Key {
+		case "installdir":
+			aic.InstallDir = strVal
+		case "launch":
+			aic.Launch = launchVdf(ckv)
+		case "steamcontrollertouchtemplateindex":
+			aic.SteamControllerTouchTemplateIndex, err = strconv.Atoi(strVal)
+		case "steamcontrollertouchconfigdetails":
+			// TODO
+		case "steamcontrollertemplateindex":
+			aic.SteamControllerTemplateIndex, err = strconv.Atoi(strVal)
+		default:
+			panic("unknown config key: " + ckv.Key)
+		}
+
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return aic
+}
+
+func launchVdf(kv *steam_vdf.KeyValues) []LaunchOption {
+
+	los := make([]LaunchOption, 0)
+
+	for _, launchKv := range kv.Values {
+
+		lo := LaunchOption{
+			DescriptionLoc: make(map[string]string),
+		}
+
+		for _, lkv := range launchKv.Values {
+
+			var strVal string
+			if lkv.Value != nil {
+				strVal = *lkv.Value
+			}
+
+			switch lkv.Key {
+			case "executable":
+				lo.Executable = strVal
+			case "arguments":
+				lo.Arguments = strVal
+			case "workingdir":
+				lo.WorkingDir = strVal
+			case "type":
+				lo.Type = strVal
+			case "config":
+				lo.Config = LaunchOptionConfig{}
+				for _, ckv := range lkv.Values {
+					switch ckv.Key {
+					case "oslist":
+						if ckv.Value != nil {
+							lo.Config.OsList = *ckv.Value
+						}
+					case "osarch":
+						if ckv.Value != nil {
+							lo.Config.OsArch = *ckv.Value
+						}
+					default:
+						panic("unknown launch config key: " + ckv.Key)
+					}
+				}
+			case "description_loc":
+				for _, dlkv := range lkv.Values {
+					if dlkv.Value != nil {
+						lo.DescriptionLoc[dlkv.Key] = *dlkv.Value
+					}
+				}
+			case "description":
+				lo.Description = strVal
+			default:
+				panic("unknown launch key: " + lkv.Key)
+			}
+		}
+
+		los = append(los, lo)
+	}
+
+	return los
 }
 
 func appInfoDepotsVdf(depotsKeyValues *steam_vdf.KeyValues) *AppInfoDepots {

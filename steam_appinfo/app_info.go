@@ -1,4 +1,4 @@
-package steam_integration
+package steam_appinfo
 
 type AppInfo struct {
 	AppId    string
@@ -11,6 +11,7 @@ type AppInfo struct {
 
 type AppInfoCommon struct {
 	Name                   string
+	NameLocalized          map[string]string
 	Type                   string
 	ReleaseState           string
 	Logo                   string
@@ -23,6 +24,7 @@ type AppInfoCommon struct {
 	OsExtended             string
 	Languages              []string
 	SteamDeckCompatibility *SteamDeckCompatibility
+	ControllerTagWizard    string
 	MetacriticName         string
 	ControllerSupport      string
 	SmallCapsule           map[string]string
@@ -57,10 +59,12 @@ type SteamDeckCompatibility struct {
 }
 
 type LibraryAssets struct {
-	LibraryCapsule string
-	LibraryHero    string
-	LibraryLogo    string
-	LogoPosition   *LogoPosition
+	LibraryCapsule  string
+	LibraryHero     string
+	LibraryHeroBlur string
+	LibraryLogo     string
+	LibraryHeader   string
+	LogoPosition    *LogoPosition
 }
 
 type LogoPosition struct {
@@ -70,9 +74,11 @@ type LogoPosition struct {
 }
 
 type LibraryAssetsFull struct {
-	LibraryCapsule *Image2xAssets
-	LibraryHero    *Image2xAssets
-	LibraryLogo    *LibraryLogoAssetsFull
+	LibraryCapsule  *Image2xAssets
+	LibraryHero     *Image2xAssets
+	LibraryHeroBlur *Image2xAssets
+	LibraryHeader   *Image2xAssets
+	LibraryLogo     *LibraryLogoAssetsFull
 }
 
 type Image2xAssets struct {
