@@ -50,7 +50,7 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 
 	var err error
 
-	for _, commonKv := range commonKeyValues.Values {
+	for ii, commonKv := range commonKeyValues.Values {
 
 		var strVal string
 		if commonKv.Value != nil {
@@ -84,8 +84,14 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 			aic.OsExtended = strVal
 		case "languages":
 			aic.Languages = sliceFromKeys(commonKv)
+		case "content_descriptors":
+			aic.ContentDescriptors = sliceFromValues(commonKv)
+		case "content_descriptors_including_dlc":
+			aic.ContentDescriptorsIncludingDlc = sliceFromValues(commonKv)
 		case "steam_deck_compatibility":
 			aic.SteamDeckCompatibility = steamDeckCompatibilityVdf(commonKv)
+		case "steam_deck_blog_url":
+			aic.SteamDeckBlogUrl = strVal
 		case "controllertagwizard":
 			aic.ControllerTagWizard = strVal
 		case "metacritic_name":
@@ -131,7 +137,7 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 		case "review_percentage":
 			aic.ReviewPercentage, err = strconv.Atoi(strVal)
 		default:
-			panic(errors.New("unknown appinfo common key: " + commonKv.Key))
+			panic(errors.New("unknown appinfo common key: " + commonKv.Key + " at " + strconv.Itoa(ii)))
 		}
 
 		if err != nil {
@@ -437,7 +443,7 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 
 	aie := new(AppInfoExtended)
 
-	for _, ekv := range extendedKeyValues.Values {
+	for ii, ekv := range extendedKeyValues.Values {
 
 		var strVal string
 		if ekv.Value != nil {
@@ -445,14 +451,20 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 		}
 
 		switch ekv.Key {
+		case "deckresolutionoverride":
+			aie.DeckResolutionOverride = strVal
 		case "developer":
 			aie.Developer = strVal
 		case "publisher":
 			aie.Publisher = strVal
 		case "homepage":
 			aie.Homepage = strVal
+		case "listofdlc":
+			aie.ListOfDlc = strVal
+		case "DLCAvailableOnStore":
+			aie.DlcAvailableOnStore = strVal
 		default:
-			panic("unknown extended key: " + ekv.Key)
+			panic("unknown extended key: " + ekv.Key + " at " + strconv.Itoa(ii))
 		}
 	}
 
@@ -463,7 +475,7 @@ func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
 
 	aic := new(AppInfoConfig)
 
-	for _, ckv := range configKeyValues.Values {
+	for ii, ckv := range configKeyValues.Values {
 
 		var strVal string
 		if ckv.Value != nil {
@@ -483,8 +495,12 @@ func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
 			// TODO
 		case "steamcontrollertemplateindex":
 			aic.SteamControllerTemplateIndex, err = strconv.Atoi(strVal)
+		case "steamdecktouchscreen":
+			aic.SteamDeckTouchScreen = strVal
+		case "steamconfigurator3rdpartynative":
+			aic.SteamConfigurator3rdPartyNative = strVal
 		default:
-			panic("unknown config key: " + ckv.Key)
+			panic("unknown config key: " + ckv.Key + " at " + strconv.Itoa(ii))
 		}
 
 		if err != nil {

@@ -10,42 +10,45 @@ type AppInfo struct {
 }
 
 type AppInfoCommon struct {
-	Name                   string
-	NameLocalized          map[string]string
-	Type                   string
-	ReleaseState           string
-	Logo                   string
-	LogoSmall              string
-	ClientIcon             string
-	ClientTga              string
-	Icon                   string
-	OsList                 string
-	OsArch                 string
-	OsExtended             string
-	Languages              []string
-	SteamDeckCompatibility *SteamDeckCompatibility
-	ControllerTagWizard    string
-	MetacriticName         string
-	ControllerSupport      string
-	SmallCapsule           map[string]string
-	HeaderImage            map[string]string
-	LibraryAssets          *LibraryAssets
-	LibraryAssetsFull      *LibraryAssetsFull
-	StoreAssetMtime        int64
-	Associations           map[string]string
-	PrimaryGenre           string
-	Genres                 []string
-	Category               []string
-	SupportedLanguages     map[string]*LanguageSupport
-	SteamReleaseDate       int64
-	MetacriticScore        int
-	MetacriticFullUrl      string
-	CommunityVisibleStats  int
-	CommunityHubVisible    int
-	GameId                 int64
-	StoreTags              []string
-	ReviewScore            int
-	ReviewPercentage       int
+	Name                           string
+	NameLocalized                  map[string]string
+	Type                           string
+	ReleaseState                   string
+	Logo                           string
+	LogoSmall                      string
+	ClientIcon                     string
+	ClientTga                      string
+	Icon                           string
+	OsList                         string
+	OsArch                         string
+	OsExtended                     string
+	Languages                      []string
+	ContentDescriptors             []string
+	ContentDescriptorsIncludingDlc []string
+	SteamDeckCompatibility         *SteamDeckCompatibility
+	SteamDeckBlogUrl               string
+	ControllerTagWizard            string
+	MetacriticName                 string
+	ControllerSupport              string
+	SmallCapsule                   map[string]string
+	HeaderImage                    map[string]string
+	LibraryAssets                  *LibraryAssets
+	LibraryAssetsFull              *LibraryAssetsFull
+	StoreAssetMtime                int64
+	Associations                   map[string]string
+	PrimaryGenre                   string
+	Genres                         []string
+	Category                       []string
+	SupportedLanguages             map[string]*LanguageSupport
+	SteamReleaseDate               int64
+	MetacriticScore                int
+	MetacriticFullUrl              string
+	CommunityVisibleStats          int
+	CommunityHubVisible            int
+	GameId                         int64
+	StoreTags                      []string
+	ReviewScore                    int
+	ReviewPercentage               int
 }
 
 type SteamDeckCompatibility struct {
@@ -103,9 +106,12 @@ type SteamTestResult struct {
 }
 
 type AppInfoExtended struct {
-	Developer string
-	Publisher string
-	Homepage  string
+	DeckResolutionOverride string
+	Developer              string
+	Publisher              string
+	Homepage               string
+	ListOfDlc              string
+	DlcAvailableOnStore    string
 }
 
 type AppInfoConfig struct {
@@ -114,6 +120,8 @@ type AppInfoConfig struct {
 	SteamControllerTouchTemplateIndex int
 	SteamControllerTouchConfigDetails map[string]SteamControllerTouchConfigDetails
 	SteamControllerTemplateIndex      int
+	SteamDeckTouchScreen              string
+	SteamConfigurator3rdPartyNative   string
 }
 
 type LaunchOption struct {
