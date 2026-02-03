@@ -8,32 +8,19 @@ import (
 )
 
 const (
-	imageTypeParam       = "image-type"
-	operatingSystemParam = OperatingSystemsProperty
-	downloadTypeParam    = "download-type"
-	productTypeParam     = ProductTypeProperty
-	idParam              = IdProperty
-	slugParam            = SlugProperty
-	propertyParam        = "property"
-	sinceHoursAgoParam   = "since-hours-ago"
+	downloadTypeParam  = "download-type"
+	propertyParam      = "property"
+	sinceHoursAgoParam = "since-hours-ago"
 )
 
 const (
 	defaultLanguageCode = "en"
 )
 
-func ValueFromUrl(u *url.URL, arg string) string {
-	if u == nil {
-		return ""
-	}
-
-	q := u.Query()
-	return q.Get(arg)
-}
-
 func ValuesFromUrl(u *url.URL, arg string) []string {
-	if FlagFromUrl(u, arg) {
-		val := ValueFromUrl(u, arg)
+	q := u.Query()
+	if q.Has(arg) {
+		val := q.Get(arg)
 		values := strings.Split(val, ",")
 		//account for empty strings
 		if len(values) == 1 && values[0] == "" {
@@ -44,42 +31,27 @@ func ValuesFromUrl(u *url.URL, arg string) []string {
 	return nil
 }
 
-func FlagFromUrl(u *url.URL, arg string) bool {
-	if u == nil {
-		return false
-	}
-
-	q := u.Query()
-	return q.Has(arg)
-}
-
 func PropertyFromUrl(u *url.URL) string {
-	return ValueFromUrl(u, propertyParam)
+	return u.Query().Get(propertyParam)
 }
 
 func PropertiesFromUrl(u *url.URL) []string {
 	return ValuesFromUrl(u, propertyParam)
 }
 
-func ImageTypesFromUrl(u *url.URL) []ImageType {
-	imageTypes := ValuesFromUrl(u, imageTypeParam)
-	its := make([]ImageType, 0, len(imageTypes))
-	for _, imageType := range imageTypes {
-		its = append(its, ParseImageType(imageType))
-	}
-	return its
-}
-
 func ProductTypeFromUrl(u *url.URL) ProductType {
-	return ParseProductType(ValueFromUrl(u, productTypeParam))
+	return ParseProductType(u.Query().Get(ProductTypeProperty))
 }
 
 func ProductTypesFromUrl(u *url.URL) []ProductType {
+
+	q := u.Query()
+
 	productTypes := make([]ProductType, 0)
-	if !u.Query().Has(productTypeParam) {
+	if !q.Has(ProductTypeProperty) {
 		return productTypes
 	}
-	ptParam := u.Query().Get(productTypeParam)
+	ptParam := q.Get(ProductTypeProperty)
 	pts := strings.Split(ptParam, ",")
 	for _, pt := range pts {
 		productTypes = append(productTypes, ParseProductType(pt))
@@ -88,7 +60,7 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 }
 
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
-	osStrings := ValuesFromUrl(u, operatingSystemParam)
+	osStrings := ValuesFromUrl(u, OperatingSystemsProperty)
 	return ParseManyOperatingSystems(osStrings)
 }
 
@@ -107,9 +79,9 @@ func DownloadTypesFromUrl(u *url.URL) []DownloadType {
 
 func IdsFromUrl(u *url.URL) ([]string, error) {
 
-	ids := ValuesFromUrl(u, idParam)
+	ids := ValuesFromUrl(u, IdProperty)
 
-	if slugs := ValuesFromUrl(u, slugParam); len(slugs) > 0 {
+	if slugs := ValuesFromUrl(u, SlugProperty); len(slugs) > 0 {
 		slugIds, err := idsFromSlugs(slugs, nil)
 		if err != nil {
 			return nil, err
@@ -121,7 +93,7 @@ func IdsFromUrl(u *url.URL) ([]string, error) {
 }
 
 func SinceFromUrl(u *url.URL) (int64, error) {
-	str := ValueFromUrl(u, sinceHoursAgoParam)
+	str := u.Query().Get(sinceHoursAgoParam)
 	var sha int
 	var err error
 	if str != "" {

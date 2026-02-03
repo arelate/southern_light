@@ -1,5 +1,10 @@
 package vangogh_integration
 
+import (
+	"maps"
+	"slices"
+)
+
 type ImageType int
 
 const (
@@ -42,6 +47,14 @@ func ParseImageType(imageType string) ImageType {
 		}
 	}
 	return UnknownImageType
+}
+
+func ParseManyImageTypes(imageTypes ...string) []ImageType {
+	its := make(map[ImageType]any)
+	for _, it := range imageTypes {
+		its[ParseImageType(it)] = nil
+	}
+	return slices.Collect(maps.Keys(its))
 }
 
 func IsValidImageType(it ImageType) bool {
