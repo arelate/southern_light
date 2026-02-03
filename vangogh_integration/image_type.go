@@ -73,6 +73,10 @@ func AllImageTypes() []ImageType {
 	return imageTypes
 }
 
+func AllDehydratedImageTypes() []ImageType {
+	return []ImageType{Image, VerticalImage}
+}
+
 // starting with empty collection and no image types require auth at the moment
 var imageTypeRequiresAuth []ImageType
 
