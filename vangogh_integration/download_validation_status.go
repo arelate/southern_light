@@ -26,6 +26,12 @@ func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationSt
 		dvs.validationResult = ParseValidationStatus(vrs)
 	}
 
+	if pgs, ok := rdx.GetLastVal(ManualUrlGeneratedChecksumProperty, manualUrl); ok && pgs != "" {
+		if dvs.validationResult == ValidationStatusSuccess {
+			dvs.validationResult = ValidationStatusSelfValidated
+		}
+	}
+
 	return dvs
 }
 
@@ -45,6 +51,12 @@ func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 
 	if pvrs, ok := rdx.GetLastVal(ProductValidationResultProperty, id); ok {
 		dvs.validationResult = ParseValidationStatus(pvrs)
+	}
+
+	if pgs, ok := rdx.GetLastVal(ProductGeneratedChecksumProperty, id); ok && pgs != "" {
+		if dvs.validationResult == ValidationStatusSuccess {
+			dvs.validationResult = ValidationStatusSelfValidated
+		}
 	}
 
 	var downloadQueued, downloadStarted, downloadCompleted string

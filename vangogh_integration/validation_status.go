@@ -9,6 +9,7 @@ type ValidationStatus int
 
 const (
 	ValidationStatusSuccess ValidationStatus = iota
+	ValidationStatusSelfValidated
 	ValidationStatusUnknown
 	ValidationStatusQueued
 	ValidationStatusValidating
@@ -21,6 +22,7 @@ const (
 
 var validationStatusStrings = map[ValidationStatus]string{
 	ValidationStatusSuccess:             "valid",
+	ValidationStatusSelfValidated:       "self-valid",
 	ValidationStatusUnknown:             "unknown",
 	ValidationStatusQueued:              "validation-queued",
 	ValidationStatusValidating:          "validating",
@@ -33,6 +35,7 @@ var validationStatusStrings = map[ValidationStatus]string{
 
 var validationStatusHumanReadableStrings = map[ValidationStatus]string{
 	ValidationStatusSuccess:             "Validated",
+	ValidationStatusSelfValidated:       "Self-Validated",
 	ValidationStatusUnknown:             "Unknown",
 	ValidationStatusQueued:              "Validation Queued",
 	ValidationStatusValidating:          "Validating",
