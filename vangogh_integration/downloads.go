@@ -173,7 +173,7 @@ func (list DownloadsList) Only(
 	operatingSystems []OperatingSystem,
 	langCodes []string,
 	downloadTypes []DownloadType,
-	excludePatches bool) DownloadsList {
+	noPatches bool) DownloadsList {
 	osSet := make(map[OperatingSystem]bool)
 	for _, os := range operatingSystems {
 		if os == AnyOperatingSystem {
@@ -216,7 +216,7 @@ func (list DownloadsList) Only(
 			continue
 		}
 
-		if excludePatches {
+		if noPatches {
 			if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
 				continue
 			}
@@ -249,7 +249,7 @@ func MapDownloads(
 	operatingSystems []OperatingSystem,
 	langCodes []string,
 	downloadTypes []DownloadType,
-	excludePatches bool,
+	noPatches bool,
 	dlProcessor DownloadsListProcessor,
 	tpw nod.TotalProgressWriter) error {
 
@@ -314,7 +314,7 @@ func MapDownloads(
 
 		filteredDownloads := make([]Download, 0)
 
-		for _, dl := range downloads.Only(operatingSystems, langCodes, downloadTypes, excludePatches) {
+		for _, dl := range downloads.Only(operatingSystems, langCodes, downloadTypes, noPatches) {
 			//some manualUrls have "0 MB" specified as size and don't seem to be used to create user clickable links.
 			//resolving such manualUrls leads to an empty filename
 			//given they don't contribute anything to download, size or validate commands - we're filtering them
