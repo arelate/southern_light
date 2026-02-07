@@ -4,6 +4,7 @@ type AppInfo struct {
 	AppId    string
 	Common   *AppInfoCommon
 	Extended *AppInfoExtended
+	Install  *AppInfoInstall
 	Config   *AppInfoConfig
 	Depots   *AppInfoDepots
 	Ufs      *AppInfoUfs
@@ -132,6 +133,9 @@ type AppInfoExtended struct {
 	Homepage                  string
 	ListOfDlc                 string
 	DlcAvailableOnStore       string
+}
+
+type AppInfoInstall struct {
 }
 
 type AppInfoConfig struct {

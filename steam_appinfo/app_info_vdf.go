@@ -30,6 +30,8 @@ func AppInfoVdf(keyValues []*steam_vdf.KeyValues) (*AppInfo, error) {
 				appInfo.Common = appInfoCommonVdf(rootValues)
 			case "extended":
 				appInfo.Extended = appInfoExtendedVdf(rootValues)
+			case "install":
+				appInfo.Install = appInfoInstallVdf(rootValues)
 			case "config":
 				appInfo.Config = appInfoConfigVdf(rootValues)
 			case "depots":
@@ -510,6 +512,14 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 	}
 
 	return aie
+}
+
+func appInfoInstallVdf(installKeyValues *steam_vdf.KeyValues) *AppInfoInstall {
+	aii := new(AppInfoInstall)
+
+	// TODO parsing using 9200 as an example
+
+	return aii
 }
 
 func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
