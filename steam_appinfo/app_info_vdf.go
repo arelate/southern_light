@@ -114,6 +114,8 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 			aic.StoreAssetMtime, err = strconv.ParseInt(strVal, 10, 64)
 		case "associations":
 			aic.Associations = commonAssociationsVdf(commonKv)
+		case "workshop_visible":
+			aic.WorkshopVisible = strVal
 		case "primary_genre":
 			aic.PrimaryGenre = strVal
 		case "genres":
@@ -457,6 +459,34 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 		switch ekv.Key {
 		case "deckresolutionoverride":
 			aie.DeckResolutionOverride = strVal
+		case "gamedir":
+			aie.GameDir = strVal
+		case "icon":
+			aie.Icon = strVal
+		case "installscriptosx":
+			aie.InstallScriptOsx = strVal
+		case "installscript_macos":
+			aie.InstallScriptMacOs = strVal
+		case "languages":
+			aie.Languages = strVal
+		case "languages_mac":
+			aie.LanguagesMac = strVal
+		case "languages_macos":
+			aie.LanguagesMacOs = strVal
+		case "noservers":
+			aie.NoServers = strVal
+		case "primarycache":
+			aie.PrimaryCache = strVal
+		case "sourcegame":
+			aie.SourceGame = strVal
+		case "state":
+			aie.State = strVal
+		case "thirdpartycdkey":
+			aie.ThirdPartyCdKey = strVal
+		case "validoslist":
+			aie.ValidOsList = strVal
+		case "visibleonlywhensubscribed":
+			aie.VisibleOnlyWhenSubscribed = strVal
 		case "developer":
 			aie.Developer = strVal
 		case "publisher":
@@ -489,10 +519,14 @@ func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
 		var err error
 
 		switch ckv.Key {
+		case "usemms":
+			aic.UseMms = strVal
 		case "installdir":
 			aic.InstallDir = strVal
 		case "launch":
 			aic.Launch = launchVdf(ckv)
+		case "contenttype":
+			aic.ContentType = strVal
 		case "steamcontrollertouchtemplateindex":
 			aic.SteamControllerTouchTemplateIndex, err = strconv.Atoi(strVal)
 		case "steamcontrollertouchconfigdetails":
@@ -503,6 +537,12 @@ func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
 			aic.SteamDeckTouchScreen = strVal
 		case "steamconfigurator3rdpartynative":
 			aic.SteamConfigurator3rdPartyNative = strVal
+		case "steaminputmanifestpath":
+			aic.SteamInputManifestPath = strVal
+		case "cegpublickey":
+			aic.CegPublicKey = strVal
+		case "checkguids":
+			aic.CheckGuids = strVal
 		default:
 			panic("unknown config key: " + ckv.Key + " at " + strconv.Itoa(ii))
 		}

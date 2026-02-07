@@ -38,6 +38,7 @@ type AppInfoCommon struct {
 	LibraryAssetsFull              *LibraryAssetsFull
 	StoreAssetMtime                int64
 	Associations                   map[string]string
+	WorkshopVisible                string
 	PrimaryGenre                   string
 	Genres                         []string
 	Category                       []string
@@ -108,22 +109,41 @@ type SteamTestResult struct {
 }
 
 type AppInfoExtended struct {
-	DeckResolutionOverride string
-	Developer              string
-	Publisher              string
-	Homepage               string
-	ListOfDlc              string
-	DlcAvailableOnStore    string
+	DeckResolutionOverride    string
+	Developer                 string
+	GameDir                   string
+	Icon                      string
+	InstallScriptOsx          string
+	InstallScriptMacOs        string
+	Languages                 string
+	LanguagesMac              string
+	LanguagesMacOs            string
+	NoServers                 string
+	PrimaryCache              string
+	SourceGame                string
+	State                     string
+	ThirdPartyCdKey           string
+	ValidOsList               string
+	VisibleOnlyWhenSubscribed string
+	Publisher                 string
+	Homepage                  string
+	ListOfDlc                 string
+	DlcAvailableOnStore       string
 }
 
 type AppInfoConfig struct {
+	UseMms                            string
 	InstallDir                        string
 	Launch                            []LaunchOption
+	ContentType                       string
 	SteamControllerTouchTemplateIndex int
 	SteamControllerTouchConfigDetails map[string]SteamControllerTouchConfigDetails
 	SteamControllerTemplateIndex      int
 	SteamDeckTouchScreen              string
 	SteamConfigurator3rdPartyNative   string
+	SteamInputManifestPath            string
+	CegPublicKey                      string
+	CheckGuids                        string
 }
 
 type LaunchOption struct {
