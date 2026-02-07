@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/arelate/southern_light/steam_vdf"
+	"github.com/boggydigital/nod"
 )
 
 func AppInfoVdf(keyValues []*steam_vdf.KeyValues) (*AppInfo, error) {
@@ -126,8 +127,12 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 			aic.SupportedLanguages = supportedLanguagesVdf(commonKv)
 		case "steam_release_date":
 			aic.SteamReleaseDate, err = strconv.ParseInt(strVal, 10, 64)
+		case "mastersubs_granting_app":
+			aic.MasterSubsGrantingApp = strVal
 		case "metacritic_score":
 			aic.MetacriticScore, err = strconv.Atoi(strVal)
+		case "metacritic_url":
+			aic.MetacriticUrl = strVal
 		case "metacritic_fullurl":
 			aic.MetacriticFullUrl = strVal
 		case "community_visible_stats":
@@ -143,7 +148,7 @@ func appInfoCommonVdf(commonKeyValues *steam_vdf.KeyValues) *AppInfoCommon {
 		case "review_percentage":
 			aic.ReviewPercentage, err = strconv.Atoi(strVal)
 		default:
-			panic(errors.New("unknown appinfo common key: " + commonKv.Key + " at " + strconv.Itoa(ii)))
+			nod.Log("unknown appinfo common key: " + commonKv.Key + " at " + strconv.Itoa(ii))
 		}
 
 		if err != nil {
@@ -195,7 +200,7 @@ func commonAssociationsVdf(kv *steam_vdf.KeyValues) map[string]string {
 			case "name":
 				an = *atn.Value
 			default:
-				panic("unknown associations key: " + atn.Key)
+				nod.Log("unknown associations key: " + atn.Key)
 			}
 		}
 
@@ -229,7 +234,7 @@ func libraryAssetsVdf(kv *steam_vdf.KeyValues) *LibraryAssets {
 		case "logo_position":
 			la.LogoPosition = logoPositionVdf(libraryKv)
 		default:
-			panic("unknown library_assets key: " + libraryKv.Key)
+			nod.Log("unknown library_assets key: " + libraryKv.Key)
 		}
 	}
 
@@ -253,7 +258,7 @@ func libraryAssetsFullVdf(kv *steam_vdf.KeyValues) *LibraryAssetsFull {
 		case "library_logo":
 			laf.LibraryLogo = libraryLogoAssetsFullVdf(lafKv)
 		default:
-			panic("unknown library_assets_full key: " + lafKv.Key)
+			nod.Log("unknown library_assets_full key: " + lafKv.Key)
 		}
 	}
 
@@ -284,7 +289,7 @@ func image2xAssetsVdf(kv *steam_vdf.KeyValues) *Image2xAssets {
 			i2xa.Image2x = imageVdf(ia)
 		case "logo_position": // ignore
 		default:
-			panic("unknown image2x_assets key: " + ia.Key)
+			nod.Log("unknown image2x_assets key: " + ia.Key)
 		}
 	}
 
@@ -304,7 +309,7 @@ func libraryLogoAssetsFullVdf(kv *steam_vdf.KeyValues) *LibraryLogoAssetsFull {
 		case "logo_position":
 			llaf.LogoPosition = logoPositionVdf(llafKv)
 		default:
-			panic("unknown library_logo_assets_full key: " + llafKv.Key)
+			nod.Log("unknown library_logo_assets_full key: " + llafKv.Key)
 		}
 	}
 
@@ -331,7 +336,7 @@ func logoPositionVdf(kv *steam_vdf.KeyValues) *LogoPosition {
 		case "height_pct":
 			lp.HeighPct, err = strconv.ParseFloat(strVal, 64)
 		default:
-			panic("unknown logo_position key: " + lpKv.Key)
+			nod.Log("unknown logo_position key: " + lpKv.Key)
 		}
 
 		if err != nil {
@@ -359,7 +364,7 @@ func supportedLanguagesVdf(kv *steam_vdf.KeyValues) map[string]*LanguageSupport 
 			case "subtitles":
 				ls.Subtitles = true
 			default:
-				panic("unknown supported_languages key: " + lsKv.Key)
+				nod.Log("unknown supported_languages key: " + lsKv.Key)
 			}
 		}
 
@@ -397,7 +402,7 @@ func steamDeckCompatibilityVdf(kv *steam_vdf.KeyValues) *SteamDeckCompatibility 
 		case "configuration":
 			sdc.Configuration = mapFromValues(sdcKv)
 		default:
-			panic("unknown steam_deck_compatibility key: " + sdcKv.Key)
+			nod.Log("unknown steam_deck_compatibility key: " + sdcKv.Key)
 		}
 
 		if err != nil {
@@ -430,7 +435,7 @@ func testResultsVdf(kv *steam_vdf.KeyValues) []SteamTestResult {
 			case "token":
 				tr.Token = strVal
 			default:
-				panic("unknown test result key: " + testResultsKv.Key)
+				nod.Log("unknown test result key: " + testResultsKv.Key)
 			}
 
 			if err != nil {
@@ -467,6 +472,8 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 			aie.InstallScriptOsx = strVal
 		case "installscript_macos":
 			aie.InstallScriptMacOs = strVal
+		case "order":
+			aie.Order = strVal
 		case "languages":
 			aie.Languages = strVal
 		case "languages_mac":
@@ -498,7 +505,7 @@ func appInfoExtendedVdf(extendedKeyValues *steam_vdf.KeyValues) *AppInfoExtended
 		case "DLCAvailableOnStore":
 			aie.DlcAvailableOnStore = strVal
 		default:
-			panic("unknown extended key: " + ekv.Key + " at " + strconv.Itoa(ii))
+			nod.Log("unknown extended key: " + ekv.Key + " at " + strconv.Itoa(ii))
 		}
 	}
 
@@ -544,7 +551,7 @@ func appInfoConfigVdf(configKeyValues *steam_vdf.KeyValues) *AppInfoConfig {
 		case "checkguids":
 			aic.CheckGuids = strVal
 		default:
-			panic("unknown config key: " + ckv.Key + " at " + strconv.Itoa(ii))
+			nod.Log("unknown config key: " + ckv.Key + " at " + strconv.Itoa(ii))
 		}
 
 		if err != nil {
@@ -594,7 +601,7 @@ func launchVdf(kv *steam_vdf.KeyValues) []LaunchOption {
 							lo.Config.OsArch = *ckv.Value
 						}
 					default:
-						panic("unknown launch config key: " + ckv.Key)
+						nod.Log("unknown launch config key: " + ckv.Key)
 					}
 				}
 			case "description_loc":
@@ -606,7 +613,7 @@ func launchVdf(kv *steam_vdf.KeyValues) []LaunchOption {
 			case "description":
 				lo.Description = strVal
 			default:
-				panic("unknown launch key: " + lkv.Key)
+				nod.Log("unknown launch key: " + lkv.Key)
 			}
 		}
 

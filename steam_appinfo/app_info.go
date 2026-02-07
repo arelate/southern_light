@@ -44,7 +44,9 @@ type AppInfoCommon struct {
 	Category                       []string
 	SupportedLanguages             map[string]*LanguageSupport
 	SteamReleaseDate               int64
+	MasterSubsGrantingApp          string
 	MetacriticScore                int
+	MetacriticUrl                  string
 	MetacriticFullUrl              string
 	CommunityVisibleStats          int
 	CommunityHubVisible            int
@@ -115,6 +117,7 @@ type AppInfoExtended struct {
 	Icon                      string
 	InstallScriptOsx          string
 	InstallScriptMacOs        string
+	Order                     string
 	Languages                 string
 	LanguagesMac              string
 	LanguagesMacOs            string
