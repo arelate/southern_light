@@ -48,7 +48,7 @@ var SteamProtonDirectories = map[string]string{
 	SteamProton630:                  "Proton 6.3",
 	SteamProton700:                  "Proton 7.0",
 	SteamProton800:                  "Proton 8.0",
-	SteamProton900:                  "Proton 9.0",
+	SteamProton900:                  "Proton 9.0 (Beta)",
 	SteamProton1000:                 "Proton 10.0",
 	SteamProtonNext:                 "Proton Next",
 	SteamProtonHotfix:               "Proton Hotfix",
