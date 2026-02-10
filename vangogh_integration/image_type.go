@@ -9,14 +9,14 @@ type ImageType int
 
 const (
 	UnknownImageType ImageType = iota
-	Image
-	Screenshots
-	VerticalImage
-	Hero
-	Logo
-	Icon
-	IconSquare
-	Background
+	Image                      // 1600x740
+	Screenshots                // ...
+	VerticalImage              // 342x482
+	Hero                       // 2560x683
+	Logo                       // 1600x740
+	Icon                       // 128x128
+	IconSquare                 // 128x128
+	Background                 // 2560x655
 )
 
 var imageTypeStrings = map[ImageType]string{
