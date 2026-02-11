@@ -20,7 +20,7 @@ func ImageFilename(shortcutId uint32, imageType Asset) string {
 	case LibraryLogo:
 		filename += "_logo"
 		ext = ".png"
-	case Icon:
+	case ClientIcon:
 		filename += "_icon"
 		ext = ".png"
 	default:
