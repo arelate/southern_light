@@ -1,7 +1,7 @@
 package vndb_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"github.com/arelate/southern_light"
 	"net/url"
 	"strings"
@@ -27,7 +27,7 @@ func VNData(id string, fields ...string) (string, error) {
 		Fields:  strings.Join(fields, ","),
 	}
 	sb := &strings.Builder{}
-	if err := json.NewEncoder(sb).Encode(data); err != nil {
+	if err := json.MarshalWrite(sb, data); err != nil {
 		return sb.String(), err
 	}
 	return sb.String(), nil

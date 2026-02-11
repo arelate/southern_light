@@ -1,7 +1,7 @@
 package vangogh_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"errors"
 	"fmt"
 	"log"
@@ -353,7 +353,7 @@ func UnmarshalDetails(id string, kvDetails kevlar.KeyValues) (*gog_integration.D
 
 	var det gog_integration.Details
 
-	if err = json.NewDecoder(rcDetails).Decode(&det); err != nil {
+	if err = json.UnmarshalRead(rcDetails, &det); err != nil {
 		if strings.Contains(err.Error(), "cannot unmarshal array into Go value of type gog_integration.Details") {
 			return nil, nil
 		}

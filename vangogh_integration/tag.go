@@ -1,7 +1,7 @@
 package vangogh_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -23,7 +23,7 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 		return fmt.Errorf("unexpected status: %s", resp.Status)
 	}
 
-	return json.NewDecoder(resp.Body).Decode(&respVal)
+	return json.UnmarshalRead(resp.Body, &respVal)
 }
 
 func TagIdByName(tagName string) (string, error) {

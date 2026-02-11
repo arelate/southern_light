@@ -6,7 +6,7 @@ package gog_integration
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/json/v2"
 	"fmt"
 	"time"
 )
@@ -75,10 +75,10 @@ func (det *Details) GetTagNames(tagIds []string) map[string]string {
 
 func encodeDecode(rawVal interface{}, output interface{}) error {
 	b := bytes.NewBuffer(nil)
-	if err := json.NewEncoder(b).Encode(rawVal); err != nil {
+	if err := json.MarshalWrite(b, rawVal); err != nil {
 		return err
 	}
-	if err := json.NewDecoder(b).Decode(output); err != nil {
+	if err := json.UnmarshalRead(b, output); err != nil {
 		return err
 	}
 	return nil

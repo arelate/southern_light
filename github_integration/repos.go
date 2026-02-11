@@ -1,7 +1,7 @@
 package github_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"github.com/boggydigital/kevlar"
 	"path"
 	"strings"
@@ -14,13 +14,10 @@ func GetLatestRelease(repo string, kvGitHubReleases kevlar.KeyValues) (*GitHubRe
 		return nil, err
 	}
 
-	var releases []GitHubRelease
-	if err = json.NewDecoder(rcReleases).Decode(&releases); err != nil {
-		rcReleases.Close()
-		return nil, err
-	}
+	defer rcReleases.Close()
 
-	if err = rcReleases.Close(); err != nil {
+	var releases []GitHubRelease
+	if err = json.UnmarshalRead(rcReleases, &releases); err != nil {
 		return nil, err
 	}
 

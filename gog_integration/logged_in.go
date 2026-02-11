@@ -5,7 +5,7 @@
 package gog_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"errors"
 	"net/http"
 )
@@ -21,7 +21,7 @@ func IsLoggedIn(client *http.Client) error {
 	defer resp.Body.Close()
 
 	var ud UserData
-	if err = json.NewDecoder(resp.Body).Decode(&ud); err != nil {
+	if err = json.UnmarshalRead(resp.Body, &ud); err != nil {
 		return err
 	}
 

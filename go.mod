@@ -1,6 +1,6 @@
 module github.com/arelate/southern_light
 
-go 1.25.5
+go 1.26.0
 
 require (
 	github.com/boggydigital/dolo v0.2.24
@@ -9,5 +9,5 @@ require (
 	github.com/boggydigital/nod v0.1.30
 	github.com/boggydigital/pathways v0.2.1
 	github.com/boggydigital/redux v0.1.11
-	golang.org/x/net v0.48.0
+	golang.org/x/net v0.50.0
 )

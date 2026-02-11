@@ -1,7 +1,7 @@
 package gog_integration
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"errors"
 	"os"
 	"strings"
@@ -76,7 +76,7 @@ func GetGogGameInfo(path string) (*GogGameInfo, error) {
 	defer gogGameInfoFile.Close()
 
 	var gogGameInfo GogGameInfo
-	if err = json.NewDecoder(gogGameInfoFile).Decode(&gogGameInfo); err != nil {
+	if err = json.UnmarshalRead(gogGameInfoFile, &gogGameInfo); err != nil {
 		return nil, err
 	}
 

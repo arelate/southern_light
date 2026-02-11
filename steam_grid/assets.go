@@ -1,16 +1,16 @@
-package steam_assets
+package steam_grid
 
 type Asset int
 
 const (
 	UnknownAsset Asset = iota
 
-	ClientIcon   // 256x256
-	ClientTga    // 16x16
-	Icon         // 32x32
-	Logo         // 184x69
-	LogoSmall    // 120x45
-	SmallCapsule // 231x87
+	ClientIcon   // 256x256, ar: 1
+	ClientTga    // 16x16, ar: 1
+	Icon         // 32x32, ar: 1
+	Logo         // 184x69, ar: 2.66
+	LogoSmall    // 120x45, ar: 2.66
+	SmallCapsule // 231x87, ar: 2.66
 	Header       // 460x215
 	Header2x     // 920x430
 
