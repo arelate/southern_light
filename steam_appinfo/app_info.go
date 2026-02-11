@@ -57,6 +57,15 @@ type AppInfoCommon struct {
 	ReviewPercentage               int
 }
 
+func (aic *AppInfoCommon) DefaultHeaderImage() string {
+	for lang, image := range aic.HeaderImage {
+		if lang == "english" {
+			return image
+		}
+	}
+	return ""
+}
+
 type SteamDeckCompatibility struct {
 	Category             int
 	SteamOsCompatibility int

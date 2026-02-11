@@ -96,5 +96,5 @@ var ShortcutAssets = []Asset{
 	LibraryCapsule,
 	LibraryHero,
 	LibraryLogo,
-	Icon,
+	ClientIcon,
 }
