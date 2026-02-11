@@ -31,3 +31,70 @@ const (
 	CommunityIcon     // 32x32
 	RawPageBackground // 1438x810
 )
+
+var assetStrings = map[Asset]string{
+	UnknownAsset:      "unknown",
+	ClientIcon:        "clienticon",
+	ClientTga:         "clienttga",
+	Icon:              "icon",
+	Logo:              "logo",
+	LogoSmall:         "logosmall",
+	SmallCapsule:      "smallcapsule",
+	Header:            "header",
+	Header2x:          "header2x",
+	LibraryCapsule:    "librarycapsule",
+	LibraryCapsule2x:  "librarycapsule2x",
+	LibraryHero:       "libraryhero",
+	LibraryHero2x:     "libraryhero2x",
+	LibraryLogo:       "librarylogo",
+	LibraryLogo2x:     "librarylogo2x",
+	MainCapsule:       "maincapsule",
+	PageBackground:    "pagebackground",
+	HeroCapsule:       "herocapsule",
+	CommunityIcon:     "communityicon",
+	RawPageBackground: "rawpagebackground",
+}
+
+var assetExt = map[Asset]string{
+	ClientIcon:        ".ico",
+	ClientTga:         ".tga",
+	Icon:              ".jpg",
+	Logo:              ".jpg",
+	LogoSmall:         ".jpg",
+	SmallCapsule:      ".jpg",
+	Header:            ".jpg",
+	Header2x:          ".jpg",
+	LibraryCapsule:    ".jpg",
+	LibraryCapsule2x:  ".jpg",
+	LibraryHero:       ".jpg",
+	LibraryHero2x:     ".jpg",
+	LibraryLogo:       ".png",
+	LibraryLogo2x:     ".png",
+	MainCapsule:       ".jpg",
+	PageBackground:    ".jpg",
+	HeroCapsule:       ".jpg",
+	CommunityIcon:     ".jpg",
+	RawPageBackground: ".jpg",
+}
+
+func (a Asset) String() string {
+	if as, ok := assetStrings[a]; ok {
+		return as
+	}
+	return assetStrings[UnknownAsset]
+}
+
+func (a Asset) Ext() string {
+	if ae, ok := assetExt[a]; ok {
+		return ae
+	}
+	return ""
+}
+
+var ShortcutAssets = []Asset{
+	Header,
+	LibraryCapsule,
+	LibraryHero,
+	LibraryLogo,
+	Icon,
+}

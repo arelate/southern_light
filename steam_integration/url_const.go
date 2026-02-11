@@ -13,7 +13,6 @@ const (
 	StoreHost          = "store." + SteamPoweredHost
 	ApiHost            = "api." + SteamPoweredHost
 	SteamCommunityHost = "steamcommunity.com"
-	SteamStaticHost    = "shared.akamai.steamstatic.com"
 )
 
 // paths
@@ -30,8 +29,6 @@ const (
 	deckAppCompatibilityReportPath = "/saleaction/ajaxgetdeckappcompatibilityreport"
 	appDetailsPath                 = "/api/appdetails"
 	guidesPath                     = "/guides"
-
-	assetPathTemplate = "/store_item_assets/steam/apps/{appId}/{asset}"
 )
 
 type SteamUrlFunc func(appId string) *url.URL

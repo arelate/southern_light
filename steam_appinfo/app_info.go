@@ -95,6 +95,15 @@ type Image2xAssets struct {
 	Image2x map[string]string
 }
 
+func (i2xa *Image2xAssets) DefaultImage() string {
+	for lang, image := range i2xa.Image {
+		if lang == "english" {
+			return image
+		}
+	}
+	return ""
+}
+
 type LibraryLogoAssetsFull struct {
 	*LogoPosition
 	*Image2xAssets
