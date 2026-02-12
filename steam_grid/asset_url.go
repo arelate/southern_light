@@ -7,7 +7,14 @@ import (
 
 func AssetUrl(steamAppId, imageId string, asset Asset) *url.URL {
 
-	path := strings.Replace(assetPathTemplate, "{steamAppId}", steamAppId, 1)
+	var pathTemplate string
+	if apt, ok := assetPathTemplates[asset]; ok {
+		pathTemplate = apt
+	} else {
+		panic("no path template set for asset " + asset.String())
+	}
+
+	path := strings.Replace(pathTemplate, "{steamAppId}", steamAppId, 1)
 	path = strings.Replace(path, "{imageId}", imageId, 1)
 
 	ext := asset.Ext()

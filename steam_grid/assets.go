@@ -105,3 +105,24 @@ var DefaultAssetsFilenames = map[Asset]string{
 	LibraryHero:    "library_hero.jpg",
 	LibraryLogo:    "logo.png",
 }
+
+var assetPathTemplates = map[Asset]string{
+	ClientIcon: communityAssetsImagePathTemplate,
+	ClientTga:  communityAssetsImagePathTemplate,
+	Icon:       communityAssetsImagePathTemplate,
+	Logo:       communityAssetsImagePathTemplate,
+	LogoSmall:  communityAssetsImagePathTemplate,
+
+	SmallCapsule:      storeItemAssetsPathTemplate,
+	Header:            storeItemAssetsPathTemplate,
+	Header2x:          storeItemAssetsPathTemplate,
+	LibraryCapsule:    storeItemAssetsPathTemplate,
+	LibraryCapsule2x:  storeItemAssetsPathTemplate,
+	LibraryHero:       storeItemAssetsPathTemplate,
+	LibraryHero2x:     storeItemAssetsPathTemplate,
+	LibraryLogo:       storeItemAssetsPathTemplate,
+	LibraryLogo2x:     storeItemAssetsPathTemplate,
+	MainCapsule:       storeItemAssetsPathTemplate,
+	PageBackground:    storeItemAssetsPathTemplate,
+	RawPageBackground: storeItemAssetsPathTemplate,
+}
