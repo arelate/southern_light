@@ -98,3 +98,10 @@ var ShortcutAssets = []Asset{
 	LibraryLogo,
 	ClientIcon,
 }
+
+var DefaultAssetsFilenames = map[Asset]string{
+	Header:         "header.jpg",
+	LibraryCapsule: "library_600x900.jpg",
+	LibraryHero:    "library_hero.jpg",
+	LibraryLogo:    "logo.png",
+}
