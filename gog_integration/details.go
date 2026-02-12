@@ -175,3 +175,5 @@ func (det *Details) GetOperatingSystems() ([]string, error) {
 
 	return operatingSystems, nil
 }
+
+func (det *Details) GetBackground() string { return det.BackgroundImage }

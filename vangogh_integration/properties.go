@@ -276,6 +276,7 @@ func GOGAccountPageProperties() []string {
 	return []string{
 		TagIdProperty,
 		TagNameProperty,
+		ImageProperty,
 		SlugProperty,
 		AccountPageProductsProperty,
 	}
@@ -332,6 +333,7 @@ func GOGDetailsProperties() []string {
 		ForumUrlProperty,
 		ChangelogProperty,
 		OperatingSystemsProperty,
+		BackgroundProperty,
 	}
 }
 
