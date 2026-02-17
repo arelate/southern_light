@@ -354,7 +354,7 @@ func UnmarshalDetails(id string, kvDetails kevlar.KeyValues) (*gog_integration.D
 	var det gog_integration.Details
 
 	if err = json.UnmarshalRead(rcDetails, &det); err != nil {
-		if strings.Contains(err.Error(), "cannot unmarshal JSON array into Go gog_integration.Details") {
+		if strings.Contains(err.Error(), "unmarshal JSON array into Go gog_integration.Details") {
 			return nil, nil
 		}
 		return nil, err
