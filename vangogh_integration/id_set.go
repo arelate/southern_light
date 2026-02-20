@@ -75,9 +75,7 @@ func PropertyListsFromIdSet(
 		if err != nil {
 			return itps, err
 		}
-		for idTitle, props := range itp {
-			itps[idTitle] = props
-		}
+		maps.Copy(itps, itp)
 	}
 
 	return itps, nil

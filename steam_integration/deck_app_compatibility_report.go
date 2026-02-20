@@ -15,7 +15,7 @@ type DeckAppCompatibilityResults struct {
 	ResolvedCategory        int            `json:"resolved_category"`
 	ResolvedItems           []ResolvedItem `json:"resolved_items"`
 	SteamDeckBlogUrl        string         `json:"steam_deck_blog_url"`
-	SearchId                interface{}    `json:"search_id"`
+	SearchId                any            `json:"search_id"`
 	SteamOsResolvedCategory int            `json:"steamos_resolved_category"`
 	SteamOsResolvedItems    []ResolvedItem `json:"steamos_resolved_items"`
 }

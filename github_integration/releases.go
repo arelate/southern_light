@@ -29,7 +29,7 @@ type GitHubAsset struct {
 	Id                 int          `json:"id"`
 	NodeId             string       `json:"node_id"`
 	Name               string       `json:"name"`
-	Label              interface{}  `json:"label"`
+	Label              any          `json:"label"`
 	Uploader           GitHubPerson `json:"uploader"`
 	ContentType        string       `json:"content_type"`
 	State              string       `json:"state"`
@@ -73,6 +73,6 @@ type GitHubRelease struct {
 	TarballUrl      string          `json:"tarball_url"`
 	ZipballUrl      string          `json:"zipball_url"`
 	Body            string          `json:"body"`
-	Reactions       GitHubReactions `json:"reactions,omitempty"`
+	Reactions       GitHubReactions `json:"reactions"`
 	MentionsCount   int             `json:"mentions_count,omitempty"`
 }

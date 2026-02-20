@@ -46,7 +46,7 @@ type GamesDbProduct struct {
 	ExternalId                string       `json:"external_id"`
 	DLCsIds                   []string     `json:"dlcs_ids"`
 	DLCs                      []PlatformId `json:"dlcs"`
-	ParentId                  interface{}  `json:"parent_id"`
+	ParentId                  any          `json:"parent_id"`
 	SupportedOperatingSystems []struct {
 		Name string `json:"name"`
 		Slug string `json:"slug"`
@@ -56,8 +56,8 @@ type GamesDbProduct struct {
 	} `json:"available_languages"`
 	FirstReleaseDate string `json:"first_release_date"`
 	Game             struct {
-		Id       string      `json:"id"`
-		ParentId interface{} `json:"parent_id"`
+		Id       string `json:"id"`
+		ParentId any    `json:"parent_id"`
 		// GOG.com source data has inconsistent types:
 		// 1199956349 is "dlcs_ids": [],
 		// 1207666353 is "dlcs_ids": {

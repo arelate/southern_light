@@ -33,7 +33,7 @@ type Order struct {
 	//GiftRecipient interface{} `json:"giftRecipient"`
 	//GiftSender interface{} `json:"giftSender"`
 	Products      []OrderProduct `json:"products"`
-	GiftCode      interface{}    `json:"giftCode"`
+	GiftCode      any            `json:"giftCode"`
 	IsResendable  bool           `json:"isResendable"`
 	StatusPageUrl string         `json:"statusPageUrl"`
 }

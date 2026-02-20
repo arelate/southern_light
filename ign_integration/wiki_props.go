@@ -55,7 +55,7 @@ type Breadcrumb struct {
 			} `json:"platformAttributes"`
 		} `json:"releases"`
 	} `json:"objectRegions"`
-	Franchises []interface{} `json:"franchises"`
+	Franchises []any `json:"franchises"`
 }
 
 type HTMLEntity struct {
@@ -126,10 +126,10 @@ type WikiProps struct {
 				Typename            string        `json:"__typename"`
 				Id                  string        `json:"id"`
 				Name                string        `json:"name"`
-				Tags                interface{}   `json:"tags"`
+				Tags                any           `json:"tags"`
 				Locked              bool          `json:"locked"`
 				Contributors        int           `json:"contributors"`
-				Maps                []interface{} `json:"maps"`
+				Maps                []any         `json:"maps"`
 				TopContributors     []Contributor `json:"topContributors"`
 				Breadcrumbs         []Breadcrumb  `json:"breadcrumbs"`
 				IsCommunity         string        `json:"isCommunity"`
@@ -155,21 +155,21 @@ type WikiProps struct {
 					} `json:"content"`
 				} `json:"additionalDataLayer"`
 				Page struct {
-					Typename       string        `json:"__typename"`
-					Id             string        `json:"id"`
-					Title          string        `json:"title"`
-					UpdatedAt      time.Time     `json:"updatedAt"`
-					PublishDate    time.Time     `json:"publishDate"`
-					Locked         bool          `json:"locked"`
-					RevisionId     int           `json:"revisionId"`
-					Thin           bool          `json:"thin"`
-					HasVideo       bool          `json:"hasVideo"`
-					ImageForTitle  string        `json:"imageForTitle"`
-					MapMarker      interface{}   `json:"mapMarker"`
-					HtmlEntities   []HTMLEntity  `json:"htmlEntities"`
-					NextPage       SiblingPage   `json:"nextPage"`
-					PrevPage       SiblingPage   `json:"prevPage"`
-					ChecklistTasks []interface{} `json:"checklistTasks"`
+					Typename       string       `json:"__typename"`
+					Id             string       `json:"id"`
+					Title          string       `json:"title"`
+					UpdatedAt      time.Time    `json:"updatedAt"`
+					PublishDate    time.Time    `json:"publishDate"`
+					Locked         bool         `json:"locked"`
+					RevisionId     int          `json:"revisionId"`
+					Thin           bool         `json:"thin"`
+					HasVideo       bool         `json:"hasVideo"`
+					ImageForTitle  string       `json:"imageForTitle"`
+					MapMarker      any          `json:"mapMarker"`
+					HtmlEntities   []HTMLEntity `json:"htmlEntities"`
+					NextPage       SiblingPage  `json:"nextPage"`
+					PrevPage       SiblingPage  `json:"prevPage"`
+					ChecklistTasks []any        `json:"checklistTasks"`
 				} `json:"page"`
 				PrimaryObject struct {
 					Typename string `json:"__typename"`
@@ -207,7 +207,7 @@ type WikiProps struct {
 							} `json:"platformAttributes"`
 						} `json:"releases"`
 					} `json:"objectRegions"`
-					Franchises []interface{} `json:"franchises"`
+					Franchises []any `json:"franchises"`
 				} `json:"primaryObject"`
 				HasAds                bool   `json:"hasAds"`
 				Image                 string `json:"image"`

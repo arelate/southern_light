@@ -12,7 +12,7 @@ import (
 	"github.com/boggydigital/redux"
 )
 
-func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) error {
+func postTagResp(httpClient *http.Client, url *url.URL, respVal any) error {
 	resp, err := httpClient.Post(url.String(), "", nil)
 	if err != nil {
 		return err

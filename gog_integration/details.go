@@ -34,8 +34,8 @@ type Details struct {
 	CdKey           string `json:"cdKey"`
 	TextInformation string `json:"textInformation"`
 	//GetDownloads comment explains why this is [][]interface{}
-	Downloads              []interface{}    `json:"downloads"`
-	GalaxyDownloads        []interface{}    `json:"galaxyDownloads"`
+	Downloads              []any            `json:"downloads"`
+	GalaxyDownloads        []any            `json:"galaxyDownloads"`
 	Extras                 []ManualDownload `json:"extras"`
 	DLCs                   []Details        `json:"dlcs"`
 	Tags                   []accountTag     `json:"tags"`
@@ -45,7 +45,7 @@ type Details struct {
 	Changelog              string           `json:"changelog"`
 	ForumLink              string           `json:"forumLink"`
 	IsBaseProductMissing   bool             `json:"isBaseProductMissing"`
-	MissingBaseProduct     interface{}      `json:"missingBaseProduct"`
+	MissingBaseProduct     any              `json:"missingBaseProduct"`
 	Features               []string         `json:"features"`
 	SimpleGalaxyInstallers []struct {
 		Path string `json:"path"`
@@ -73,7 +73,7 @@ func (det *Details) GetTagNames(tagIds []string) map[string]string {
 	return getTagNames(tagIds, det)
 }
 
-func encodeDecode(rawVal interface{}, output interface{}) error {
+func encodeDecode(rawVal any, output any) error {
 	b := bytes.NewBuffer(nil)
 	if err := json.MarshalWrite(b, rawVal); err != nil {
 		return err
@@ -100,7 +100,7 @@ func (det *Details) GetGameDownloads() ([]LangOSManualDownloads, error) {
 		//GOG.com has the following formats in details:
 		//- games:
 		//	[["Native_Language_Name",{"windows":[ManualDownload,...],"mac":[ManualDownload,...],"linux":[ManualDownload,...]}],...]
-		gameDls, ok := dl.([]interface{})
+		gameDls, ok := dl.([]any)
 		if !ok {
 			return langOsManDls, fmt.Errorf("gog_types: cannot unmarshal game details download as []interface{}")
 		}

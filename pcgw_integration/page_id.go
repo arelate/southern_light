@@ -24,8 +24,8 @@ func (ps *PageId) GetPageId() string {
 
 func (ps *PageId) GetSteamAppId() string {
 	for _, cq := range ps.Cargoquery {
-		saids := strings.Split(cq.Title.SteamAppID, ",")
-		for _, said := range saids {
+		saids := strings.SplitSeq(cq.Title.SteamAppID, ",")
+		for said := range saids {
 			return strings.TrimSpace(said)
 		}
 	}

@@ -36,8 +36,8 @@ type ParseExternalLinks struct {
 }
 
 func extractSteamAppId(link, pfx string) uint32 {
-	if strings.HasPrefix(link, pfx) {
-		if parts := strings.Split(strings.TrimPrefix(link, pfx), "/"); len(parts) > 0 {
+	if after, ok := strings.CutPrefix(link, pfx); ok {
+		if parts := strings.Split(after, "/"); len(parts) > 0 {
 			if sai, err := strconv.ParseInt(parts[0], 10, 32); err == nil {
 				return uint32(sai)
 			}
@@ -65,8 +65,8 @@ func (pel *ParseExternalLinks) GetSteamAppIds() []uint32 {
 
 func (pel *ParseExternalLinks) externalLinkSuffixId(pfx string) string {
 	for _, link := range pel.Parse.ExternalLinks {
-		if strings.HasPrefix(link, pfx) {
-			return strings.TrimPrefix(link, pfx)
+		if after, ok := strings.CutPrefix(link, pfx); ok {
+			return after
 		}
 	}
 	return ""

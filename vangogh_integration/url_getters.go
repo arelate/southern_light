@@ -52,8 +52,8 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 		return productTypes
 	}
 	ptParam := q.Get(ProductTypeProperty)
-	pts := strings.Split(ptParam, ",")
-	for _, pt := range pts {
+	pts := strings.SplitSeq(ptParam, ",")
+	for pt := range pts {
 		productTypes = append(productTypes, ParseProductType(pt))
 	}
 	return productTypes
