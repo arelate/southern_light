@@ -57,8 +57,8 @@ func (kv *KeyValues) WriteBinary(w io.Writer) error {
 	return nil
 }
 
-func WriteBinary(writer io.Writer, keyValues []*KeyValues) error {
-	for _, kv := range keyValues {
+func WriteBinary(writer io.Writer, vdf ValveDataFile) error {
+	for _, kv := range vdf {
 		if err := kv.WriteBinary(writer); err != nil {
 			return err
 		}
@@ -68,7 +68,7 @@ func WriteBinary(writer io.Writer, keyValues []*KeyValues) error {
 	return binary.Write(writer, binary.LittleEndian, BinaryTypeNullMarker)
 }
 
-func CreateBinary(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
+func CreateBinary(dstPath string, vdf ValveDataFile, wo ...VdfWriteOptions) error {
 
 	if slices.Contains(wo, VdfBackupExisting) {
 		if _, err := os.Stat(dstPath); err == nil {
@@ -84,5 +84,5 @@ func CreateBinary(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions)
 	}
 	defer vdfFile.Close()
 
-	return WriteBinary(vdfFile, keyValues)
+	return WriteBinary(vdfFile, vdf)
 }

@@ -8,6 +8,8 @@ type KeyValues struct {
 	Values     []*KeyValues
 }
 
+type ValveDataFile []*KeyValues
+
 func GetKevValuesByKey(keyValues []*KeyValues, key string) *KeyValues {
 
 	queue := make(map[*KeyValues]bool)
@@ -41,4 +43,12 @@ func GetKevValuesByKey(keyValues []*KeyValues, key string) *KeyValues {
 	}
 
 	return nil
+}
+
+func (vdf ValveDataFile) GetKv(pathParts ...string) (*KeyValues, error) {
+	return nil, nil
+}
+
+func (vdf ValveDataFile) GetVdf(pathParts ...string) (ValveDataFile, error) {
+	return nil, nil
 }

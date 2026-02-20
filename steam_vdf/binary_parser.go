@@ -10,15 +10,15 @@ type binaryParseStateFn func(parser *binaryParser) binaryParseStateFn
 type binaryParser struct {
 	lex   *binaryLexer
 	last  *KeyValues
-	stack []*KeyValues
-	kv    []*KeyValues
+	stack ValveDataFile
+	kv    ValveDataFile
 	err   error
 }
 
 func newBinaryParser(lex *binaryLexer) *binaryParser {
 	p := &binaryParser{
 		lex: lex,
-		kv:  make([]*KeyValues, 0),
+		kv:  make(ValveDataFile, 0),
 	}
 	return p
 }
@@ -104,7 +104,7 @@ func parseNextValue(bp *binaryParser) binaryParseStateFn {
 	}
 }
 
-func ReadBinary(reader io.Reader) ([]*KeyValues, error) {
+func ReadBinary(reader io.Reader) (ValveDataFile, error) {
 
 	p := newBinaryParser(newBinaryLexer(reader))
 	if err := p.run(); err != nil {

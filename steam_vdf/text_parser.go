@@ -11,15 +11,15 @@ type textParseStateFn func(parser *textParser) textParseStateFn
 type textParser struct {
 	lex   *textLexer
 	last  *KeyValues
-	stack []*KeyValues
-	kv    []*KeyValues
+	stack ValveDataFile
+	kv    ValveDataFile
 	err   error
 }
 
 func newTextParser(lex *textLexer) *textParser {
 	p := &textParser{
 		lex: lex,
-		kv:  make([]*KeyValues, 0),
+		kv:  make(ValveDataFile, 0),
 	}
 	return p
 }
@@ -89,7 +89,7 @@ func parseTextValue(tp *textParser) textParseStateFn {
 	}
 }
 
-func ReadText(reader io.Reader) ([]*KeyValues, error) {
+func ReadText(reader io.Reader) (ValveDataFile, error) {
 
 	sb := &strings.Builder{}
 

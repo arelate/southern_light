@@ -100,9 +100,9 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) 
 	return nil
 }
 
-func WriteText(writer io.Writer, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
+func WriteText(writer io.Writer, vdf ValveDataFile, wo ...VdfWriteOptions) error {
 
-	for _, kv := range keyValues {
+	for _, kv := range vdf {
 		if err := kv.WriteString(writer, 0, wo...); err != nil {
 			return err
 		}
@@ -111,7 +111,7 @@ func WriteText(writer io.Writer, keyValues []*KeyValues, wo ...VdfWriteOptions) 
 	return nil
 }
 
-func CreateText(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions) error {
+func CreateText(dstPath string, vdf ValveDataFile, wo ...VdfWriteOptions) error {
 
 	if slices.Contains(wo, VdfBackupExisting) {
 		if _, err := os.Stat(dstPath); err == nil {
@@ -127,7 +127,7 @@ func CreateText(dstPath string, keyValues []*KeyValues, wo ...VdfWriteOptions) e
 	}
 	defer vdfFile.Close()
 
-	return WriteText(vdfFile, keyValues)
+	return WriteText(vdfFile, vdf)
 }
 
 func backup(path string) error {
