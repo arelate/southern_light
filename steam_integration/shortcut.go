@@ -2,11 +2,11 @@ package steam_integration
 
 import (
 	"errors"
-	"github.com/arelate/southern_light/steam_vdf"
 	"hash/crc32"
-	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/arelate/southern_light/steam_vdf"
 )
 
 type Shortcut struct {
@@ -213,7 +213,7 @@ func NewShortcut() *Shortcut {
 	}
 }
 
-func GetShortcutByAppId(kvShortcuts *steam_vdf.KeyValues, appId uint32) *steam_vdf.KeyValues {
+func GetShortcutByAppId(appId uint32, kvShortcuts *steam_vdf.KeyValues) *steam_vdf.KeyValues {
 	for _, shortcut := range kvShortcuts.Values {
 		for _, kv := range shortcut.Values {
 			if kv.Key == "appid" && kv.Type == steam_vdf.BinaryTypeInt {
@@ -226,7 +226,7 @@ func GetShortcutByAppId(kvShortcuts *steam_vdf.KeyValues, appId uint32) *steam_v
 	return nil
 }
 
-func AppendShortcut(kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error {
+func AppendShortcut(shortcut *Shortcut, kvShortcuts *steam_vdf.KeyValues) error {
 
 	index := "0"
 	if len(kvShortcuts.Values) > 0 {
@@ -243,7 +243,7 @@ func AppendShortcut(kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error 
 	return nil
 }
 
-func UpdateShortcut(index string, kvShortcuts *steam_vdf.KeyValues, shortcut *Shortcut) error {
+func UpdateShortcut(index string, shortcut *Shortcut, kvShortcuts *steam_vdf.KeyValues) error {
 
 	for ii, kv := range kvShortcuts.Values {
 		if kv.Key == index {
@@ -265,24 +265,19 @@ func ShortcutAppId(appName string) uint32 {
 	return uint32(result)
 }
 
-func RemoveShortcuts(kvShortcuts *steam_vdf.KeyValues, appIds ...uint32) error {
+func RemoveShortcuts(appIds uint32, kvShortcuts *steam_vdf.KeyValues) error {
 
 	if len(kvShortcuts.Values) == 0 {
 		return nil
 	}
 
-	expCap := len(kvShortcuts.Values)
-	if len(kvShortcuts.Values) > len(appIds) {
-		expCap = len(kvShortcuts.Values) - len(appIds)
-	}
-
-	filteredKeyValues := make([]*steam_vdf.KeyValues, 0, expCap)
+	filteredKeyValues := make([]*steam_vdf.KeyValues, 0, len(kvShortcuts.Values))
 	for _, shortcut := range kvShortcuts.Values {
 		remove := false
 		for _, kv := range shortcut.Values {
 			if kv.Key == "appid" && kv.Type == steam_vdf.BinaryTypeInt {
 				shortcutAppId := kv.TypedValue.(uint32)
-				if slices.Contains(appIds, shortcutAppId) {
+				if appIds == shortcutAppId {
 					remove = true
 					break
 				}
