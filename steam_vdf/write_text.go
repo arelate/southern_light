@@ -17,9 +17,21 @@ const (
 	VdfBackupExisting VdfWriteOptions = iota
 	VdfTabsIndent
 	VdfSpacesIndent
+	VdfNewLines
 )
 
-const defaultVdfIndent = "\t"
+const (
+	vdfIndentSpace   = " "
+	vdfIndentTab     = "\t"
+	defaultVdfIndent = vdfIndentSpace
+)
+
+func HumanReadable() []VdfWriteOptions {
+	return []VdfWriteOptions{
+		VdfTabsIndent,
+		VdfNewLines,
+	}
+}
 
 const Ext = ".vdf"
 
@@ -31,10 +43,10 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) 
 
 	var indent string
 	if slices.Contains(wo, VdfTabsIndent) {
-		indent = "\t"
+		indent = vdfIndentTab
 	}
 	if slices.Contains(wo, VdfSpacesIndent) {
-		indent = " "
+		indent = vdfIndentSpace
 	}
 
 	if indent == "" {
@@ -60,8 +72,10 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) 
 	}
 
 	// \n
-	if _, err := io.WriteString(w, "\n"); err != nil {
-		return err
+	if slices.Contains(wo, VdfNewLines) {
+		if _, err := io.WriteString(w, "\n"); err != nil {
+			return err
+		}
 	}
 
 	// (depth times \t){\n
@@ -72,14 +86,16 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) 
 		if _, err := io.WriteString(w, string(leftCurlyBracket)); err != nil {
 			return err
 		}
-		if _, err := io.WriteString(w, "\n"); err != nil {
-			return err
+		if slices.Contains(wo, VdfNewLines) {
+			if _, err := io.WriteString(w, "\n"); err != nil {
+				return err
+			}
 		}
 	}
 
 	// write Values at depth + 1
 	for _, val := range kv.Values {
-		if err := val.WriteString(w, depth+1); err != nil {
+		if err := val.WriteString(w, depth+1, wo...); err != nil {
 			return err
 		}
 	}
@@ -92,8 +108,10 @@ func (kv *KeyValues) WriteString(w io.Writer, depth int, wo ...VdfWriteOptions) 
 		if _, err := io.WriteString(w, string(rightCurlyBracket)); err != nil {
 			return err
 		}
-		if _, err := io.WriteString(w, "\n"); err != nil {
-			return err
+		if slices.Contains(wo, VdfNewLines) {
+			if _, err := io.WriteString(w, "\n"); err != nil {
+				return err
+			}
 		}
 	}
 
