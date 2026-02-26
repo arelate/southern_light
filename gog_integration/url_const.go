@@ -77,6 +77,6 @@ const (
 	imagesPathTemplate = "/{image_id}"
 )
 
-func DefaultUrl() *url.URL {
-	return &url.URL{Scheme: southern_light.HttpsScheme, Host: GogHost}
+func HostUrl() *url.URL {
+	return new(url.URL{Scheme: southern_light.HttpsScheme, Host: GogHost})
 }
