@@ -12,10 +12,12 @@ const (
 )
 
 const (
-	apiRedirectPath          = "/id/api/redirect"
-	accountApiOauthTokenPath = "/account/api/oauth/token"
-	entitlementsPathTemplate = "/entitlement/api/account/{accountId}/entitlements"
-	catalogItemPathTemplate  = "/catalog/api/shared/namespace/{namespace}/bulk/items"
+	apiRedirectPath                         = "/id/api/redirect"
+	accountApiOauthTokenPath                = "/account/api/oauth/token"
+	accountApiOauthVerifyPath               = "/account/api/oauth/verify"
+	accountApiOauthSessionsKillPathTemplate = "/account/api/oauth/sessions/kill/{token}"
+	entitlementsPathTemplate                = "/entitlement/api/account/{accountId}/entitlements"
+	catalogItemPathTemplate                 = "/catalog/api/shared/namespace/{namespace}/bulk/items"
 )
 
 func HostUrl() *url.URL {

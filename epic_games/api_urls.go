@@ -23,11 +23,27 @@ func ApiRedirectUrl() *url.URL {
 	return u
 }
 
-func AccountApiOauthToken() *url.URL {
+func AccountApiOauthTokenUrl() *url.URL {
 	return new(url.URL{
 		Scheme: httpsScheme,
 		Host:   accountHost,
 		Path:   accountApiOauthTokenPath,
+	})
+}
+
+func AccountApiOauthVerifyUrl() *url.URL {
+	return new(url.URL{
+		Scheme: httpsScheme,
+		Host:   accountHost,
+		Path:   accountApiOauthVerifyPath,
+	})
+}
+
+func AccountApiOauthKillUrl(token string) *url.URL {
+	return new(url.URL{
+		Scheme: httpsScheme,
+		Host:   accountHost,
+		Path:   strings.Replace(accountApiOauthSessionsKillPathTemplate, "{token}", token, 1),
 	})
 }
 

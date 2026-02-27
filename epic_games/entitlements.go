@@ -38,11 +38,7 @@ func GetEntitlements(accountId string, accessToken string, client *http.Client) 
 		return nil, err
 	}
 
-	req.Header.Set("Authorization", "Bearer "+accessToken)
-	req.Header.Set("User-Agent", UserAgent)
-	req.Header.Set("Accept", "application/json")
-
-	resp, err := client.Do(req)
+	resp, err := doResponse(req, accessToken, client)
 	if err != nil {
 		return nil, err
 	}
