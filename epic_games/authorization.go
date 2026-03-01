@@ -17,7 +17,8 @@ const (
 )
 
 const (
-	UserAgent = "EpicGamesLauncher/12.2.9-16657426 UnrealEngine/4.23.0-14907503+++Portal+Release-Live"
+	//UserAgent = "EpicGamesLauncher/14.0.8-22004686+++Portal+Release-Live"
+	UserAgent = "UELauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit"
 )
 
 type GetApiRedirectResponse struct {
@@ -145,16 +146,20 @@ func doResponse(req *http.Request, token string, client *http.Client) (*http.Res
 	return resp, nil
 }
 
-func GetVerifyToken(token string, client *http.Client) (*GetVerifyTokenResponse, error) {
-
-	aovUrl := AccountApiOauthVerifyUrl()
-
-	req, err := http.NewRequest(http.MethodGet, aovUrl.String(), http.NoBody)
+func getResponse(u *url.URL, token string, client *http.Client) (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, u.String(), http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := doResponse(req, token, client)
+	return doResponse(req, token, client)
+}
+
+func GetVerifyToken(token string, client *http.Client) (*GetVerifyTokenResponse, error) {
+
+	aovUrl := AccountApiOauthVerifyUrl()
+
+	resp, err := getResponse(aovUrl, token, client)
 	if err != nil {
 		return nil, err
 	}
