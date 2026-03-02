@@ -29,16 +29,11 @@ type Entitlement struct {
 	ReadFromCache    bool      `json:"readFromCache"`
 }
 
-func GetUserEntitlements(accountId string, accessToken string, start, count int, client *http.Client) ([]Entitlement, error) {
+func GetUserEntitlements(accountId string, token string, start, count int, client *http.Client) ([]Entitlement, error) {
 
 	entUrl := EntitlementsUrl(accountId, start, count)
 
-	req, err := http.NewRequest(http.MethodGet, entUrl.String(), http.NoBody)
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := doResponse(req, accessToken, client)
+	resp, err := getResponse(entUrl, token, client)
 	if err != nil {
 		return nil, err
 	}
