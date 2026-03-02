@@ -1,6 +1,8 @@
 package epic_games
 
 import (
+	"bytes"
+	"compress/zlib"
 	"encoding/binary"
 	"errors"
 	"io"
@@ -14,7 +16,8 @@ const (
 )
 
 type Manifest struct {
-	Header *Header
+	Header   *Header
+	Metadata *Metadata
 }
 
 type Header struct {
@@ -23,7 +26,24 @@ type Header struct {
 	SizeCompressed   uint32
 	ShaHash          []byte
 	Storage          uint8
-	Version          uint32
+	FeatureLevel     uint32
+}
+
+type Metadata struct {
+	MetadataSize    uint32
+	MetadataVersion uint8
+	FeatureLevel    uint32
+	IsFileData      bool
+	AppId           uint32
+	AppName         string
+	BuildVersion    string
+	LaunchExe       string
+	LaunchCommand   string
+	PrereqIds       []string
+	PrereqName      string
+	PrereqPath      string
+	PrereqArgs      string
+	BuildId         string
 }
 
 func (h *Header) IsCompressed() bool {
@@ -34,28 +54,24 @@ func (h *Header) IsEncrypted() bool {
 	return h.Storage&StorageEncrypted != 0
 }
 
-func readUint8(r io.Reader) (uint8, error) {
-	var v uint8
-	err := binary.Read(r, binary.LittleEndian, &v)
-	return v, err
+func readUint8(r io.Reader) (val uint8, err error) {
+	err = binary.Read(r, binary.LittleEndian, &val)
+	return val, err
 }
 
-func readUint32(r io.Reader) (uint32, error) {
-	var v uint32
-	err := binary.Read(r, binary.LittleEndian, &v)
-	return v, err
+func readUint32(r io.Reader) (val uint32, err error) {
+	err = binary.Read(r, binary.LittleEndian, &val)
+	return val, err
 }
 
-func readUint64(r io.Reader) (uint64, error) {
-	var v uint64
-	err := binary.Read(r, binary.LittleEndian, &v)
-	return v, err
+func readUint64(r io.Reader) (val uint64, err error) {
+	err = binary.Read(r, binary.LittleEndian, &val)
+	return val, err
 }
 
 func readBool(r io.Reader) (bool, error) {
-	var b uint8
-	err := binary.Read(r, binary.LittleEndian, &b)
-	return b != 0, err
+	ui8, err := readUint8(r)
+	return ui8 != 0, err
 }
 
 func readBytes(r io.Reader, n int) ([]byte, error) {
@@ -65,15 +81,18 @@ func readBytes(r io.Reader, n int) ([]byte, error) {
 }
 
 func readString(r io.Reader) (string, error) {
-	length, err := readUint32(r)
-	if err != nil {
+	if length, err := readUint32(r); err != nil || length == 0 {
 		return "", err
+	} else {
+		var data []byte
+		if data, err = readBytes(r, int(length)); err != nil {
+			return "", err
+		} else if readLen := len(data) - 1; data[readLen] != 0 {
+			return "", errors.New("string must be null terminated")
+		} else {
+			return string(data[:readLen]), nil
+		}
 	}
-	data, err := readBytes(r, int(length))
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
 }
 
 func readMagic(r io.Reader) error {
@@ -116,11 +135,43 @@ func readHeader(r io.Reader) (*Header, error) {
 		return nil, err
 	}
 
-	if header.Version, err = readUint32(r); err != nil {
+	if header.FeatureLevel, err = readUint32(r); err != nil {
 		return nil, err
 	}
 
 	return &header, nil
+}
+
+func readMetadata(r io.Reader) (*Metadata, error) {
+
+	var metadata Metadata
+	var err error
+
+	if metadata.MetadataSize, err = readUint32(r); err != nil {
+		return nil, err
+	}
+
+	if metadata.MetadataVersion, err = readUint8(r); err != nil {
+		return nil, err
+	}
+
+	if metadata.FeatureLevel, err = readUint32(r); err != nil {
+		return nil, err
+	}
+
+	if metadata.IsFileData, err = readBool(r); err != nil {
+		return nil, err
+	}
+
+	if metadata.AppId, err = readUint32(r); err != nil {
+		return nil, err
+	}
+
+	if metadata.AppName, err = readString(r); err != nil {
+		return nil, err
+	}
+
+	return &metadata, nil
 }
 
 func ReadManifest(r io.ReadSeeker) (*Manifest, error) {
@@ -132,12 +183,42 @@ func ReadManifest(r io.ReadSeeker) (*Manifest, error) {
 
 	manifest := new(Manifest)
 
-	manifest.Header, err = readHeader(r)
-	if err != nil {
+	if manifest.Header, err = readHeader(r); err != nil {
 		return nil, err
 	}
 
 	if _, err = r.Seek(int64(manifest.Header.HeaderSize), io.SeekStart); err != nil {
+		return nil, err
+	}
+
+	if manifest.Header.IsEncrypted() {
+		return nil, errors.New("cannot read encrypted manifest")
+	}
+
+	var reader io.ReadSeeker
+
+	switch manifest.Header.IsCompressed() {
+	case true:
+		var zr io.ReadCloser
+		if zr, err = zlib.NewReader(r); err != nil {
+			return nil, err
+		}
+
+		var unzipped []byte
+		if unzipped, err = io.ReadAll(zr); err != nil {
+			return nil, err
+		}
+
+		if len(unzipped) != int(manifest.Header.SizeUncompressed) {
+			return nil, errors.New("uncompressed data size mismatch")
+		}
+
+		reader = bytes.NewReader(unzipped)
+	case false:
+		reader = r
+	}
+
+	if manifest.Metadata, err = readMetadata(reader); err != nil {
 		return nil, err
 	}
 
