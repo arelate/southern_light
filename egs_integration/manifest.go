@@ -5,7 +5,9 @@ import (
 	"compress/zlib"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"io"
+	"path/filepath"
 
 	"github.com/google/uuid"
 )
@@ -23,6 +25,10 @@ type Manifest struct {
 	ChunkList    *ChunkList
 	FileList     *FileList
 	CustomFields *CustomFields
+}
+
+func (mft *Manifest) Path(chk *Chunk) string {
+	return filepath.Join(mft.Metadata.ChunksVersion(), chk.Base())
 }
 
 type Header struct {
@@ -51,6 +57,17 @@ type Metadata struct {
 	BuildId       string
 }
 
+func (mdt *Metadata) ChunksVersion() string {
+	if mdt.Version < 3 {
+		return "Chunks"
+	} else if mdt.Version < 6 {
+		return "ChunksV2"
+	} else if mdt.Version < 15 {
+		return "ChunksV3"
+	}
+	return "ChunksV4"
+}
+
 type ChunkList struct {
 	Offset  uint32
 	Version uint8
@@ -60,12 +77,16 @@ type ChunkList struct {
 }
 
 type Chunk struct {
-	Guid       uuid.UUID
+	Uuid       uuid.UUID
 	Hash       uint64
 	ShaHash    []byte
 	Group      uint8
 	WindowSize uint32
 	FileSize   uint64
+}
+
+func (chk *Chunk) Base() string {
+	return fmt.Sprintf("%02d/%016X_%X.chunk", chk.Group, chk.Hash, chk.Uuid[:])
 }
 
 type FileList struct {
@@ -87,7 +108,7 @@ type File struct {
 
 type ChunkPart struct {
 	DataSize   uint32
-	ParentGuid uuid.UUID
+	ParentUuid uuid.UUID
 	Offset     uint32
 	Size       uint32
 	Chunk      *Chunk
@@ -292,8 +313,8 @@ func readChunkList(r io.Reader) (*ChunkList, error) {
 	list.Lookup = make(map[uuid.UUID]uint32)
 
 	for ii, chk := range list.Chunks {
-		if chk.Guid, err = readUuid(r); err == nil {
-			list.Lookup[chk.Guid] = uint32(ii)
+		if chk.Uuid, err = readUuid(r); err == nil {
+			list.Lookup[chk.Uuid] = uint32(ii)
 		} else {
 			return nil, err
 		}
@@ -385,10 +406,10 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 			if list.List[ii].Parts[jj].DataSize, err = readUint32(r); err != nil {
 				return nil, err
 			}
-			if list.List[ii].Parts[jj].ParentGuid, err = readUuid(r); err != nil {
+			if list.List[ii].Parts[jj].ParentUuid, err = readUuid(r); err != nil {
 				return nil, err
 			}
-			if chunkId, ok := chunkList.Lookup[list.List[ii].Parts[jj].ParentGuid]; ok {
+			if chunkId, ok := chunkList.Lookup[list.List[ii].Parts[jj].ParentUuid]; ok {
 				list.List[ii].Parts[jj].Chunk = chunkList.Chunks[chunkId]
 			} else {
 				return nil, errors.New("parent UUID not found")
