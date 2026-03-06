@@ -1,4 +1,4 @@
-package epic_games
+package egs_integration
 
 import (
 	"encoding/base64"
@@ -17,7 +17,7 @@ const (
 )
 
 const (
-	UserAgent = "EpicGamesLauncher/14.0.8-22004686+++Portal+Release-Live"
+	UserAgent = "UELauncher/11.0.1-14907503+++Portal+Release-Live Windows/10.0.19041.1.256.64bit"
 )
 
 type GetApiRedirectResponse struct {

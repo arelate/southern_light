@@ -1,4 +1,4 @@
-package epic_games
+package egs_integration
 
 import (
 	"encoding/json/v2"

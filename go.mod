@@ -7,7 +7,9 @@ require (
 	github.com/boggydigital/kevlar v0.6.10
 	github.com/boggydigital/match_node v0.1.19
 	github.com/boggydigital/nod v0.1.30
-	github.com/boggydigital/pathways v0.2.1
+	github.com/boggydigital/pathways v0.2.5
 	github.com/boggydigital/redux v0.1.11
-	golang.org/x/net v0.50.0
+	golang.org/x/net v0.51.0
 )
+
+require github.com/google/uuid v1.6.0
