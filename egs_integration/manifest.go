@@ -27,10 +27,6 @@ type Manifest struct {
 	CustomFields *CustomFields
 }
 
-func (mft *Manifest) Path(chk *Chunk) string {
-	return filepath.Join(mft.Metadata.ChunksVersion(), chk.Base())
-}
-
 type Header struct {
 	Offset           uint32
 	SizeUncompressed uint32
@@ -57,17 +53,6 @@ type Metadata struct {
 	BuildId       string
 }
 
-func (mdt *Metadata) ChunksVersion() string {
-	if mdt.Version < 3 {
-		return "Chunks"
-	} else if mdt.Version < 6 {
-		return "ChunksV2"
-	} else if mdt.Version < 15 {
-		return "ChunksV3"
-	}
-	return "ChunksV4"
-}
-
 type ChunkList struct {
 	Offset  uint32
 	Version uint8
@@ -85,8 +70,20 @@ type Chunk struct {
 	FileSize   uint64
 }
 
-func (chk *Chunk) Base() string {
-	return fmt.Sprintf("%02d/%016X_%X.chunk", chk.Group, chk.Hash, chk.Uuid[:])
+func chunkDir(version uint8) string {
+	if version < 3 {
+		return "Chunks"
+	} else if version < 6 {
+		return "ChunksV2"
+	} else if version < 15 {
+		return "ChunksV3"
+	}
+	return "ChunksV4"
+}
+
+func (chk *Chunk) Path(version uint8) string {
+	base := fmt.Sprintf("%02d/%016X_%X.chunk", chk.Group, chk.Hash, chk.Uuid[:])
+	return filepath.Join(chunkDir(version), base)
 }
 
 type FileList struct {
