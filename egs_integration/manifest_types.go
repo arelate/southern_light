@@ -10,8 +10,9 @@ import (
 const magicBits uint32 = 0x44BEC00C
 
 const (
-	StorageCompressed uint8 = 0x01
-	StorageEncrypted  uint8 = 0x02
+	StorageUncompressed uint8 = 0x00
+	StorageCompressed   uint8 = 0x01
+	StorageEncrypted    uint8 = 0x02
 )
 
 type Manifest struct {

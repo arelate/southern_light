@@ -4,6 +4,7 @@ import (
 	"encoding/json/v2"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 const defaultLabel = "Live"
@@ -60,15 +61,34 @@ type GameManifest struct {
 			InstallationPoolId string `json:"installationPoolId"`
 			UpdateType         string `json:"update_type"`
 		} `json:"metadata"`
-		Manifests []struct {
-			Uri         string `json:"uri"`
-			QueryParams []struct {
-				Name  string `json:"name"`
-				Value string `json:"value"`
-			} `json:"queryParams"`
-		} `json:"manifests"`
-		IsPreloaded bool `json:"isPreloaded"`
+		Manifests   []ManifestUri `json:"manifests"`
+		IsPreloaded bool          `json:"isPreloaded"`
 	} `json:"elements"`
+}
+
+type ManifestUri struct {
+	Uri         string `json:"uri"`
+	QueryParams []struct {
+		Name  string `json:"name"`
+		Value string `json:"value"`
+	} `json:"queryParams"`
+}
+
+func (mu *ManifestUri) Url() (*url.URL, error) {
+	manifestUrl, err := url.Parse(mu.Uri)
+	if err != nil {
+		return nil, err
+	}
+
+	q := manifestUrl.Query()
+
+	for _, kv := range mu.QueryParams {
+		q.Add(kv.Name, kv.Value)
+	}
+
+	manifestUrl.RawQuery = q.Encode()
+
+	return manifestUrl, nil
 }
 
 func GetGameAssets(platform string, token string, client *http.Client) ([]GameAsset, error) {
