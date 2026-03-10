@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-const magicBits uint32 = 0x44BEC00C
+const manifestMagic uint32 = 0x44BEC00C
 
 const (
 	StorageUncompressed uint8 = 0x00

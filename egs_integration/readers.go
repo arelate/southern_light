@@ -80,7 +80,7 @@ func readUuid(r io.Reader) (val uuid.UUID, err error) {
 	return val, err
 }
 
-func readMagic(r io.Reader) error {
+func readManifestMagic(r io.Reader) error {
 
 	var magic uint32
 
@@ -88,7 +88,7 @@ func readMagic(r io.Reader) error {
 		return err
 	}
 
-	if magic != magicBits {
+	if magic != manifestMagic {
 		return errors.New("unsupported binary manifest format")
 	}
 
@@ -354,9 +354,76 @@ func readCustomFields(r io.ReadSeeker) (*CustomFields, error) {
 	return &fields, err
 }
 
-func ReadBinary(r io.ReadSeeker) (*Manifest, error) {
+func readChunkHeader(r io.Reader) (*ChunkHeader, error) {
 
-	err := readMagic(r)
+	var chunkHeader ChunkHeader
+	var err error
+
+	if chunkHeader.Magic, err = readUint32(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.Magic != chunkMagic {
+		return nil, errors.New("unsupported chunk format")
+	}
+
+	if chunkHeader.Version, err = readUint32(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.Offset, err = readUint32(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.SizeCompressed, err = readUint32(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.Uuid, err = readUuid(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.RollingHash, err = readUint64(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.Storage, err = readUint8(r); err != nil {
+		return nil, err
+	}
+	if chunkHeader.ShaHash, err = readBytes(r, 20); err != nil {
+		return nil, err
+	}
+	if chunkHeader.HashType, err = readUint32(r); err != nil {
+		return nil, err
+	}
+
+	return &chunkHeader, err
+}
+
+func ReadChunk(r io.ReadSeeker) (io.Reader, error) {
+
+	var chunkHeader *ChunkHeader
+	var err error
+
+	if chunkHeader, err = readChunkHeader(r); err != nil {
+		return nil, err
+	}
+
+	if chunkHeader.Version != 3 {
+		return nil, errors.New("unsupported chunk version")
+	}
+	if _, err = r.Seek(int64(chunkHeader.Offset), io.SeekStart); err != nil {
+		return nil, err
+	}
+
+	if chunkHeader.IsUncompressed() {
+		return r, nil
+	} else if chunkHeader.IsCompressed() {
+		return zlib.NewReader(r)
+	} else if chunkHeader.IsEncrypted() {
+		return nil, errors.New("chunk is encrypted")
+	} else {
+		return nil, errors.New("unsupported chunk storage")
+	}
+}
+
+func ReadBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
+
+	err := readManifestMagic(r)
 	if err != nil {
 		return nil, err
 	}
