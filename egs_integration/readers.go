@@ -202,6 +202,12 @@ func readChunkList(r io.Reader) (*ChunkList, error) {
 	}
 
 	for _, chk := range list.Chunks {
+		if chk.Hash, err = readUint64(r); err != nil {
+			return nil, err
+		}
+	}
+
+	for _, chk := range list.Chunks {
 		if chk.ShaHash, err = readBytes(r, 20); err != nil {
 			return nil, err
 		}

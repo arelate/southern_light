@@ -66,20 +66,20 @@ type Chunk struct {
 	FileSize   uint64
 }
 
-func chunkDir(version uint8) string {
-	if version < 3 {
+func chunkDir(featureLevel uint32) string {
+	if featureLevel < 3 {
 		return "Chunks"
-	} else if version < 6 {
+	} else if featureLevel < 6 {
 		return "ChunksV2"
-	} else if version < 15 {
+	} else if featureLevel < 15 {
 		return "ChunksV3"
 	}
 	return "ChunksV4"
 }
 
-func (chk *Chunk) Path(version uint8) string {
+func (chk *Chunk) Path(featureLevel uint32) string {
 	base := fmt.Sprintf("%02d/%016X_%X.chunk", chk.Group, chk.Hash, chk.Uuid[:])
-	return filepath.Join(chunkDir(version), base)
+	return filepath.Join(chunkDir(featureLevel), base)
 }
 
 type FileList struct {
