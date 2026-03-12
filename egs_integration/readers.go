@@ -282,6 +282,7 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 	}
 
 	for ii := range list.List {
+
 		var partSize uint32
 		if partSize, err = readUint32(r); err != nil {
 			return nil, err
@@ -290,17 +291,23 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 		list.List[ii].Parts = make([]ChunkPart, partSize)
 
 		for jj := range list.List[ii].Parts {
+
 			if list.List[ii].Parts[jj].DataSize, err = readUint32(r); err != nil {
 				return nil, err
 			}
-			if list.List[ii].Parts[jj].ParentUuid, err = readUuid(r); err != nil {
+
+			var parentUuid uuid.UUID
+			if parentUuid, err = readUuid(r); err != nil {
 				return nil, err
 			}
-			if chunkId, ok := chunkList.Lookup[list.List[ii].Parts[jj].ParentUuid]; ok {
+
+			list.List[ii].Parts[jj].ParentUuid = parentUuid
+			if chunkId, ok := chunkList.Lookup[parentUuid]; ok {
 				list.List[ii].Parts[jj].Chunk = chunkList.Chunks[chunkId]
 			} else {
 				return nil, errors.New("parent UUID not found")
 			}
+
 			if list.List[ii].Parts[jj].Offset, err = readUint32(r); err != nil {
 				return nil, err
 			}
