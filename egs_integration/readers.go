@@ -417,13 +417,14 @@ func ReadChunk(r io.ReadSeeker) (io.Reader, error) {
 		return nil, err
 	}
 
-	if chunkHeader.IsUncompressed() {
+	switch chunkHeader.Storage {
+	case StorageUncompressed:
 		return r, nil
-	} else if chunkHeader.IsCompressed() {
+	case StorageCompressed:
 		return zlib.NewReader(r)
-	} else if chunkHeader.IsEncrypted() {
+	case StorageEncrypted:
 		return nil, errors.New("chunk is encrypted")
-	} else {
+	default:
 		return nil, errors.New("unsupported chunk storage")
 	}
 }
@@ -445,14 +446,10 @@ func ReadBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		return nil, err
 	}
 
-	if manifest.Header.IsEncrypted() {
-		return nil, errors.New("cannot read encrypted manifest")
-	}
-
 	var reader io.ReadSeeker
 
-	switch manifest.Header.IsCompressed() {
-	case true:
+	switch manifest.Header.Storage {
+	case StorageCompressed:
 		var zr io.ReadCloser
 		if zr, err = zlib.NewReader(r); err != nil {
 			return nil, err
@@ -468,8 +465,12 @@ func ReadBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		}
 
 		reader = bytes.NewReader(unzipped)
-	case false:
+	case StorageUncompressed:
 		reader = r
+	case StorageEncrypted:
+		return nil, errors.New("cannot read encrypted manifest")
+	default:
+		return nil, errors.New("unsupported manifest storage")
 	}
 
 	savedPos, err := reader.Seek(0, io.SeekCurrent)

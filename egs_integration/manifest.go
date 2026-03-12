@@ -113,11 +113,3 @@ type CustomFields struct {
 	Count   uint32
 	Fields  map[string]string
 }
-
-func (h *Header) IsCompressed() bool {
-	return h.Storage&StorageCompressed != 0
-}
-
-func (h *Header) IsEncrypted() bool {
-	return h.Storage&StorageEncrypted != 0
-}

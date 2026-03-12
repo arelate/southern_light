@@ -15,15 +15,3 @@ type ChunkHeader struct {
 	ShaHash        []byte
 	HashType       uint32
 }
-
-func (ch *ChunkHeader) IsUncompressed() bool {
-	return ch.Storage&StorageUncompressed != 0
-}
-
-func (ch *ChunkHeader) IsCompressed() bool {
-	return ch.Storage&StorageCompressed != 0
-}
-
-func (ch *ChunkHeader) IsEncrypted() bool {
-	return ch.Storage&StorageEncrypted != 0
-}
