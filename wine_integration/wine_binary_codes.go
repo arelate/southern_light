@@ -9,7 +9,7 @@ const (
 var WineBinariesCodesArgs = map[string][]string{
 	VcRedistX64Code:      {"/install", "/quiet", "/norestart"},
 	VcRedistX86Code:      {"/install", "/quiet", "/norestart"},
-	DxEndUserRuntimeCode: {"/install", "/quiet", "/norestart"},
+	DxEndUserRuntimeCode: {},
 }
 
 func WineBinariesCodes() []string {
