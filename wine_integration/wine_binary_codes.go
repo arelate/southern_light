@@ -1,13 +1,15 @@
 package wine_integration
 
 const (
-	VcRedistX64Code = "vcredistx64"
-	VcRedistX86Code = "vcredistx86"
+	VcRedistX64Code      = "vcredistx64"
+	VcRedistX86Code      = "vcredistx86"
+	DxEndUserRuntimeCode = "directx"
 )
 
 var WineBinariesCodesArgs = map[string][]string{
-	VcRedistX64Code: {"/install", "/quiet", "/norestart"},
-	VcRedistX86Code: {"/install", "/quiet", "/norestart"},
+	VcRedistX64Code:      {"/install", "/quiet", "/norestart"},
+	VcRedistX86Code:      {"/install", "/quiet", "/norestart"},
+	DxEndUserRuntimeCode: {"/install", "/quiet", "/norestart"},
 }
 
 func WineBinariesCodes() []string {
