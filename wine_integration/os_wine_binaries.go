@@ -17,6 +17,7 @@ const (
 	DxMt               = "3Shain/dxmt"
 	VcRedistX64        = "Visual C++ Redistributable X64"
 	VcRedistX86        = "Visual C++ Redistributable X86"
+	DxEndUserRuntime   = "DirectX End-User Runtimes (June 2010)"
 )
 
 const (
@@ -118,6 +119,15 @@ var OsWineBinaries = []Binary{
 		// Digest source: https://download.visualstudio.microsoft.com/download/pr/7ebf5fdb-36dc-4145-b0a0-90d3d5990a61/0C09F2611660441084CE0DF425C51C11E147E6447963C3690F97E0B25C55ED64/VC_redist.x86.exe
 		Digest:      "sha256:0c09f2611660441084ce0df425c51c11e147e6447963c3690f97e0b25c55ed64",
 		DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x86.exe",
+		OS:          vangogh_integration.Windows,
+	},
+	{
+		Title:   DxEndUserRuntime,
+		Code:    DxEndUserRuntimeCode,
+		Version: "9.29.1974.1",
+		// Digest source: manual
+		Digest:      "sha256:053f76dcbb28802e23341b6a787e3b0791c0fa5c8d4d011b1044172dbf89c73b",
+		DownloadUrl: "https://download.microsoft.com/download/8/4/a/84a35bf1-dafe-4ae8-82af-ad2ae20b6b14/directx_Jun2010_redist.exe",
 		OS:          vangogh_integration.Windows,
 	},
 }
