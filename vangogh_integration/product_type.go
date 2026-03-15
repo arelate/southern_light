@@ -28,7 +28,6 @@ const (
 
 	// Steam product types
 
-	SteamAppList
 	SteamAppDetails
 	SteamAppNews
 	SteamAppReviews
@@ -75,7 +74,6 @@ var productTypeStrings = map[ProductType]string{
 
 	// Steam product types
 
-	SteamAppList:                 "steam-app-list",
 	SteamAppDetails:              "steam-app-details",
 	SteamAppNews:                 "steam-app-news",
 	SteamAppReviews:              "steam-app-reviews",
@@ -116,7 +114,6 @@ var productTypePfx = map[ProductType]string{
 	ApiProducts:                  "api",
 	Details:                      "d",
 	GamesDbGogProducts:           "ggp",
-	SteamAppList:                 "sl",
 	SteamAppDetails:              "sd",
 	SteamAppNews:                 "sn",
 	SteamAppReviews:              "sr",

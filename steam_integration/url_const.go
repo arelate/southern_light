@@ -18,7 +18,6 @@ const (
 // paths
 const (
 	// Steam Web API paths
-	getAppsListV2             = "/ISteamApps/GetAppList/v2"
 	getNewsForAppV2           = "/ISteamNews/GetNewsForApp/v2"
 	getAppReviewsPathTemplate = "/appreviews/{appId}"
 
