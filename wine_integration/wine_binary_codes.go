@@ -9,8 +9,12 @@ const (
 var WineBinariesCodesArgs = map[string][]string{
 	VcRedistX64Code:      {"/install", "/quiet", "/norestart"},
 	VcRedistX86Code:      {"/install", "/quiet", "/norestart"},
-	DxEndUserRuntimeCode: {},
+	DxEndUserRuntimeCode: {"/Q", "/C", "/T:C:\\DirectX\\"},
 }
+
+const DxSetupPath = "/DirectX/DXSETUP.exe"
+
+var DxSetupArgs = []string{"/silent"}
 
 func WineBinariesCodes() []string {
 	codes := make([]string, 0)
