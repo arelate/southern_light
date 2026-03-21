@@ -73,10 +73,6 @@ func AllImageTypes() []ImageType {
 	return imageTypes
 }
 
-func AllDehydratedImageTypes() []ImageType {
-	return []ImageType{Image, VerticalImage}
-}
-
 // starting with empty collection and no image types require auth at the moment
 var imageTypeRequiresAuth []ImageType
 
@@ -87,20 +83,6 @@ func ImageTypeFromProperty(property string) ImageType {
 		}
 	}
 	return UnknownImageType
-}
-
-// values are result of running issa dehydration on an image set and finding
-// sampling rate that produces most compact representation (min sum of string lengths)
-var imageTypeDehydrationSamples = map[ImageType]int{
-	VerticalImage: 16,
-	Image:         20,
-}
-
-func ImageTypeDehydrationSamples(it ImageType) int {
-	if s, ok := imageTypeDehydrationSamples[it]; ok {
-		return s
-	}
-	return -1
 }
 
 func ImageTypesCloValues() []string {

@@ -181,11 +181,6 @@ const (
 	SyncEventsProperty      = "sync-events"
 	LastSyncUpdatesProperty = "last-sync-updates"
 
-	// dehydrated images properties
-
-	DehydratedImageProperty = "dehydrated-image"
-	RepColorProperty        = "rep-color"
-
 	// sort properties
 
 	SortProperty       = "sort"
@@ -492,13 +487,6 @@ func VideoProperties() []string {
 	}
 }
 
-func DehydratedImagesProperties() []string {
-	return []string{
-		DehydratedImageProperty,
-		RepColorProperty,
-	}
-}
-
 func LocalProperties() []string {
 	return []string{
 		LocalTagsProperty,
@@ -559,7 +547,6 @@ func ReduxProperties() []string {
 	all = append(all, LocalProperties()...)
 
 	all = append(all, VideoProperties()...)
-	all = append(all, DehydratedImagesProperties()...)
 
 	all = append(all, SyncProperties()...)
 	all = append(all, DownloadsLifecycleProperties()...)

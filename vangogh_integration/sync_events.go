@@ -6,7 +6,6 @@ const (
 	SyncDataKey                  = "sync-data"
 	SyncDescriptionImagesKey     = "sync-description-images"
 	SyncImagesKey                = "sync-images"
-	SyncDehydrateKey             = "sync-dehydrate"
 	SyncVideoMetadataKey         = "sync-video-metadata"
 	SyncDownloadsKey             = "sync-downloads"
 	SyncGenerateMissingChecksums = "sync-generate-missing-checksums"
@@ -22,7 +21,6 @@ var SyncEventsKeys = []string{
 	SyncDataKey,
 	SyncDescriptionImagesKey,
 	SyncImagesKey,
-	SyncDehydrateKey,
 	SyncVideoMetadataKey,
 	SyncDownloadsKey,
 	SyncGenerateMissingChecksums,
@@ -36,8 +34,7 @@ var CurrentSyncEventForCompleted = map[string]string{
 	SyncStartKey:                 SyncDataKey,
 	SyncDataKey:                  SyncDescriptionImagesKey,
 	SyncDescriptionImagesKey:     SyncImagesKey,
-	SyncImagesKey:                SyncDehydrateKey,
-	SyncDehydrateKey:             SyncVideoMetadataKey,
+	SyncImagesKey:                SyncVideoMetadataKey,
 	SyncVideoMetadataKey:         SyncDownloadsKey,
 	SyncDownloadsKey:             SyncGenerateMissingChecksums,
 	SyncGenerateMissingChecksums: SyncCleanupKey,
@@ -51,7 +48,6 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncDataKey:                  "Updating data",
 	SyncDescriptionImagesKey:     "Updating descriptions",
 	SyncImagesKey:                "Updating images",
-	SyncDehydrateKey:             "Processing images",
 	SyncVideoMetadataKey:         "Updating videos",
 	SyncDownloadsKey:             "Downloading files",
 	SyncGenerateMissingChecksums: "Generating missing checksums",
