@@ -15,7 +15,6 @@ const (
 	PublishersProperty                 = "publishers"
 	ImageProperty                      = "image"
 	VerticalImageProperty              = "vertical-image"
-	ScreenshotsProperty                = "screenshots"
 	HeroProperty                       = "hero"
 	LogoProperty                       = "logo"
 	IconProperty                       = "icon"
@@ -66,9 +65,6 @@ const (
 	StoreUrlProperty                   = "store-url"
 	ForumUrlProperty                   = "forum-url"
 	SupportUrlProperty                 = "support-url"
-	ChangelogProperty                  = "changelog"
-	DescriptionOverviewProperty        = "description-overview"
-	DescriptionFeaturesProperty        = "description-features"
 	AdditionalRequirementsProperty     = "additional-requirements"
 	CopyrightsProperty                 = "copyrights"
 	InDevelopmentProperty              = "in-development"
@@ -188,6 +184,13 @@ const (
 )
 
 const (
+	DescriptionOverviewKeyValues = "description-overview"
+	DescriptionFeaturesKeyValues = "description-features"
+	ChangelogKeyValues           = "changelog"
+	ScreenshotsKeyValues         = "screenshots"
+)
+
+const (
 	// property values
 	TrueValue  = "true"
 	FalseValue = "false"
@@ -233,7 +236,6 @@ func GOGCatalogPageProperties() []string {
 		PublishersProperty,
 		ImageProperty,
 		VerticalImageProperty,
-		ScreenshotsProperty,
 		GenresProperty,
 		FeaturesProperty,
 		RatingProperty,
@@ -256,6 +258,12 @@ func GOGCatalogPageProperties() []string {
 		RootEditionsProperty,
 		CatalogPageProductsProperty,
 		UserWishlistProperty,
+	}
+}
+
+func GOGCatalogPageKeyValues() []string {
+	return []string{
+		ScreenshotsKeyValues,
 	}
 }
 
@@ -290,7 +298,6 @@ func GOGApiProductProperties() []string {
 		IconProperty,
 		IconSquareProperty,
 		BackgroundProperty,
-		ScreenshotsProperty,
 		GenresProperty,
 		FeaturesProperty,
 		SeriesProperty,
@@ -308,14 +315,20 @@ func GOGApiProductProperties() []string {
 		StoreUrlProperty,
 		ForumUrlProperty,
 		SupportUrlProperty,
-		DescriptionOverviewProperty,
-		DescriptionFeaturesProperty,
 		ProductTypeProperty,
 		CopyrightsProperty,
 		StoreTagsProperty,
 		AdditionalRequirementsProperty,
 		InDevelopmentProperty,
 		PreOrderProperty,
+	}
+}
+
+func GOGApiProductsKeyValues() []string {
+	return []string{
+		DescriptionOverviewKeyValues,
+		DescriptionFeaturesKeyValues,
+		ScreenshotsKeyValues,
 	}
 }
 
@@ -326,9 +339,14 @@ func GOGDetailsProperties() []string {
 		TagIdProperty,
 		GOGReleaseDateProperty,
 		ForumUrlProperty,
-		ChangelogProperty,
 		OperatingSystemsProperty,
 		BackgroundProperty,
+	}
+}
+
+func GOGDetailsKeyValues() []string {
+	return []string{
+		ChangelogKeyValues,
 	}
 }
 
@@ -553,9 +571,18 @@ func ReduxProperties() []string {
 	return all
 }
 
+func DataKeyValues() []string {
+	all := make([]string, 0)
+
+	all = append(all, GOGCatalogPageKeyValues()...)
+	all = append(all, GOGDetailsKeyValues()...)
+	all = append(all, GOGApiProductsKeyValues()...)
+
+	return all
+}
+
 var imageTypeProperties = map[ImageType]string{
 	Image:         ImageProperty,
-	Screenshots:   ScreenshotsProperty,
 	VerticalImage: VerticalImageProperty,
 	Hero:          HeroProperty,
 	Logo:          LogoProperty,
