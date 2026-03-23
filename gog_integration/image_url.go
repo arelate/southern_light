@@ -33,8 +33,8 @@ func ImageId(imageUrl string) string {
 func ImageIds(imageUrls ...string) []string {
 	imageIds := make([]string, 0, len(imageUrls))
 	for _, imageUrl := range imageUrls {
-		if imageId := ImageId(imageUrl); imageId != "" {
-			imageIds = append(imageIds)
+		if imageId := ImageId(imageUrl); strings.TrimSpace(imageId) != "" {
+			imageIds = append(imageIds, imageId)
 		}
 	}
 	return imageIds
