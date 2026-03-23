@@ -2,10 +2,11 @@ package gog_integration
 
 import (
 	"fmt"
-	"github.com/arelate/southern_light"
 	"net/url"
 	"path"
 	"strings"
+
+	"github.com/arelate/southern_light"
 )
 
 const (
@@ -32,7 +33,9 @@ func ImageId(imageUrl string) string {
 func ImageIds(imageUrls ...string) []string {
 	imageIds := make([]string, 0, len(imageUrls))
 	for _, imageUrl := range imageUrls {
-		imageIds = append(imageIds, ImageId(imageUrl))
+		if imageId := ImageId(imageUrl); imageId != "" {
+			imageIds = append(imageIds)
+		}
 	}
 	return imageIds
 }
