@@ -10,7 +10,7 @@ const (
 	launcherHost    = "launcher-public-service-prod.ol." + rootHost
 	entitlementHost = "entitlement-public-service-prod.ol." + rootHost
 	catalogHost     = "catalog-public-service-prod.ol." + rootHost
-	libraryHost     = "library-service.live.use1a.on." + rootHost
+	libraryHost     = "library-service.live.on." + rootHost
 )
 
 const (
