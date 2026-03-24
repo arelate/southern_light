@@ -20,6 +20,15 @@ const (
 	UserAgent = "UELauncher/15.18.2-29993784+++Portal+Release-Live Windows/10.0.19041.1.256.64bit"
 )
 
+type GrantType string
+
+const (
+	GrantTypeRefreshToken      GrantType = "refresh_token"
+	GrantTypeExchangeToken               = "exchange_code"
+	GrantTypeAuthorizationCode           = "authorization_code"
+	GrantTypeClientCredentials           = "client_credentials"
+)
+
 type GetApiRedirectResponse struct {
 	Warning           string `json:"warning"`
 	RedirectUrl       string `json:"redirectUrl"`
@@ -93,14 +102,24 @@ func GetApiRedirect(client *http.Client) (*GetApiRedirectResponse, error) {
 	return &getApiRedirectResponse, nil
 }
 
-func PostToken(authorizationCode string, client *http.Client) (*PostTokenResponse, error) {
+func PostToken(token string, grantType GrantType, client *http.Client) (*PostTokenResponse, error) {
 
 	aotUrl := AccountApiOauthTokenUrl()
 
 	payload := make(url.Values)
-	payload.Add("grant_type", "authorization_code")
-	payload.Add("code", authorizationCode)
+	payload.Add("grant_type", string(grantType))
 	payload.Add("token_type", "eg1")
+
+	switch grantType {
+	case GrantTypeRefreshToken:
+		payload.Add("refresh_token", token)
+	case GrantTypeExchangeToken:
+		payload.Add("exchange_code", token)
+	case GrantTypeAuthorizationCode:
+		payload.Add("code", token)
+	case GrantTypeClientCredentials:
+		// do nothing
+	}
 
 	req, err := http.NewRequest(http.MethodPost, aotUrl.String(), strings.NewReader(payload.Encode()))
 	if err != nil {
