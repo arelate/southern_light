@@ -27,6 +27,10 @@ const (
 )
 
 const (
+	steamCmdValidateParameter = "-validate"
+)
+
+const (
 	steamCmdTrueValue      = "1"
 	steamCmdFalseValue     = "0"
 	steamCmdAnonymousValue = "anonymous"
@@ -114,16 +118,24 @@ func AppInfoPrint(absSteamCmdPath string, id string) (string, error) {
 	return sb.String(), nil
 }
 
-func AppUpdate(absSteamCmdPath string, id string, operatingSystem vangogh_integration.OperatingSystem, absInstallDir, username string) error {
+func AppUpdate(absSteamCmdPath string, id string, operatingSystem vangogh_integration.OperatingSystem, absInstallDir, username string, validate bool) error {
 
-	steamAppUpdateCmd, err := runSteamCmdCommands(absSteamCmdPath,
+	appUpdateCommands := []string{
 		steamCmdShutdownOnFailedCommandVariable, steamCmdTrueValue,
 		steamCmdNoPromptForPasswordVariable, steamCmdTrueValue,
 		steamCmdForcePlatformTypeVariable, strings.ToLower(operatingSystem.String()),
 		steamCmdForceInstallDirCommand, absInstallDir,
 		steamCmdLoginCommand, username,
 		steamCmdAppUpdateCommand, id,
-		steamCmdQuitCommand)
+	}
+
+	if validate {
+		appUpdateCommands = append(appUpdateCommands, steamCmdValidateParameter)
+	}
+
+	appUpdateCommands = append(appUpdateCommands, steamCmdQuitCommand)
+
+	steamAppUpdateCmd, err := runSteamCmdCommands(absSteamCmdPath, appUpdateCommands...)
 	if err != nil {
 		return err
 	}
