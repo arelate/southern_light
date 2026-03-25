@@ -9,6 +9,8 @@ import (
 
 const manifestMagic uint32 = 0x44BEC00C
 
+const ManifestExt = ".manifest"
+
 const (
 	StorageUncompressed uint8 = 0x00
 	StorageCompressed   uint8 = 0x01

@@ -66,6 +66,23 @@ type GameManifest struct {
 	} `json:"elements"`
 }
 
+func (gm *GameManifest) Urls() ([]*url.URL, error) {
+
+	manifestUrls := make([]*url.URL, 0)
+	for _, element := range gm.Elements {
+		for _, manifest := range element.Manifests {
+
+			manifestUrl, err := manifest.Url()
+			if err != nil {
+				return nil, err
+			}
+
+			manifestUrls = append(manifestUrls, manifestUrl)
+		}
+	}
+	return manifestUrls, nil
+}
+
 type ManifestUri struct {
 	Uri         string `json:"uri"`
 	QueryParams []struct {
