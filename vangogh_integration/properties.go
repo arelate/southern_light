@@ -15,6 +15,7 @@ const (
 	PublishersProperty                 = "publishers"
 	ImageProperty                      = "image"
 	VerticalImageProperty              = "vertical-image"
+	ScreenshotsProperty                = "screenshots"
 	HeroProperty                       = "hero"
 	LogoProperty                       = "logo"
 	IconProperty                       = "icon"
@@ -187,7 +188,6 @@ const (
 	DescriptionOverviewKeyValues = "description-overview"
 	DescriptionFeaturesKeyValues = "description-features"
 	ChangelogKeyValues           = "changelog"
-	ScreenshotsKeyValues         = "screenshots"
 )
 
 const (
@@ -236,6 +236,7 @@ func GOGCatalogPageProperties() []string {
 		PublishersProperty,
 		ImageProperty,
 		VerticalImageProperty,
+		ScreenshotsProperty,
 		GenresProperty,
 		FeaturesProperty,
 		RatingProperty,
@@ -258,12 +259,6 @@ func GOGCatalogPageProperties() []string {
 		RootEditionsProperty,
 		CatalogPageProductsProperty,
 		UserWishlistProperty,
-	}
-}
-
-func GOGCatalogPageKeyValues() []string {
-	return []string{
-		ScreenshotsKeyValues,
 	}
 }
 
@@ -293,6 +288,7 @@ func GOGApiProductProperties() []string {
 		LanguageCodeProperty,
 		ImageProperty,
 		VerticalImageProperty,
+		ScreenshotsProperty,
 		HeroProperty,
 		LogoProperty,
 		IconProperty,
@@ -328,7 +324,6 @@ func GOGApiProductsKeyValues() []string {
 	return []string{
 		DescriptionOverviewKeyValues,
 		DescriptionFeaturesKeyValues,
-		ScreenshotsKeyValues,
 	}
 }
 
@@ -574,7 +569,6 @@ func ReduxProperties() []string {
 func DataKeyValues() []string {
 	all := make([]string, 0)
 
-	all = append(all, GOGCatalogPageKeyValues()...)
 	all = append(all, GOGDetailsKeyValues()...)
 	all = append(all, GOGApiProductsKeyValues()...)
 
@@ -584,6 +578,7 @@ func DataKeyValues() []string {
 var imageTypeProperties = map[ImageType]string{
 	Image:         ImageProperty,
 	VerticalImage: VerticalImageProperty,
+	Screenshots:   ScreenshotsProperty,
 	Hero:          HeroProperty,
 	Logo:          LogoProperty,
 	Icon:          IconProperty,
