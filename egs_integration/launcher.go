@@ -2,21 +2,11 @@ package egs_integration
 
 import (
 	"encoding/json/v2"
-	"io"
 	"net/http"
 	"net/url"
 )
 
 const defaultLabel = "Live"
-
-func debugString(reader io.Reader) (string, error) {
-	bts, err := io.ReadAll(reader)
-	if err != nil {
-		return "", err
-	}
-
-	return string(bts), err
-}
 
 type GameAsset struct {
 	AppName       string `json:"appName"`
