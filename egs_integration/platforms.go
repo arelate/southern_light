@@ -14,3 +14,8 @@ func Platform(operatingSystem vangogh_integration.OperatingSystem) string {
 	}
 	return ""
 }
+
+var SupportedOperatingSystems = []vangogh_integration.OperatingSystem{
+	vangogh_integration.Windows,
+	vangogh_integration.MacOS,
+}
