@@ -60,9 +60,11 @@ const (
 )
 
 const (
-	gamesDbGogExternalReleasePathTemplate     = "/platforms/gog/external_releases/{id}"
-	gamesDbGenericExternalReleasePathTemplate = "/platforms/generic/external_releases/{id}"
-	gamesDbWishlistedGamesPath                = "/wishlist/user/wishlisted_games"
+	gamesDbGogExternalReleasesPathTemplate     = "/platforms/gog/external_releases/{id}"
+	gamesDbGenericExternalReleasesPathTemplate = "/platforms/generic/external_releases/{id}"
+	gamesDbSteamExternalReleasesPathTemplate   = "/platforms/steam/external_releases/{appId}"
+	gamesDbEpicExternalReleasesPathTemplate    = "/platforms/epic/external_releases/{appName}"
+	gamesDbWishlistedGamesPath                 = "/wishlist/user/wishlisted_games"
 )
 
 const (
