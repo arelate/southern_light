@@ -35,6 +35,6 @@ func GamesDbEpicUrl(appName string) *url.URL {
 	return &url.URL{
 		Scheme: southern_light.HttpsScheme,
 		Host:   gamesDbHost,
-		Path:   strings.Replace(gamesDbEpicExternalReleasesPathTemplate, "{id}", appName, 1),
+		Path:   strings.Replace(gamesDbEpicExternalReleasesPathTemplate, "{appName}", appName, 1),
 	}
 }
