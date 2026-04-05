@@ -15,6 +15,7 @@ const (
 	steamCmdForceInstallDirCommand = "+force_install_dir"
 	steamCmdAppUpdateCommand       = "+app_update"
 	steamCmdAppInfoPrintCommand    = "+app_info_print"
+	steamCmdLicensesPrintCommand   = "+licenses_print"
 	steamCmdAppUninstallCommand    = "+app_uninstall"
 	steamCmdLogoutCommand          = "+logout"
 	steamCmdQuitCommand            = "+quit"
@@ -51,7 +52,9 @@ func runSteamCmdCommands(absSteamCmdPath string, commands ...string) (*exec.Cmd,
 
 func Login(absSteamCmdPath string, username string) error {
 
-	cmd, err := runSteamCmdCommands(absSteamCmdPath, steamCmdLoginCommand, username, steamCmdQuitCommand)
+	cmd, err := runSteamCmdCommands(absSteamCmdPath,
+		steamCmdLoginCommand, username,
+		steamCmdQuitCommand)
 	if err != nil {
 		return err
 	}
@@ -108,6 +111,55 @@ func AppInfoPrint(absSteamCmdPath string, id string) (string, error) {
 
 		if appinfo {
 			sb.WriteString(line)
+		}
+	}
+
+	if scanner.Err() != nil {
+		return "", err
+	}
+
+	return sb.String(), nil
+}
+
+func LicensesPrint(absSteamCmdPath string, username string) (string, error) {
+
+	licensesPrintCmd, err := runSteamCmdCommands(absSteamCmdPath,
+		steamCmdShutdownOnFailedCommandVariable, steamCmdTrueValue,
+		steamCmdNoPromptForPasswordVariable, steamCmdTrueValue,
+		steamCmdLoginCommand, username,
+		steamCmdLicensesPrintCommand,
+		steamCmdQuitCommand)
+	if err != nil {
+		return "", err
+	}
+
+	stdout := bytes.NewBuffer(nil)
+
+	licensesPrintCmd.Stdout = stdout
+	licensesPrintCmd.Stderr = stdout
+
+	if err = licensesPrintCmd.Run(); err != nil {
+		return "", err
+	}
+
+	scanner := bufio.NewScanner(stdout)
+	sb := new(strings.Builder)
+
+	licenses := false
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if strings.HasPrefix(line, "License packageID") {
+			licenses = true
+		}
+		if strings.HasPrefix(line, "Unloading Steam API") {
+			licenses = false
+		}
+
+		if licenses {
+			sb.WriteString(scanner.Text())
+			sb.WriteByte('\n')
 		}
 	}
 
