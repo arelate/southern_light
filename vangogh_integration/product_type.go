@@ -4,6 +4,7 @@ import (
 	"errors"
 	"iter"
 	"maps"
+	"slices"
 )
 
 type ProductType int
@@ -126,6 +127,31 @@ var productTypePfx = map[ProductType]string{
 	HltbData:                     "hd",
 	ProtonDbSummary:              "prs",
 	OpenCriticApiGame:            "oa",
+}
+
+var purchaseProductTypes = []ProductType{
+	Licences,
+	UserWishlist,
+	AccountPage,
+	OrderPage,
+	Details,
+}
+
+func PurchaseProductTypes() []ProductType {
+	return purchaseProductTypes
+}
+
+func ExtraProductTypes() iter.Seq[ProductType] {
+	return func(yield func(ProductType) bool) {
+		for pt := range AllProductTypes() {
+			if slices.Contains(purchaseProductTypes, pt) {
+				continue
+			}
+			if !yield(pt) {
+				return
+			}
+		}
+	}
 }
 
 func AllProductTypes() iter.Seq[ProductType] {
