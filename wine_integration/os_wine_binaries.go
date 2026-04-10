@@ -81,10 +81,10 @@ var OsWineBinaries = []Binary{
 	},
 	{
 		Title:   CrossOver,
-		Version: "26.0.0",
-		// Digest source: https://media.codeweavers.com/pub/crossover/cxmac/demo/crossover-26.0.0.zip.sha256
-		Digest:      "sha256:eff883bc1b8d004f091e42345e00ff3b2999cd62da723d3fbc11ece3c8416db3",
-		DownloadUrl: "https://media.codeweavers.com/pub/crossover/cxmac/demo/crossover-26.0.0.zip",
+		Version: "26.1.0",
+		// Digest source: https://media.codeweavers.com/pub/crossover/cxmac/demo/crossover-26.1.0.zip.sha256
+		Digest:      "sha256:99812be77501995533a9fd4553efa75a4237eac6a20c5639ff43ad46660d9256",
+		DownloadUrl: "https://media.codeweavers.com/pub/crossover/cxmac/demo/crossover-26.1.0.zip",
 		OS:          vangogh_integration.MacOS,
 	},
 	{
