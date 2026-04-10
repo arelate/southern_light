@@ -3,7 +3,7 @@ package vangogh_integration
 const (
 	SyncInterruptedKey           = "sync-interrupted"
 	SyncStartKey                 = "sync-start"
-	SyncDataKey                  = "sync-data"
+	SyncPurchasesDataKey         = "sync-purchases-data"
 	SyncDescriptionImagesKey     = "sync-description-images"
 	SyncImagesKey                = "sync-images"
 	SyncVideoMetadataKey         = "sync-video-metadata"
@@ -11,6 +11,7 @@ const (
 	SyncGenerateMissingChecksums = "sync-generate-missing-checksums"
 	SyncCleanupKey               = "sync-cleanup"
 	SyncBinaries                 = "sync-binaries"
+	SyncExtraData                = "sync-extra-data"
 	SyncBackup                   = "sync-backup"
 	SyncCompleteKey              = "sync-complete"
 )
@@ -18,7 +19,7 @@ const (
 var SyncEventsKeys = []string{
 	SyncInterruptedKey,
 	SyncStartKey,
-	SyncDataKey,
+	SyncPurchasesDataKey,
 	SyncDescriptionImagesKey,
 	SyncImagesKey,
 	SyncVideoMetadataKey,
@@ -26,26 +27,28 @@ var SyncEventsKeys = []string{
 	SyncGenerateMissingChecksums,
 	SyncCleanupKey,
 	SyncBinaries,
+	SyncExtraData,
 	SyncBackup,
 	SyncCompleteKey, // this should be the last key
 }
 
 var CurrentSyncEventForCompleted = map[string]string{
-	SyncStartKey:                 SyncDataKey,
-	SyncDataKey:                  SyncDescriptionImagesKey,
+	SyncStartKey:                 SyncPurchasesDataKey,
+	SyncPurchasesDataKey:         SyncDescriptionImagesKey,
 	SyncDescriptionImagesKey:     SyncImagesKey,
 	SyncImagesKey:                SyncVideoMetadataKey,
 	SyncVideoMetadataKey:         SyncDownloadsKey,
 	SyncDownloadsKey:             SyncGenerateMissingChecksums,
 	SyncGenerateMissingChecksums: SyncCleanupKey,
 	SyncCleanupKey:               SyncBinaries,
-	SyncBinaries:                 SyncBackup,
+	SyncBinaries:                 SyncExtraData,
+	SyncExtraData:                SyncBackup,
 }
 
 var CurrentSyncEventsTitles = map[string]string{
 	SyncInterruptedKey:           "Interrupted",
 	SyncStartKey:                 "Started sync",
-	SyncDataKey:                  "Updating data",
+	SyncPurchasesDataKey:         "Updating account data",
 	SyncDescriptionImagesKey:     "Updating descriptions",
 	SyncImagesKey:                "Updating images",
 	SyncVideoMetadataKey:         "Updating videos",
@@ -53,6 +56,7 @@ var CurrentSyncEventsTitles = map[string]string{
 	SyncGenerateMissingChecksums: "Generating missing checksums",
 	SyncCleanupKey:               "Cleaning up downloads",
 	SyncBinaries:                 "Updating binaries",
+	SyncExtraData:                "Updating extra data",
 	SyncBackup:                   "Backing up data",
 	SyncCompleteKey:              "Sync complete", // this should be the last key
 }
