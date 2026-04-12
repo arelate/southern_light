@@ -107,6 +107,22 @@ type GamesDbProduct struct {
 	Logo         UrlFormat          `json:"logo"`
 }
 
+func (gdp *GamesDbProduct) GetSteamAppId() uint32 {
+	if steamAppIds := gdp.GetSteamAppIds(); len(steamAppIds) > 0 {
+		return steamAppIds[0]
+	}
+	return 0
+}
+
+func (gdp *GamesDbProduct) GetGogId() string {
+	for _, release := range gdp.Game.Releases {
+		if release.PlatformId == "gog" {
+			return release.ExternalId
+		}
+	}
+	return ""
+}
+
 func (gdp *GamesDbProduct) GetSteamAppIds() []uint32 {
 	var appIds []uint32
 	for _, release := range gdp.Game.Releases {

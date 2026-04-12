@@ -2,14 +2,16 @@ package vangogh_integration
 
 import (
 	"errors"
-	"github.com/arelate/southern_light/gog_integration"
 	"net/url"
+
+	"github.com/arelate/southern_light/gog_integration"
 )
 
-func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
-	urls := make([]*url.URL, 0, len(imageIds))
+func ImagePropertyExt(it ImageType) (string, error) {
 
 	var ext string
+	var err error
+
 	switch it {
 	case Image:
 		fallthrough
@@ -28,14 +30,26 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	case Logo:
 		ext = gog_integration.PngExt
 	default:
-		return nil, errors.New("no url for unknown image type")
+		err = errors.New("no url for unknown image type")
+	}
+
+	return ext, err
+}
+
+func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
+	urls := make([]*url.URL, 0, len(imageIds))
+
+	ext, err := ImagePropertyExt(it)
+	if err != nil {
+		return nil, err
 	}
 
 	for _, imageId := range imageIds {
 		if imageId == "" {
 			continue
 		}
-		imageUrl, err := gog_integration.ImageUrl(imageId, ext)
+		var imageUrl *url.URL
+		imageUrl, err = gog_integration.ImageUrl(imageId, ext)
 		if err != nil {
 			return urls, err
 		}
