@@ -6,6 +6,8 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/boggydigital/nod"
 )
 
 var excludeFiles = map[string]bool{
@@ -30,6 +32,10 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]any, error) {
+
+	liia := nod.Begin(" itemizing local images...")
+	defer liia.Done()
+
 	return walkFiles(Pwd.AbsDirPath(Images), filenameAsId)
 }
 
