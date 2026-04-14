@@ -40,6 +40,9 @@ var SyncEventsSequence = []string{
 }
 
 func NextSyncEvent(completedEvent string) string {
+	if completedEvent == SyncCompleteKey {
+		return SyncCompleteKey
+	}
 	for ii, event := range SyncEventsSequence {
 		if event == completedEvent {
 			if ii == 0 || ii == len(SyncEventsSequence)-1 {
