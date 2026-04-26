@@ -40,6 +40,7 @@ type CatalogItem struct {
 	EulaIds             []string             `json:"eulaIds"`
 	EndOfSupport        bool                 `json:"endOfSupport"`
 	MainGameItemList    []CatalogItem        `json:"mainGameItemList"`
+	DlcItemList         []CatalogItem        `json:"dlcItemList"`
 	EsrbGameRatingValue string               `json:"esrbGameRatingValue"`
 	AgeGatings          struct {
 	} `json:"ageGatings"`
