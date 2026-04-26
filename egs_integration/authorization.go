@@ -2,8 +2,8 @@ package egs_integration
 
 import (
 	"encoding/base64"
-	"encoding/json/v2"
 	"errors"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -76,7 +76,7 @@ type GetVerifyTokenResponse struct {
 	AuthTime       time.Time `json:"auth_time"`
 }
 
-func GetApiRedirect(client *http.Client) (*GetApiRedirectResponse, error) {
+func GetApiRedirect(client *http.Client) (io.ReadCloser, error) {
 
 	aruUrl := ApiRedirectUrl()
 
@@ -92,17 +92,14 @@ func GetApiRedirect(client *http.Client) (*GetApiRedirectResponse, error) {
 		return nil, err
 	}
 
-	defer resp.Body.Close()
-
-	var getApiRedirectResponse GetApiRedirectResponse
-	if err = json.UnmarshalRead(resp.Body, &getApiRedirectResponse); err != nil {
-		return nil, err
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errors.New(resp.Status)
 	}
 
-	return &getApiRedirectResponse, nil
+	return resp.Body, nil
 }
 
-func PostToken(token string, grantType GrantType, client *http.Client) (*PostTokenResponse, error) {
+func PostToken(token string, grantType GrantType, client *http.Client) (io.ReadCloser, error) {
 
 	aotUrl := AccountApiOauthTokenUrl()
 
@@ -136,17 +133,15 @@ func PostToken(token string, grantType GrantType, client *http.Client) (*PostTok
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
-	var postTokenReponse PostTokenResponse
-	if err = json.UnmarshalRead(resp.Body, &postTokenReponse); err != nil {
-		return nil, err
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, errors.New(resp.Status)
 	}
 
-	return &postTokenReponse, nil
+	return resp.Body, nil
 }
 
-func doResponse(req *http.Request, token string, client *http.Client) (*http.Response, error) {
+func doResponse(req *http.Request, token string, client *http.Client) (io.ReadCloser, error) {
 
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("User-Agent", UserAgent)
@@ -161,10 +156,10 @@ func doResponse(req *http.Request, token string, client *http.Client) (*http.Res
 		return nil, errors.New(resp.Status)
 	}
 
-	return resp, nil
+	return resp.Body, nil
 }
 
-func getResponse(u *url.URL, token string, client *http.Client) (*http.Response, error) {
+func getResponse(u *url.URL, token string, client *http.Client) (io.ReadCloser, error) {
 	req, err := http.NewRequest(http.MethodGet, u.String(), http.NoBody)
 	if err != nil {
 		return nil, err
@@ -173,23 +168,11 @@ func getResponse(u *url.URL, token string, client *http.Client) (*http.Response,
 	return doResponse(req, token, client)
 }
 
-func GetVerifyToken(token string, client *http.Client) (*GetVerifyTokenResponse, error) {
+func GetVerifyToken(token string, client *http.Client) (io.ReadCloser, error) {
 
 	aovUrl := AccountApiOauthVerifyUrl()
 
-	resp, err := getResponse(aovUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var getVerifyTokenResponse GetVerifyTokenResponse
-
-	if err = json.UnmarshalRead(resp.Body, &getVerifyTokenResponse); err != nil {
-		return nil, err
-	}
-
-	return &getVerifyTokenResponse, nil
+	return getResponse(aovUrl, token, client)
 }
 
 func DeleteToken(token string, client *http.Client) error {
@@ -201,9 +184,10 @@ func DeleteToken(token string, client *http.Client) error {
 		return err
 	}
 
-	resp, err := doResponse(req, token, client)
+	readCloser, err := doResponse(req, token, client)
 	if err != nil {
 		return err
 	}
-	return resp.Body.Close()
+
+	return readCloser.Close()
 }

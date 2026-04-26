@@ -1,7 +1,7 @@
 package egs_integration
 
 import (
-	"encoding/json/v2"
+	"io"
 	"net/http"
 	"time"
 )
@@ -29,20 +29,9 @@ type Entitlement struct {
 	ReadFromCache    bool      `json:"readFromCache"`
 }
 
-func GetUserEntitlements(accountId string, token string, start, count int, client *http.Client) ([]Entitlement, error) {
+func GetUserEntitlements(accountId string, token string, start, count int, client *http.Client) (io.ReadCloser, error) {
 
 	entUrl := EntitlementsUrl(accountId, start, count)
 
-	resp, err := getResponse(entUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var entitlements []Entitlement
-	if err = json.UnmarshalRead(resp.Body, &entitlements); err != nil {
-		return nil, err
-	}
-
-	return entitlements, nil
+	return getResponse(entUrl, token, client)
 }

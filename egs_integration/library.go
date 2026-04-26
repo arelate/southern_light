@@ -1,7 +1,7 @@
 package egs_integration
 
 import (
-	"encoding/json/v2"
+	"io"
 	"net/http"
 	"time"
 )
@@ -27,20 +27,9 @@ type LibraryItems struct {
 	} `json:"records"`
 }
 
-func GetLibraryItems(cursor string, token string, client *http.Client) (*LibraryItems, error) {
+func GetLibraryItems(cursor string, token string, client *http.Client) (io.ReadCloser, error) {
 
 	liUrl := LibraryItemsUrl(true, cursor)
 
-	resp, err := getResponse(liUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var libraryItems LibraryItems
-	if err = json.UnmarshalRead(resp.Body, &libraryItems); err != nil {
-		return nil, err
-	}
-
-	return &libraryItems, nil
+	return getResponse(liUrl, token, client)
 }

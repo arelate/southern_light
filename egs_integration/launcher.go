@@ -1,7 +1,7 @@
 package egs_integration
 
 import (
-	"encoding/json/v2"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -98,56 +98,23 @@ func (mu *ManifestUri) Url() (*url.URL, error) {
 	return manifestUrl, nil
 }
 
-func GetGameAssets(platform string, token string, client *http.Client) ([]GameAsset, error) {
+func GetGameAssets(platform string, token string, client *http.Client) (io.ReadCloser, error) {
 
 	ggaUrl := LauncherGameAssetsUrl(platform, defaultLabel)
 
-	resp, err := getResponse(ggaUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var gameAssets []GameAsset
-	if err = json.UnmarshalRead(resp.Body, &gameAssets); err != nil {
-		return nil, err
-	}
-
-	return gameAssets, nil
+	return getResponse(ggaUrl, token, client)
 }
 
-func GetGameManifest(namespace, catalogItemId, appName string, platform string, token string, client *http.Client) (*GameManifest, error) {
+func GetGameManifest(namespace, catalogItemId, appName string, platform string, token string, client *http.Client) (io.ReadCloser, error) {
 
 	lgmUrl := LauncherGameManifestUrl(namespace, catalogItemId, appName, platform, defaultLabel)
 
-	resp, err := getResponse(lgmUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var gameManifest GameManifest
-	if err = json.UnmarshalRead(resp.Body, &gameManifest); err != nil {
-		return nil, err
-	}
-
-	return &gameManifest, nil
+	return getResponse(lgmUrl, token, client)
 }
 
-func GetLauncherManifests(platform string, token string, client *http.Client) (*LauncherManifests, error) {
+func GetLauncherManifests(platform string, token string, client *http.Client) (io.ReadCloser, error) {
 
 	lmUrl := LauncherManifestsUrl(platform, defaultLabel)
 
-	resp, err := getResponse(lmUrl, token, client)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var launcherManifests LauncherManifests
-	if err = json.UnmarshalRead(resp.Body, &launcherManifests); err != nil {
-		return nil, err
-	}
-
-	return &launcherManifests, nil
+	return getResponse(lmUrl, token, client)
 }
