@@ -27,21 +27,27 @@ type CatalogItem struct {
 	Categories []struct {
 		Path string `json:"path"`
 	} `json:"categories"`
-	Namespace           string               `json:"namespace"`
-	Status              string               `json:"status"`
-	CreationDate        time.Time            `json:"creationDate"`
-	LastModifiedDate    time.Time            `json:"lastModifiedDate"`
-	CustomAttributes    map[string]TypeValue `json:"customAttributes"`
-	EntitlementName     string               `json:"entitlementName"`
-	EntitlementType     string               `json:"entitlementType"`
-	ItemType            string               `json:"itemType"`
-	Developer           string               `json:"developer"`
-	DeveloperId         string               `json:"developerId"`
-	EulaIds             []string             `json:"eulaIds"`
-	EndOfSupport        bool                 `json:"endOfSupport"`
-	MainGameItemList    []CatalogItem        `json:"mainGameItemList"`
-	DlcItemList         []CatalogItem        `json:"dlcItemList"`
-	EsrbGameRatingValue string               `json:"esrbGameRatingValue"`
+	Namespace        string               `json:"namespace"`
+	Status           string               `json:"status"`
+	CreationDate     time.Time            `json:"creationDate"`
+	LastModifiedDate time.Time            `json:"lastModifiedDate"`
+	CustomAttributes map[string]TypeValue `json:"customAttributes"`
+	EntitlementName  string               `json:"entitlementName"`
+	EntitlementType  string               `json:"entitlementType"`
+	ItemType         string               `json:"itemType"`
+	ReleaseInfo      []struct {
+		Id       string   `json:"id"`
+		AppId    string   `json:"appId"`
+		Platform []string `json:"platform"`
+	} `json:"releaseInfo"`
+	Developer    string   `json:"developer"`
+	DeveloperId  string   `json:"developerId"`
+	EulaIds      []string `json:"eulaIds"`
+	EndOfSupport bool     `json:"endOfSupport"`
+	//MainGameItem        CatalogItem   `json:"mainGameItem"`
+	MainGameItemList    []CatalogItem `json:"mainGameItemList"`
+	DlcItemList         []CatalogItem `json:"dlcItemList"`
+	EsrbGameRatingValue string        `json:"esrbGameRatingValue"`
 	AgeGatings          struct {
 	} `json:"ageGatings"`
 	Unsearchable bool `json:"unsearchable"`
