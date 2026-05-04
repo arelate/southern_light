@@ -102,7 +102,7 @@ func SinceFromUrl(u *url.URL) (int64, error) {
 			return 0, err
 		}
 	}
-	return time.Now().Unix() - int64(sha*60*60), err
+	return time.Now().UTC().Unix() - int64(sha*60*60), err
 }
 
 func DownloadsLayoutFromUrl(u *url.URL) DownloadsLayout {
