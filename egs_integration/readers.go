@@ -530,6 +530,7 @@ func ReadManifest(r io.ReadSeeker) (*Manifest, error) {
 	if manifest, err := readBinaryManifest(r); err == nil {
 		return manifest, nil
 	} else if errors.Is(err, errUnsupportedBinaryManifestFormat) {
+		r.Seek(0, io.SeekStart)
 		return readJsonManifest(r)
 	} else if err != nil {
 		return nil, err
