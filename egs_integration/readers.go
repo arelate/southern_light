@@ -4,10 +4,15 @@ import (
 	"bytes"
 	"compress/zlib"
 	"encoding/binary"
+	"encoding/json/v2"
 	"errors"
 	"io"
 
 	"github.com/google/uuid"
+)
+
+var (
+	errUnsupportedBinaryManifestFormat = errors.New("unsupported binary manifest format")
 )
 
 func readUint8(r io.Reader) (val uint8, err error) {
@@ -89,7 +94,7 @@ func readManifestMagic(r io.Reader) error {
 	}
 
 	if magic != manifestMagic {
-		return errors.New("unsupported binary manifest format")
+		return errUnsupportedBinaryManifestFormat
 	}
 
 	return nil
@@ -429,7 +434,7 @@ func ReadChunk(r io.ReadSeeker) (io.Reader, error) {
 	}
 }
 
-func ReadBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
+func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 
 	err := readManifestMagic(r)
 	if err != nil {
@@ -507,4 +512,28 @@ func ReadBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 	}
 
 	return manifest, nil
+}
+
+func readJsonManifest(r io.Reader) (*Manifest, error) {
+
+	var jsonManifest JsonManifest
+
+	if err := json.UnmarshalRead(r, &jsonManifest); err != nil {
+		return nil, err
+	}
+
+	return jsonManifest.Manifest()
+}
+
+func ReadManifest(r io.ReadSeeker) (*Manifest, error) {
+
+	if manifest, err := readBinaryManifest(r); err == nil {
+		return manifest, nil
+	} else if errors.Is(err, errUnsupportedBinaryManifestFormat) {
+		return readJsonManifest(r)
+	} else if err != nil {
+		return nil, err
+	}
+
+	return nil, errors.New("unable to read manifest")
 }
