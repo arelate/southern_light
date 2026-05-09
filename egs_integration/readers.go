@@ -415,7 +415,7 @@ func ReadChunk(r io.ReadSeeker) (io.Reader, error) {
 		return nil, err
 	}
 
-	if chunkHeader.Version != 3 {
+	if chunkHeader.Version > 3 {
 		return nil, errors.New("unsupported chunk version")
 	}
 	if _, err = r.Seek(int64(chunkHeader.Offset), io.SeekStart); err != nil {
