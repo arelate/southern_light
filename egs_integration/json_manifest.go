@@ -156,6 +156,7 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 		file := File{
 			Filename: fml.Filename,
 			ShaHash:  shaHash,
+			Flags:    flags,
 		}
 
 		for _, fcp := range fml.FileChunkParts {
@@ -182,7 +183,8 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 				Offset:     uint32(partOffset.Uint64()),
 				Size:       uint32(partSize.Uint64()),
 				Chunk: new(Chunk{
-					Uuid: partUuid,
+					Uuid:       partUuid,
+					WindowSize: 2 ^ 20,
 				}),
 			}
 
