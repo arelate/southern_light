@@ -43,19 +43,14 @@ type JsonManifest struct {
 }
 
 func parseJsonInt(inStr string) (*big.Int, error) {
-	num := new(big.Int)
-	shift := 0
-
+	num := big.NewInt(0)
+	shift := uint(0)
 	for i := 0; i < len(inStr); i += 3 {
-		end := i + 3
-		if end > len(inStr) {
-			end = len(inStr)
-		}
-		val, err := strconv.ParseInt(inStr[i:end], 10, 16)
+		val, err := strconv.ParseInt(inStr[i:i+3], 10, 64)
 		if err != nil {
 			return nil, err
 		}
-		num.Add(num, new(big.Int).Lsh(big.NewInt(val), uint(shift)))
+		num.Add(num, new(big.Int).Lsh(big.NewInt(val), shift))
 		shift += 8
 	}
 	return num, nil
@@ -69,10 +64,10 @@ func parseJsonHash(hash string) ([]byte, error) {
 	}
 
 	result := make([]byte, hashLen)
-	numBytes := num.Bytes()
+	bytes := num.Bytes()
 
-	for i := 0; i < len(numBytes); i++ {
-		result[hashLen-1-i] = numBytes[i]
+	for i := range bytes {
+		result[i] = bytes[len(bytes)-1-i]
 	}
 
 	return result, nil
