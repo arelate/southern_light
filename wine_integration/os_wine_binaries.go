@@ -3,6 +3,7 @@ package wine_integration
 import (
 	"maps"
 	"slices"
+	"strings"
 
 	"github.com/arelate/southern_light/vangogh_integration"
 )
@@ -105,20 +106,20 @@ var OsWineBinaries = []Binary{
 	{
 		Title:   VcRedistX64,
 		Code:    VcRedistX64Code,
-		Version: "v14.44.35211.0",
-		// Digest source: https://download.visualstudio.microsoft.com/download/pr/7ebf5fdb-36dc-4145-b0a0-90d3d5990a61/CC0FF0EB1DC3F5188AE6300FAEF32BF5BEEBA4BDD6E8E445A9184072096B713B/VC_redist.x64.exe
+		Version: "11/11/2025",
+		// Digest source: https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/VC_redist.x64.exe
 		// Note the URL path part before the filename
-		Digest:      "sha256:cc0ff0eb1dc3f5188ae6300faef32bf5beeba4bdd6e8e445a9184072096b713b",
-		DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+		Digest:      strings.ToLower("sha256:90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B"),
+		DownloadUrl: "https://aka.ms/vc14/vc_redist.x64.exe",
 		OS:          vangogh_integration.Windows,
 	},
 	{
 		Title:   VcRedistX86,
 		Code:    VcRedistX86Code,
-		Version: "v14.44.35211.0",
-		// Digest source: https://download.visualstudio.microsoft.com/download/pr/7ebf5fdb-36dc-4145-b0a0-90d3d5990a61/0C09F2611660441084CE0DF425C51C11E147E6447963C3690F97E0B25C55ED64/VC_redist.x86.exe
-		Digest:      "sha256:0c09f2611660441084ce0df425c51c11e147e6447963c3690f97e0b25c55ed64",
-		DownloadUrl: "https://aka.ms/vs/17/release/vc_redist.x86.exe",
+		Version: "11/11/2025",
+		// Digest source: https://download.visualstudio.microsoft.com/download/pr/0dd156af-82aa-4812-b524-49c2f894359a/B6AB675F0A27E6600F9726E75DEA08D99C15F8EA4B842A2A1D988FA9529D39B9/VC_redist.x86.exe
+		Digest:      strings.ToLower("sha256:B6AB675F0A27E6600F9726E75DEA08D99C15F8EA4B842A2A1D988FA9529D39B9"),
+		DownloadUrl: "https://aka.ms/vc14/vc_redist.x86.exe",
 		OS:          vangogh_integration.Windows,
 	},
 	{
