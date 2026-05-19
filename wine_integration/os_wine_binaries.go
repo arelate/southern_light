@@ -12,6 +12,8 @@ const (
 	UmuLauncher        = "Open-Wine-Components/umu-launcher"
 	UmuProton          = "Open-Wine-Components/umu-proton"
 	ProtonGe           = "GloriousEggroll/proton-ge-custom"
+	ProtonCachyOs      = "CachyOS/proton-cachyos"
+	ProtonEm           = "Etaash-mathamsetty/Proton"
 	CrossOver          = "CrossOver"
 	WineMacOs          = "Gcenx/macOS_Wine_builds"
 	GamePortingToolkit = "Gcenx/game-porting-toolkit"
@@ -54,7 +56,7 @@ var SteamProtonDirectories = map[string]string{
 	SteamProton1000:                 "Proton 10.0",
 	SteamProtonNext:                 "Proton Next",
 	SteamProtonHotfix:               "Proton Hotfix",
-	SteamProtonExperimental:         "Proton Experimental",
+	SteamProtonExperimental:         "Proton - Experimental",
 	SteamProtonBattlEyeRuntime:      "Proton BattlEye Runtime",
 	SteamProtonEasyAntiCheatRuntime: "Proton Easy Anti-Cheat Runtime",
 }
@@ -78,6 +80,16 @@ var OsWineBinaries = []Binary{
 	{
 		GitHubOwnerRepo: UmuProton,
 		GitHubAssetGlob: tarGz,
+		OS:              vangogh_integration.Linux,
+	},
+	{
+		GitHubOwnerRepo: ProtonCachyOs,
+		GitHubAssetGlob: tarXz,
+		OS:              vangogh_integration.Linux,
+	},
+	{
+		GitHubOwnerRepo: ProtonEm,
+		GitHubAssetGlob: tarXz,
 		OS:              vangogh_integration.Linux,
 	},
 	{
