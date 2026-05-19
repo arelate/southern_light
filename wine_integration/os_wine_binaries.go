@@ -84,7 +84,7 @@ var OsWineBinaries = []Binary{
 	},
 	{
 		GitHubOwnerRepo: ProtonCachyOs,
-		GitHubAssetGlob: tarXz,
+		GitHubAssetGlob: "*-x86_64.tar.xz",
 		OS:              vangogh_integration.Linux,
 	},
 	{
