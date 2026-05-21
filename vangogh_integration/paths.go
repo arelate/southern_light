@@ -66,7 +66,7 @@ func AbsLocalImagePath(imageId string) (string, error) {
 	return "", err
 }
 
-func AbsCookiePath() string {
+func AbsCookiesPath() string {
 	return filepath.Join(Pwd.AbsDirPath(Input), cookiesFilename)
 }
 
