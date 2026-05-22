@@ -18,9 +18,9 @@ const (
 	WineMacOs          = "Gcenx/macOS_Wine_builds"
 	GamePortingToolkit = "Gcenx/game-porting-toolkit"
 	DxMt               = "3Shain/dxmt"
-	VcRedistX64        = "Visual C++ Redistributable X64"
-	VcRedistX86        = "Visual C++ Redistributable X86"
-	DxEndUserRuntime   = "DirectX End-User Runtimes (June 2010)"
+	VcRedistX64        = "vc_redist.x64.exe"
+	VcRedistX86        = "vc_redist.x86.exe"
+	DxEndUserRuntime   = "directx_Jun2010_redist.exe"
 )
 
 const (
