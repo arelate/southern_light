@@ -197,13 +197,13 @@ const (
 )
 
 var ProductTypeProperties = map[ProductType][]string{
-	Licences:                     GOGLicencesProperties(),
-	UserWishlist:                 GOGUserWishlistProperties(),
-	CatalogPage:                  GOGCatalogPageProperties(),
-	OrderPage:                    GOGOrderPageProperties(),
-	AccountPage:                  GOGAccountPageProperties(),
-	ApiProducts:                  GOGApiProductProperties(),
-	Details:                      GOGDetailsProperties(),
+	GogLicences:                  GOGLicencesProperties(),
+	GogUserWishlist:              GOGUserWishlistProperties(),
+	GogCatalogPage:               GOGCatalogPageProperties(),
+	GogOrderPage:                 GOGOrderPageProperties(),
+	GogAccountPage:               GOGAccountPageProperties(),
+	GogApiProducts:               GOGApiProductProperties(),
+	GogDetails:                   GOGDetailsProperties(),
 	GamesDbGogProducts:           GOGGamesDbProperties(),
 	SteamAppDetails:              SteamAppDetailsProperties(),
 	SteamAppReviews:              SteamAppReviewsProperties(),

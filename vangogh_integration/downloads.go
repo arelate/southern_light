@@ -261,7 +261,7 @@ func MapDownloads(
 		return err
 	}
 
-	detailsDir, err := AbsProductTypeDir(Details)
+	detailsDir, err := AbsProductTypeDir(GogDetails)
 	if err != nil {
 		return err
 	}

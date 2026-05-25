@@ -1,61 +1,62 @@
 package vangogh_integration
 
 import (
-	"errors"
 	"iter"
 	"maps"
 	"slices"
+	"strconv"
 )
 
 type ProductType int
 
+// The types below are intentionally assigned stable sparse constant values:
+// - new values in the same group should be added after the last existing value
+// - new groups should be added after the last group
+// - there is space to add new distribution services above PCGamingWiki
+
 const (
-	UnknownProductType ProductType = iota
+	UnknownProductType ProductType = 0
 
 	// GOG.com product types
-
-	CatalogPage
-	AccountPage
-	UserWishlist
-	Details
-	ApiProducts
-	Licences
-	OrderPage
-	UserAccessToken
+	GogCatalogPage     ProductType = 100
+	GogAccountPage     ProductType = 101
+	GogUserWishlist    ProductType = 102
+	GogDetails         ProductType = 103
+	GogApiProducts     ProductType = 104
+	GogLicences        ProductType = 105
+	GogOrderPage       ProductType = 106
+	GogUserAccessToken ProductType = 107
 
 	// GamesDB (GOG Galaxy)
-
-	GamesDbGogProducts
+	GamesDbGogProducts ProductType = 200
 
 	// Steam product types
+	SteamAppDetails              ProductType = 300
+	SteamAppNews                 ProductType = 301
+	SteamAppReviews              ProductType = 302
+	SteamDeckCompatibilityReport ProductType = 303
 
-	SteamAppDetails
-	SteamAppNews
-	SteamAppReviews
-	SteamDeckCompatibilityReport
+	// new distributions services should be added here
 
 	// PCGamingWiki product types
-
-	PcgwGogPageId
-	PcgwSteamPageId
-	PcgwRaw
+	PcgwGogPageId   ProductType = 1000
+	PcgwSteamPageId ProductType = 1001
+	PcgwRaw         ProductType = 1002
 
 	// Wikipedia product types
-
-	WikipediaRaw
+	WikipediaRaw ProductType = 1100
 
 	// HLTB product types
-
-	HltbRootPage
-	HltbData
+	HltbRootPage ProductType = 1200
+	HltbData     ProductType = 1201
 
 	// ProtonDB product types
-
-	ProtonDbSummary
+	ProtonDbSummary ProductType = 1300
 
 	// OpenCritic product types
+	OpenCriticApiGame ProductType = 1400
 
-	OpenCriticApiGame
+	// new data type groups should be added here
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -63,14 +64,17 @@ var productTypeStrings = map[ProductType]string{
 
 	// GOG.com product types
 
-	UserAccessToken:    "user-access-token",
-	Licences:           "licences",
-	UserWishlist:       "user-wishlist",
-	CatalogPage:        "catalog-page",
-	OrderPage:          "order-page",
-	AccountPage:        "account-page",
-	ApiProducts:        "api-products",
-	Details:            "details",
+	GogUserAccessToken: "gog-user-access-token",
+	GogLicences:        "gog-licences",
+	GogUserWishlist:    "gog-user-wishlist",
+	GogCatalogPage:     "gog-catalog-page",
+	GogOrderPage:       "gog-order-page",
+	GogAccountPage:     "gog-account-page",
+	GogApiProducts:     "gog-api-products",
+	GogDetails:         "gog-details",
+
+	// GamesDB (GOG Galaxy)
+
 	GamesDbGogProducts: "gamesdb-gog-products",
 
 	// Steam product types
@@ -104,47 +108,22 @@ var productTypeStrings = map[ProductType]string{
 	OpenCriticApiGame: "opencritic-api-game",
 }
 
-var productTypePfx = map[ProductType]string{
-	UnknownProductType:           "upt",
-	UserAccessToken:              "uat",
-	Licences:                     "l",
-	UserWishlist:                 "uw",
-	CatalogPage:                  "cp",
-	OrderPage:                    "op",
-	AccountPage:                  "ap",
-	ApiProducts:                  "api",
-	Details:                      "d",
-	GamesDbGogProducts:           "ggp",
-	SteamAppDetails:              "sd",
-	SteamAppNews:                 "sn",
-	SteamAppReviews:              "sr",
-	SteamDeckCompatibilityReport: "sd",
-	PcgwSteamPageId:              "pcs",
-	PcgwGogPageId:                "pcg",
-	PcgwRaw:                      "pcr",
-	WikipediaRaw:                 "wr",
-	HltbRootPage:                 "hr",
-	HltbData:                     "hd",
-	ProtonDbSummary:              "prs",
-	OpenCriticApiGame:            "oa",
+var gogPurchaseProductTypes = []ProductType{
+	GogLicences,
+	GogUserWishlist,
+	GogAccountPage,
+	GogOrderPage,
+	GogDetails,
 }
 
-var purchaseProductTypes = []ProductType{
-	Licences,
-	UserWishlist,
-	AccountPage,
-	OrderPage,
-	Details,
-}
-
-func PurchaseProductTypes() []ProductType {
-	return purchaseProductTypes
+func GogPurchaseProductTypes() []ProductType {
+	return gogPurchaseProductTypes
 }
 
 func ExtraProductTypes() iter.Seq[ProductType] {
 	return func(yield func(ProductType) bool) {
 		for pt := range AllProductTypes() {
-			if slices.Contains(purchaseProductTypes, pt) {
+			if slices.Contains(gogPurchaseProductTypes, pt) {
 				continue
 			}
 			if !yield(pt) {
@@ -176,13 +155,8 @@ func ParseProductType(productType string) ProductType {
 	return UnknownProductType
 }
 
-func ProductTypeId(pt ProductType, id string) (string, error) {
-	pfx, ok := productTypePfx[pt]
-	if ok {
-		return pfx + id, nil
-	}
-
-	return "", errors.New("no prefix for " + pt.String())
+func ProductTypeId(pt ProductType, id string) string {
+	return strconv.FormatInt(int64(pt), 10) + "-" + id
 }
 
 func ProductTypesCloValues() []string {
