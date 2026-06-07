@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	DefaultSort = TitleProperty
+	DefaultSort = GogTitleProperty
 	DefaultDesc = false
 )
 
@@ -21,7 +21,7 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 	var err error
 	if rdx == nil && len(slugs) > 0 {
 
-		rdx, err = redux.NewReader(AbsReduxDir(), SlugProperty)
+		rdx, err = redux.NewReader(AbsReduxDir(), GogSlugProperty)
 		if err != nil {
 			return nil, err
 		}
@@ -31,14 +31,14 @@ func idsFromSlugs(slugs []string, rdx redux.Readable) ([]string, error) {
 		return nil, errors.New("converting slugs to ids requires redux")
 	}
 
-	if err = rdx.MustHave(SlugProperty); err != nil {
+	if err = rdx.MustHave(GogSlugProperty); err != nil {
 		return nil, err
 	}
 
 	var ids []string
 	for _, slug := range slugs {
 		if slug != "" {
-			matchedIds := rdx.Match(map[string][]string{SlugProperty: {slug}}, redux.FullMatch)
+			matchedIds := rdx.Match(map[string][]string{GogSlugProperty: {slug}}, redux.FullMatch)
 			for id := range matchedIds {
 				ids = append(ids, id)
 			}
@@ -58,7 +58,7 @@ func PropertyListsFromIdSet(
 	for _, p := range properties {
 		propSet[p] = true
 	}
-	propSet[TitleProperty] = nil
+	propSet[GogTitleProperty] = nil
 
 	if rdx == nil {
 		var err error
@@ -91,7 +91,7 @@ func propertyListFromId(
 		return nil, err
 	}
 
-	title, ok := rdx.GetLastVal(TitleProperty, id)
+	title, ok := rdx.GetLastVal(GogTitleProperty, id)
 	if !ok {
 		return nil, nil
 	}
@@ -104,7 +104,7 @@ func propertyListFromId(
 
 	for _, prop := range properties {
 		if prop == IdProperty ||
-			prop == TitleProperty {
+			prop == GogTitleProperty {
 			continue
 		}
 		values, ok := rdx.GetAllValues(prop, id)

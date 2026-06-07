@@ -9,7 +9,7 @@ type DownloadValidationStatus struct {
 
 func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationStatus {
 
-	if err := rdx.MustHave(ManualUrlValidationResultProperty, ManualUrlValidationResultProperty); err != nil {
+	if err := rdx.MustHave(GogManualUrlValidationResultProperty, GogManualUrlValidationResultProperty); err != nil {
 		panic(err)
 	}
 
@@ -18,15 +18,15 @@ func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationSt
 		validationResult: ValidationStatusUnknown,
 	}
 
-	if muss, ok := rdx.GetLastVal(ManualUrlStatusProperty, manualUrl); ok {
+	if muss, ok := rdx.GetLastVal(GogManualUrlStatusProperty, manualUrl); ok {
 		dvs.downloadStatus = ParseDownloadStatus(muss)
 	}
 
-	if vrs, ok := rdx.GetLastVal(ManualUrlValidationResultProperty, manualUrl); ok {
+	if vrs, ok := rdx.GetLastVal(GogManualUrlValidationResultProperty, manualUrl); ok {
 		dvs.validationResult = ParseValidationStatus(vrs)
 	}
 
-	if pgs, ok := rdx.GetLastVal(ManualUrlGeneratedChecksumProperty, manualUrl); ok && pgs != "" {
+	if pgs, ok := rdx.GetLastVal(GogManualUrlGeneratedChecksumProperty, manualUrl); ok && pgs != "" {
 		if dvs.validationResult == ValidationStatusSuccess {
 			dvs.validationResult = ValidationStatusSelfValidated
 		}
@@ -37,7 +37,7 @@ func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationSt
 
 func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 
-	if err := rdx.MustHave(ProductValidationResultProperty,
+	if err := rdx.MustHave(GogProductValidationResultProperty,
 		DownloadQueuedProperty,
 		DownloadStartedProperty,
 		DownloadCompletedProperty); err != nil {
@@ -49,11 +49,11 @@ func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 		validationResult: ValidationStatusUnknown,
 	}
 
-	if pvrs, ok := rdx.GetLastVal(ProductValidationResultProperty, id); ok {
+	if pvrs, ok := rdx.GetLastVal(GogProductValidationResultProperty, id); ok {
 		dvs.validationResult = ParseValidationStatus(pvrs)
 	}
 
-	if pgs, ok := rdx.GetLastVal(ProductGeneratedChecksumProperty, id); ok && pgs != "" {
+	if pgs, ok := rdx.GetLastVal(GogProductGeneratedChecksumProperty, id); ok && pgs != "" {
 		if dvs.validationResult == ValidationStatusSuccess {
 			dvs.validationResult = ValidationStatusSelfValidated
 		}

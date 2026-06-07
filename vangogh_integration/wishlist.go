@@ -11,7 +11,7 @@ func AddToLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), UserWishlistProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogUserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -22,7 +22,7 @@ func AddToLocalWishlist(
 
 	for _, id := range ids {
 
-		if err = rdx.ReplaceValues(UserWishlistProperty, id, TrueValue); err != nil {
+		if err = rdx.ReplaceValues(GogUserWishlistProperty, id, TrueValue); err != nil {
 			if tpw != nil {
 				tpw.Increment()
 			}
@@ -44,7 +44,7 @@ func RemoveFromLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), UserWishlistProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogUserWishlistProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -54,7 +54,7 @@ func RemoveFromLocalWishlist(
 	}
 
 	for _, id := range ids {
-		if err = rdx.ReplaceValues(UserWishlistProperty, id, FalseValue); err != nil {
+		if err = rdx.ReplaceValues(GogUserWishlistProperty, id, FalseValue); err != nil {
 			if tpw != nil {
 				tpw.Increment()
 			}

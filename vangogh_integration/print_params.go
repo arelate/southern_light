@@ -2,9 +2,10 @@ package vangogh_integration
 
 import (
 	"fmt"
-	"github.com/boggydigital/nod"
 	"strconv"
 	"strings"
+
+	"github.com/boggydigital/nod"
 )
 
 func PrintParams(

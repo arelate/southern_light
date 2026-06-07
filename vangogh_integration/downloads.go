@@ -257,7 +257,7 @@ func MapDownloads(
 		return fmt.Errorf("vangogh_downloads: map downloads list processor is nil")
 	}
 
-	if err := rdx.MustHave(SlugProperty, ProductTypeProperty); err != nil {
+	if err := rdx.MustHave(GogSlugProperty, GogProductTypeProperty); err != nil {
 		return err
 	}
 
@@ -275,7 +275,7 @@ func MapDownloads(
 	gameProducts := make([]string, 0, len(ids))
 
 	for _, id := range ids {
-		if pt, ok := rdx.GetLastVal(ProductTypeProperty, id); ok && pt != GameProductType {
+		if pt, ok := rdx.GetLastVal(GogProductTypeProperty, id); ok && pt != gog_integration.ProductTypeGame {
 			packDlcProducts = append(packDlcProducts, id)
 			continue
 		}
@@ -291,7 +291,7 @@ func MapDownloads(
 
 	for _, id := range gameProducts {
 
-		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
+		detSlug, ok := rdx.GetLastVal(GogSlugProperty, id)
 
 		if !kvDetails.Has(id) || !ok {
 			tpw.Increment()

@@ -3,180 +3,190 @@ package vangogh_integration
 const (
 	IdProperty = "id"
 
-	LicencesProperty     = "licences"
-	UserWishlistProperty = "user-wishlist"
+	// GOG Properties
 
-	AccountPageProductsProperty = "account-page-products"
-	CatalogPageProductsProperty = "catalog-page-products"
-	OrderPageProductsProperty   = "order-page-products"
+	GogLicencesProperty                   = "gog-licences"
+	GogUserWishlistProperty               = "gog-user-wishlist"
+	GogAccountPageProductsProperty        = "gog-account-page-products" // TODO: rename to GogAccountProductPageProperty
+	GogCatalogPageProductsProperty        = "gog-catalog-page-products" // TODO: rename to GogCatalogProductPageProperty
+	GogOrderPageProductsProperty          = "gog-order-page-products"
+	GogTitleProperty                      = "gog-title"
+	GogDevelopersProperty                 = "gog-developers"
+	GogPublishersProperty                 = "gog-publishers"
+	GogImageProperty                      = "gog-image"
+	GogVerticalImageProperty              = "gog-vertical-image"
+	GogScreenshotsProperty                = "gog-screenshots"
+	GogHeroProperty                       = "gog-hero"
+	GogLogoProperty                       = "gog-logo"
+	GogIconProperty                       = "gog-icon"
+	GogIconSquareProperty                 = "gog-icon-square"
+	GogBackgroundProperty                 = "gog-background"
+	GogRatingProperty                     = "gog-rating"
+	GogProductTypeProperty                = "gog-product-type"
+	GogIncludesGamesProperty              = "gog-includes-games"
+	GogIsIncludedByGamesProperty          = "gog-is-included-by-games"
+	GogRequiresGamesProperty              = "gog-requires-games"
+	GogIsRequiredByGamesProperty          = "gog-is-required-by-games"
+	GogModifiesGamesProperty              = "gog-modifies-games"
+	GogIsModifiedByGamesProperty          = "gog-is-modified-by-games"
+	GogEditionsProperty                   = "gog-editions"
+	GogRootEditionsProperty               = "gog-root-editions"
+	GogStoreTagsProperty                  = "gog-store-tags"
+	GogGenresProperty                     = "gog-genres"
+	GogFeaturesProperty                   = "gog-features"
+	GogSeriesProperty                     = "gog-series"
+	GogThemesProperty                     = "gog-themes"
+	GogGameModesProperty                  = "gog-game-modes"
+	GogTagIdProperty                      = "gog-tag" // TODO: Rename to gog-tag-id
+	GogTagNameProperty                    = "gog-tag-name"
+	GogSlugProperty                       = "gog-slug"
+	GogReleaseDateProperty                = "gog-release-date"
+	GogOrderDateProperty                  = "gog-order-date"
+	GogGlobalReleaseDateProperty          = "gog-global-release-date"
+	GogLocalManualUrlProperty             = "gog-local-manual-url"
+	GogManualUrlFilenameProperty          = "gog-manual-url-filename"
+	GogManualUrlStatusProperty            = "gog-manual-url-status"
+	GogManualUrlValidationResultProperty  = "gog-manual-url-validation-result"
+	GogManualUrlGeneratedChecksumProperty = "gog-manual-url-generated-checksum"
+	GogProductValidationResultProperty    = "gog-product-validation-result"
+	GogProductGeneratedChecksumProperty   = "gog-product-generated-checksum"
+	GogProductValidationDateProperty      = "gog-product-validation-date"
+	GogStoreUrlProperty                   = "gog-store-url"
+	GogForumUrlProperty                   = "gog-forum-url"
+	GogSupportUrlProperty                 = "gog-support-url"
+	GogAdditionalRequirementsProperty     = "gog-additional-requirements"
+	GogCopyrightsProperty                 = "gog-copyrights"
+	GogInDevelopmentProperty              = "gog-in-development"
+	GogPreOrderProperty                   = "gog-pre-order"
+	GogComingSoonProperty                 = "gog-coming-soon"
+	GogBasePriceProperty                  = "gog-base-price"
+	GogPriceProperty                      = "gog-price"
+	GogIsFreeProperty                     = "gog-is-free"
+	GogIsDemoProperty                     = "gog-is-demo"
+	GogIsModProperty                      = "gog-is-mod"
+	GogIsDiscountedProperty               = "gog-is-discounted"
+	GogDiscountPercentageProperty         = "gog-discount-percentage"
+	GogSteamAppIdProperty                 = "gog-steam-app-id"
 
-	TitleProperty                      = "title"
-	DevelopersProperty                 = "developers"
-	PublishersProperty                 = "publishers"
-	ImageProperty                      = "image"
-	VerticalImageProperty              = "vertical-image"
-	ScreenshotsProperty                = "screenshots"
-	HeroProperty                       = "hero"
-	LogoProperty                       = "logo"
-	IconProperty                       = "icon"
-	IconSquareProperty                 = "icon-square"
-	BackgroundProperty                 = "background"
-	RatingProperty                     = "rating"
-	ProductTypeProperty                = "product-type"
-	IncludesGamesProperty              = "includes-games"
-	IsIncludedByGamesProperty          = "is-included-by-games"
-	RequiresGamesProperty              = "requires-games"
-	IsRequiredByGamesProperty          = "is-required-by-games"
-	ModifiesGamesProperty              = "modifies-games"
-	IsModifiedByGamesProperty          = "is-modified-by-games"
-	EditionsProperty                   = "editions"
-	RootEditionsProperty               = "root-editions"
-	GenresProperty                     = "genres"
-	StoreTagsProperty                  = "store-tags"
-	FeaturesProperty                   = "features"
-	SeriesProperty                     = "series"
-	ThemesProperty                     = "themes"
-	GameModesProperty                  = "game-modes"
-	TagIdProperty                      = "tag"
-	TagNameProperty                    = "tag-name"
-	VideoIdProperty                    = "video-id"
-	VideoTitleProperty                 = "video-title"
-	VideoDurationProperty              = "video-duration"
-	VideoErrorProperty                 = "video-error"
-	OperatingSystemsProperty           = "os"
-	LanguageCodeProperty               = "lang-code"
-	DownloadTypeProperty               = "download-type"
-	NoPatchesProperty                  = "no-patches"
-	SlugProperty                       = "slug"
-	GOGReleaseDateProperty             = "gog-release-date"
-	GOGOrderDateProperty               = "gog-order-date"
-	GlobalReleaseDateProperty          = "global-release-date"
-	LocalManualUrlProperty             = "local-manual-url"
-	ManualUrlFilenameProperty          = "manual-url-filename"
-	ManualUrlStatusProperty            = "manual-url-status"
-	ManualUrlValidationResultProperty  = "manual-url-validation-result"
-	ManualUrlGeneratedChecksumProperty = "manual-url-generated-checksum"
-	ProductValidationResultProperty    = "product-validation-result"
-	ProductGeneratedChecksumProperty   = "product-generated-checksum"
-	ProductValidationDateProperty      = "product-validation-date"
-	DownloadStatusErrorProperty        = "download-status-error"
-	DownloadQueuedProperty             = "download-queued"
-	DownloadStartedProperty            = "download-started"
-	DownloadCompletedProperty          = "download-completed"
-	StoreUrlProperty                   = "store-url"
-	ForumUrlProperty                   = "forum-url"
-	SupportUrlProperty                 = "support-url"
-	AdditionalRequirementsProperty     = "additional-requirements"
-	CopyrightsProperty                 = "copyrights"
-	InDevelopmentProperty              = "in-development"
-	PreOrderProperty                   = "pre-order"
-	ComingSoonProperty                 = "coming-soon"
-	BasePriceProperty                  = "base-price"
-	PriceProperty                      = "price"
-	IsFreeProperty                     = "is-free"
-	IsDemoProperty                     = "is-demo"
-	IsModProperty                      = "is-mod"
-	IsDiscountedProperty               = "is-discounted"
-	DiscountPercentageProperty         = "discount-percentage"
-	SteamAppIdProperty                 = "steam-app-id"
-	LocalTagsProperty                  = "local-tags"
+	LocalTagsProperty = "local-tags" //TODO: Rename to Vangogh*Property
 
-	SteamLastCommunityUpdateProperty = "steam-last-community-update"
+	// download lifecycle properties
+
+	DownloadStatusErrorProperty = "download-status-error" //TODO: Rename to Vangogh*Property
+	DownloadQueuedProperty      = "download-queued"       //TODO: Rename to Vangogh*Property
+	DownloadStartedProperty     = "download-started"      //TODO: Rename to Vangogh*Property
+	DownloadCompletedProperty   = "download-completed"    //TODO: Rename to Vangogh*Property
+
+	// video properties
+
+	VideoIdProperty       = "video-id"       // TODO: Rename to GogYouTubeVideoIdProperty
+	VideoTitleProperty    = "video-title"    // TODO: Rename to YouTubeVideoTitleProperty
+	VideoDurationProperty = "video-duration" // TODO: Rename to YouTubeVideoDurationProperty
+	VideoErrorProperty    = "video-error"    // TODO: Rename to YouTubeVideoErrorProperty
+
+	// downloads properties
+
+	OperatingSystemsProperty = "os"            // TODO: Replace with GogOperatingSystemsProperty, then add generic property for theo
+	LanguageCodeProperty     = "lang-code"     // TODO: Replace with GogLanguageCodeProperty, then add generic property for theo
+	DownloadTypeProperty     = "download-type" // TODO: Replace with GogDownloadTypeProperty, then add generic property for theo
+	NoPatchesProperty        = "no-patches"    // TODO: Replace with GogNoPatchesProperty, then add generic property for theo
 
 	SteamReviewScoreProperty                  = "steam-review-score"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
-	SteamOsAppCompatibilityCategoryProperty   = "steamos-app-compatibility-category" // no space in SteamOS
+	SteamOsAppCompatibilityCategoryProperty   = "steamos-app-compatibility-category" // TODO: Rename to steam-steamos-app-compatibility-category, no space in SteamOS
+	SteamLastCommunityUpdateProperty          = "steam-last-community-update"
 
-	SummaryRatingProperty  = "summary-rating"
-	SummaryReviewsProperty = "summary-reviews"
+	SummaryRatingProperty  = "summary-rating"  //TODO: Rename to Vangogh*Property
+	SummaryReviewsProperty = "summary-reviews" //TODO: Rename to Vangogh*Property
 
-	PcgwPageIdProperty = "pcgw-page-id"
+	GogPcgwPageIdProperty = "gog-pcgw-page-id"
 
 	// hltb-data properties
 
-	HltbIdProperty                  = "hltb-id"
-	HltbHoursToCompleteMainProperty = "hltb-comp-main"
-	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
-	HltbHoursToComplete100Property  = "hltb-comp-100"
-	HltbReviewScoreProperty         = "hltb-review-score"
-	HltbGenresProperty              = "hltb-genres"
-	HltbPlatformsProperty           = "hltb-platforms"
+	GogHltbIdProperty               = "gog-hltb-id"
+	HltbHoursToCompleteMainProperty = "hltb-comp-main"    // TODO: Use HLTB Id as a key
+	HltbHoursToCompletePlusProperty = "hltb-comp-plus"    // TODO: Use HLTB Id as a key
+	HltbHoursToComplete100Property  = "hltb-comp-100"     // TODO: Use HLTB Id as a key
+	HltbReviewScoreProperty         = "hltb-review-score" // TODO: Use HLTB Id as a key
+	HltbGenresProperty              = "hltb-genres"       // TODO: Use HLTB Id as a key
+	HltbPlatformsProperty           = "hltb-platforms"    // TODO: Use HLTB Id as a key
 
 	// pcgw-raw properties
 
-	IgdbIdProperty         = "igdb-id"
-	StrategyWikiIdProperty = "strategy-wiki-id"
-	MobyGamesIdProperty    = "moby-games-id"
-	WikipediaIdProperty    = "wikipedia-id"
-	WineHQIdProperty       = "winehq-id"
-	VndbIdProperty         = "vndb-id"
-	IGNWikiSlugProperty    = "ign-wiki-slug"
-	OpenCriticIdProperty   = "opencritic-id"
-	OpenCriticSlugProperty = "opencritic-slug"
+	GogIgdbIdProperty         = "gog-igdb-id"
+	GogStrategyWikiIdProperty = "gog-strategy-wiki-id"
+	GogMobyGamesIdProperty    = "gog-moby-games-id"
+	GogWikipediaIdProperty    = "gog-wikipedia-id"
+	GogWineHqIdProperty       = "gog-winehq-id"
+	GogVndbIdProperty         = "gog-vndb-id"
+	GogIgnWikiSlugProperty    = "gog-ign-wiki-slug"
+	GogOpenCriticIdProperty   = "gog-opencritic-id"
+	GogOpenCriticSlugProperty = "gog-opencritic-slug" // TODO: Use OpenCritic Id and migrate back to OpenCriticSlugProperty
 
-	EnginesProperty       = "engines"
-	EnginesBuildsProperty = "engines-builds"
+	EnginesProperty       = "engines"        // TODO: Rename to pcgw-engines
+	EnginesBuildsProperty = "engines-builds" // TODO: Rename to pcgw-engines-builds
 
 	// wikipedia-raw properties
 
-	CreditsProperty            = "credits"
-	HasMultipleCreditsProperty = "has-multiple-credits"
+	CreditsProperty            = "credits"              // TODO: Rename to wikipedia-credits, use Wikipedia Id as key
+	HasMultipleCreditsProperty = "has-multiple-credits" // TODO: Deprecate
 
-	CreatorsProperty    = "creators"
-	DirectorsProperty   = "directors"
-	ProducersProperty   = "producers"
-	DesignersProperty   = "designers"
-	ProgrammersProperty = "programmers"
-	ArtistsProperty     = "artists"
-	WritersProperty     = "writers"
-	ComposersProperty   = "composers"
+	CreatorsProperty    = "creators"    // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	DirectorsProperty   = "directors"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	ProducersProperty   = "producers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	DesignersProperty   = "designers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	ProgrammersProperty = "programmers" // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	ArtistsProperty     = "artists"     // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	WritersProperty     = "writers"     // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	ComposersProperty   = "composers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
 
 	// proton-summary properties
 
-	ProtonDBTierProperty       = "protondb-tier"
-	ProtonDBConfidenceProperty = "protondb-confidence"
+	ProtonDbTierProperty       = "protondb-tier"
+	ProtonDbConfidenceProperty = "protondb-confidence"
 
 	// steam-app-details properties
 
-	RequiredAgeProperty       = "required-age"
-	ControllerSupportProperty = "controller-support"
-	ShortDescriptionProperty  = "short-description"
-	WebsiteProperty           = "website"
-	MetacriticScoreProperty   = "metacritic-score"
-	MetacriticIdProperty      = "metacritic-id"
-	SteamCategoriesProperty   = "steam-categories"
-	SteamGenresProperty       = "steam-genres"
-	SteamSupportUrlProperty   = "steam-support-url"
-	SteamSupportEmailProperty = "steam-support-email"
+	RequiredAgeProperty       = "required-age"        // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	ControllerSupportProperty = "controller-support"  // TODO: Rename to SteamControllerSupportProperty, Use Steam AppId as key
+	ShortDescriptionProperty  = "short-description"   // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	WebsiteProperty           = "website"             // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	MetacriticScoreProperty   = "metacritic-score"    // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	MetacriticIdProperty      = "metacritic-id"       // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	SteamCategoriesProperty   = "steam-categories"    // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	SteamGenresProperty       = "steam-genres"        // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	SteamSupportUrlProperty   = "steam-support-url"   // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	SteamSupportEmailProperty = "steam-support-email" // TODO: Rename to Steam*Property, Use Steam AppId as a key
 
 	// opencritic properties
 
-	OpenCriticMedianScoreProperty     = "opencritic-median-score"
-	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score"
-	OpenCriticPercentileProperty      = "opencritic-percentile"
-	OpenCriticTierProperty            = "opencritic-tier"
+	OpenCriticMedianScoreProperty     = "opencritic-median-score"      // TODO: Use OpenCritic Id as key
+	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score" // TODO: Use OpenCritic Id as key
+	OpenCriticPercentileProperty      = "opencritic-percentile"        // TODO: Use OpenCritic Id as key
+	OpenCriticTierProperty            = "opencritic-tier"              // TODO: Use OpenCritic Id as key
 
 	// get-data properties
 
-	GetDataErrorDateProperty    = "get-data-error-date"
-	GetDataErrorMessageProperty = "get-data-error-message"
-	GetDataLastUpdatedProperty  = "get-data-last-updated"
+	GetDataErrorDateProperty    = "get-data-error-date"    // Rename to vangogh-*
+	GetDataErrorMessageProperty = "get-data-error-message" // Rename to vangogh-*
+	GetDataLastUpdatedProperty  = "get-data-last-updated"  // Rename to vangogh-*
 
 	// reduced properties
 
-	OwnedProperty      = "owned"
-	TypesProperty      = "types"
-	TopPercentProperty = "top-percent"
+	GogOwnedProperty = "gog-owned" // TODO: Reduce is proper data types
+
+	TypesProperty      = "types"       // TODO: Deprecate
+	TopPercentProperty = "top-percent" // TODO: Reduce in OpenCritic data
 
 	// data scheme version
 
-	DataSchemeVersionProperty = "data-scheme-version"
+	DataSchemeVersionProperty = "data-scheme-version" // TODO: Rename to vangogh-*
 
 	// sync properties
 
-	SyncEventsProperty      = "sync-events"
-	LastSyncUpdatesProperty = "last-sync-updates"
+	SyncEventsProperty      = "sync-events"       // TODO: Rename to vangogh-*
+	LastSyncUpdatesProperty = "last-sync-updates" // TODO: Rename to vangogh-*
 
 	// sort properties
 
@@ -197,14 +207,14 @@ const (
 )
 
 var ProductTypeProperties = map[ProductType][]string{
-	GogLicences:                  GOGLicencesProperties(),
-	GogUserWishlist:              GOGUserWishlistProperties(),
-	GogCatalogPage:               GOGCatalogPageProperties(),
-	GogOrderPage:                 GOGOrderPageProperties(),
-	GogAccountPage:               GOGAccountPageProperties(),
-	GogApiProducts:               GOGApiProductProperties(),
-	GogDetails:                   GOGDetailsProperties(),
-	GamesDbGogProducts:           GOGGamesDbProperties(),
+	GogLicences:                  GogLicencesProperties(),
+	GogUserWishlist:              GogUserWishlistProperties(),
+	GogCatalogPage:               GogCatalogPageProperties(),
+	GogOrderPage:                 GogOrderPageProperties(),
+	GogAccountPage:               GogAccountPageProperties(),
+	GogApiProducts:               GogApiProductProperties(),
+	GogDetails:                   GogDetailsProperties(),
+	GamesDbGogProducts:           GogGamesDbProperties(),
 	SteamAppDetails:              SteamAppDetailsProperties(),
 	SteamAppReviews:              SteamAppReviewsProperties(),
 	SteamDeckCompatibilityReport: SteamDeckCompatibilityReportProperties(),
@@ -217,146 +227,146 @@ var ProductTypeProperties = map[ProductType][]string{
 	OpenCriticApiGame:            OpenCriticApiGameProperties(),
 }
 
-func GOGLicencesProperties() []string {
+func GogLicencesProperties() []string {
 	return []string{
-		LicencesProperty,
+		GogLicencesProperty,
 	}
 }
 
-func GOGUserWishlistProperties() []string {
+func GogUserWishlistProperties() []string {
 	return []string{
-		UserWishlistProperty,
+		GogUserWishlistProperty,
 	}
 }
 
-func GOGCatalogPageProperties() []string {
+func GogCatalogPageProperties() []string {
 	return []string{
-		TitleProperty,
-		DevelopersProperty,
-		PublishersProperty,
-		ImageProperty,
-		VerticalImageProperty,
-		ScreenshotsProperty,
-		GenresProperty,
-		FeaturesProperty,
-		RatingProperty,
+		GogTitleProperty,
+		GogDevelopersProperty,
+		GogPublishersProperty,
+		GogImageProperty,
+		GogVerticalImageProperty,
+		GogScreenshotsProperty,
+		GogGenresProperty,
+		GogFeaturesProperty,
+		GogRatingProperty,
 		OperatingSystemsProperty,
-		SlugProperty,
-		GlobalReleaseDateProperty,
-		ProductTypeProperty,
-		StoreTagsProperty,
-		BasePriceProperty,
-		PriceProperty,
-		IsFreeProperty,
-		IsDiscountedProperty,
-		DiscountPercentageProperty,
-		ComingSoonProperty,
-		PreOrderProperty,
-		InDevelopmentProperty,
-		IsDemoProperty,
-		IsModProperty,
-		EditionsProperty,
-		RootEditionsProperty,
-		CatalogPageProductsProperty,
-		UserWishlistProperty,
+		GogSlugProperty,
+		GogGlobalReleaseDateProperty,
+		GogProductTypeProperty,
+		GogStoreTagsProperty,
+		GogBasePriceProperty,
+		GogPriceProperty,
+		GogIsFreeProperty,
+		GogIsDiscountedProperty,
+		GogDiscountPercentageProperty,
+		GogComingSoonProperty,
+		GogPreOrderProperty,
+		GogInDevelopmentProperty,
+		GogIsDemoProperty,
+		GogIsModProperty,
+		GogEditionsProperty,
+		GogRootEditionsProperty,
+		GogCatalogPageProductsProperty,
+		GogUserWishlistProperty,
 	}
 }
 
-func GOGOrderPageProperties() []string {
+func GogOrderPageProperties() []string {
 	return []string{
-		GOGOrderDateProperty,
-		OrderPageProductsProperty,
-		ImageProperty,
+		GogOrderDateProperty,
+		GogOrderPageProductsProperty,
+		GogImageProperty,
 	}
 }
 
-func GOGAccountPageProperties() []string {
+func GogAccountPageProperties() []string {
 	return []string{
-		TagIdProperty,
-		TagNameProperty,
-		ImageProperty,
-		SlugProperty,
-		AccountPageProductsProperty,
+		GogTagIdProperty,
+		GogTagNameProperty,
+		GogImageProperty,
+		GogSlugProperty,
+		GogAccountPageProductsProperty,
 	}
 }
 
-func GOGApiProductProperties() []string {
+func GogApiProductProperties() []string {
 	return []string{
-		TitleProperty,
-		DevelopersProperty,
-		PublishersProperty,
+		GogTitleProperty,
+		GogDevelopersProperty,
+		GogPublishersProperty,
 		LanguageCodeProperty,
-		ImageProperty,
-		VerticalImageProperty,
-		ScreenshotsProperty,
-		HeroProperty,
-		LogoProperty,
-		IconProperty,
-		IconSquareProperty,
-		BackgroundProperty,
-		GenresProperty,
-		FeaturesProperty,
-		SeriesProperty,
+		GogImageProperty,
+		GogVerticalImageProperty,
+		GogScreenshotsProperty,
+		GogHeroProperty,
+		GogLogoProperty,
+		GogIconProperty,
+		GogIconSquareProperty,
+		GogBackgroundProperty,
+		GogGenresProperty,
+		GogFeaturesProperty,
+		GogSeriesProperty,
 		VideoIdProperty,
 		OperatingSystemsProperty,
-		RequiresGamesProperty,
-		IsRequiredByGamesProperty,
-		IncludesGamesProperty,
-		IsIncludedByGamesProperty,
-		ModifiesGamesProperty,
-		IsModifiedByGamesProperty,
-		IsModProperty,
-		GlobalReleaseDateProperty,
-		GOGReleaseDateProperty,
-		StoreUrlProperty,
-		ForumUrlProperty,
-		SupportUrlProperty,
-		ProductTypeProperty,
-		CopyrightsProperty,
-		StoreTagsProperty,
-		AdditionalRequirementsProperty,
-		InDevelopmentProperty,
-		PreOrderProperty,
+		GogRequiresGamesProperty,
+		GogIsRequiredByGamesProperty,
+		GogIncludesGamesProperty,
+		GogIsIncludedByGamesProperty,
+		GogModifiesGamesProperty,
+		GogIsModifiedByGamesProperty,
+		GogIsModProperty,
+		GogGlobalReleaseDateProperty,
+		GogReleaseDateProperty,
+		GogStoreUrlProperty,
+		GogForumUrlProperty,
+		GogSupportUrlProperty,
+		GogProductTypeProperty,
+		GogCopyrightsProperty,
+		GogStoreTagsProperty,
+		GogAdditionalRequirementsProperty,
+		GogInDevelopmentProperty,
+		GogPreOrderProperty,
 	}
 }
 
-func GOGApiProductsKeyValues() []string {
+func GogApiProductsKeyValues() []string {
 	return []string{
 		DescriptionOverviewKeyValues,
 		DescriptionFeaturesKeyValues,
 	}
 }
 
-func GOGDetailsProperties() []string {
+func GogDetailsProperties() []string {
 	return []string{
-		TitleProperty,
-		FeaturesProperty,
-		TagIdProperty,
-		GOGReleaseDateProperty,
-		ForumUrlProperty,
+		GogTitleProperty,
+		GogFeaturesProperty,
+		GogTagIdProperty,
+		GogReleaseDateProperty,
+		GogForumUrlProperty,
 		OperatingSystemsProperty,
-		BackgroundProperty,
+		GogBackgroundProperty,
 	}
 }
 
-func GOGDetailsKeyValues() []string {
+func GogDetailsKeyValues() []string {
 	return []string{
 		ChangelogKeyValues,
 	}
 }
 
-func GOGGamesDbProperties() []string {
+func GogGamesDbProperties() []string {
 	return []string{
-		SteamAppIdProperty,
+		GogSteamAppIdProperty,
 		VideoIdProperty,
-		ThemesProperty,
-		GameModesProperty,
+		GogThemesProperty,
+		GogGameModesProperty,
 	}
 }
 
 func SteamAppDetailsProperties() []string {
 	return []string{
-		SteamAppIdProperty,
+		GogSteamAppIdProperty,
 		RequiredAgeProperty,
 		ControllerSupportProperty,
 		ShortDescriptionProperty,
@@ -372,7 +382,7 @@ func SteamAppDetailsProperties() []string {
 
 func SteamAppNewsProperties() []string {
 	return []string{
-		SteamAppIdProperty,
+		GogSteamAppIdProperty,
 		SteamLastCommunityUpdateProperty,
 	}
 }
@@ -393,27 +403,27 @@ func SteamDeckCompatibilityReportProperties() []string {
 
 func PcgwPageIdProperties() []string {
 	return []string{
-		PcgwPageIdProperty,
-		SteamAppIdProperty,
+		GogPcgwPageIdProperty,
+		GogSteamAppIdProperty,
 	}
 }
 
 func PcgwRawProperties() []string {
 	return []string{
-		SteamAppIdProperty,
-		HltbIdProperty,
-		IgdbIdProperty,
-		StrategyWikiIdProperty,
-		MobyGamesIdProperty,
-		WikipediaIdProperty,
-		WineHQIdProperty,
+		GogSteamAppIdProperty,
+		GogHltbIdProperty,
+		GogIgdbIdProperty,
+		GogStrategyWikiIdProperty,
+		GogMobyGamesIdProperty,
+		GogWikipediaIdProperty,
+		GogWineHqIdProperty,
 		WebsiteProperty,
-		VndbIdProperty,
+		GogVndbIdProperty,
 
 		MetacriticIdProperty,
 		MetacriticScoreProperty,
-		OpenCriticIdProperty,
-		OpenCriticSlugProperty,
+		GogOpenCriticIdProperty,
+		GogOpenCriticSlugProperty,
 		OpenCriticMedianScoreProperty,
 
 		EnginesProperty,
@@ -453,14 +463,14 @@ func HltbDataProperties() []string {
 		HltbReviewScoreProperty,
 		HltbGenresProperty,
 		HltbPlatformsProperty,
-		IGNWikiSlugProperty,
+		GogIgnWikiSlugProperty,
 	}
 }
 
 func ProtonDbSummaryProperties() []string {
 	return []string{
-		ProtonDBTierProperty,
-		ProtonDBConfidenceProperty,
+		ProtonDbTierProperty,
+		ProtonDbConfidenceProperty,
 	}
 }
 
@@ -483,7 +493,7 @@ func GetDataProperties() []string {
 
 func ReducedProperties() []string {
 	return []string{
-		OwnedProperty,
+		GogOwnedProperty,
 		TypesProperty,
 		TopPercentProperty,
 		SummaryRatingProperty,
@@ -515,14 +525,14 @@ func SyncProperties() []string {
 
 func DownloadsLifecycleProperties() []string {
 	return []string{
-		LocalManualUrlProperty,
-		ManualUrlFilenameProperty,
-		ManualUrlStatusProperty,
-		ManualUrlValidationResultProperty,
-		ManualUrlGeneratedChecksumProperty,
-		ProductValidationResultProperty,
-		ProductGeneratedChecksumProperty,
-		ProductValidationDateProperty,
+		GogLocalManualUrlProperty,
+		GogManualUrlFilenameProperty,
+		GogManualUrlStatusProperty,
+		GogManualUrlValidationResultProperty,
+		GogManualUrlGeneratedChecksumProperty,
+		GogProductValidationResultProperty,
+		GogProductGeneratedChecksumProperty,
+		GogProductValidationDateProperty,
 		DownloadQueuedProperty,
 		DownloadStartedProperty,
 		DownloadCompletedProperty,
@@ -535,14 +545,14 @@ func ReduxProperties() []string {
 
 	// product type properties (data for those is coming directly from origin data)
 
-	all = append(all, GOGLicencesProperties()...)
-	all = append(all, GOGUserWishlistProperties()...)
-	all = append(all, GOGCatalogPageProperties()...)
-	all = append(all, GOGOrderPageProperties()...)
-	all = append(all, GOGAccountPageProperties()...)
-	all = append(all, GOGApiProductProperties()...)
-	all = append(all, GOGDetailsProperties()...)
-	all = append(all, GOGGamesDbProperties()...)
+	all = append(all, GogLicencesProperties()...)
+	all = append(all, GogUserWishlistProperties()...)
+	all = append(all, GogCatalogPageProperties()...)
+	all = append(all, GogOrderPageProperties()...)
+	all = append(all, GogAccountPageProperties()...)
+	all = append(all, GogApiProductProperties()...)
+	all = append(all, GogDetailsProperties()...)
+	all = append(all, GogGamesDbProperties()...)
 	all = append(all, SteamAppDetailsProperties()...)
 	all = append(all, SteamAppNewsProperties()...)
 	all = append(all, SteamAppReviewsProperties()...)
@@ -569,21 +579,21 @@ func ReduxProperties() []string {
 func DataKeyValues() []string {
 	all := make([]string, 0)
 
-	all = append(all, GOGDetailsKeyValues()...)
-	all = append(all, GOGApiProductsKeyValues()...)
+	all = append(all, GogDetailsKeyValues()...)
+	all = append(all, GogApiProductsKeyValues()...)
 
 	return all
 }
 
 var imageTypeProperties = map[ImageType]string{
-	Image:         ImageProperty,
-	VerticalImage: VerticalImageProperty,
-	Screenshots:   ScreenshotsProperty,
-	Hero:          HeroProperty,
-	Logo:          LogoProperty,
-	Icon:          IconProperty,
-	IconSquare:    IconSquareProperty,
-	Background:    BackgroundProperty,
+	Image:         GogImageProperty,
+	VerticalImage: GogVerticalImageProperty,
+	Screenshots:   GogScreenshotsProperty,
+	Hero:          GogHeroProperty,
+	Logo:          GogLogoProperty,
+	Icon:          GogIconProperty,
+	IconSquare:    GogIconSquareProperty,
+	Background:    GogBackgroundProperty,
 }
 
 func PropertyFromImageType(it ImageType) string {

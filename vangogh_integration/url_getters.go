@@ -40,7 +40,7 @@ func PropertiesFromUrl(u *url.URL) []string {
 }
 
 func ProductTypeFromUrl(u *url.URL) ProductType {
-	return ParseProductType(u.Query().Get(ProductTypeProperty))
+	return ParseProductType(u.Query().Get(GogProductTypeProperty))
 }
 
 func ProductTypesFromUrl(u *url.URL) []ProductType {
@@ -48,10 +48,10 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 	q := u.Query()
 
 	productTypes := make([]ProductType, 0)
-	if !q.Has(ProductTypeProperty) {
+	if !q.Has(GogProductTypeProperty) {
 		return productTypes
 	}
-	ptParam := q.Get(ProductTypeProperty)
+	ptParam := q.Get(GogProductTypeProperty)
 	pts := strings.SplitSeq(ptParam, ",")
 	for pt := range pts {
 		productTypes = append(productTypes, ParseProductType(pt))
@@ -81,7 +81,7 @@ func IdsFromUrl(u *url.URL) ([]string, error) {
 
 	ids := ValuesFromUrl(u, IdProperty)
 
-	if slugs := ValuesFromUrl(u, SlugProperty); len(slugs) > 0 {
+	if slugs := ValuesFromUrl(u, GogSlugProperty); len(slugs) > 0 {
 		slugIds, err := idsFromSlugs(slugs, nil)
 		if err != nil {
 			return nil, err

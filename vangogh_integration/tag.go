@@ -28,12 +28,12 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal any) error {
 
 func TagIdByName(tagName string) (string, error) {
 
-	rdx, err := redux.NewReader(AbsReduxDir(), TagNameProperty)
+	rdx, err := redux.NewReader(AbsReduxDir(), GogTagNameProperty)
 	if err != nil {
 		return "", err
 	}
 
-	tagIds := rdx.Match(map[string][]string{TagNameProperty: {tagName}})
+	tagIds := rdx.Match(map[string][]string{GogTagNameProperty: {tagName}})
 	if tagIds == nil {
 		return "", fmt.Errorf("unknown tag-name %s", tagName)
 	}
@@ -51,7 +51,7 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), TagNameProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogTagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -65,8 +65,8 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 		return fmt.Errorf("invalid create tag response")
 	}
 
-	if !rdx.HasValue(TagNameProperty, ctResp.Id, tagName) {
-		if err := rdx.AddValues(TagNameProperty, ctResp.Id, tagName); err != nil {
+	if !rdx.HasValue(GogTagNameProperty, ctResp.Id, tagName) {
+		if err := rdx.AddValues(GogTagNameProperty, ctResp.Id, tagName); err != nil {
 			return err
 		}
 	}
@@ -76,7 +76,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), TagNameProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogTagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -90,8 +90,8 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 		return fmt.Errorf("invalid delete tag response")
 	}
 
-	if rdx.HasValue(TagNameProperty, tagId, tagName) {
-		if err := rdx.CutValues(TagNameProperty, tagId, tagName); err != nil {
+	if rdx.HasValue(GogTagNameProperty, tagId, tagName) {
+		if err := rdx.CutValues(GogTagNameProperty, tagId, tagName); err != nil {
 			return err
 		}
 	}
@@ -104,7 +104,7 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), TagIdProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogTagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func AddTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if rdx.HasValue(TagIdProperty, id, tag) {
+			if rdx.HasValue(GogTagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -132,7 +132,7 @@ func AddTags(
 				return fmt.Errorf("failed to add tag %s", tag)
 			}
 
-			if err := rdx.AddValues(TagIdProperty, id, tag); err != nil {
+			if err := rdx.AddValues(GogTagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -149,7 +149,7 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rdx, err := redux.NewWriter(AbsReduxDir(), TagIdProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), GogTagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -159,7 +159,7 @@ func RemoveTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if !rdx.HasValue(TagIdProperty, id, tag) {
+			if !rdx.HasValue(GogTagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -175,7 +175,7 @@ func RemoveTags(
 				return fmt.Errorf("failed to remove tag %s", tag)
 			}
 
-			if err := rdx.CutValues(TagIdProperty, id, tag); err != nil {
+			if err := rdx.CutValues(GogTagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -219,5 +219,5 @@ func diffTagProperty(
 }
 
 func DiffTags(id string, newTags []string) (add []string, rem []string, err error) {
-	return diffTagProperty(TagIdProperty, id, newTags)
+	return diffTagProperty(GogTagIdProperty, id, newTags)
 }
