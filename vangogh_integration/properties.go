@@ -43,7 +43,6 @@ const (
 	GogReleaseDateProperty                = "gog-release-date"
 	GogOrderDateProperty                  = "gog-order-date"
 	GogGlobalReleaseDateProperty          = "gog-global-release-date"
-	GogLocalManualUrlProperty             = "gog-local-manual-url"
 	GogManualUrlFilenameProperty          = "gog-manual-url-filename"
 	GogManualUrlStatusProperty            = "gog-manual-url-status"
 	GogManualUrlValidationResultProperty  = "gog-manual-url-validation-result"
@@ -525,7 +524,6 @@ func SyncProperties() []string {
 
 func DownloadsLifecycleProperties() []string {
 	return []string{
-		GogLocalManualUrlProperty,
 		GogManualUrlFilenameProperty,
 		GogManualUrlStatusProperty,
 		GogManualUrlValidationResultProperty,
