@@ -3,6 +3,8 @@ package vangogh_integration
 const (
 	IdProperty = "id"
 
+	TitleProperty = "title"
+
 	// GOG Properties
 
 	GogLicencesProperty                   = "gog-licences"
