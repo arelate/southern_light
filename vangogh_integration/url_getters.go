@@ -8,9 +8,56 @@ import (
 )
 
 const (
-	downloadTypeParam  = "download-type"
-	propertyParam      = "property"
-	sinceHoursAgoParam = "since-hours-ago"
+	UrlIdParameter                 = "id"
+	UrlTitleParameter              = "title"
+	UrlSlugParameter               = "slug"
+	UrlOperatingSystemParameter    = "os"
+	UrlLanguageCodeParameter       = "lang-code"
+	UrlDownloadTypeParameter       = "download-type"
+	UrlNoPatchesParameter          = "no-patches"
+	UrlDownloadLayoutParameter     = "download-layout"
+	UrlAllParameter                = "all"
+	UrlTestParameter               = "test"
+	UrlWineParameter               = "wine"
+	UrlSteamCmdParameter           = "steamcmd"
+	UrlSinceHoursAgoParameter      = "since-hours-ago"
+	UrlPropertyParameter           = "property"
+	UrlProductTypeParameter        = "product-type"
+	UrlForceParameter              = "force"
+	UrlPurchasesParameter          = "purchases"
+	UrlExtraParameter              = "extra"
+	UrlRelatedApiProductsParameter = "related-api-products"
+	UrlManualUrlParameter          = "manual-url"
+	UrlManualUrlFilterParameter    = "manual-url-filter"
+	UrlUpdateDetailsParameter      = "update-details"
+	UrlValidateParameter           = "validate"
+	UrlChecksumsOnlyParameter      = "checksums-only"
+	UrlQueuedParameter             = "queued"
+	UrlMissingParameter            = "missing"
+	UrlDebugParameter              = "debug"
+	UrlImageTypeParameter          = "image-type"
+	UrlCookiesParameter            = "cookies"
+	UrlFromParameter               = "from"
+	UrlToParameter                 = "to"
+	UrlPortParameter               = "port"
+	UrlInsecureCookiesParameter    = "insecure-cookies"
+	UrlStdErrParameter             = "stderr"
+	UrlUpdatesOnlyParameter        = "updates-only"
+	UrlUsernameParameter           = "username"
+	UrlPasswordParameter           = "password"
+	UrlNewPasswordParameter        = "new-password"
+	UrlRoleParameter               = "role"
+	UrlCreateParameter             = "create"
+	UrlDeleteParameter             = "delete"
+	UrlChangePasswordParameter     = "change-password"
+	UrlListParameter               = "list"
+	UrlValidationStatusParameter   = "validation-status"
+	UrlNotValidParameter           = "not-valid"
+	UrlNewValueParameter           = "new-property-value"
+	UrlValueParameter              = "value"
+	UrlConditionParameter          = "condition"
+	UrlSectionParameter            = "section"
+	UrlImportCookiesParameter      = "import-cookies"
 )
 
 const (
@@ -32,15 +79,15 @@ func ValuesFromUrl(u *url.URL, arg string) []string {
 }
 
 func PropertyFromUrl(u *url.URL) string {
-	return u.Query().Get(propertyParam)
+	return u.Query().Get(UrlPropertyParameter)
 }
 
 func PropertiesFromUrl(u *url.URL) []string {
-	return ValuesFromUrl(u, propertyParam)
+	return ValuesFromUrl(u, UrlPropertyParameter)
 }
 
 func ProductTypeFromUrl(u *url.URL) ProductType {
-	return ParseProductType(u.Query().Get(GogProductTypeProperty))
+	return ParseProductType(u.Query().Get(UrlProductTypeParameter))
 }
 
 func ProductTypesFromUrl(u *url.URL) []ProductType {
@@ -48,10 +95,10 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 	q := u.Query()
 
 	productTypes := make([]ProductType, 0)
-	if !q.Has(GogProductTypeProperty) {
+	if !q.Has(UrlProductTypeParameter) {
 		return productTypes
 	}
-	ptParam := q.Get(GogProductTypeProperty)
+	ptParam := q.Get(UrlProductTypeParameter)
 	pts := strings.SplitSeq(ptParam, ",")
 	for pt := range pts {
 		productTypes = append(productTypes, ParseProductType(pt))
@@ -60,12 +107,16 @@ func ProductTypesFromUrl(u *url.URL) []ProductType {
 }
 
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
-	osStrings := ValuesFromUrl(u, OperatingSystemsProperty)
-	return ParseManyOperatingSystems(osStrings)
+	osStrings := ValuesFromUrl(u, UrlOperatingSystemParameter)
+	operatingSystems := ParseManyOperatingSystems(osStrings)
+	if len(operatingSystems) == 0 {
+		operatingSystems = append(operatingSystems, AnyOperatingSystem)
+	}
+	return operatingSystems
 }
 
 func LanguageCodesFromUrl(u *url.URL) []string {
-	if langCodes := ValuesFromUrl(u, LanguageCodeProperty); len(langCodes) > 0 {
+	if langCodes := ValuesFromUrl(u, UrlLanguageCodeParameter); len(langCodes) > 0 {
 		return langCodes
 	} else {
 		return []string{defaultLanguageCode}
@@ -73,15 +124,15 @@ func LanguageCodesFromUrl(u *url.URL) []string {
 }
 
 func DownloadTypesFromUrl(u *url.URL) []DownloadType {
-	dtStrings := ValuesFromUrl(u, downloadTypeParam)
+	dtStrings := ValuesFromUrl(u, UrlDownloadTypeParameter)
 	return ParseManyDownloadTypes(dtStrings)
 }
 
 func IdsFromUrl(u *url.URL) ([]string, error) {
 
-	ids := ValuesFromUrl(u, IdProperty)
+	ids := ValuesFromUrl(u, UrlIdParameter)
 
-	if slugs := ValuesFromUrl(u, GogSlugProperty); len(slugs) > 0 {
+	if slugs := ValuesFromUrl(u, UrlSlugParameter); len(slugs) > 0 {
 		slugIds, err := idsFromSlugs(slugs, nil)
 		if err != nil {
 			return nil, err
@@ -93,7 +144,7 @@ func IdsFromUrl(u *url.URL) ([]string, error) {
 }
 
 func SinceFromUrl(u *url.URL) (int64, error) {
-	str := u.Query().Get(sinceHoursAgoParam)
+	str := u.Query().Get(UrlSinceHoursAgoParameter)
 	var sha int
 	var err error
 	if str != "" {
@@ -108,8 +159,8 @@ func SinceFromUrl(u *url.URL) (int64, error) {
 func DownloadsLayoutFromUrl(u *url.URL) DownloadsLayout {
 	downloadsLayout := DefaultDownloadsLayout
 	q := u.Query()
-	if q.Has("downloads-layout") {
-		if dl := ParseDownloadsLayout(q.Get("downloads-layout")); dl != UnknownDownloadsLayout {
+	if q.Has(UrlDownloadLayoutParameter) {
+		if dl := ParseDownloadsLayout(q.Get(UrlDownloadLayoutParameter)); dl != UnknownDownloadsLayout {
 			downloadsLayout = dl
 		}
 	}
