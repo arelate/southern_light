@@ -15,7 +15,7 @@ const (
 	UrlLanguageCodeParameter       = "lang-code"
 	UrlDownloadTypeParameter       = "download-type"
 	UrlNoPatchesParameter          = "no-patches"
-	UrlDownloadLayoutParameter     = "download-layout"
+	UrlDownloadsLayoutParameter    = "downloads-layout"
 	UrlAllParameter                = "all"
 	UrlTestParameter               = "test"
 	UrlWineParameter               = "wine"
@@ -159,8 +159,8 @@ func SinceFromUrl(u *url.URL) (int64, error) {
 func DownloadsLayoutFromUrl(u *url.URL) DownloadsLayout {
 	downloadsLayout := DefaultDownloadsLayout
 	q := u.Query()
-	if q.Has(UrlDownloadLayoutParameter) {
-		if dl := ParseDownloadsLayout(q.Get(UrlDownloadLayoutParameter)); dl != UnknownDownloadsLayout {
+	if q.Has(UrlDownloadsLayoutParameter) {
+		if dl := ParseDownloadsLayout(q.Get(UrlDownloadsLayoutParameter)); dl != UnknownDownloadsLayout {
 			downloadsLayout = dl
 		}
 	}
