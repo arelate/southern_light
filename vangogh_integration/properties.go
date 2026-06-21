@@ -66,6 +66,7 @@ const (
 	GogIsDiscountedProperty               = "gog-is-discounted"
 	GogDiscountPercentageProperty         = "gog-discount-percentage"
 	GogSteamAppIdProperty                 = "gog-steam-app-id"
+	GogBundleNameProperty                 = "gog-bundle-name"
 
 	LocalTagsProperty = "local-tags" //TODO: Rename to Vangogh*Property
 
@@ -90,11 +91,19 @@ const (
 	DownloadTypeProperty     = "download-type" // TODO: Replace with GogDownloadTypeProperty, then add generic property for theo
 	NoPatchesProperty        = "no-patches"    // TODO: Replace with GogNoPatchesProperty, then add generic property for theo
 
+	// Steam properties
+
+	SteamTitleProperty                        = "steam-title"
 	SteamReviewScoreProperty                  = "steam-review-score"
 	SteamReviewScoreDescProperty              = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
 	SteamOsAppCompatibilityCategoryProperty   = "steamos-app-compatibility-category" // TODO: Rename to steam-steamos-app-compatibility-category, no space in SteamOS
 	SteamLastCommunityUpdateProperty          = "steam-last-community-update"
+
+	// EGS properties
+
+	EgsTitleProperty    = "egs-title"
+	EgsMainGameProperty = "egs-main-game"
 
 	SummaryRatingProperty  = "summary-rating"  //TODO: Rename to Vangogh*Property
 	SummaryReviewsProperty = "summary-reviews" //TODO: Rename to Vangogh*Property
