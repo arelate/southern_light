@@ -12,8 +12,7 @@ func PrintParams(
 	ids []string,
 	operatingSystems []OperatingSystem,
 	langCodes []string,
-	downloadTypes []DownloadType,
-	noPatches bool) {
+	noDlc, noPatches bool) {
 
 	ppa := nod.Begin("operating parameters:")
 	defer ppa.Done()
@@ -21,22 +20,24 @@ func PrintParams(
 	params := make(map[string][]string)
 
 	for _, id := range ids {
-		params[IdProperty] = append(params[IdProperty], id)
+		params[UrlIdParameter] = append(params[UrlIdParameter], id)
 	}
 
 	for _, os := range operatingSystems {
-		params[OperatingSystemsProperty] = append(params[OperatingSystemsProperty], os.String())
+		params[UrlOperatingSystemParameter] = append(params[UrlOperatingSystemParameter], os.String())
 	}
 
 	for _, lc := range langCodes {
-		params[LanguageCodeProperty] = append(params[LanguageCodeProperty], lc)
+		params[UrlLanguageCodeParameter] = append(params[UrlLanguageCodeParameter], lc)
 	}
 
-	for _, dt := range downloadTypes {
-		params[DownloadTypeProperty] = append(params[DownloadTypeProperty], dt.String())
+	if noDlc {
+		params[UrlNoDlcParameter] = append(params[UrlNoDlcParameter], strconv.FormatBool(noDlc))
 	}
 
-	params[NoPatchesProperty] = append(params[NoPatchesProperty], strconv.FormatBool(noPatches))
+	if noPatches {
+		params[NoPatchesProperty] = append(params[NoPatchesProperty], strconv.FormatBool(noPatches))
+	}
 
 	pvs := make([]string, 0, len(params))
 	for _, p := range []string{
