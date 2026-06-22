@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	// GitHub binaries
 	UmuLauncher        = "Open-Wine-Components/umu-launcher"
 	UmuProton          = "Open-Wine-Components/umu-proton"
 	ProtonGe           = "GloriousEggroll/proton-ge-custom"
@@ -18,9 +19,12 @@ const (
 	WineMacOs          = "Gcenx/macOS_Wine_builds"
 	GamePortingToolkit = "Gcenx/game-porting-toolkit"
 	DxMt               = "3Shain/dxmt"
-	VcRedistX64        = "vc_redist.x64.exe"
-	VcRedistX86        = "vc_redist.x86.exe"
-	DxEndUserRuntime   = "directx_Jun2010_redist.exe"
+	Innoextract        = "dscharrer/innoextract"
+
+	// Direct download binaries
+	VcRedistX64      = "vc_redist.x64.exe"
+	VcRedistX86      = "vc_redist.x86.exe"
+	DxEndUserRuntime = "directx_Jun2010_redist.exe"
 )
 
 const (
@@ -142,6 +146,11 @@ var OsWineBinaries = []Binary{
 		Digest:      "sha256:053f76dcbb28802e23341b6a787e3b0791c0fa5c8d4d011b1044172dbf89c73b",
 		DownloadUrl: "https://download.microsoft.com/download/8/4/a/84a35bf1-dafe-4ae8-82af-ad2ae20b6b14/directx_Jun2010_redist.exe",
 		OS:          vangogh_integration.Windows,
+	},
+	{
+		GitHubOwnerRepo: Innoextract,
+		GitHubAssetGlob: tarXz,
+		OS:              vangogh_integration.Linux,
 	},
 }
 
