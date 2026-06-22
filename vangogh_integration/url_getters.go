@@ -99,7 +99,9 @@ const (
 	UrlNoPresetLaunchOptionsParameter = "no-preset-launch-options"
 	UrlSteamAppIdParameter            = "steam-appid"
 	UrlUrlParameter                   = "url"
-	UrlNoDlcParameter                 = "no-dlc"
+	UrlNoDlcsParameter                = "no-dlcs"
+	UrlNoExtrasParameter              = "no-extras"
+	UrlNoCleanupParameter             = "no-cleanup"
 )
 
 const (

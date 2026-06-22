@@ -172,7 +172,8 @@ func convertGameDetails(det *gog_integration.Details, rdx redux.Readable, dt Dow
 func (list DownloadsList) Only(
 	operatingSystems []OperatingSystem,
 	langCodes []string,
-	downloadTypes []DownloadType,
+	noDlcs bool,
+	noExtras bool,
 	noPatches bool) DownloadsList {
 	osSet := make(map[OperatingSystem]bool)
 	for _, os := range operatingSystems {
@@ -184,16 +185,13 @@ func (list DownloadsList) Only(
 		}
 		osSet[os] = true
 	}
-	dtSet := make(map[DownloadType]bool)
-	for _, dt := range downloadTypes {
-		if dt == AnyDownloadType {
-			for _, adt := range AllDownloadTypes() {
-				dtSet[adt] = true
-			}
-			break
-		}
-		dtSet[dt] = true
+
+	dtSet := map[DownloadType]bool{
+		Installer: true,
+		DLC:       !noDlcs,
+		Extra:     !noExtras,
 	}
+
 	langSet := make(map[string]bool)
 	for _, lc := range langCodes {
 		langSet[lc] = true
@@ -248,7 +246,8 @@ func MapDownloads(
 	rdx redux.Readable,
 	operatingSystems []OperatingSystem,
 	langCodes []string,
-	downloadTypes []DownloadType,
+	noDlcs bool,
+	noExtras bool,
 	noPatches bool,
 	dlProcessor DownloadsListProcessor,
 	tpw nod.TotalProgressWriter) error {
@@ -298,7 +297,8 @@ func MapDownloads(
 			continue
 		}
 
-		det, err := UnmarshalDetails(id, kvDetails)
+		var det *gog_integration.Details
+		det, err = UnmarshalDetails(id, kvDetails)
 		if err != nil {
 			return err
 		}
@@ -314,7 +314,7 @@ func MapDownloads(
 
 		filteredDownloads := make([]Download, 0)
 
-		for _, dl := range downloads.Only(operatingSystems, langCodes, downloadTypes, noPatches) {
+		for _, dl := range downloads.Only(operatingSystems, langCodes, noDlcs, noExtras, noPatches) {
 			//some manualUrls have "0 MB" specified as size and don't seem to be used to create user clickable links.
 			//resolving such manualUrls leads to an empty filename
 			//given they don't contribute anything to download, size or validate commands - we're filtering them

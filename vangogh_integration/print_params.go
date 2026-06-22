@@ -12,7 +12,7 @@ func PrintParams(
 	ids []string,
 	operatingSystems []OperatingSystem,
 	langCodes []string,
-	noDlc, noPatches bool) {
+	noDlc, noExtras, noPatches bool) {
 
 	ppa := nod.Begin("operating parameters:")
 	defer ppa.Done()
@@ -32,7 +32,11 @@ func PrintParams(
 	}
 
 	if noDlc {
-		params[UrlNoDlcParameter] = append(params[UrlNoDlcParameter], strconv.FormatBool(noDlc))
+		params[UrlNoDlcsParameter] = append(params[UrlNoDlcsParameter], strconv.FormatBool(noDlc))
+	}
+
+	if noExtras {
+		params[UrlNoExtrasParameter] = append(params[UrlNoExtrasParameter], strconv.FormatBool(noExtras))
 	}
 
 	if noPatches {
