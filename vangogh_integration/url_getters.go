@@ -122,14 +122,6 @@ func ValuesFromUrl(u *url.URL, arg string) []string {
 	return nil
 }
 
-func PropertyFromUrl(u *url.URL) string {
-	return u.Query().Get(UrlPropertyParameter)
-}
-
-func PropertiesFromUrl(u *url.URL) []string {
-	return ValuesFromUrl(u, UrlPropertyParameter)
-}
-
 func ProductTypeFromUrl(u *url.URL) ProductType {
 	return ParseProductType(u.Query().Get(UrlProductTypeParameter))
 }
@@ -167,11 +159,6 @@ func LanguageCodesFromUrl(u *url.URL) []string {
 	}
 }
 
-func DownloadTypesFromUrl(u *url.URL) []DownloadType {
-	dtStrings := ValuesFromUrl(u, UrlDownloadTypeParameter)
-	return ParseManyDownloadTypes(dtStrings)
-}
-
 func IdsFromUrl(u *url.URL) ([]string, error) {
 
 	ids := ValuesFromUrl(u, UrlIdParameter)
@@ -187,7 +174,7 @@ func IdsFromUrl(u *url.URL) ([]string, error) {
 	return ids, nil
 }
 
-func SinceFromUrl(u *url.URL) (int64, error) {
+func SinceHouseAgoFromUrl(u *url.URL) (int64, error) {
 	str := u.Query().Get(UrlSinceHoursAgoParameter)
 	var sha int
 	var err error
