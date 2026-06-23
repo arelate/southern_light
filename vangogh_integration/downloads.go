@@ -18,8 +18,10 @@ import (
 const (
 	mbSuffix  = "MB"
 	gbSuffix  = "GB"
-	bytesInGB = 1024 * 1024 * 1024
-	bytesInMB = 1024 * 1024
+	tbSuffix  = "TB"
+	bytesInTb = 1024 * 1024 * 1024 * 1024
+	bytesInGb = 1024 * 1024 * 1024
+	bytesInMb = 1024 * 1024
 	patchStr  = "patch"
 )
 
@@ -74,17 +76,21 @@ func convertToBytes(size string, suffix string, bytesInUnit int) int64 {
 }
 
 func SizeToEstimatedBytes(size string) int64 {
-	if strings.HasSuffix(size, gbSuffix) {
-		return convertToBytes(size, gbSuffix, bytesInGB)
-	} else if strings.HasSuffix(size, mbSuffix) {
-		return convertToBytes(size, mbSuffix, bytesInMB)
-	} else {
-		log.Printf("unknown size format: %s", size)
-		return 0
+	suffixes := []string{tbSuffix, gbSuffix, mbSuffix}
+	bytesInUnits := []int{bytesInTb, bytesInGb, bytesInMb}
+
+	for ii, sfx := range suffixes {
+		if strings.HasSuffix(size, sfx) {
+			return convertToBytes(size, sfx, bytesInUnits[ii])
+		}
 	}
+
+	log.Printf("unknown size format: %s", size)
+	return 0
 }
 
 func (dl *Download) String() string {
+
 	switch dl.DownloadType {
 	case Installer:
 		fallthrough
@@ -97,7 +103,7 @@ func (dl *Download) String() string {
 		}
 		return fmt.Sprintf("%s %s (%s, %s)", name, dl.Version, dl.OS, dl.LanguageCode)
 	case Extra:
-		return strings.Title(dl.Name)
+		return dl.Name
 	default:
 		return ""
 	}

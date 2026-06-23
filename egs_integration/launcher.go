@@ -17,7 +17,7 @@ type GameAsset struct {
 	Metadata      struct {
 		InstallationPoolId string `json:"installationPoolId,omitempty"`
 		UpdateType         string `json:"update_type,omitempty"`
-	} `json:"metadata,omitempty"`
+	} `json:"metadata"`
 	SidecarRvn int    `json:"sidecarRvn,omitempty"`
 	AssetId    string `json:"assetId"`
 }

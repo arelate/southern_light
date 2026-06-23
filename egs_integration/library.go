@@ -12,18 +12,18 @@ type LibraryItems struct {
 		StateToken string `json:"stateToken"`
 	} `json:"responseMetadata"`
 	Records []struct {
-		Namespace       string        `json:"namespace"`
-		CatalogItemId   string        `json:"catalogItemId"`
-		AppName         string        `json:"appName"`
-		Country         string        `json:"country"`
-		Platform        []string      `json:"platform"`
-		ProductId       string        `json:"productId"`
-		SandboxName     string        `json:"sandboxName"`
-		SandboxType     string        `json:"sandboxType"`
-		RecordType      string        `json:"recordType"`
-		AcquisitionDate time.Time     `json:"acquisitionDate"`
-		Dependencies    []interface{} `json:"dependencies"`
-		AvailableDate   time.Time     `json:"availableDate,omitempty"`
+		Namespace       string    `json:"namespace"`
+		CatalogItemId   string    `json:"catalogItemId"`
+		AppName         string    `json:"appName"`
+		Country         string    `json:"country"`
+		Platform        []string  `json:"platform"`
+		ProductId       string    `json:"productId"`
+		SandboxName     string    `json:"sandboxName"`
+		SandboxType     string    `json:"sandboxType"`
+		RecordType      string    `json:"recordType"`
+		AcquisitionDate time.Time `json:"acquisitionDate"`
+		Dependencies    []any     `json:"dependencies"`
+		AvailableDate   time.Time `json:"availableDate"`
 	} `json:"records"`
 }
 
