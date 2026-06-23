@@ -2,9 +2,6 @@ package vangogh_integration
 
 import (
 	"slices"
-	"strconv"
-
-	"github.com/arelate/southern_light/gog_integration"
 )
 
 type ProductDetails struct {
@@ -98,43 +95,4 @@ func (mdl ProductDownloadLinks) FilterDownloadTypes(downloadTypes ...DownloadTyp
 	}
 
 	return filteredLinks
-}
-
-func ProductDetailsFromGamesDbProduct(gamesDbProduct *gog_integration.GamesDbProduct) (*ProductDetails, error) {
-
-	game := gamesDbProduct.Game
-
-	pd := new(ProductDetails{
-		Id:          gamesDbProduct.Game.Id,
-		Slug:        gamesDbProduct.Game.Slug,
-		Title:       gamesDbProduct.Game.Title.EnUS,
-		ProductType: gamesDbProduct.Game.Type,
-		Images: ProductImages{
-			VerticalImage: gog_integration.ImageId(game.VerticalCover.UrlFormat),
-			Image:         gog_integration.ImageId(game.Cover.UrlFormat),
-			Hero:          gog_integration.ImageId(game.HorizontalArtwork.UrlFormat),
-			Logo:          gog_integration.ImageId(game.Logo.UrlFormat),
-			Icon:          gog_integration.ImageId(game.Icon.UrlFormat),
-			IconSquare:    gog_integration.ImageId(game.SquareIcon.UrlFormat),
-			Background:    gog_integration.ImageId(game.Background.UrlFormat),
-		},
-	})
-
-	if steamAppId := gamesDbProduct.GetSteamAppId(); steamAppId > 0 {
-		pd.SteamAppId = strconv.FormatInt(int64(steamAppId), 10)
-	}
-
-	for _, osStr := range gamesDbProduct.SupportedOperatingSystems {
-		pd.OperatingSystems = append(pd.OperatingSystems, ParseOperatingSystem(osStr.Name))
-	}
-
-	for _, dev := range game.Developers {
-		pd.Developers = append(pd.Developers, dev.Name)
-	}
-
-	for _, pub := range game.Publishers {
-		pd.Publishers = append(pd.Publishers, pub.Name)
-	}
-
-	return pd, nil
 }

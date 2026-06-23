@@ -1,4 +1,4 @@
-package vangogh_integration
+package gog_integration
 
 import "encoding/xml"
 

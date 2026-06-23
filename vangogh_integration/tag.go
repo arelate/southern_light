@@ -58,7 +58,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 	createTagUrl := gog_integration.CreateTagUrl(tagName)
 	var ctResp gog_integration.CreateTagResp
-	if err := postTagResp(httpClient, createTagUrl, &ctResp); err != nil {
+	if err = postTagResp(httpClient, createTagUrl, &ctResp); err != nil {
 		return err
 	}
 	if ctResp.Id == "" {
@@ -66,7 +66,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 	}
 
 	if !rdx.HasValue(GogTagNameProperty, ctResp.Id, tagName) {
-		if err := rdx.AddValues(GogTagNameProperty, ctResp.Id, tagName); err != nil {
+		if err = rdx.AddValues(GogTagNameProperty, ctResp.Id, tagName); err != nil {
 			return err
 		}
 	}
@@ -83,7 +83,7 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
 	deleteTagUrl := gog_integration.DeleteTagUrl(tagId)
 	var dtResp gog_integration.DeleteTagResp
-	if err := postTagResp(httpClient, deleteTagUrl, &dtResp); err != nil {
+	if err = postTagResp(httpClient, deleteTagUrl, &dtResp); err != nil {
 		return err
 	}
 	if dtResp.Status != "deleted" {
@@ -91,7 +91,7 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 	}
 
 	if rdx.HasValue(GogTagNameProperty, tagId, tagName) {
-		if err := rdx.CutValues(GogTagNameProperty, tagId, tagName); err != nil {
+		if err = rdx.CutValues(GogTagNameProperty, tagId, tagName); err != nil {
 			return err
 		}
 	}
@@ -121,7 +121,7 @@ func AddTags(
 
 			addTagUrl := gog_integration.AddTagUrl(id, tag)
 			var artResp gog_integration.AddRemoveTagResp
-			if err := postTagResp(httpClient, addTagUrl, &artResp); err != nil {
+			if err = postTagResp(httpClient, addTagUrl, &artResp); err != nil {
 				if tpw != nil {
 					tpw.Increment()
 				}
@@ -132,7 +132,7 @@ func AddTags(
 				return fmt.Errorf("failed to add tag %s", tag)
 			}
 
-			if err := rdx.AddValues(GogTagIdProperty, id, tag); err != nil {
+			if err = rdx.AddValues(GogTagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -166,7 +166,7 @@ func RemoveTags(
 
 			removeTagUrl := gog_integration.RemoveTagUrl(id, tag)
 			var artResp gog_integration.AddRemoveTagResp
-			if err := postTagResp(httpClient, removeTagUrl, &artResp); err != nil {
+			if err = postTagResp(httpClient, removeTagUrl, &artResp); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -175,7 +175,7 @@ func RemoveTags(
 				return fmt.Errorf("failed to remove tag %s", tag)
 			}
 
-			if err := rdx.CutValues(GogTagIdProperty, id, tag); err != nil {
+			if err = rdx.CutValues(GogTagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}

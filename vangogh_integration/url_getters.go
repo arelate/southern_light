@@ -160,18 +160,7 @@ func LanguageCodesFromUrl(u *url.URL) []string {
 }
 
 func IdsFromUrl(u *url.URL) ([]string, error) {
-
-	ids := ValuesFromUrl(u, UrlIdParameter)
-
-	if slugs := ValuesFromUrl(u, UrlSlugParameter); len(slugs) > 0 {
-		slugIds, err := idsFromSlugs(slugs, nil)
-		if err != nil {
-			return nil, err
-		}
-		ids = append(ids, slugIds...)
-	}
-
-	return ids, nil
+	return ValuesFromUrl(u, UrlIdParameter), nil
 }
 
 func SinceHouseAgoFromUrl(u *url.URL) (int64, error) {

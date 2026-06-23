@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"math"
 	"path"
 	"strconv"
 	"strings"
@@ -106,25 +105,21 @@ func (dl *Download) String() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_integration.Details, rdx redux.Readable) (DownloadsList, error) {
-	return fromGameDetails(det, rdx)
-}
-
-func fromGameDetails(det *gog_integration.Details, rdx redux.Readable) (DownloadsList, error) {
+func FromDetails(det *gog_integration.Details) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
 		return dlList, fmt.Errorf("details are nil")
 	}
 
-	installerDls, err := convertGameDetails(det, rdx, Installer)
+	installerDls, err := convertGameDetails(det, Installer)
 	if err != nil {
 		return dlList, err
 	}
 	dlList = append(dlList, installerDls...)
 
 	for _, dlc := range det.DLCs {
-		dlcDls, err := convertGameDetails(&dlc, rdx, DLC)
+		dlcDls, err := convertGameDetails(&dlc, DLC)
 		if err != nil {
 			return dlList, err
 		}
@@ -134,7 +129,7 @@ func fromGameDetails(det *gog_integration.Details, rdx redux.Readable) (Download
 	return dlList, nil
 }
 
-func convertGameDetails(det *gog_integration.Details, rdx redux.Readable, dt DownloadType) (DownloadsList, error) {
+func convertGameDetails(det *gog_integration.Details, dt DownloadType) (DownloadsList, error) {
 
 	dlList := make(DownloadsList, 0)
 
@@ -233,10 +228,6 @@ func (list DownloadsList) TotalBytesEstimate() int64 {
 	return totalBytes
 }
 
-func (list DownloadsList) TotalGBsEstimate() float64 {
-	return float64(list.TotalBytesEstimate()) / math.Pow(1000, 3)
-}
-
 type DownloadsListProcessor interface {
 	Process(id string, slug string, downloadsList DownloadsList) error
 }
@@ -306,7 +297,7 @@ func MapDownloads(
 		var downloads DownloadsList
 
 		if det != nil {
-			downloads, err = FromDetails(det, rdx)
+			downloads, err = FromDetails(det)
 			if err != nil {
 				return err
 			}
@@ -373,10 +364,6 @@ func NilDetailsErr(id string) error {
 
 func IsDetailsNotFound(err error) bool {
 	return strings.HasPrefix(err.Error(), detailsNotFoundError)
-}
-
-func IsNilDetails(err error) bool {
-	return strings.HasPrefix(err.Error(), nilDetailsError)
 }
 
 func FormatBytes(b int64) string {
