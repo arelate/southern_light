@@ -1,4 +1,4 @@
-package vangogh_integration
+package gog_integration
 
 import (
 	"maps"
@@ -57,11 +57,6 @@ func ParseManyImageTypes(imageTypes ...string) []ImageType {
 	return slices.Collect(maps.Keys(its))
 }
 
-func IsValidImageType(it ImageType) bool {
-	_, ok := imageTypeStrings[it]
-	return ok && it != UnknownImageType
-}
-
 func AllImageTypes() []ImageType {
 	imageTypes := make([]ImageType, 0, len(imageTypeStrings))
 	for it, _ := range imageTypeStrings {
@@ -71,18 +66,6 @@ func AllImageTypes() []ImageType {
 		imageTypes = append(imageTypes, it)
 	}
 	return imageTypes
-}
-
-// starting with empty collection and no image types require auth at the moment
-var imageTypeRequiresAuth []ImageType
-
-func ImageTypeFromProperty(property string) ImageType {
-	for it, prop := range imageTypeProperties {
-		if prop == property {
-			return it
-		}
-	}
-	return UnknownImageType
 }
 
 func ImageTypesCloValues() []string {

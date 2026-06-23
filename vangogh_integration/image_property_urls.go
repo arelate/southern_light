@@ -7,27 +7,27 @@ import (
 	"github.com/arelate/southern_light/gog_integration"
 )
 
-func ImagePropertyExt(it ImageType) (string, error) {
+func ImagePropertyExt(it gog_integration.ImageType) (string, error) {
 
 	var ext string
 	var err error
 
 	switch it {
-	case Image:
+	case gog_integration.Image:
 		fallthrough
-	case VerticalImage:
+	case gog_integration.VerticalImage:
 		fallthrough
-	case Screenshots:
+	case gog_integration.Screenshots:
 		fallthrough
-	case Hero:
+	case gog_integration.Hero:
 		fallthrough
-	case Background:
+	case gog_integration.Background:
 		ext = gog_integration.JpgExt
-	case Icon:
+	case gog_integration.Icon:
 		fallthrough
-	case IconSquare:
+	case gog_integration.IconSquare:
 		fallthrough
-	case Logo:
+	case gog_integration.Logo:
 		ext = gog_integration.PngExt
 	default:
 		err = errors.New("no url for unknown image type")
@@ -36,7 +36,7 @@ func ImagePropertyExt(it ImageType) (string, error) {
 	return ext, err
 }
 
-func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
+func ImagePropertyUrls(imageIds []string, it gog_integration.ImageType) ([]*url.URL, error) {
 	urls := make([]*url.URL, 0, len(imageIds))
 
 	ext, err := ImagePropertyExt(it)

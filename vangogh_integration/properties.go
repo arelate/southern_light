@@ -1,5 +1,7 @@
 package vangogh_integration
 
+import "github.com/arelate/southern_light/gog_integration"
+
 const (
 	IdProperty = "id"
 
@@ -592,17 +594,17 @@ func DataKeyValues() []string {
 	return all
 }
 
-var imageTypeProperties = map[ImageType]string{
-	Image:         GogImageProperty,
-	VerticalImage: GogVerticalImageProperty,
-	Screenshots:   GogScreenshotsProperty,
-	Hero:          GogHeroProperty,
-	Logo:          GogLogoProperty,
-	Icon:          GogIconProperty,
-	IconSquare:    GogIconSquareProperty,
-	Background:    GogBackgroundProperty,
+var imageTypeProperties = map[gog_integration.ImageType]string{
+	gog_integration.Image:         GogImageProperty,
+	gog_integration.VerticalImage: GogVerticalImageProperty,
+	gog_integration.Screenshots:   GogScreenshotsProperty,
+	gog_integration.Hero:          GogHeroProperty,
+	gog_integration.Logo:          GogLogoProperty,
+	gog_integration.Icon:          GogIconProperty,
+	gog_integration.IconSquare:    GogIconSquareProperty,
+	gog_integration.Background:    GogBackgroundProperty,
 }
 
-func PropertyFromImageType(it ImageType) string {
+func PropertyFromImageType(it gog_integration.ImageType) string {
 	return imageTypeProperties[it]
 }
