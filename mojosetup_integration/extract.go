@@ -50,6 +50,9 @@ func Extract(opt *Options) error {
 	scanner := bufio.NewScanner(fInput)
 
 	for scanner.Scan() {
+		// scanner breaks on \r?\n so len("\n") might not be enough in general case
+		// however considering this is for Linux installers only at the moment
+		// it should be safe to keep as is
 		scriptLen += int64(len(scanner.Bytes()) + len("\n"))
 
 		line := strings.TrimSpace(scanner.Text())
