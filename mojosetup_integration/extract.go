@@ -80,7 +80,7 @@ func Extract(opt *Options) error {
 
 	var stat os.FileInfo
 	if stat, err = fInput.Stat(); err == nil {
-		if stat.Size() <= fsLen {
+		if stat.Size() <= fsLen+scriptLen {
 			return errors.New("mojosetup data not present")
 		}
 	}
