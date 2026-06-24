@@ -1,8 +1,6 @@
 package wine_integration
 
 import (
-	"maps"
-	"slices"
 	"strings"
 
 	"github.com/arelate/southern_light/vangogh_integration"
@@ -12,7 +10,7 @@ const (
 	// GitHub binaries
 	UmuLauncher        = "Open-Wine-Components/umu-launcher"
 	UmuProton          = "Open-Wine-Components/umu-proton"
-	ProtonGe           = "GloriousEggroll/proton-ge-custom"
+	ProtonGeCustom     = "GloriousEggroll/proton-ge-custom"
 	ProtonCachyOs      = "CachyOS/proton-cachyos"
 	ProtonEm           = "Etaash-mathamsetty/Proton"
 	CrossOver          = "CrossOver"
@@ -28,44 +26,6 @@ const (
 )
 
 const (
-	SteamProton316                  = "proton-3.16"
-	SteamProton370                  = "proton-3.7"
-	SteamProton411                  = "proton-4.11"
-	SteamProton420                  = "proton-4.2"
-	SteamProton500                  = "proton-5.0"
-	SteamProton513                  = "proton-5.13"
-	SteamProton630                  = "proton-6.3"
-	SteamProton700                  = "proton-7.0"
-	SteamProton800                  = "proton-8.0"
-	SteamProton900                  = "proton-9.0"
-	SteamProton1000                 = "proton-10.0"
-	SteamProtonNext                 = "proton-next"
-	SteamProtonHotfix               = "proton-hotfix"
-	SteamProtonExperimental         = "proton-experimental"
-	SteamProtonBattlEyeRuntime      = "proton-battleye-runtime"
-	SteamProtonEasyAntiCheatRuntime = "proton-easy-anti-cheat-runtime"
-)
-
-var SteamProtonDirectories = map[string]string{
-	SteamProton316:                  "Proton 3.16",
-	SteamProton370:                  "Proton 3.7",
-	SteamProton411:                  "Proton 4.11",
-	SteamProton420:                  "Proton 4.2",
-	SteamProton500:                  "Proton 5.0",
-	SteamProton513:                  "Proton 5.13",
-	SteamProton630:                  "Proton 6.3",
-	SteamProton700:                  "Proton 7.0",
-	SteamProton800:                  "Proton 8.0",
-	SteamProton900:                  "Proton 9.0 (Beta)",
-	SteamProton1000:                 "Proton 10.0",
-	SteamProtonNext:                 "Proton Next",
-	SteamProtonHotfix:               "Proton Hotfix",
-	SteamProtonExperimental:         "Proton - Experimental",
-	SteamProtonBattlEyeRuntime:      "Proton BattlEye Runtime",
-	SteamProtonEasyAntiCheatRuntime: "Proton Easy Anti-Cheat Runtime",
-}
-
-const (
 	tarGz = "*.tar.gz"
 	tarXz = "*.tar.xz"
 )
@@ -77,7 +37,7 @@ var OsWineBinaries = []Binary{
 		OS:              vangogh_integration.Linux,
 	},
 	{
-		GitHubOwnerRepo: ProtonGe,
+		GitHubOwnerRepo: ProtonGeCustom,
 		GitHubAssetGlob: tarGz,
 		OS:              vangogh_integration.Linux,
 	},
@@ -152,13 +112,4 @@ var OsWineBinaries = []Binary{
 		GitHubAssetGlob: tarXz,
 		OS:              vangogh_integration.Linux,
 	},
-}
-
-func AllSteamProtonRuntimes() []string {
-	return slices.Collect(maps.Keys(SteamProtonDirectories))
-}
-
-func IsSteamProtonRuntime(runtime string) bool {
-	_, ok := SteamProtonDirectories[runtime]
-	return ok
 }
