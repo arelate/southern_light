@@ -6,12 +6,12 @@ import (
 )
 
 func addLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWriter) error {
-	if err := rdx.MustHave(LocalTagsProperty); err != nil {
+	if err := rdx.MustHave(VangoghLocalTagsProperty); err != nil {
 		return err
 	}
 
-	if !rdx.HasValue(LocalTagsProperty, id, tag) {
-		if err := rdx.AddValues(LocalTagsProperty, id, tag); err != nil {
+	if !rdx.HasValue(VangoghLocalTagsProperty, id, tag) {
+		if err := rdx.AddValues(VangoghLocalTagsProperty, id, tag); err != nil {
 			nod.Increment(tpw)
 			return err
 		}
@@ -21,12 +21,12 @@ func addLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWrite
 }
 
 func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWriter) error {
-	if err := rdx.MustHave(LocalTagsProperty); err != nil {
+	if err := rdx.MustHave(VangoghLocalTagsProperty); err != nil {
 		return err
 	}
 
-	if rdx.HasValue(LocalTagsProperty, id, tag) {
-		if err := rdx.CutValues(LocalTagsProperty, id, tag); err != nil {
+	if rdx.HasValue(VangoghLocalTagsProperty, id, tag) {
+		if err := rdx.CutValues(VangoghLocalTagsProperty, id, tag); err != nil {
 			nod.Increment(tpw)
 			return err
 		}
@@ -37,7 +37,7 @@ func removeLocalTag(id, tag string, rdx redux.Writeable, tpw nod.TotalProgressWr
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rdx, err := redux.NewWriter(AbsReduxDir(), LocalTagsProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), VangoghLocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rdx, err := redux.NewWriter(AbsReduxDir(), LocalTagsProperty)
+	rdx, err := redux.NewWriter(AbsReduxDir(), VangoghLocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -75,5 +75,5 @@ func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func DiffLocalTags(id string, newTags []string) (add []string, rem []string, err error) {
-	return diffTagProperty(LocalTagsProperty, id, newTags)
+	return diffTagProperty(VangoghLocalTagsProperty, id, newTags)
 }

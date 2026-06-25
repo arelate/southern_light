@@ -9,8 +9,8 @@ const (
 
 	GogLicencesProperty                   = "gog-licences"
 	GogUserWishlistProperty               = "gog-user-wishlist"
-	GogAccountPageProductsProperty        = "gog-account-page-products" // TODO: rename to GogAccountProductPageProperty
-	GogCatalogPageProductsProperty        = "gog-catalog-page-products" // TODO: rename to GogCatalogProductPageProperty
+	GogAccountProductPageProperty         = "gog-account-product-page"
+	GogCatalogProductPageProperty         = "gog-catalog-product-page"
 	GogOrderPageProductsProperty          = "gog-order-page-products"
 	GogTitleProperty                      = "gog-title"
 	GogDevelopersProperty                 = "gog-developers"
@@ -39,7 +39,7 @@ const (
 	GogSeriesProperty                     = "gog-series"
 	GogThemesProperty                     = "gog-themes"
 	GogGameModesProperty                  = "gog-game-modes"
-	GogTagIdProperty                      = "gog-tag" // TODO: Rename to gog-tag-id
+	GogTagIdProperty                      = "gog-tag-id"
 	GogTagNameProperty                    = "gog-tag-name"
 	GogSlugProperty                       = "gog-slug"
 	GogReleaseDateProperty                = "gog-release-date"
@@ -70,21 +70,21 @@ const (
 	GogSteamAppIdProperty                 = "gog-steam-app-id"
 	GogBundleNameProperty                 = "gog-bundle-name"
 
-	LocalTagsProperty = "local-tags" //TODO: Rename to Vangogh*Property
+	VangoghLocalTagsProperty = "vangogh-local-tags"
 
 	// download lifecycle properties
 
-	DownloadStatusErrorProperty = "download-status-error" //TODO: Rename to Vangogh*Property
-	DownloadQueuedProperty      = "download-queued"       //TODO: Rename to Vangogh*Property
-	DownloadStartedProperty     = "download-started"      //TODO: Rename to Vangogh*Property
-	DownloadCompletedProperty   = "download-completed"    //TODO: Rename to Vangogh*Property
+	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
+	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
+	VangoghDownloadStartedProperty     = "vangogh-download-started"
+	VangoghDownloadCompletedProperty   = "vangogh-download-completed"
 
 	// video properties
 
-	VideoIdProperty       = "video-id"       // TODO: Rename to GogYouTubeVideoIdProperty
-	VideoTitleProperty    = "video-title"    // TODO: Rename to YouTubeVideoTitleProperty
-	VideoDurationProperty = "video-duration" // TODO: Rename to YouTubeVideoDurationProperty
-	VideoErrorProperty    = "video-error"    // TODO: Rename to YouTubeVideoErrorProperty
+	GogYouTubeVideoIdProperty    = "gog-youtube-video-id"
+	YouTubeVideoTitleProperty    = "youtube-video-title"
+	YouTubeVideoDurationProperty = "youtube-video-duration"
+	YouTubeVideoErrorProperty    = "youtube-video-error"
 
 	// downloads properties
 
@@ -95,20 +95,20 @@ const (
 
 	// Steam properties
 
-	SteamTitleProperty                        = "steam-title"
-	SteamReviewScoreProperty                  = "steam-review-score"
-	SteamReviewScoreDescProperty              = "steam-review-score-desc"
-	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
-	SteamOsAppCompatibilityCategoryProperty   = "steamos-app-compatibility-category" // TODO: Rename to steam-steamos-app-compatibility-category, no space in SteamOS
-	SteamLastCommunityUpdateProperty          = "steam-last-community-update"
+	SteamTitleProperty                           = "steam-title"
+	SteamReviewScoreProperty                     = "steam-review-score"
+	SteamReviewScoreDescProperty                 = "steam-review-score-desc"
+	SteamDeckAppCompatibilityCategoryProperty    = "steam-deck-app-compatibility-category"
+	SteamSteamOsAppCompatibilityCategoryProperty = "steam-steamos-app-compatibility-category"
+	SteamLastCommunityUpdateProperty             = "steam-last-community-update"
 
 	// EGS properties
 
 	EgsTitleProperty    = "egs-title"
 	EgsMainGameProperty = "egs-main-game"
 
-	SummaryRatingProperty  = "summary-rating"  //TODO: Rename to Vangogh*Property
-	SummaryReviewsProperty = "summary-reviews" //TODO: Rename to Vangogh*Property
+	VangoghSummaryRatingProperty  = "vangogh-summary-rating"
+	VangoghSummaryReviewsProperty = "vangogh-summary-reviews"
 
 	GogPcgwPageIdProperty = "gog-pcgw-page-id"
 
@@ -139,8 +139,7 @@ const (
 
 	// wikipedia-raw properties
 
-	CreditsProperty            = "credits"              // TODO: Rename to wikipedia-credits, use Wikipedia Id as key
-	HasMultipleCreditsProperty = "has-multiple-credits" // TODO: Deprecate
+	CreditsProperty = "credits" // TODO: Rename to wikipedia-credits, use Wikipedia Id as key
 
 	CreatorsProperty    = "creators"    // TODO: Rename to wikipedia-*, use Wikipedia Id as key
 	DirectorsProperty   = "directors"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
@@ -186,17 +185,16 @@ const (
 
 	GogOwnedProperty = "gog-owned" // TODO: Reduce is proper data types
 
-	TypesProperty      = "types"       // TODO: Deprecate
 	TopPercentProperty = "top-percent" // TODO: Reduce in OpenCritic data
 
 	// data scheme version
 
-	DataSchemeVersionProperty = "data-scheme-version" // TODO: Rename to vangogh-*
+	VangoghDataSchemeVersionProperty = "vangogh-data-scheme-version"
 
 	// sync properties
 
-	SyncEventsProperty      = "sync-events"       // TODO: Rename to vangogh-*
-	LastSyncUpdatesProperty = "last-sync-updates" // TODO: Rename to vangogh-*
+	VangoghSyncEventsProperty      = "vangogh-sync-events"
+	VangoghLastSyncUpdatesProperty = "vangogh-last-sync-updates"
 
 	// sort properties
 
@@ -277,7 +275,7 @@ func GogCatalogPageProperties() []string {
 		GogIsModProperty,
 		GogEditionsProperty,
 		GogRootEditionsProperty,
-		GogCatalogPageProductsProperty,
+		GogCatalogProductPageProperty,
 		GogUserWishlistProperty,
 	}
 }
@@ -296,7 +294,7 @@ func GogAccountPageProperties() []string {
 		GogTagNameProperty,
 		GogImageProperty,
 		GogSlugProperty,
-		GogAccountPageProductsProperty,
+		GogAccountProductPageProperty,
 	}
 }
 
@@ -317,7 +315,7 @@ func GogApiProductProperties() []string {
 		GogGenresProperty,
 		GogFeaturesProperty,
 		GogSeriesProperty,
-		VideoIdProperty,
+		GogYouTubeVideoIdProperty,
 		OperatingSystemsProperty,
 		GogRequiresGamesProperty,
 		GogIsRequiredByGamesProperty,
@@ -368,7 +366,7 @@ func GogDetailsKeyValues() []string {
 func GogGamesDbProperties() []string {
 	return []string{
 		GogSteamAppIdProperty,
-		VideoIdProperty,
+		GogYouTubeVideoIdProperty,
 		GogThemesProperty,
 		GogGameModesProperty,
 	}
@@ -407,7 +405,7 @@ func SteamAppReviewsProperties() []string {
 func SteamDeckCompatibilityReportProperties() []string {
 	return []string{
 		SteamDeckAppCompatibilityCategoryProperty,
-		SteamOsAppCompatibilityCategoryProperty,
+		SteamSteamOsAppCompatibilityCategoryProperty,
 	}
 }
 
@@ -444,7 +442,6 @@ func PcgwRawProperties() []string {
 func CreditsProperties() []string {
 	return []string{
 		CreditsProperty,
-		HasMultipleCreditsProperty,
 		CreatorsProperty,
 		DirectorsProperty,
 		ProducersProperty,
@@ -504,32 +501,31 @@ func GetDataProperties() []string {
 func ReducedProperties() []string {
 	return []string{
 		GogOwnedProperty,
-		TypesProperty,
 		TopPercentProperty,
-		SummaryRatingProperty,
-		SummaryReviewsProperty,
+		VangoghSummaryRatingProperty,
+		VangoghSummaryReviewsProperty,
 	}
 }
 
 func VideoProperties() []string {
 	return []string{
-		VideoIdProperty,
-		VideoTitleProperty,
-		VideoDurationProperty,
-		VideoErrorProperty,
+		GogYouTubeVideoIdProperty,
+		YouTubeVideoTitleProperty,
+		YouTubeVideoDurationProperty,
+		YouTubeVideoErrorProperty,
 	}
 }
 
 func LocalProperties() []string {
 	return []string{
-		LocalTagsProperty,
+		VangoghLocalTagsProperty,
 	}
 }
 
 func SyncProperties() []string {
 	return []string{
-		LastSyncUpdatesProperty,
-		SyncEventsProperty,
+		VangoghLastSyncUpdatesProperty,
+		VangoghSyncEventsProperty,
 	}
 }
 
@@ -542,10 +538,10 @@ func DownloadsLifecycleProperties() []string {
 		GogProductValidationResultProperty,
 		GogProductGeneratedChecksumProperty,
 		GogProductValidationDateProperty,
-		DownloadQueuedProperty,
-		DownloadStartedProperty,
-		DownloadCompletedProperty,
-		DownloadStatusErrorProperty,
+		VangoghDownloadQueuedProperty,
+		VangoghDownloadStartedProperty,
+		VangoghDownloadCompletedProperty,
+		VangoghDownloadStatusErrorProperty,
 	}
 }
 

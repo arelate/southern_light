@@ -38,9 +38,9 @@ func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationSt
 func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 
 	if err := rdx.MustHave(GogProductValidationResultProperty,
-		DownloadQueuedProperty,
-		DownloadStartedProperty,
-		DownloadCompletedProperty); err != nil {
+		VangoghDownloadQueuedProperty,
+		VangoghDownloadStartedProperty,
+		VangoghDownloadCompletedProperty); err != nil {
 		panic(err)
 	}
 
@@ -61,13 +61,13 @@ func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 
 	var downloadQueued, downloadStarted, downloadCompleted string
 
-	if dq, ok := rdx.GetLastVal(DownloadQueuedProperty, id); ok {
+	if dq, ok := rdx.GetLastVal(VangoghDownloadQueuedProperty, id); ok {
 		downloadQueued = dq
 	}
-	if ds, ok := rdx.GetLastVal(DownloadStartedProperty, id); ok {
+	if ds, ok := rdx.GetLastVal(VangoghDownloadStartedProperty, id); ok {
 		downloadStarted = ds
 	}
-	if dc, ok := rdx.GetLastVal(DownloadCompletedProperty, id); ok {
+	if dc, ok := rdx.GetLastVal(VangoghDownloadCompletedProperty, id); ok {
 		downloadCompleted = dc
 	}
 

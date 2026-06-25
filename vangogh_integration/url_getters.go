@@ -81,7 +81,7 @@ const (
 	UrlEnvParameter                   = "env"
 	UrlProtonRuntimeParameter         = "proton-runtime"
 	UrlSteamProtonRuntimeParameter    = "steam-proton-runtime"
-	UrlProtonOptionParameter          = "proton-option"
+	UrlProtonOptionsParameter         = "proton-option"
 	UrlInstalledParameter             = "installed"
 	UrlDownloadsParameter             = "downloads"
 	UrlBackupsParameter               = "backups"
