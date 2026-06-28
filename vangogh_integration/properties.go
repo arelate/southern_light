@@ -203,9 +203,9 @@ const (
 )
 
 const (
-	DescriptionOverviewKeyValues = "description-overview"
-	DescriptionFeaturesKeyValues = "description-features"
-	ChangelogKeyValues           = "changelog"
+	GogDescriptionOverviewKeyValues = "gog-description-overview"
+	GogDescriptionFeaturesKeyValues = "gog-description-features"
+	GogChangelogKeyValues           = "gog-changelog"
 )
 
 const (
@@ -340,8 +340,8 @@ func GogApiProductProperties() []string {
 
 func GogApiProductsKeyValues() []string {
 	return []string{
-		DescriptionOverviewKeyValues,
-		DescriptionFeaturesKeyValues,
+		GogDescriptionOverviewKeyValues,
+		GogDescriptionFeaturesKeyValues,
 	}
 }
 
@@ -359,7 +359,7 @@ func GogDetailsProperties() []string {
 
 func GogDetailsKeyValues() []string {
 	return []string{
-		ChangelogKeyValues,
+		GogChangelogKeyValues,
 	}
 }
 
