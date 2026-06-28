@@ -132,10 +132,10 @@ const (
 	GogVndbIdProperty         = "gog-vndb-id"
 	GogIgnWikiSlugProperty    = "gog-ign-wiki-slug"
 	GogOpenCriticIdProperty   = "gog-opencritic-id"
-	GogOpenCriticSlugProperty = "gog-opencritic-slug" // TODO: Use OpenCritic Id and migrate back to OpenCriticSlugProperty
+	GogMetacriticIdProperty   = "gog-metacritic-id"
 
-	EnginesProperty       = "engines"        // TODO: Rename to pcgw-engines
-	EnginesBuildsProperty = "engines-builds" // TODO: Rename to pcgw-engines-builds
+	PcgwEnginesProperty       = "pcgw-engines"
+	PcgwEnginesBuildsProperty = "pcgw-engines-builds"
 
 	// wikipedia-raw properties
 
@@ -157,23 +157,27 @@ const (
 
 	// steam-app-details properties
 
-	RequiredAgeProperty       = "required-age"        // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	ControllerSupportProperty = "controller-support"  // TODO: Rename to SteamControllerSupportProperty, Use Steam AppId as key
-	ShortDescriptionProperty  = "short-description"   // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	WebsiteProperty           = "website"             // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	MetacriticScoreProperty   = "metacritic-score"    // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	MetacriticIdProperty      = "metacritic-id"       // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	RequiredAgeProperty       = "required-age"       // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	ControllerSupportProperty = "controller-support" // TODO: Rename to SteamControllerSupportProperty, Use Steam AppId as key
+	ShortDescriptionProperty  = "short-description"  // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	WebsiteProperty           = "website"            // TODO: Rename to Steam*Property, Use Steam AppId as a key
+	SteamMetacriticIdProperty = "steam-metacritic-id"
 	SteamCategoriesProperty   = "steam-categories"    // TODO: Rename to Steam*Property, Use Steam AppId as a key
 	SteamGenresProperty       = "steam-genres"        // TODO: Rename to Steam*Property, Use Steam AppId as a key
 	SteamSupportUrlProperty   = "steam-support-url"   // TODO: Rename to Steam*Property, Use Steam AppId as a key
 	SteamSupportEmailProperty = "steam-support-email" // TODO: Rename to Steam*Property, Use Steam AppId as a key
 
+	// metacritic properties
+
+	MetacriticScoreProperty = "metacritic-score"
+
 	// opencritic properties
 
-	OpenCriticMedianScoreProperty     = "opencritic-median-score"      // TODO: Use OpenCritic Id as key
-	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score" // TODO: Use OpenCritic Id as key
-	OpenCriticPercentileProperty      = "opencritic-percentile"        // TODO: Use OpenCritic Id as key
-	OpenCriticTierProperty            = "opencritic-tier"              // TODO: Use OpenCritic Id as key
+	OpenCriticMedianScoreProperty     = "opencritic-median-score"
+	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score"
+	OpenCriticPercentileProperty      = "opencritic-percentile"
+	OpenCriticTierProperty            = "opencritic-tier"
+	OpenCriticSlugProperty            = "opencritic-slug"
 
 	// get-data properties
 
@@ -183,9 +187,7 @@ const (
 
 	// reduced properties
 
-	GogOwnedProperty = "gog-owned" // TODO: Reduce is proper data types
-
-	TopPercentProperty = "top-percent" // TODO: Reduce in OpenCritic data
+	GogOwnedProperty = "gog-owned" // TODO: Reduce using providing data types
 
 	// data scheme version
 
@@ -379,8 +381,8 @@ func SteamAppDetailsProperties() []string {
 		ControllerSupportProperty,
 		ShortDescriptionProperty,
 		WebsiteProperty,
-		MetacriticScoreProperty,
-		MetacriticIdProperty,
+		//MetacriticScoreProperty,
+		//MetacriticIdProperty,
 		SteamCategoriesProperty,
 		SteamGenresProperty,
 		SteamSupportUrlProperty,
@@ -428,14 +430,14 @@ func PcgwRawProperties() []string {
 		WebsiteProperty,
 		GogVndbIdProperty,
 
-		MetacriticIdProperty,
+		GogMetacriticIdProperty,
 		MetacriticScoreProperty,
 		GogOpenCriticIdProperty,
-		GogOpenCriticSlugProperty,
+		OpenCriticSlugProperty,
 		OpenCriticMedianScoreProperty,
 
-		EnginesProperty,
-		EnginesBuildsProperty,
+		PcgwEnginesProperty,
+		PcgwEnginesBuildsProperty,
 	}
 }
 
@@ -501,7 +503,7 @@ func GetDataProperties() []string {
 func ReducedProperties() []string {
 	return []string{
 		GogOwnedProperty,
-		TopPercentProperty,
+		//TopPercentProperty,
 		VangoghSummaryRatingProperty,
 		VangoghSummaryReviewsProperty,
 	}
