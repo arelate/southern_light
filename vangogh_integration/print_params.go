@@ -45,10 +45,10 @@ func PrintParams(
 
 	pvs := make([]string, 0, len(params))
 	for _, p := range []string{
-		IdProperty,
-		OperatingSystemsProperty,
-		LanguageCodeProperty,
-		DownloadTypeProperty} {
+		UrlIdParameter,
+		UrlOperatingSystemParameter,
+		UrlLanguageCodeParameter,
+		UrlDownloadTypeParameter} {
 
 		if _, ok := params[p]; !ok {
 			continue

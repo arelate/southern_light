@@ -3,8 +3,6 @@ package vangogh_integration
 import "github.com/arelate/southern_light/gog_integration"
 
 const (
-	IdProperty = "id"
-
 	// GOG Properties
 
 	GogLicencesProperty                   = "gog-licences"
@@ -101,41 +99,46 @@ const (
 	SteamDeckAppCompatibilityCategoryProperty    = "steam-deck-app-compatibility-category"
 	SteamSteamOsAppCompatibilityCategoryProperty = "steam-steamos-app-compatibility-category"
 	SteamLastCommunityUpdateProperty             = "steam-last-community-update"
+	SteamRequiredAgeProperty                     = "steam-required-age"
+	SteamControllerSupportProperty               = "steam-controller-support"
+	SteamShortDescriptionProperty                = "steam-short-description"
+	SteamWebsiteProperty                         = "steam-website"
+	SteamMetacriticIdProperty                    = "steam-metacritic-id"
+	SteamCategoriesProperty                      = "steam-categories"
+	SteamGenresProperty                          = "steam-genres"
+	SteamSupportUrlProperty                      = "steam-support-url"
+	SteamSupportEmailProperty                    = "steam-support-email"
 
 	// EGS properties
 
 	EgsTitleProperty    = "egs-title"
 	EgsMainGameProperty = "egs-main-game"
 
-	VangoghSummaryRatingProperty  = "vangogh-summary-rating"
-	VangoghSummaryReviewsProperty = "vangogh-summary-reviews"
-
-	GogPcgwPageIdProperty = "gog-pcgw-page-id"
-
 	// hltb-data properties
 
 	GogHltbIdProperty               = "gog-hltb-id"
-	HltbHoursToCompleteMainProperty = "hltb-comp-main"    // TODO: Use HLTB Id as a key
-	HltbHoursToCompletePlusProperty = "hltb-comp-plus"    // TODO: Use HLTB Id as a key
-	HltbHoursToComplete100Property  = "hltb-comp-100"     // TODO: Use HLTB Id as a key
-	HltbReviewScoreProperty         = "hltb-review-score" // TODO: Use HLTB Id as a key
-	HltbGenresProperty              = "hltb-genres"       // TODO: Use HLTB Id as a key
-	HltbPlatformsProperty           = "hltb-platforms"    // TODO: Use HLTB Id as a key
+	HltbHoursToCompleteMainProperty = "hltb-comp-main"
+	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
+	HltbHoursToComplete100Property  = "hltb-comp-100"
+	HltbReviewScoreProperty         = "hltb-review-score"
+	HltbGenresProperty              = "hltb-genres"
+	HltbPlatformsProperty           = "hltb-platforms"
 
 	// pcgw-raw properties
 
+	GogPcgwPageIdProperty     = "gog-pcgw-page-id"
 	GogIgdbIdProperty         = "gog-igdb-id"
 	GogStrategyWikiIdProperty = "gog-strategy-wiki-id"
 	GogMobyGamesIdProperty    = "gog-moby-games-id"
 	GogWikipediaIdProperty    = "gog-wikipedia-id"
 	GogWineHqIdProperty       = "gog-winehq-id"
 	GogVndbIdProperty         = "gog-vndb-id"
-	GogIgnWikiSlugProperty    = "gog-ign-wiki-slug"
 	GogOpenCriticIdProperty   = "gog-opencritic-id"
 	GogMetacriticIdProperty   = "gog-metacritic-id"
 
 	PcgwEnginesProperty       = "pcgw-engines"
 	PcgwEnginesBuildsProperty = "pcgw-engines-builds"
+	PcgwWebsiteProperty       = "pcgw-website"
 
 	// wikipedia-raw properties
 
@@ -154,18 +157,6 @@ const (
 
 	ProtonDbTierProperty       = "protondb-tier"
 	ProtonDbConfidenceProperty = "protondb-confidence"
-
-	// steam-app-details properties
-
-	RequiredAgeProperty       = "required-age"       // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	ControllerSupportProperty = "controller-support" // TODO: Rename to SteamControllerSupportProperty, Use Steam AppId as key
-	ShortDescriptionProperty  = "short-description"  // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	WebsiteProperty           = "website"            // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	SteamMetacriticIdProperty = "steam-metacritic-id"
-	SteamCategoriesProperty   = "steam-categories"    // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	SteamGenresProperty       = "steam-genres"        // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	SteamSupportUrlProperty   = "steam-support-url"   // TODO: Rename to Steam*Property, Use Steam AppId as a key
-	SteamSupportEmailProperty = "steam-support-email" // TODO: Rename to Steam*Property, Use Steam AppId as a key
 
 	// metacritic properties
 
@@ -377,10 +368,10 @@ func GogGamesDbProperties() []string {
 func SteamAppDetailsProperties() []string {
 	return []string{
 		GogSteamAppIdProperty,
-		RequiredAgeProperty,
-		ControllerSupportProperty,
-		ShortDescriptionProperty,
-		WebsiteProperty,
+		SteamRequiredAgeProperty,
+		SteamControllerSupportProperty,
+		SteamShortDescriptionProperty,
+		SteamWebsiteProperty,
 		//MetacriticScoreProperty,
 		//MetacriticIdProperty,
 		SteamCategoriesProperty,
@@ -427,7 +418,7 @@ func PcgwRawProperties() []string {
 		GogMobyGamesIdProperty,
 		GogWikipediaIdProperty,
 		GogWineHqIdProperty,
-		WebsiteProperty,
+		SteamWebsiteProperty,
 		GogVndbIdProperty,
 
 		GogMetacriticIdProperty,
@@ -438,6 +429,7 @@ func PcgwRawProperties() []string {
 
 		PcgwEnginesProperty,
 		PcgwEnginesBuildsProperty,
+		PcgwWebsiteProperty,
 	}
 }
 
@@ -472,7 +464,6 @@ func HltbDataProperties() []string {
 		HltbReviewScoreProperty,
 		HltbGenresProperty,
 		HltbPlatformsProperty,
-		GogIgnWikiSlugProperty,
 	}
 }
 
@@ -503,9 +494,6 @@ func GetDataProperties() []string {
 func ReducedProperties() []string {
 	return []string{
 		GogOwnedProperty,
-		//TopPercentProperty,
-		VangoghSummaryRatingProperty,
-		VangoghSummaryReviewsProperty,
 	}
 }
 
