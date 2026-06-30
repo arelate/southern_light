@@ -142,16 +142,14 @@ const (
 
 	// wikipedia-raw properties
 
-	CreditsProperty = "credits" // TODO: Rename to wikipedia-credits, use Wikipedia Id as key
-
-	CreatorsProperty    = "creators"    // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	DirectorsProperty   = "directors"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	ProducersProperty   = "producers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	DesignersProperty   = "designers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	ProgrammersProperty = "programmers" // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	ArtistsProperty     = "artists"     // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	WritersProperty     = "writers"     // TODO: Rename to wikipedia-*, use Wikipedia Id as key
-	ComposersProperty   = "composers"   // TODO: Rename to wikipedia-*, use Wikipedia Id as key
+	WikipediaCreatorsProperty    = "wikipedia-creators"
+	WikipediaDirectorsProperty   = "wikipedia-directors"
+	WikipediaProducersProperty   = "wikipedia-producers"
+	WikipediaDesignersProperty   = "wikipedia-designers"
+	WikipediaProgrammersProperty = "wikipedia-programmers"
+	WikipediaArtistsProperty     = "wikipedia-artists"
+	WikipediaWritersProperty     = "wikipedia-writers"
+	WikipediaComposersProperty   = "wikipedia-composers"
 
 	// proton-summary properties
 
@@ -433,17 +431,16 @@ func PcgwRawProperties() []string {
 	}
 }
 
-func CreditsProperties() []string {
+func WikipediaCreditsProperties() []string {
 	return []string{
-		CreditsProperty,
-		CreatorsProperty,
-		DirectorsProperty,
-		ProducersProperty,
-		DesignersProperty,
-		ProgrammersProperty,
-		ArtistsProperty,
-		WritersProperty,
-		ComposersProperty,
+		WikipediaCreatorsProperty,
+		WikipediaDirectorsProperty,
+		WikipediaProducersProperty,
+		WikipediaDesignersProperty,
+		WikipediaProgrammersProperty,
+		WikipediaArtistsProperty,
+		WikipediaWritersProperty,
+		WikipediaComposersProperty,
 	}
 }
 
@@ -453,7 +450,7 @@ func WikipediaRawProperties() []string {
 	// we'll keep them separate and wikipedia-raw
 	// might add more properties in the future in
 	// addition to credits
-	return CreditsProperties()
+	return WikipediaCreditsProperties()
 }
 
 func HltbDataProperties() []string {
