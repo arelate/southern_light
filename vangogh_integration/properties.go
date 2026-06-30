@@ -80,10 +80,7 @@ const (
 	GogVndbIdProperty                     = "gog-vndb-id"
 	GogOpenCriticIdProperty               = "gog-opencritic-id"
 	GogMetacriticIdProperty               = "gog-metacritic-id"
-
-	// reduced properties
-
-	GogOwnedProperty = "gog-owned" // TODO: Reduce using providing data types
+	GogOwnedProperty                      = "gog-owned"
 
 	// YouTube properties
 
@@ -159,21 +156,17 @@ const (
 
 	// vangogh properties
 
-	VangoghLocalTagsProperty = "vangogh-local-tags"
-
+	VangoghLocalTagsProperty           = "vangogh-local-tags"
 	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
 	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
 	VangoghDownloadStartedProperty     = "vangogh-download-started"
 	VangoghDownloadCompletedProperty   = "vangogh-download-completed"
-
 	VangoghGetDataErrorDateProperty    = "vangogh-get-data-error-date"
 	VangoghGetDataErrorMessageProperty = "vangogh-get-data-error-message"
 	VangoghGetDataLastUpdatedProperty  = "vangogh-get-data-last-updated"
-
-	VangoghDataSchemeVersionProperty = "vangogh-data-scheme-version"
-
-	VangoghSyncEventsProperty      = "vangogh-sync-events"
-	VangoghLastSyncUpdatesProperty = "vangogh-last-sync-updates"
+	VangoghDataSchemeVersionProperty   = "vangogh-data-scheme-version"
+	VangoghSyncEventsProperty          = "vangogh-sync-events"
+	VangoghLastSyncUpdatesProperty     = "vangogh-last-sync-updates"
 )
 
 const (
