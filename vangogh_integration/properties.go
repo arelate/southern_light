@@ -67,10 +67,12 @@ const (
 	GogDiscountPercentageProperty         = "gog-discount-percentage"
 	GogSteamAppIdProperty                 = "gog-steam-app-id"
 	GogBundleNameProperty                 = "gog-bundle-name"
+	GogOperatingSystemsProperty           = "gog-os"
+	GogLanguageCodeProperty               = "gog-lang-code"
+
+	// vangogh properties
 
 	VangoghLocalTagsProperty = "vangogh-local-tags"
-
-	// download lifecycle properties
 
 	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
 	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
@@ -83,13 +85,6 @@ const (
 	YouTubeVideoTitleProperty    = "youtube-video-title"
 	YouTubeVideoDurationProperty = "youtube-video-duration"
 	YouTubeVideoErrorProperty    = "youtube-video-error"
-
-	// downloads properties
-
-	OperatingSystemsProperty = "os"            // TODO: Replace with GogOperatingSystemsProperty, then add generic property for theo
-	LanguageCodeProperty     = "lang-code"     // TODO: Replace with GogLanguageCodeProperty, then add generic property for theo
-	DownloadTypeProperty     = "download-type" // TODO: Replace with GogDownloadTypeProperty, then add generic property for theo
-	NoPatchesProperty        = "no-patches"    // TODO: Replace with GogNoPatchesProperty, then add generic property for theo
 
 	// Steam properties
 
@@ -249,7 +244,7 @@ func GogCatalogPageProperties() []string {
 		GogGenresProperty,
 		GogFeaturesProperty,
 		GogRatingProperty,
-		OperatingSystemsProperty,
+		GogOperatingSystemsProperty,
 		GogSlugProperty,
 		GogGlobalReleaseDateProperty,
 		GogProductTypeProperty,
@@ -294,7 +289,7 @@ func GogApiProductProperties() []string {
 		GogTitleProperty,
 		GogDevelopersProperty,
 		GogPublishersProperty,
-		LanguageCodeProperty,
+		GogLanguageCodeProperty,
 		GogImageProperty,
 		GogVerticalImageProperty,
 		GogScreenshotsProperty,
@@ -307,7 +302,7 @@ func GogApiProductProperties() []string {
 		GogFeaturesProperty,
 		GogSeriesProperty,
 		GogYouTubeVideoIdProperty,
-		OperatingSystemsProperty,
+		GogOperatingSystemsProperty,
 		GogRequiresGamesProperty,
 		GogIsRequiredByGamesProperty,
 		GogIncludesGamesProperty,
@@ -343,7 +338,7 @@ func GogDetailsProperties() []string {
 		GogTagIdProperty,
 		GogReleaseDateProperty,
 		GogForumUrlProperty,
-		OperatingSystemsProperty,
+		GogOperatingSystemsProperty,
 		GogBackgroundProperty,
 	}
 }

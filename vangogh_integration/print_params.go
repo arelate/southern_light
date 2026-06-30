@@ -40,7 +40,7 @@ func PrintParams(
 	}
 
 	if noPatches {
-		params[NoPatchesProperty] = append(params[NoPatchesProperty], strconv.FormatBool(noPatches))
+		params[UrlNoPatchesParameter] = append(params[UrlNoPatchesParameter], strconv.FormatBool(noPatches))
 	}
 
 	pvs := make([]string, 0, len(params))
