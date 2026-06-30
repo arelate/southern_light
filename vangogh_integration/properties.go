@@ -69,19 +69,24 @@ const (
 	GogBundleNameProperty                 = "gog-bundle-name"
 	GogOperatingSystemsProperty           = "gog-os"
 	GogLanguageCodeProperty               = "gog-lang-code"
+	GogYouTubeVideoIdProperty             = "gog-youtube-video-id"
+	GogHltbIdProperty                     = "gog-hltb-id"
+	GogPcgwPageIdProperty                 = "gog-pcgw-page-id"
+	GogIgdbIdProperty                     = "gog-igdb-id"
+	GogStrategyWikiIdProperty             = "gog-strategy-wiki-id"
+	GogMobyGamesIdProperty                = "gog-moby-games-id"
+	GogWikipediaIdProperty                = "gog-wikipedia-id"
+	GogWineHqIdProperty                   = "gog-winehq-id"
+	GogVndbIdProperty                     = "gog-vndb-id"
+	GogOpenCriticIdProperty               = "gog-opencritic-id"
+	GogMetacriticIdProperty               = "gog-metacritic-id"
 
-	// vangogh properties
+	// reduced properties
 
-	VangoghLocalTagsProperty = "vangogh-local-tags"
+	GogOwnedProperty = "gog-owned" // TODO: Reduce using providing data types
 
-	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
-	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
-	VangoghDownloadStartedProperty     = "vangogh-download-started"
-	VangoghDownloadCompletedProperty   = "vangogh-download-completed"
+	// YouTube properties
 
-	// video properties
-
-	GogYouTubeVideoIdProperty    = "gog-youtube-video-id"
 	YouTubeVideoTitleProperty    = "youtube-video-title"
 	YouTubeVideoDurationProperty = "youtube-video-duration"
 	YouTubeVideoErrorProperty    = "youtube-video-error"
@@ -111,7 +116,6 @@ const (
 
 	// hltb-data properties
 
-	GogHltbIdProperty               = "gog-hltb-id"
 	HltbHoursToCompleteMainProperty = "hltb-comp-main"
 	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
 	HltbHoursToComplete100Property  = "hltb-comp-100"
@@ -120,16 +124,6 @@ const (
 	HltbPlatformsProperty           = "hltb-platforms"
 
 	// pcgw-raw properties
-
-	GogPcgwPageIdProperty     = "gog-pcgw-page-id"
-	GogIgdbIdProperty         = "gog-igdb-id"
-	GogStrategyWikiIdProperty = "gog-strategy-wiki-id"
-	GogMobyGamesIdProperty    = "gog-moby-games-id"
-	GogWikipediaIdProperty    = "gog-wikipedia-id"
-	GogWineHqIdProperty       = "gog-winehq-id"
-	GogVndbIdProperty         = "gog-vndb-id"
-	GogOpenCriticIdProperty   = "gog-opencritic-id"
-	GogMetacriticIdProperty   = "gog-metacritic-id"
 
 	PcgwEnginesProperty       = "pcgw-engines"
 	PcgwEnginesBuildsProperty = "pcgw-engines-builds"
@@ -163,29 +157,23 @@ const (
 	OpenCriticTierProperty            = "opencritic-tier"
 	OpenCriticSlugProperty            = "opencritic-slug"
 
-	// get-data properties
+	// vangogh properties
 
-	GetDataErrorDateProperty    = "get-data-error-date"    // Rename to vangogh-*
-	GetDataErrorMessageProperty = "get-data-error-message" // Rename to vangogh-*
-	GetDataLastUpdatedProperty  = "get-data-last-updated"  // Rename to vangogh-*
+	VangoghLocalTagsProperty = "vangogh-local-tags"
 
-	// reduced properties
+	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
+	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
+	VangoghDownloadStartedProperty     = "vangogh-download-started"
+	VangoghDownloadCompletedProperty   = "vangogh-download-completed"
 
-	GogOwnedProperty = "gog-owned" // TODO: Reduce using providing data types
-
-	// data scheme version
+	VangoghGetDataErrorDateProperty    = "vangogh-get-data-error-date"
+	VangoghGetDataErrorMessageProperty = "vangogh-get-data-error-message"
+	VangoghGetDataLastUpdatedProperty  = "vangogh-get-data-last-updated"
 
 	VangoghDataSchemeVersionProperty = "vangogh-data-scheme-version"
 
-	// sync properties
-
 	VangoghSyncEventsProperty      = "vangogh-sync-events"
 	VangoghLastSyncUpdatesProperty = "vangogh-last-sync-updates"
-
-	// sort properties
-
-	SortProperty       = "sort"
-	DescendingProperty = "desc"
 )
 
 const (
@@ -477,9 +465,9 @@ func OpenCriticApiGameProperties() []string {
 
 func GetDataProperties() []string {
 	return []string{
-		GetDataErrorDateProperty,
-		GetDataErrorMessageProperty,
-		GetDataLastUpdatedProperty,
+		VangoghGetDataErrorDateProperty,
+		VangoghGetDataErrorMessageProperty,
+		VangoghGetDataLastUpdatedProperty,
 	}
 }
 

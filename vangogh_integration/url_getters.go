@@ -102,6 +102,8 @@ const (
 	UrlNoDlcsParameter                = "no-dlcs"
 	UrlNoExtrasParameter              = "no-extras"
 	UrlNoCleanupParameter             = "no-cleanup"
+	UrlSortParameter                  = "sort"
+	UrlDescendingParameter            = "desc"
 )
 
 const (
