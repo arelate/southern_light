@@ -81,6 +81,8 @@ const (
 	GogOpenCriticIdProperty               = "gog-opencritic-id"
 	GogMetacriticIdProperty               = "gog-metacritic-id"
 	GogOwnedProperty                      = "gog-owned"
+	GogIsAccountProductProperty           = "gog-is-account-product"
+	GogAccountProductOrderProperty        = "gog-account-product-order"
 
 	// YouTube properties
 
@@ -262,6 +264,8 @@ func GogAccountPageProperties() []string {
 		GogImageProperty,
 		GogSlugProperty,
 		GogAccountProductPageProperty,
+		GogIsAccountProductProperty,
+		GogAccountProductOrderProperty,
 	}
 }
 
