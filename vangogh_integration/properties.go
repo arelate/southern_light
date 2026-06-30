@@ -309,6 +309,8 @@ func GogApiProductProperties() []string {
 		GogAdditionalRequirementsProperty,
 		GogInDevelopmentProperty,
 		GogPreOrderProperty,
+		GogOwnedProperty,
+		GogLicencesProperty,
 	}
 }
 

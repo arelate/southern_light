@@ -5,7 +5,6 @@ const (
 	SyncInterruptedKey           = "sync-interrupted"
 	SyncStartKey                 = "sync-start"
 	SyncPurchasesDataKey         = "sync-purchases-data"
-	SyncReducePurchasesDataKey   = "sync-reduce-purchases-data"
 	SyncPurchasesImagesKey       = "sync-purchases-images"
 	SyncDownloadsKey             = "sync-downloads"
 	SyncGenerateMissingChecksums = "sync-generate-missing-checksums"
@@ -13,7 +12,6 @@ const (
 	SyncVideoMetadataKey         = "sync-video-metadata"
 	SyncBinaries                 = "sync-binaries"
 	SyncExtraData                = "sync-extra-data"
-	SyncReduceExtraDataKey       = "sync-reduce-extra-data"
 	SyncExtraImagesKey           = "sync-extra-images"
 	SyncDescriptionImagesKey     = "sync-description-images"
 	SyncBackup                   = "sync-backup"
@@ -24,7 +22,6 @@ var SyncEventsSequence = []string{
 	SyncInterruptedKey,
 	SyncStartKey,
 	SyncPurchasesDataKey,
-	SyncReducePurchasesDataKey,
 	SyncPurchasesImagesKey,
 	SyncDownloadsKey,
 	SyncGenerateMissingChecksums,
@@ -32,7 +29,6 @@ var SyncEventsSequence = []string{
 	SyncVideoMetadataKey,
 	SyncBinaries,
 	SyncExtraData,
-	SyncReduceExtraDataKey,
 	SyncExtraImagesKey,
 	SyncDescriptionImagesKey,
 	SyncBackup,
@@ -59,7 +55,6 @@ var SyncEventsTitles = map[string]string{
 	SyncInterruptedKey:           "Interrupted",
 	SyncStartKey:                 "Started sync",
 	SyncPurchasesDataKey:         "Updating account data",
-	SyncReducePurchasesDataKey:   "Reducing account data",
 	SyncPurchasesImagesKey:       "Updating account images",
 	SyncDownloadsKey:             "Downloading files",
 	SyncGenerateMissingChecksums: "Generating missing checksums",
@@ -67,7 +62,6 @@ var SyncEventsTitles = map[string]string{
 	SyncVideoMetadataKey:         "Updating video titles",
 	SyncBinaries:                 "Updating binaries",
 	SyncExtraData:                "Updating extra data",
-	SyncReduceExtraDataKey:       "Reducing extra data",
 	SyncExtraImagesKey:           "Updating extra images",
 	SyncDescriptionImagesKey:     "Updating descriptions",
 	SyncBackup:                   "Backing up data",
