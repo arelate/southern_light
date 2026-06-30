@@ -3,7 +3,7 @@ package vangogh_integration
 import "github.com/arelate/southern_light/gog_integration"
 
 const (
-	// GOG Properties
+	// GOG properties
 
 	GogLicencesProperty                   = "gog-licences"
 	GogUserWishlistProperty               = "gog-user-wishlist"
@@ -111,7 +111,7 @@ const (
 	EgsTitleProperty    = "egs-title"
 	EgsMainGameProperty = "egs-main-game"
 
-	// hltb-data properties
+	// HLTB properties
 
 	HltbHoursToCompleteMainProperty = "hltb-comp-main"
 	HltbHoursToCompletePlusProperty = "hltb-comp-plus"
@@ -120,13 +120,13 @@ const (
 	HltbGenresProperty              = "hltb-genres"
 	HltbPlatformsProperty           = "hltb-platforms"
 
-	// pcgw-raw properties
+	// PCGW properties
 
 	PcgwEnginesProperty       = "pcgw-engines"
 	PcgwEnginesBuildsProperty = "pcgw-engines-builds"
 	PcgwWebsiteProperty       = "pcgw-website"
 
-	// wikipedia-raw properties
+	// Wikipedia properties
 
 	WikipediaCreatorsProperty    = "wikipedia-creators"
 	WikipediaDirectorsProperty   = "wikipedia-directors"
@@ -137,16 +137,16 @@ const (
 	WikipediaWritersProperty     = "wikipedia-writers"
 	WikipediaComposersProperty   = "wikipedia-composers"
 
-	// proton-summary properties
+	// ProtonDB properties
 
 	ProtonDbTierProperty       = "protondb-tier"
 	ProtonDbConfidenceProperty = "protondb-confidence"
 
-	// metacritic properties
+	// Metacritic properties
 
 	MetacriticScoreProperty = "metacritic-score"
 
-	// opencritic properties
+	// OpenCritic properties
 
 	OpenCriticMedianScoreProperty     = "opencritic-median-score"
 	OpenCriticTopCriticsScoreProperty = "opencritic-top-critics-score"
