@@ -112,7 +112,6 @@ var gogPurchaseProductTypes = []ProductType{
 	GogLicences,
 	GogUserWishlist,
 	GogAccountPage,
-	GogOrderPage,
 	GogDetails,
 }
 
