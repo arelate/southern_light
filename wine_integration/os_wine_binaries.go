@@ -83,9 +83,9 @@ var OsWineBinaries = []Binary{
 		Title:   VcRedistX64,
 		Code:    VcRedistX64Code,
 		Version: "11/11/2025",
-		// Digest source: https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/VC_redist.x64.exe
+		// Digest source: https://download.visualstudio.microsoft.com/download/pr/ebdab8e5-1d7b-4d9f-a11b-cbb1720c3b12/843068991DAAA1F73AD9F6239BCE4D0F6A07A51F18C37EA2A867E9BECA71295C/VC_redist.x64.exe
 		// Note the URL path part before the filename
-		Digest:      strings.ToLower("sha256:90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B"),
+		Digest:      strings.ToLower("sha256:843068991DAAA1F73AD9F6239BCE4D0F6A07A51F18C37EA2A867E9BECA71295C"),
 		DownloadUrl: "https://aka.ms/vc14/vc_redist.x64.exe",
 		OS:          vangogh_integration.Windows,
 	},
@@ -93,8 +93,8 @@ var OsWineBinaries = []Binary{
 		Title:   VcRedistX86,
 		Code:    VcRedistX86Code,
 		Version: "11/11/2025",
-		// Digest source: https://download.visualstudio.microsoft.com/download/pr/0dd156af-82aa-4812-b524-49c2f894359a/B6AB675F0A27E6600F9726E75DEA08D99C15F8EA4B842A2A1D988FA9529D39B9/VC_redist.x86.exe
-		Digest:      strings.ToLower("sha256:B6AB675F0A27E6600F9726E75DEA08D99C15F8EA4B842A2A1D988FA9529D39B9"),
+		// Digest source: https://download.visualstudio.microsoft.com/download/pr/57eef8ae-a341-46c3-b0bc-c041027b54cd/F0BAB33A302B3CDB2E11113760D016F54FD3D2632C65BA7834FAC4F0ABD7F1A3/VC_redist.x86.exe
+		Digest:      strings.ToLower("sha256:F0BAB33A302B3CDB2E11113760D016F54FD3D2632C65BA7834FAC4F0ABD7F1A3"),
 		DownloadUrl: "https://aka.ms/vc14/vc_redist.x86.exe",
 		OS:          vangogh_integration.Windows,
 	},
