@@ -93,6 +93,10 @@ func lexTextKeyValue(tl *textLexer) textLexStateFn {
 		}
 		r := tl.next()
 		if r == '\\' {
+			if tl.peek() == '\\' {
+				tl.next()
+				continue
+			}
 			if tl.peek() == quotationMark {
 				tl.next()
 				continue
