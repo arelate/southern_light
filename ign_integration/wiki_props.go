@@ -2,11 +2,12 @@ package ign_integration
 
 import (
 	"fmt"
-	"github.com/boggydigital/match_node"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 	"strings"
 	"time"
+
+	"github.com/boggydigital/camino"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 const (
@@ -306,14 +307,14 @@ func (he *HTMLEntity) PageUrls(slug string) ([]string, error) {
 		return nil, err
 	}
 
-	etc := match_node.NewEtc(atom.A, "", false)
+	etc := camino.AtomClassMatcher(atom.A, "", false)
 
 	pageUrls := make([]string, 0)
 
 	wikiSlugPfx := fmt.Sprintf("%s/%s/", wikisLinkPfx, slug)
 
-	for _, link := range match_node.Matches(fragment, etc, -1) {
-		href := match_node.AttrVal(link, "href")
+	for _, link := range camino.AllMatches(fragment, etc, -1) {
+		href := camino.GetAttribute(link, "href")
 		if strings.HasPrefix(href, wikisLinkPfx) {
 			rel := strings.TrimPrefix(href, wikiSlugPfx)
 			if rel != "" {
@@ -336,10 +337,10 @@ func (he *HTMLEntity) ImageUrls() ([]string, error) {
 		return nil, err
 	}
 
-	etc := match_node.NewEtc(atom.Img, "", false)
+	etc := camino.AtomClassMatcher(atom.Img, "", false)
 
-	for _, img := range match_node.Matches(fragment, etc, -1) {
-		src := match_node.AttrVal(img, "src")
+	for _, img := range camino.AllMatches(fragment, etc, -1) {
+		src := camino.GetAttribute(img, "src")
 		imageUrls = append(imageUrls, src)
 	}
 

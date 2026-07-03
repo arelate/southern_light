@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 )
 
@@ -36,11 +37,11 @@ func LocalImageIds() (map[string]any, error) {
 	liia := nod.Begin(" itemizing local images...")
 	defer liia.Done()
 
-	return walkFiles(Pwd.AbsDirPath(Images), filenameAsId)
+	return walkFiles(camino.GetAbs(Images), filenameAsId)
 }
 
 func LocalDownloadDirs() (map[string]any, error) {
-	return walkDirectories(Pwd.AbsDirPath(Downloads))
+	return walkDirectories(camino.GetAbs(Downloads))
 }
 
 func AbsLocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]any, error) {

@@ -1,10 +1,11 @@
 package hltb_integration
 
 import (
-	"github.com/boggydigital/match_node"
+	"strings"
+
+	"github.com/boggydigital/camino"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
-	"strings"
 )
 
 const (
@@ -20,7 +21,7 @@ func (rp *RootPage) GetBuildId() string {
 		return ""
 	}
 
-	if ndsm := match_node.Match(rp.Doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
+	if ndsm := camino.Match(rp.Doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
 		buildString := ndsm.FirstChild.Data
 		if strings.Contains(buildString, "buildId") {
 

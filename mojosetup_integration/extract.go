@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/camino"
 )
 
 const (
@@ -31,7 +31,7 @@ type Options struct {
 func Extract(opt *Options) error {
 
 	if _, err := os.Stat(opt.Dst); os.IsNotExist(err) {
-		if err = os.MkdirAll(opt.Dst, pathways.PermUrwGrwOr); err != nil {
+		if err = os.MkdirAll(opt.Dst, camino.DefaultFileMode); err != nil {
 			return err
 		}
 	} else if err != nil {

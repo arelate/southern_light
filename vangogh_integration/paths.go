@@ -8,6 +8,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/camino"
 )
 
 const (
@@ -26,14 +27,14 @@ var validatedExtensions = map[string]bool{
 
 func AbsChecksumPath(absDownloadPath string) (string, error) {
 
-	downloadsDir := Pwd.AbsDirPath(Downloads)
+	downloadsDir := camino.GetAbs(Downloads)
 
 	relDownloadPath, err := filepath.Rel(downloadsDir, absDownloadPath)
 	if err != nil {
 		return "", err
 	}
 
-	checksumsDir := Pwd.AbsDirPath(Checksums)
+	checksumsDir := camino.GetAbs(Checksums)
 
 	return filepath.Join(checksumsDir, relDownloadPath+xmlExt), nil
 }
@@ -67,11 +68,11 @@ func AbsLocalImagePath(imageId string) (string, error) {
 }
 
 func AbsCookiesPath() string {
-	return filepath.Join(Pwd.AbsDirPath(Input), cookiesFilename)
+	return filepath.Join(camino.GetAbs(Input), cookiesFilename)
 }
 
 func AbsAtomFeedPath() string {
-	return filepath.Join(Pwd.AbsDirPath(Output), atomFeedFilename)
+	return filepath.Join(camino.GetAbs(Output), atomFeedFilename)
 }
 
 func AbsDescriptionImagePath(path string) (string, error) {
@@ -89,7 +90,7 @@ func AbsDescriptionImagePath(path string) (string, error) {
 		return "", fmt.Errorf("sanitized description image path cannot be empty")
 	}
 
-	idp := Pwd.AbsDirPath(DescriptionImages)
+	idp := camino.GetAbs(DescriptionImages)
 
 	x, _ := utf8.DecodeRuneInString(path)
 

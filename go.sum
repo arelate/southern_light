@@ -1,13 +1,11 @@
+github.com/boggydigital/camino v0.2.11 h1:kNi2Mwq8KUtKt5E2L1XrEcl+FAFU22KVbvbTRKmD3zs=
+github.com/boggydigital/camino v0.2.11/go.mod h1:UuW3eJP/wrm1VkNPvvNETKisvQymCD1d2a8KIe6J6cI=
 github.com/boggydigital/dolo v0.2.25 h1:CV/iaScm94pAFGL5n1COcLZSXx+FWnET6x0YC64CtfU=
 github.com/boggydigital/dolo v0.2.25/go.mod h1:/Z2gQ4V/IIc/9WEL2/HIUag4LnCyZZPOx1Kl9KxI7uI=
-github.com/boggydigital/kevlar v0.6.12 h1:Q6vsbZr2kylExXmLOiK/SHRurublnzlH+DoxwhwFWME=
-github.com/boggydigital/kevlar v0.6.12/go.mod h1:+M+TNjAuj5TQ+MBxmOa7pUdcbLfvZg+H4rhpNtulNN8=
-github.com/boggydigital/match_node v0.1.19 h1:n62RM9BOUwRJFNtagE4siMu34zgwz+BRCbdO/0j7aJM=
-github.com/boggydigital/match_node v0.1.19/go.mod h1:F8Eqagj2uDDRK6ElfuTIOWROjASUC72uUo9s7FWbthQ=
+github.com/boggydigital/kevlar v0.6.13 h1:Xl4shLJVbxd/jRBktJFrqtm/J+I863yBfGy79heRkOI=
+github.com/boggydigital/kevlar v0.6.13/go.mod h1:qGQojbgP9+XY2gy6rkBMtiRf2OqxE0M7TcXFofCFM60=
 github.com/boggydigital/nod v0.1.30 h1:/u3FE04mfH5ka1VqoS6uutTmbYbvUaEHyDDJk96uB+k=
 github.com/boggydigital/nod v0.1.30/go.mod h1:bzsGsnXacX7YmctBeqpY0oEQeT1KHqcSNpBhLNbKhfA=
-github.com/boggydigital/pathways v0.2.5 h1:XxlnynQgQ0Bn1EMVXcx36Kn/HWiysAfX2OF9t/rUFaY=
-github.com/boggydigital/pathways v0.2.5/go.mod h1:4zo+EQWew/KR0h2zOCtZQq6DL7zvhdDOcHWXm17nYDI=
 github.com/boggydigital/redux v0.1.11 h1:o1O+SuoHR7xoGtgs4GSF9rc1JhTl9WhOhFL3fJKxOyo=
 github.com/boggydigital/redux v0.1.11/go.mod h1:vjmX7ffyfOdu3WKky6yX2QNi06S4WK2xDaMv93XD6kg=
 github.com/boggydigital/testo v0.1.8 h1:NKuKLpWKn8gG3dYq8xNrFYHimxoCTdzLOs242q6jeQo=

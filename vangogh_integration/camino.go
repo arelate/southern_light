@@ -7,37 +7,61 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/camino"
 )
 
 const (
-	rootPathwaysDir     = "/var/lib/vangogh"
-	setPathwaysFilename = "directories.txt"
+	rootDir             = "/var/lib/vangogh"
+	directoriesFilename = "directories.txt"
 )
 
 const (
-	Backups           pathways.AbsDir = "backups"
-	Metadata          pathways.AbsDir = "metadata"
-	Input             pathways.AbsDir = "input"
-	Output            pathways.AbsDir = "output"
-	Images            pathways.AbsDir = "images"
-	DescriptionImages pathways.AbsDir = "description_images"
-	Downloads         pathways.AbsDir = "downloads"
-	Checksums         pathways.AbsDir = "checksums"
-	Logs              pathways.AbsDir = "logs"
+	Backups camino.AbsDir = iota
+	Metadata
+	Input
+	Output
+	Images
+	DescriptionImages
+	Downloads
+	Checksums
+	Logs
 )
 
 const (
-	Redux            pathways.RelDir = "_redux"          // Metadata
-	GitHubReleases   pathways.RelDir = "github-releases" // Metadata
-	Author           pathways.RelDir = "_author"         // Metadata
-	WineBinaries     pathways.RelDir = "_wine-binaries"  // Downloads
-	SteamCmdBinaries pathways.RelDir = "_steamcmd"       // Downloads
-	DLCs             pathways.RelDir = "dlc"             // (slug Downloads)
-	Extras           pathways.RelDir = "extras"          // (slug Downloads)
+	Redux camino.RelDir = iota
+	GitHubReleases
+	Author
+	WineBinaries
+	SteamCmdBinaries
 )
 
-var Pwd pathways.Pathway
+var absPathDirs = map[camino.AbsDir]string{
+	Backups:           "backups",
+	Metadata:          "metadata",
+	Input:             "input",
+	Output:            "output",
+	Images:            "images",
+	DescriptionImages: "description_images",
+	Downloads:         "downloads",
+	Checksums:         "checksums",
+	Logs:              "logs",
+}
+
+var relPathDirs = map[camino.RelDir]string{
+	Redux:            "_redux",
+	GitHubReleases:   "github-releases",
+	Author:           "_author",
+	WineBinaries:     "_wine-binaries",
+	SteamCmdBinaries: "_steamcmd",
+}
+
+var relAbsPaths = map[camino.RelDir][]camino.AbsDir{
+	Redux:            {Metadata},
+	GitHubReleases:   {Metadata},
+	Author:           {Metadata},
+	WineBinaries:     {Downloads},
+	SteamCmdBinaries: {Downloads},
+}
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
 	if imageId == "" {
@@ -50,7 +74,7 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 		return "", fmt.Errorf("imageId is too short")
 	}
 
-	idp := Pwd.AbsDirPath(Images)
+	idp := camino.GetAbs(Images)
 	return filepath.Join(idp, imageId[0:2]), nil
 }
 
@@ -58,7 +82,7 @@ func AbsProductTypeDir(pt ProductType) (string, error) {
 	if pt == UnknownProductType {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-	amd := Pwd.AbsDirPath(Metadata)
+	amd := camino.GetAbs(Metadata)
 	return filepath.Join(amd, pt.String()), nil
 }
 
@@ -85,13 +109,13 @@ func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout
 		return "", errors.New("unsupported downloads layout: " + layout.String())
 	}
 
-	relDownloadTypeDir := ""
+	var relDownloadTypeDir string
 
 	switch dt {
 	case DLC:
-		relDownloadTypeDir = string(DLCs)
+		relDownloadTypeDir = "dlc"
 	case Extra:
-		relDownloadTypeDir = string(Extras)
+		relDownloadTypeDir = "extras"
 	default:
 		// do nothing - use base product downloads dir
 	}
@@ -105,27 +129,33 @@ func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (s
 		return "", err
 	}
 
-	downloadsDir := Pwd.AbsDirPath(Downloads)
+	downloadsDir := camino.GetAbs(Downloads)
 	return filepath.Join(downloadsDir, rsdtd), nil
 }
 
 func AbsReduxDir() string {
-	return Pwd.AbsRelDirPath(Redux, Metadata)
+	return camino.GetRel(Redux, Metadata)
 }
 
-func InitPathways() error {
-	var setExists bool
-	if _, err := os.Stat(setPathwaysFilename); err == nil {
-		setExists = true
+func InitVangoghCamino() error {
+
+	var overrides map[string]string
+
+	if _, err := os.Stat(directoriesFilename); err == nil {
+		if overrides, err = camino.ReadOverrides(directoriesFilename); err != nil {
+			return err
+		}
 	}
 
-	var err error
-	switch setExists {
-	case true:
-		Pwd, err = pathways.ReadSet(setPathwaysFilename)
-	default:
-		Pwd, err = pathways.NewRoot(rootPathwaysDir)
+	apds := make(map[camino.AbsDir]string)
+
+	for ap, apd := range absPathDirs {
+		if dir, ok := overrides[apd]; !ok {
+			apds[ap] = filepath.Join(rootDir, apd)
+		} else {
+			apds[ap] = dir
+		}
 	}
 
-	return err
+	return camino.Register(apds, relPathDirs, relAbsPaths)
 }
