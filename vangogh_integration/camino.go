@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	rootDir             = "/var/lib/vangogh"
+	vangoghRootDir      = "/var/lib/vangogh"
 	directoriesFilename = "directories.txt"
 )
 
@@ -35,7 +35,7 @@ const (
 	SteamCmdBinaries
 )
 
-var absPathDirs = map[camino.AbsDir]string{
+var absDirNames = map[camino.AbsDir]string{
 	Backups:           "backups",
 	Metadata:          "metadata",
 	Input:             "input",
@@ -47,7 +47,7 @@ var absPathDirs = map[camino.AbsDir]string{
 	Logs:              "logs",
 }
 
-var relPathDirs = map[camino.RelDir]string{
+var relDirNames = map[camino.RelDir]string{
 	Redux:            "_redux",
 	GitHubReleases:   "github-releases",
 	Author:           "_author",
@@ -55,7 +55,19 @@ var relPathDirs = map[camino.RelDir]string{
 	SteamCmdBinaries: "_steamcmd",
 }
 
-var relAbsPaths = map[camino.RelDir][]camino.AbsDir{
+var vangoghAbsDirs = []camino.AbsDir{
+	Backups,
+	Metadata,
+	Input,
+	Output,
+	Images,
+	DescriptionImages,
+	Downloads,
+	Checksums,
+	Logs,
+}
+
+var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
 	Redux:            {Metadata},
 	GitHubReleases:   {Metadata},
 	Author:           {Metadata},
@@ -147,15 +159,26 @@ func InitVangoghCamino() error {
 		}
 	}
 
-	apds := make(map[camino.AbsDir]string)
+	vangoghAbsDirNames := make(map[camino.AbsDir]string)
 
-	for ap, apd := range absPathDirs {
-		if dir, ok := overrides[apd]; !ok {
-			apds[ap] = filepath.Join(rootDir, apd)
-		} else {
-			apds[ap] = dir
+	for _, vad := range vangoghAbsDirs {
+
+		var ok bool
+		if vangoghAbsDirNames[vad], ok = absDirNames[vad]; !ok {
+			return errors.New("vangogh abs dir name not set")
 		}
 	}
 
-	return camino.Register(apds, relPathDirs, relAbsPaths)
+	resolvedVangoghAbsPaths := camino.ResolveAbsPaths(vangoghRootDir, vangoghAbsDirNames, overrides)
+
+	vrds := make(map[camino.RelDir]string)
+
+	for vrp := range vangoghRelAbsParents {
+		var ok bool
+		if vrds[vrp], ok = relDirNames[vrp]; !ok {
+			return errors.New("vangogh rel dir path not set")
+		}
+	}
+
+	return camino.Register(resolvedVangoghAbsPaths, vrds, vangoghRelAbsParents)
 }
