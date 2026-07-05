@@ -7,14 +7,15 @@ import (
 )
 
 type Binary struct {
-	Title           string
-	Code            string
-	Version         string
-	Digest          string
-	OS              vangogh_integration.OperatingSystem
-	DownloadUrl     string
-	GitHubOwnerRepo string
-	GitHubAssetGlob string
+	Title              string
+	Code               string
+	Version            string
+	Digest             string
+	OS                 vangogh_integration.OperatingSystem
+	DownloadUrl        string
+	GitHubOwnerRepo    string
+	GitHubAssetGlob    string
+	GitHubAssetFilters []string
 }
 
 func (bin *Binary) String() string {
@@ -38,7 +39,7 @@ func (bin *Binary) GetDownloadUrl(kvGitHubReleases kevlar.KeyValues) (string, er
 		return "", err
 	}
 
-	latestAsset := github_integration.GetReleaseAsset(latestRelease, bin.GitHubAssetGlob)
+	latestAsset := github_integration.GetReleaseAsset(latestRelease, bin.GitHubAssetGlob, bin.GitHubAssetFilters...)
 
 	return latestAsset.BrowserDownloadUrl, nil
 }
@@ -69,7 +70,7 @@ func (bin *Binary) GetDigest(kvGitHubReleases kevlar.KeyValues) (string, error) 
 		return "", err
 	}
 
-	latestAsset := github_integration.GetReleaseAsset(latestRelease, bin.GitHubAssetGlob)
+	latestAsset := github_integration.GetReleaseAsset(latestRelease, bin.GitHubAssetGlob, bin.GitHubAssetFilters...)
 
 	if latestAsset.Digest != nil {
 		return *latestAsset.Digest, nil

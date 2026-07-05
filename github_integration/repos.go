@@ -2,9 +2,10 @@ package github_integration
 
 import (
 	"encoding/json/v2"
-	"github.com/boggydigital/kevlar"
 	"path"
 	"strings"
+
+	"github.com/boggydigital/kevlar"
 )
 
 func GetLatestRelease(repo string, kvGitHubReleases kevlar.KeyValues) (*GitHubRelease, error) {
@@ -29,7 +30,7 @@ func GetLatestRelease(repo string, kvGitHubReleases kevlar.KeyValues) (*GitHubRe
 	return latestRelease, nil
 }
 
-func GetReleaseAsset(release *GitHubRelease, assetGlob string) *GitHubAsset {
+func GetReleaseAsset(release *GitHubRelease, assetGlob string, assetFilters ...string) *GitHubAsset {
 
 	if len(release.Assets) == 1 {
 		return &release.Assets[0]
@@ -39,6 +40,16 @@ func GetReleaseAsset(release *GitHubRelease, assetGlob string) *GitHubAsset {
 		for _, asset := range release.Assets {
 			_, file := path.Split(asset.Name)
 			if strings.HasPrefix(file, prefix) && strings.HasSuffix(file, suffix) {
+				skipFile := false
+				for _, filter := range assetFilters {
+					if strings.Contains(file, filter) {
+						skipFile = true
+						break
+					}
+				}
+				if skipFile {
+					continue
+				}
 				return &asset
 			}
 		}

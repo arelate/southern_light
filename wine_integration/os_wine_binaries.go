@@ -37,9 +37,10 @@ var OsWineBinaries = []Binary{
 		OS:              vangogh_integration.Linux,
 	},
 	{
-		GitHubOwnerRepo: ProtonGeCustom,
-		GitHubAssetGlob: tarGz,
-		OS:              vangogh_integration.Linux,
+		GitHubOwnerRepo:    ProtonGeCustom,
+		GitHubAssetGlob:    tarGz,
+		GitHubAssetFilters: []string{"aarch64"},
+		OS:                 vangogh_integration.Linux,
 	},
 	{
 		GitHubOwnerRepo: UmuProton,
