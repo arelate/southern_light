@@ -5,6 +5,8 @@ import (
 	"maps"
 	"slices"
 	"strconv"
+
+	"github.com/boggydigital/kevlar"
 )
 
 type ProductType int
@@ -156,6 +158,28 @@ func ParseProductType(productType string) ProductType {
 
 func ProductTypeId(pt ProductType, id string) string {
 	return strconv.FormatInt(int64(pt), 10) + "-" + id
+}
+
+func (pt ProductType) Ext() string {
+	switch pt {
+	case PcgwRaw:
+		fallthrough
+	case WikipediaRaw:
+		return kevlar.TxtExt
+	default:
+		return kevlar.JsonExt
+	}
+}
+
+func (pt ProductType) ContentType() string {
+	switch pt {
+	case PcgwRaw:
+		fallthrough
+	case WikipediaRaw:
+		return "text/plain"
+	default:
+		return "application/json"
+	}
 }
 
 func ProductTypesCloValues() []string {
