@@ -16,9 +16,9 @@ const (
 )
 
 const (
-	Backups camino.AbsDir = iota
-	Metadata
-	Input
+	Backups  camino.AbsDir = iota // vangogh, theo
+	Binaries                      // vangogh, theo
+	Metadata                      // vangogh, theo
 	Output
 	Images
 	DescriptionImages
@@ -29,16 +29,17 @@ const (
 
 const (
 	Redux camino.RelDir = iota
-	GitHubReleases
 	Author
-	WineBinaries
-	SteamCmdBinaries
+	Cookies
+	GitHubReleases
+	Releases
+	Runtimes
 )
 
 var absDirNames = map[camino.AbsDir]string{
 	Backups:           "backups",
+	Binaries:          "binaries",
 	Metadata:          "metadata",
-	Input:             "input",
 	Output:            "output",
 	Images:            "images",
 	DescriptionImages: "description_images",
@@ -48,17 +49,18 @@ var absDirNames = map[camino.AbsDir]string{
 }
 
 var relDirNames = map[camino.RelDir]string{
-	Redux:            "_redux",
-	GitHubReleases:   "github-releases",
-	Author:           "_author",
-	WineBinaries:     "_wine-binaries",
-	SteamCmdBinaries: "_steamcmd",
+	Redux:          "_redux",
+	Author:         "_author",
+	Cookies:        "_cookies",
+	GitHubReleases: "github-releases",
+	Releases:       "releases",
+	Runtimes:       "runtimes",
 }
 
 var vangoghAbsDirs = []camino.AbsDir{
 	Backups,
+	Binaries,
 	Metadata,
-	Input,
 	Output,
 	Images,
 	DescriptionImages,
@@ -68,11 +70,11 @@ var vangoghAbsDirs = []camino.AbsDir{
 }
 
 var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
-	Redux:            {Metadata},
-	GitHubReleases:   {Metadata},
-	Author:           {Metadata},
-	WineBinaries:     {Downloads},
-	SteamCmdBinaries: {Downloads},
+	Redux:          {Metadata},
+	GitHubReleases: {Metadata},
+	Author:         {Metadata},
+	Releases:       {Binaries},
+	Runtimes:       {Binaries},
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {

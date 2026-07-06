@@ -58,7 +58,7 @@ func AbsLocalImagePath(imageId string) (string, error) {
 	}
 	for _, ext := range exts {
 		aip := filepath.Join(idp, imageId+ext)
-		if _, err := os.Stat(aip); err == nil {
+		if _, err = os.Stat(aip); err == nil {
 			return aip, nil
 		} else {
 			continue
@@ -68,7 +68,7 @@ func AbsLocalImagePath(imageId string) (string, error) {
 }
 
 func AbsCookiesPath() string {
-	return filepath.Join(camino.GetAbs(Input), cookiesFilename)
+	return filepath.Join(camino.GetRel(Cookies, Metadata), cookiesFilename)
 }
 
 func AbsAtomFeedPath() string {
