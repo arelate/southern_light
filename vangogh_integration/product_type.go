@@ -69,7 +69,6 @@ const (
 	// vangogh/theo product types
 	GogChecksums      ProductType = 9000
 	GogFilenames      ProductType = 9001
-	GogImages         ProductType = 9002
 	AvailableProducts ProductType = 9003
 
 	// new data type groups should be added here
@@ -135,7 +134,6 @@ var productTypeStrings = map[ProductType]string{
 
 	GogChecksums:      "gog-checksums",
 	GogFilenames:      "gog-filenames",
-	GogImages:         "gog-images",
 	AvailableProducts: "available-products",
 }
 
