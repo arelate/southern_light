@@ -58,6 +58,11 @@ const (
 	// OpenCritic product types
 	OpenCriticApiGame ProductType = 1400
 
+	// vangogh/theo product types
+	GogChecksums ProductType = 1500
+	GogFilenames ProductType = 1501
+	GogImages    ProductType = 1502
+
 	// new data type groups should be added here
 )
 
@@ -108,6 +113,12 @@ var productTypeStrings = map[ProductType]string{
 	// OpenCritic product types
 
 	OpenCriticApiGame: "opencritic-api-game",
+
+	// vangogh/theo product types
+
+	GogChecksums: "gog-checksums",
+	GogFilenames: "gog-filenames",
+	GogImages:    "gog-images",
 }
 
 var gogPurchaseProductTypes = []ProductType{

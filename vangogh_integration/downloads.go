@@ -4,8 +4,10 @@ import (
 	"encoding/json/v2"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"path"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -125,7 +127,8 @@ func FromDetails(det *gog_integration.Details) (DownloadsList, error) {
 	dlList = append(dlList, installerDls...)
 
 	for _, dlc := range det.DLCs {
-		dlcDls, err := convertGameDetails(&dlc, DLC)
+		var dlcDls DownloadsList
+		dlcDls, err = convertGameDetails(&dlc, DLC)
 		if err != nil {
 			return dlList, err
 		}
@@ -170,65 +173,162 @@ func convertGameDetails(det *gog_integration.Details, dt DownloadType) (Download
 	return dlList, nil
 }
 
-func (list DownloadsList) Only(
+func (dls DownloadsList) Only(
 	operatingSystems []OperatingSystem,
 	langCodes []string,
 	noDlcs bool,
 	noExtras bool,
 	noPatches bool) DownloadsList {
-	osSet := make(map[OperatingSystem]bool)
-	for _, os := range operatingSystems {
-		if os == AnyOperatingSystem {
-			for _, aos := range AllOperatingSystems() {
-				osSet[aos] = true
-			}
-			break
-		}
-		osSet[os] = true
+
+	downloadTypes := []DownloadType{Installer}
+
+	switch noDlcs {
+	case false:
+		downloadTypes = append(downloadTypes, DLC)
+	default: // do nothing
 	}
 
-	dtSet := map[DownloadType]bool{
-		Installer: true,
-		DLC:       !noDlcs,
-		Extra:     !noExtras,
+	switch noExtras {
+	case false:
+		downloadTypes = append(downloadTypes, Extra)
+	default: // do nothing
 	}
 
-	langSet := make(map[string]bool)
-	for _, lc := range langCodes {
-		langSet[lc] = true
-	}
-	matchingList := make(DownloadsList, 0)
-	for _, dl := range list {
-		if dl.OS != AnyOperatingSystem &&
-			!osSet[dl.OS] {
-			continue
-		}
-
-		if dl.DownloadType != AnyDownloadType &&
-			!dtSet[dl.DownloadType] {
-			continue
-		}
-
-		if dl.LanguageCode != "" &&
-			len(langSet) > 0 &&
-			!langSet[dl.LanguageCode] {
-			continue
-		}
-
-		if noPatches {
-			if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
-				continue
-			}
-		}
-
-		matchingList = append(matchingList, dl)
-	}
-	return matchingList
+	return dls.
+		FilterOperatingSystems(operatingSystems...).
+		FilterLangCodes(langCodes...).
+		FilterDownloadTypes(downloadTypes...).
+		FilterPatches(noPatches)
 }
 
-func (list DownloadsList) TotalBytesEstimate() int64 {
+//func (list DownloadsList) Only(
+//	operatingSystems []OperatingSystem,
+//	langCodes []string,
+//	noDlcs bool,
+//	noExtras bool,
+//	noPatches bool) DownloadsList {
+//	osSet := make(map[OperatingSystem]bool)
+//	for _, os := range operatingSystems {
+//		if os == AnyOperatingSystem {
+//			for _, aos := range AllOperatingSystems() {
+//				osSet[aos] = true
+//			}
+//			break
+//		}
+//		osSet[os] = true
+//	}
+//
+//	dtSet := map[DownloadType]bool{
+//		Installer: true,
+//		DLC:       !noDlcs,
+//		Extra:     !noExtras,
+//	}
+//
+//	langSet := make(map[string]bool)
+//	for _, lc := range langCodes {
+//		langSet[lc] = true
+//	}
+//	matchingList := make(DownloadsList, 0)
+//	for _, dl := range list {
+//		if dl.OS != AnyOperatingSystem &&
+//			!osSet[dl.OS] {
+//			continue
+//		}
+//
+//		if dl.DownloadType != AnyDownloadType &&
+//			!dtSet[dl.DownloadType] {
+//			continue
+//		}
+//
+//		if dl.LanguageCode != "" &&
+//			len(langSet) > 0 &&
+//			!langSet[dl.LanguageCode] {
+//			continue
+//		}
+//
+//		if noPatches {
+//			if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
+//				continue
+//			}
+//		}
+//
+//		matchingList = append(matchingList, dl)
+//	}
+//	return matchingList
+//}
+
+func (dls DownloadsList) FilterOperatingSystems(operatingSystems ...OperatingSystem) DownloadsList {
+	if len(operatingSystems) == 0 {
+		return dls
+	}
+
+	if slices.Contains(operatingSystems, AnyOperatingSystem) {
+		return dls
+	}
+
+	filteredList := make(DownloadsList, 0)
+	for _, dl := range dls {
+		if dl.OS == AnyOperatingSystem || slices.Contains(operatingSystems, dl.OS) {
+			filteredList = append(filteredList, dl)
+		}
+	}
+
+	return filteredList
+}
+
+func (dls DownloadsList) FilterLangCodes(languageCodes ...string) DownloadsList {
+	if len(languageCodes) == 0 {
+		return dls
+	}
+
+	filteredList := make(DownloadsList, 0)
+	for _, dl := range dls {
+		if dl.LanguageCode == "" || slices.Contains(languageCodes, dl.LanguageCode) {
+			filteredList = append(filteredList, dl)
+		}
+	}
+
+	return filteredList
+}
+
+func (dls DownloadsList) FilterDownloadTypes(downloadTypes ...DownloadType) DownloadsList {
+	if len(downloadTypes) == 0 {
+		return dls
+	}
+
+	if slices.Contains(downloadTypes, AnyDownloadType) {
+		return dls
+	}
+
+	filteredList := make(DownloadsList, 0)
+	for _, dl := range dls {
+		if dl.DownloadType == AnyDownloadType || slices.Contains(downloadTypes, dl.DownloadType) {
+			filteredList = append(filteredList, dl)
+		}
+	}
+
+	return filteredList
+}
+
+func (dls DownloadsList) FilterPatches(flag bool) DownloadsList {
+	if !flag {
+		return dls
+	}
+
+	filteredList := make(DownloadsList, 0)
+	for _, dl := range dls {
+		if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
+			continue
+		}
+		filteredList = append(filteredList, dl)
+	}
+
+	return filteredList
+}
+
+func (dls DownloadsList) TotalBytesEstimate() int64 {
 	var totalBytes int64
-	for _, dl := range list {
+	for _, dl := range dls {
 		totalBytes += dl.EstimatedBytes
 	}
 	return totalBytes
@@ -348,9 +448,13 @@ func UnmarshalDetails(id string, kvDetails kevlar.KeyValues) (*gog_integration.D
 	}
 	defer rcDetails.Close()
 
+	return UnmarshalDetailsReadCloser(rcDetails)
+}
+
+func UnmarshalDetailsReadCloser(rcDetails io.ReadCloser) (*gog_integration.Details, error) {
 	var det gog_integration.Details
 
-	if err = json.UnmarshalRead(rcDetails, &det); err != nil {
+	if err := json.UnmarshalRead(rcDetails, &det); err != nil {
 		if strings.Contains(err.Error(), "unmarshal JSON array into Go gog_integration.Details") {
 			return nil, nil
 		}

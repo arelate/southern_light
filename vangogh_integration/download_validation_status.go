@@ -9,7 +9,9 @@ type DownloadValidationStatus struct {
 
 func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationStatus {
 
-	if err := rdx.MustHave(GogManualUrlValidationResultProperty, GogManualUrlValidationResultProperty); err != nil {
+	if err := rdx.MustHave(GogManualUrlStatusProperty,
+		GogManualUrlValidationResultProperty,
+		GogManualUrlGeneratedChecksumProperty); err != nil {
 		panic(err)
 	}
 
@@ -38,6 +40,7 @@ func NewManualUrlDvs(manualUrl string, rdx redux.Readable) *DownloadValidationSt
 func NewProductDvs(id string, rdx redux.Readable) *DownloadValidationStatus {
 
 	if err := rdx.MustHave(GogProductValidationResultProperty,
+		GogProductGeneratedChecksumProperty,
 		VangoghDownloadQueuedProperty,
 		VangoghDownloadStartedProperty,
 		VangoghDownloadCompletedProperty); err != nil {
