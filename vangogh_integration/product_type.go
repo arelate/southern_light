@@ -173,7 +173,7 @@ func (pt ProductType) String() string {
 		return str
 	}
 
-	return productTypeStrings[UnknownProductType]
+	panic("no string set for product type")
 }
 
 func ParseProductType(productType string) ProductType {
