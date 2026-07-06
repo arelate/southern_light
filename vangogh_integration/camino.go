@@ -145,12 +145,12 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 	return filepath.Join(idp, imageId[0:2]), nil
 }
 
-func AbsProductTypeDir(pt ProductType) (string, error) {
+func AbsProductTypeDir(pt ProductType) string {
 	if pt == UnknownProductType {
-		return "", fmt.Errorf("no local destination for product type %s", pt)
+		panic("unknown product type has no dir")
 	}
-	amd := camino.GetAbs(Metadata)
-	return filepath.Join(amd, pt.String()), nil
+
+	return filepath.Join(camino.GetAbs(Metadata), pt.String())
 }
 
 func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {

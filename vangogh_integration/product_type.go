@@ -99,7 +99,7 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppNews:                 "steam-app-news",
 	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
-	SteamAppInfo:                 "steam-app-info",
+	SteamAppInfo:                 "steam-appinfo",
 
 	// Epic Games Store
 

@@ -357,10 +357,7 @@ func MapDownloads(
 		return err
 	}
 
-	detailsDir, err := AbsProductTypeDir(GogDetails)
-	if err != nil {
-		return err
-	}
+	detailsDir := AbsProductTypeDir(GogDetails)
 
 	kvDetails, err := kevlar.New(detailsDir, kevlar.JsonExt)
 	if err != nil {
