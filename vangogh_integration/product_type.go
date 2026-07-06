@@ -44,6 +44,7 @@ const (
 	EgsCatalogItems  ProductType = 400
 	EgsGameManifests ProductType = 401
 	EgsManifests     ProductType = 402
+	EgsGameAssets    ProductType = 403
 
 	// new distributions services should be added here
 
@@ -99,6 +100,13 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	SteamAppInfo:                 "steam-app-info",
+
+	// Epic Games Store
+
+	EgsCatalogItems:  "egs-catalog-items",
+	EgsGameManifests: "egs-game-manifests",
+	EgsManifests:     "egs-manifests",
+	EgsGameAssets:    "egs-game-assets",
 
 	// PCGamingWiki product types
 
