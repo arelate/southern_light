@@ -109,6 +109,7 @@ var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
 	Redux:          {Metadata},
 	GitHubReleases: {Metadata},
 	Author:         {Metadata},
+	Cookies:        {Metadata},
 	Releases:       {Binaries},
 	Runtimes:       {Binaries},
 }
