@@ -17,6 +17,7 @@ type ProductType int
 // - there is space to add new distribution services above PCGamingWiki
 
 const (
+	// cannot use iota, since product type id representation requires stable values
 	UnknownProductType ProductType = 0
 
 	// GOG.com product types
@@ -37,6 +38,12 @@ const (
 	SteamAppNews                 ProductType = 301
 	SteamAppReviews              ProductType = 302
 	SteamDeckCompatibilityReport ProductType = 303
+	SteamAppInfo                 ProductType = 304
+
+	// Epic Games Store
+	EgsCatalogItems  ProductType = 400
+	EgsGameManifests ProductType = 401
+	EgsManifests     ProductType = 402
 
 	// new distributions services should be added here
 
@@ -59,9 +66,10 @@ const (
 	OpenCriticApiGame ProductType = 1400
 
 	// vangogh/theo product types
-	GogChecksums ProductType = 1500
-	GogFilenames ProductType = 1501
-	GogImages    ProductType = 1502
+	GogChecksums      ProductType = 9000
+	GogFilenames      ProductType = 9001
+	GogImages         ProductType = 9002
+	AvailableProducts ProductType = 9003
 
 	// new data type groups should be added here
 )
@@ -90,6 +98,7 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppNews:                 "steam-app-news",
 	SteamAppReviews:              "steam-app-reviews",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
+	SteamAppInfo:                 "steam-app-info",
 
 	// PCGamingWiki product types
 
@@ -116,9 +125,10 @@ var productTypeStrings = map[ProductType]string{
 
 	// vangogh/theo product types
 
-	GogChecksums: "gog-checksums",
-	GogFilenames: "gog-filenames",
-	GogImages:    "gog-images",
+	GogChecksums:      "gog-checksums",
+	GogFilenames:      "gog-filenames",
+	GogImages:         "gog-images",
+	AvailableProducts: "available-products",
 }
 
 var gogPurchaseProductTypes = []ProductType{

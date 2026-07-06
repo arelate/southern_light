@@ -15,25 +15,20 @@ const (
 	directoriesFilename = "directories.txt"
 )
 
-const (
-	Backups  camino.AbsDir = iota // vangogh, theo
-	Binaries                      // vangogh, theo
-	Metadata                      // vangogh, theo
-	Output
-	Images
-	DescriptionImages
-	Downloads
-	Checksums
-	Logs
-)
+const theoDirname = "theo"
 
 const (
-	Redux camino.RelDir = iota
-	Author
-	Cookies
-	GitHubReleases
-	Releases
-	Runtimes
+	Backups           camino.AbsDir = iota // vangogh, theo
+	Binaries                               // vangogh, theo
+	Metadata                               // vangogh, theo
+	Output                                 // vangogh
+	Images                                 // vangogh
+	DescriptionImages                      // vangogh
+	Downloads                              // vangogh, theo
+	Checksums                              // vangogh
+	Logs                                   // vangogh, theo
+	InstalledApps                          // theo
+	Prefixes                               // theo
 )
 
 var absDirNames = map[camino.AbsDir]string{
@@ -46,15 +41,46 @@ var absDirNames = map[camino.AbsDir]string{
 	Downloads:         "downloads",
 	Checksums:         "checksums",
 	Logs:              "logs",
+	InstalledApps:     "installed-apps",
+	Prefixes:          "prefixes",
 }
+
+const (
+	Redux camino.RelDir = iota
+	Author
+	Cookies
+	Tokens
+	GitHubReleases
+	Releases
+	Runtimes
+	Temp
+	Inventory
+	GogApps
+	SteamApps
+	EgsApps
+	UmuConfigs
+	GogPrefixes
+	SteamPrefixes
+	EgsPrefixes
+)
 
 var relDirNames = map[camino.RelDir]string{
 	Redux:          "_redux",
 	Author:         "_author",
 	Cookies:        "_cookies",
+	Tokens:         "_tokens",
 	GitHubReleases: "github-releases",
 	Releases:       "releases",
 	Runtimes:       "runtimes",
+	Temp:           "_temp",
+	Inventory:      "_inventory",
+	GogApps:        "gog-apps",
+	SteamApps:      "steam-apps",
+	EgsApps:        "egs-apps",
+	UmuConfigs:     "_umu-configs",
+	GogPrefixes:    "gog-prefixes",
+	SteamPrefixes:  "steam-prefixes",
+	EgsPrefixes:    "egs-prefixes",
 }
 
 var vangoghAbsDirs = []camino.AbsDir{
@@ -69,12 +95,39 @@ var vangoghAbsDirs = []camino.AbsDir{
 	Logs,
 }
 
+var theoAbsDirs = []camino.AbsDir{
+	Backups,
+	Binaries,
+	Downloads,
+	Logs,
+	Metadata,
+	InstalledApps,
+	Prefixes,
+}
+
 var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
 	Redux:          {Metadata},
 	GitHubReleases: {Metadata},
 	Author:         {Metadata},
 	Releases:       {Binaries},
 	Runtimes:       {Binaries},
+}
+
+var theoRelAbsParents = map[camino.RelDir][]camino.AbsDir{
+	Redux:         {Metadata},
+	Cookies:       {Metadata},
+	Tokens:        {Metadata},
+	Temp:          {Downloads},
+	Inventory:     {InstalledApps},
+	GogApps:       {InstalledApps},
+	SteamApps:     {InstalledApps},
+	EgsApps:       {InstalledApps},
+	UmuConfigs:    {InstalledApps},
+	Releases:      {Binaries},
+	Runtimes:      {Binaries},
+	GogPrefixes:   {Prefixes},
+	SteamPrefixes: {Prefixes},
+	EgsPrefixes:   {Prefixes},
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {
@@ -173,14 +226,46 @@ func InitVangoghCamino() error {
 
 	resolvedVangoghAbsPaths := camino.ResolveAbsPaths(vangoghRootDir, vangoghAbsDirNames, overrides)
 
-	vrds := make(map[camino.RelDir]string)
+	vangoghRelDirNames := make(map[camino.RelDir]string)
 
-	for vrp := range vangoghRelAbsParents {
+	for vrd := range vangoghRelAbsParents {
 		var ok bool
-		if vrds[vrp], ok = relDirNames[vrp]; !ok {
+		if vangoghRelDirNames[vrd], ok = relDirNames[vrd]; !ok {
 			return errors.New("vangogh rel dir path not set")
 		}
 	}
 
-	return camino.Register(resolvedVangoghAbsPaths, vrds, vangoghRelAbsParents)
+	return camino.Register(resolvedVangoghAbsPaths, vangoghRelDirNames, vangoghRelAbsParents)
+}
+
+func InitTheoCamino() error {
+	udhd, err := UserDataHomeDir()
+	if err != nil {
+		return err
+	}
+
+	theoRootDir := filepath.Join(udhd, theoDirname)
+	if _, err = os.Stat(theoRootDir); os.IsNotExist(err) {
+		if err = os.MkdirAll(theoRootDir, camino.DefaultFileMode); err != nil {
+			return err
+		}
+	}
+
+	theoAbsDirPaths := make(map[camino.AbsDir]string)
+
+	for _, ad := range theoAbsDirs {
+		theoAbsDirPaths[ad] = filepath.Join(theoRootDir, absDirNames[ad])
+	}
+
+	theoRelDirNames := make(map[camino.RelDir]string)
+
+	for trd := range theoRelAbsParents {
+		var ok bool
+		if theoRelDirNames[trd], ok = relDirNames[trd]; !ok {
+			return errors.New("theo rel dir path not set")
+		}
+	}
+
+	return camino.Register(theoAbsDirPaths, theoRelDirNames, theoRelAbsParents)
+
 }
