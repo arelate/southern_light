@@ -148,7 +148,7 @@ func GogPurchaseProductTypes() []ProductType {
 	return gogPurchaseProductTypes
 }
 
-func ExtraProductTypes() iter.Seq[ProductType] {
+func AdditionalProductTypes() iter.Seq[ProductType] {
 	return func(yield func(ProductType) bool) {
 		for pt := range AllProductTypes() {
 			if slices.Contains(gogPurchaseProductTypes, pt) {

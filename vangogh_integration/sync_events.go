@@ -4,15 +4,15 @@ const (
 	SyncUnknownKey               = "sync-unknown"
 	SyncInterruptedKey           = "sync-interrupted"
 	SyncStartKey                 = "sync-start"
-	SyncPurchasesDataKey         = "sync-purchases-data"
-	SyncPurchasesImagesKey       = "sync-purchases-images"
+	SyncAccountDataKey           = "sync-account-data"
+	SyncAccountImagesKey         = "sync-account-images"
 	SyncDownloadsKey             = "sync-downloads"
 	SyncGenerateMissingChecksums = "sync-generate-missing-checksums"
 	SyncCleanupKey               = "sync-cleanup"
 	SyncVideoMetadataKey         = "sync-video-metadata"
 	SyncBinaries                 = "sync-binaries"
-	SyncExtraData                = "sync-extra-data"
-	SyncExtraImagesKey           = "sync-extra-images"
+	SyncAdditionalData           = "sync-additional-data"
+	SyncAdditionalImagesKey      = "sync-additional-images"
 	SyncDescriptionImagesKey     = "sync-description-images"
 	SyncBackup                   = "sync-backup"
 	SyncCompleteKey              = "sync-complete"
@@ -21,15 +21,15 @@ const (
 var SyncEventsSequence = []string{
 	SyncInterruptedKey,
 	SyncStartKey,
-	SyncPurchasesDataKey,
-	SyncPurchasesImagesKey,
+	SyncAccountDataKey,
+	SyncAccountImagesKey,
 	SyncDownloadsKey,
 	SyncGenerateMissingChecksums,
 	SyncCleanupKey,
 	SyncVideoMetadataKey,
 	SyncBinaries,
-	SyncExtraData,
-	SyncExtraImagesKey,
+	SyncAdditionalData,
+	SyncAdditionalImagesKey,
 	SyncDescriptionImagesKey,
 	SyncBackup,
 	SyncCompleteKey, // this should be the last key
@@ -54,15 +54,15 @@ var SyncEventsTitles = map[string]string{
 	SyncUnknownKey:               "Unknown",
 	SyncInterruptedKey:           "Interrupted",
 	SyncStartKey:                 "Started sync",
-	SyncPurchasesDataKey:         "Updating account data",
-	SyncPurchasesImagesKey:       "Updating account images",
+	SyncAccountDataKey:           "Updating account data",
+	SyncAccountImagesKey:         "Updating account images",
 	SyncDownloadsKey:             "Downloading files",
 	SyncGenerateMissingChecksums: "Generating missing checksums",
 	SyncCleanupKey:               "Cleaning up downloads",
 	SyncVideoMetadataKey:         "Updating video titles",
 	SyncBinaries:                 "Updating binaries",
-	SyncExtraData:                "Updating extra data",
-	SyncExtraImagesKey:           "Updating extra images",
+	SyncAdditionalData:           "Updating additional data",
+	SyncAdditionalImagesKey:      "Updating additional images",
 	SyncDescriptionImagesKey:     "Updating descriptions",
 	SyncBackup:                   "Backing up data",
 	SyncCompleteKey:              "Sync complete", // this should be the last key
