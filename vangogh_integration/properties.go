@@ -470,12 +470,6 @@ func GetDataProperties() []string {
 	}
 }
 
-func ReducedProperties() []string {
-	return []string{
-		GogOwnedProperty,
-	}
-}
-
 func VideoProperties() []string {
 	return []string{
 		GogYouTubeVideoIdProperty,
@@ -540,7 +534,6 @@ func ReduxProperties() []string {
 
 	// other properties
 
-	all = append(all, ReducedProperties()...)
 	all = append(all, LocalProperties()...)
 
 	all = append(all, VideoProperties()...)
