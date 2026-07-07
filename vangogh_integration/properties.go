@@ -352,8 +352,6 @@ func SteamAppDetailsProperties() []string {
 		SteamControllerSupportProperty,
 		SteamShortDescriptionProperty,
 		SteamWebsiteProperty,
-		//MetacriticScoreProperty,
-		//MetacriticIdProperty,
 		SteamCategoriesProperty,
 		SteamGenresProperty,
 		SteamSupportUrlProperty,
