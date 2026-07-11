@@ -96,6 +96,8 @@ const (
 	SteamReviewScoreProperty                     = "steam-review-score"
 	SteamReviewScoreDescProperty                 = "steam-review-score-desc"
 	SteamDeckAppCompatibilityCategoryProperty    = "steam-deck-app-compatibility-category"
+	SteamMachineCompatibilityCategoryProperty    = "steam-machine-app-compatibility-category"
+	SteamFrameCompatibilityCategoryProperty      = "steam-frame-app-compatibility-category"
 	SteamSteamOsAppCompatibilityCategoryProperty = "steam-steamos-app-compatibility-category"
 	SteamLastCommunityUpdateProperty             = "steam-last-community-update"
 	SteamRequiredAgeProperty                     = "steam-required-age"
@@ -376,6 +378,8 @@ func SteamAppReviewsProperties() []string {
 func SteamDeckCompatibilityReportProperties() []string {
 	return []string{
 		SteamDeckAppCompatibilityCategoryProperty,
+		SteamMachineCompatibilityCategoryProperty,
+		SteamFrameCompatibilityCategoryProperty,
 		SteamSteamOsAppCompatibilityCategoryProperty,
 	}
 }

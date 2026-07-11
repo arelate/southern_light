@@ -16,6 +16,10 @@ type DeckAppCompatibilityResults struct {
 	ResolvedItems           []ResolvedItem `json:"resolved_items"`
 	SteamDeckBlogUrl        string         `json:"steam_deck_blog_url"`
 	SearchId                any            `json:"search_id"`
+	MachineResolvedCategory int            `json:"machine_resolved_category"`
+	MachineResolvedItems    []ResolvedItem `json:"machine_resolved_items"`
+	FrameResolvedCategory   int            `json:"frame_resolved_category"`
+	FrameResolvedItems      []ResolvedItem `json:"frame_resolved_items"`
 	SteamOsResolvedCategory int            `json:"steamos_resolved_category"`
 	SteamOsResolvedItems    []ResolvedItem `json:"steamos_resolved_items"`
 }
@@ -39,6 +43,46 @@ func (dacr *DeckAppCompatibilityReport) GetSteamDeckDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetSteamDeckResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
+		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
+	}
+	return rilt
+}
+
+func (dacr *DeckAppCompatibilityReport) SteamMachineString() string {
+	return DecodeCategory(dacr.Results.MachineResolvedCategory)
+}
+
+func (dacr *DeckAppCompatibilityReport) GetSteamMachineDisplayTypes() []string {
+	ridt := make([]string, 0, len(dacr.Results.MachineResolvedItems))
+	for _, ri := range dacr.Results.MachineResolvedItems {
+		ridt = append(ridt, DecodeCategory(ri.DisplayType-1))
+	}
+	return ridt
+}
+
+func (dacr *DeckAppCompatibilityReport) GetSteamMachineResults() []string {
+	rilt := make([]string, 0, len(dacr.Results.MachineResolvedItems))
+	for _, ri := range dacr.Results.MachineResolvedItems {
+		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
+	}
+	return rilt
+}
+
+func (dacr *DeckAppCompatibilityReport) SteamFrameString() string {
+	return DecodeCategory(dacr.Results.FrameResolvedCategory)
+}
+
+func (dacr *DeckAppCompatibilityReport) GetSteamFrameDisplayTypes() []string {
+	ridt := make([]string, 0, len(dacr.Results.FrameResolvedItems))
+	for _, ri := range dacr.Results.FrameResolvedItems {
+		ridt = append(ridt, DecodeCategory(ri.DisplayType-1))
+	}
+	return ridt
+}
+
+func (dacr *DeckAppCompatibilityReport) GetSteamFrameResults() []string {
+	rilt := make([]string, 0, len(dacr.Results.FrameResolvedItems))
+	for _, ri := range dacr.Results.FrameResolvedItems {
 		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
 	}
 	return rilt

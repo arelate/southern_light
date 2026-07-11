@@ -5,8 +5,9 @@ import (
 )
 
 const (
-	steamDeckLocTokenPrefix = "#SteamDeckVerified_TestResult_"
-	steamOsLocTokenPrefix   = "#SteamOS_TestResult_"
+	steamDeckLocTokenPrefix    = "#SteamDeckVerified_TestResult_"
+	steamMachineLocTokenPrefix = "#SteamMachine_TestResult_"
+	steamOsLocTokenPrefix      = "#SteamOS_TestResult_"
 )
 
 // Source: https://store.fastly.steamstatic.com/public/javascript/applications/store/shared_english-json.js
@@ -101,6 +102,14 @@ func SteamDeckTrimLocToken(token string) string {
 }
 
 func SteamDeckDecodeLocToken(token string) string {
+	return steamDeckLocTokensStrings[token]
+}
+
+func SteamMachineTrimLocToken(token string) string {
+	return strings.TrimPrefix(token, steamMachineLocTokenPrefix)
+}
+
+func SteamMachineDecodeLocToken(token string) string {
 	return steamDeckLocTokensStrings[token]
 }
 
