@@ -35,6 +35,7 @@ const (
 	SteamProton800                  = "proton-8.0"
 	SteamProton900                  = "proton-9.0"
 	SteamProton1000                 = "proton-10.0"
+	SteamProton1100                 = "proton-11.0"
 	SteamProtonNext                 = "proton-next"
 	SteamProtonHotfix               = "proton-hotfix"
 	SteamProtonExperimental         = "proton-experimental"
@@ -61,6 +62,7 @@ var SteamProtonDirectories = map[string]string{
 	SteamProton800:                  "Proton 8.0",
 	SteamProton900:                  "Proton 9.0 (Beta)",
 	SteamProton1000:                 "Proton 10.0",
+	SteamProton1100:                 "Proton 11.0",
 	SteamProtonNext:                 "Proton Next",
 	SteamProtonHotfix:               "Proton Hotfix",
 	SteamProtonExperimental:         "Proton - Experimental",
