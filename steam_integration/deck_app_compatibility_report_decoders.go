@@ -7,6 +7,7 @@ import (
 const (
 	steamDeckLocTokenPrefix    = "#SteamDeckVerified_TestResult_"
 	steamMachineLocTokenPrefix = "#SteamMachine_TestResult_"
+	steamFrameLocTokenPrefix   = "#SteamFrame_TestResult_"
 	steamOsLocTokenPrefix      = "#SteamOS_TestResult_"
 )
 
@@ -110,6 +111,14 @@ func SteamMachineTrimLocToken(token string) string {
 }
 
 func SteamMachineDecodeLocToken(token string) string {
+	return steamDeckLocTokensStrings[token]
+}
+
+func SteamFrameTrimLocToken(token string) string {
+	return strings.Trim(token, steamFrameLocTokenPrefix)
+}
+
+func SteamFrameDecodeLocToken(token string) string {
 	return steamDeckLocTokensStrings[token]
 }
 
