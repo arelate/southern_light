@@ -98,6 +98,7 @@ const (
 	UrlKeepDownloadsParameter         = "keep-downloads"
 	UrlNoSteamShortcutParameter       = "no-steam-shortcut"
 	UrlNoPresetLaunchOptionsParameter = "no-preset-launch-options"
+	UrlNoValidationParameter          = "no-validation"
 	UrlSteamAppIdParameter            = "steam-appid"
 	UrlUrlParameter                   = "url"
 	UrlNoDlcsParameter                = "no-dlcs"
