@@ -209,6 +209,7 @@ var ProductTypeProperties = map[ProductType][]string{
 func GogLicencesProperties() []string {
 	return []string{
 		GogLicencesProperty,
+		GogOwnedProperty,
 	}
 }
 
@@ -268,6 +269,7 @@ func GogAccountPageProperties() []string {
 		GogAccountProductPageProperty,
 		GogIsAccountProductProperty,
 		GogAccountProductOrderProperty,
+		GogOwnedProperty,
 	}
 }
 
