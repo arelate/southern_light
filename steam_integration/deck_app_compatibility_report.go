@@ -43,7 +43,7 @@ func (dacr *DeckAppCompatibilityReport) GetSteamDeckDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetSteamDeckResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.ResolvedItems))
 	for _, ri := range dacr.Results.ResolvedItems {
-		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
+		rilt = append(rilt, SteamDecodeLocToken(ri.LocToken))
 	}
 	return rilt
 }
@@ -63,7 +63,7 @@ func (dacr *DeckAppCompatibilityReport) GetSteamMachineDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetSteamMachineResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.MachineResolvedItems))
 	for _, ri := range dacr.Results.MachineResolvedItems {
-		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
+		rilt = append(rilt, SteamDecodeLocToken(ri.LocToken))
 	}
 	return rilt
 }
@@ -83,7 +83,7 @@ func (dacr *DeckAppCompatibilityReport) GetSteamFrameDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetSteamFrameResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.FrameResolvedItems))
 	for _, ri := range dacr.Results.FrameResolvedItems {
-		rilt = append(rilt, SteamDeckTrimLocToken(ri.LocToken))
+		rilt = append(rilt, SteamDecodeLocToken(ri.LocToken))
 	}
 	return rilt
 }
@@ -103,7 +103,7 @@ func (dacr *DeckAppCompatibilityReport) GetSteamOsDisplayTypes() []string {
 func (dacr *DeckAppCompatibilityReport) GetSteamOsResults() []string {
 	rilt := make([]string, 0, len(dacr.Results.SteamOsResolvedItems))
 	for _, ri := range dacr.Results.SteamOsResolvedItems {
-		rilt = append(rilt, SteamOsTrimLocToken(ri.LocToken))
+		rilt = append(rilt, SteamDecodeLocToken(ri.LocToken))
 	}
 	return rilt
 }
