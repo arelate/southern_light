@@ -21,7 +21,6 @@ const (
 	Backups           camino.AbsDir = iota // vangogh, theo
 	Binaries                               // vangogh, theo
 	Metadata                               // vangogh, theo
-	Output                                 // vangogh
 	Images                                 // vangogh
 	DescriptionImages                      // vangogh
 	Downloads                              // vangogh, theo
@@ -35,7 +34,6 @@ var absDirNames = map[camino.AbsDir]string{
 	Backups:           "backups",
 	Binaries:          "binaries",
 	Metadata:          "metadata",
-	Output:            "output",
 	Images:            "images",
 	DescriptionImages: "description_images",
 	Downloads:         "downloads",
@@ -87,7 +85,6 @@ var vangoghAbsDirs = []camino.AbsDir{
 	Backups,
 	Binaries,
 	Metadata,
-	Output,
 	Images,
 	DescriptionImages,
 	Downloads,
