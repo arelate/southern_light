@@ -71,10 +71,6 @@ func AbsCookiesPath() string {
 	return filepath.Join(camino.GetRel(Cookies, Metadata), cookiesFilename)
 }
 
-func AbsAtomFeedPath() string {
-	return filepath.Join(camino.GetAbs(Output), atomFeedFilename)
-}
-
 func AbsDescriptionImagePath(path string) (string, error) {
 	if path == "" {
 		return "", fmt.Errorf("description image path cannot be empty")
