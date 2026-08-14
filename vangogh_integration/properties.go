@@ -160,17 +160,18 @@ const (
 
 	// vangogh properties
 
-	VangoghLocalTagsProperty           = "vangogh-local-tags"
-	VangoghDownloadStatusErrorProperty = "vangogh-download-status-error"
-	VangoghDownloadQueuedProperty      = "vangogh-download-queued"
-	VangoghDownloadStartedProperty     = "vangogh-download-started"
-	VangoghDownloadCompletedProperty   = "vangogh-download-completed"
-	VangoghGetDataErrorDateProperty    = "vangogh-get-data-error-date"
-	VangoghGetDataErrorMessageProperty = "vangogh-get-data-error-message"
-	VangoghGetDataLastUpdatedProperty  = "vangogh-get-data-last-updated"
-	VangoghDataSchemeVersionProperty   = "vangogh-data-scheme-version"
-	VangoghSyncEventsProperty          = "vangogh-sync-events"
-	VangoghLastSyncUpdatesProperty     = "vangogh-last-sync-updates"
+	VangoghLocalTagsProperty                = "vangogh-local-tags"
+	VangoghDownloadStatusErrorProperty      = "vangogh-download-status-error"
+	VangoghDownloadQueuedProperty           = "vangogh-download-queued"
+	VangoghDownloadStartedProperty          = "vangogh-download-started"
+	VangoghDownloadCompletedProperty        = "vangogh-download-completed"
+	VangoghGetDataErrorDateProperty         = "vangogh-get-data-error-date"
+	VangoghGetDataErrorMessageProperty      = "vangogh-get-data-error-message"
+	VangoghGetDataLastUpdatedProperty       = "vangogh-get-data-last-updated"
+	VangoghSteamLastCommunityUpdateProperty = "vangogh-steam-last-community-update"
+	VangoghDataSchemeVersionProperty        = "vangogh-data-scheme-version"
+	VangoghSyncEventsProperty               = "vangogh-sync-events"
+	VangoghLastSyncUpdatesProperty          = "vangogh-last-sync-updates"
 )
 
 const (
@@ -367,6 +368,7 @@ func SteamAppNewsProperties() []string {
 	return []string{
 		GogSteamAppIdProperty,
 		SteamLastCommunityUpdateProperty,
+		VangoghSteamLastCommunityUpdateProperty,
 	}
 }
 
