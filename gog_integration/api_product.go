@@ -399,6 +399,9 @@ func (ap *ApiProduct) GetGOGRelease() string {
 	//Considering GOG was founded in 2008 - neither is a real date for practical purposes.
 	if grd.Unix() == 693612000 ||
 		grd.Unix() == 978299999 {
+		if globalRelease := ap.GetGlobalRelease(); globalRelease != "" {
+			return globalRelease
+		}
 		return ""
 	}
 
