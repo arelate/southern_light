@@ -152,7 +152,8 @@ func convertGameDetails(det *gog_integration.Details, dt DownloadType) (Download
 		langCode := gog_integration.LanguageCodeByNativeName(dl.Language)
 
 		if langCode == "" {
-			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
+			nod.Log("invalid native language %s", dl.Language)
+			continue
 		}
 
 		for _, winDl := range dl.Windows {
