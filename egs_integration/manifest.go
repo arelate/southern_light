@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/google/uuid"
+	"uuid"
 )
 
 const manifestMagic uint32 = 0x44BEC00C

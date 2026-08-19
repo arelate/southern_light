@@ -7,8 +7,7 @@ import (
 	"encoding/json/v2"
 	"errors"
 	"io"
-
-	"github.com/google/uuid"
+	"uuid"
 )
 
 var (
@@ -77,7 +76,7 @@ func readUuid(r io.Reader) (val uuid.UUID, err error) {
 	data := make([]uint32, 4)
 	err = binary.Read(r, binary.BigEndian, &data)
 	if err != nil {
-		return uuid.Nil, err
+		return uuid.Nil(), err
 	}
 	for ii, vv := range data {
 		binary.LittleEndian.PutUint32(val[ii*4:(ii+1)*4], vv)

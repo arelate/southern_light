@@ -1,6 +1,6 @@
 package egs_integration
 
-import "github.com/google/uuid"
+import "uuid"
 
 const chunkMagic = 0xB1FE3AA2
 

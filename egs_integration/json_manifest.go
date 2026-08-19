@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/uuid"
+	"uuid"
 )
 
 const hashLen = 20
