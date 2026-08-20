@@ -24,15 +24,20 @@ type CatalogProduct struct {
 	Genres                []NameSlug             `json:"genres"`
 	ProductType           string                 `json:"productType"`
 	ReleaseDate           *string                `json:"releaseDate"`
+	StoreReleaseDate      *string                `json:"storeReleaseDate"`
 	ReviewsRating         int                    `json:"reviewsRating"`
+	ReviewsCount          int                    `json:"reviewsCount"`
 	OperatingSystems      []string               `json:"operatingSystems"`
 	CoverHorizontal       string                 `json:"coverHorizontal"`
 	CoverVertical         string                 `json:"coverVertical"`
+	Logo                  *string                `json:"logo"`
+	GalaxyBackgroundImage *string                `json:"galaxyBackgroundImage"`
 	Screenshots           []string               `json:"screenshots"`
 	ProductState          string                 `json:"productState"`
 	Tags                  []NameSlug             `json:"tags"`
 	UserPreferredLanguage *UserPreferredLanguage `json:"userPreferredLanguage"`
 	Price                 CatalogPrice           `json:"price"`
+	Ratings               []AgeRating            `json:"ratings"`
 	StoreLink             string                 `json:"storeLink"`
 }
 
@@ -61,6 +66,11 @@ type CatalogPrice struct {
 	BaseMoney  AmountCurrency `json:"baseMoney"`
 }
 
+type AgeRating struct {
+	Name      string `json:"name"`
+	AgeRating string `json:"ageRating"`
+}
+
 func (cp *CatalogProduct) GetTitle() string {
 	return cp.Title
 }
@@ -79,6 +89,20 @@ func (cp *CatalogProduct) GetImage() string {
 
 func (cp *CatalogProduct) GetVerticalImage() string {
 	return cp.CoverVertical
+}
+
+func (cp *CatalogProduct) GetLogo() string {
+	if cp.Logo != nil {
+		return *cp.Logo
+	}
+	return ""
+}
+
+func (cp *CatalogProduct) GetGalaxyBackgroundImage() string {
+	if cp.GalaxyBackgroundImage != nil {
+		return *cp.GalaxyBackgroundImage
+	}
+	return ""
 }
 
 func (cp *CatalogProduct) GetScreenshots() []string {
@@ -136,6 +160,13 @@ func (cp *CatalogProduct) GetSlug() string {
 func (cp *CatalogProduct) GetGlobalRelease() string {
 	if cp.ReleaseDate != nil {
 		return *cp.ReleaseDate
+	}
+	return ""
+}
+
+func (cp *CatalogProduct) GetGogRelease() string {
+	if cp.StoreReleaseDate != nil {
+		return *cp.StoreReleaseDate
 	}
 	return ""
 }
