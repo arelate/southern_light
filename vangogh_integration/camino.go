@@ -233,7 +233,7 @@ func InitVangoghCamino() error {
 		}
 	}
 
-	return camino.Register(resolvedVangoghAbsPaths, vangoghRelDirNames, vangoghRelAbsParents)
+	return camino.Register(resolvedVangoghAbsPaths, vangoghRelDirNames, vangoghRelAbsParents, len(overrides) == 0)
 }
 
 func InitTheoCamino() error {
@@ -264,6 +264,6 @@ func InitTheoCamino() error {
 		}
 	}
 
-	return camino.Register(theoAbsDirPaths, theoRelDirNames, theoRelAbsParents)
+	return camino.Register(theoAbsDirPaths, theoRelDirNames, theoRelAbsParents, true)
 
 }
