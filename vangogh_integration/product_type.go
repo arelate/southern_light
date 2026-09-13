@@ -132,7 +132,7 @@ var productTypeStrings = map[ProductType]string{
 
 	// vangogh/theo product types
 
-	//GogChecksums:      "gog-checksums",
+	GogChecksums:      "gog-checksums",
 	GogFilenames:      "gog-filenames",
 	AvailableProducts: "available-products",
 }
