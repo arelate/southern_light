@@ -18,29 +18,25 @@ const (
 const theoDirname = "theo"
 
 const (
-	Backups           camino.AbsDir = iota // vangogh, theo
-	Binaries                               // vangogh, theo
-	Metadata                               // vangogh, theo
-	Images                                 // vangogh
-	DescriptionImages                      // vangogh
-	Downloads                              // vangogh, theo
-	Checksums                              // vangogh
-	Logs                                   // vangogh, theo
-	InstalledApps                          // theo
-	Prefixes                               // theo
+	Backups       camino.AbsDir = iota // vangogh, theo
+	Binaries                           // vangogh, theo
+	Metadata                           // vangogh, theo
+	Images                             // vangogh
+	Downloads                          // vangogh, theo
+	Logs                               // vangogh, theo
+	InstalledApps                      // theo
+	Prefixes                           // theo
 )
 
 var absDirNames = map[camino.AbsDir]string{
-	Backups:           "backups",
-	Binaries:          "binaries",
-	Metadata:          "metadata",
-	Images:            "images",
-	DescriptionImages: "description_images",
-	Downloads:         "downloads",
-	Checksums:         "checksums",
-	Logs:              "logs",
-	InstalledApps:     "installed-apps",
-	Prefixes:          "prefixes",
+	Backups:       "backups",
+	Binaries:      "binaries",
+	Metadata:      "metadata",
+	Images:        "images",
+	Downloads:     "downloads",
+	Logs:          "logs",
+	InstalledApps: "installed-apps",
+	Prefixes:      "prefixes",
 }
 
 const (
@@ -48,6 +44,10 @@ const (
 	Author
 	Cookies
 	Tokens
+	GogImages
+	GogDescriptionImages
+	GogDownloads
+	Checksums
 	GitHubReleases
 	Releases
 	Runtimes
@@ -63,22 +63,26 @@ const (
 )
 
 var relDirNames = map[camino.RelDir]string{
-	Redux:          "_redux",
-	Author:         "_author",
-	Cookies:        "_cookies",
-	Tokens:         "_tokens",
-	GitHubReleases: "github-releases",
-	Releases:       "releases",
-	Runtimes:       "runtimes",
-	Temp:           "_temp",
-	Inventory:      "_inventory",
-	GogApps:        "gog-apps",
-	SteamApps:      "steam-apps",
-	EgsApps:        "egs-apps",
-	UmuConfigs:     "_umu-configs",
-	GogPrefixes:    "gog-prefixes",
-	SteamPrefixes:  "steam-prefixes",
-	EgsPrefixes:    "egs-prefixes",
+	Redux:                "_redux",
+	Author:               "_author",
+	Cookies:              "_cookies",
+	Tokens:               "_tokens",
+	GogImages:            "gog-images",
+	GogDescriptionImages: "gog-description-images",
+	GogDownloads:         "gog-downloads",
+	Checksums:            "checksums",
+	GitHubReleases:       "github-releases",
+	Releases:             "releases",
+	Runtimes:             "runtimes",
+	Temp:                 "_temp",
+	Inventory:            "_inventory",
+	GogApps:              "gog-apps",
+	SteamApps:            "steam-apps",
+	EgsApps:              "egs-apps",
+	UmuConfigs:           "_umu-configs",
+	GogPrefixes:          "gog-prefixes",
+	SteamPrefixes:        "steam-prefixes",
+	EgsPrefixes:          "egs-prefixes",
 }
 
 var vangoghAbsDirs = []camino.AbsDir{
@@ -86,9 +90,7 @@ var vangoghAbsDirs = []camino.AbsDir{
 	Binaries,
 	Metadata,
 	Images,
-	DescriptionImages,
 	Downloads,
-	Checksums,
 	Logs,
 }
 
@@ -103,12 +105,16 @@ var theoAbsDirs = []camino.AbsDir{
 }
 
 var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
-	Redux:          {Metadata},
-	GitHubReleases: {Metadata},
-	Author:         {Metadata},
-	Cookies:        {Metadata},
-	Releases:       {Binaries},
-	Runtimes:       {Binaries},
+	Redux:                {Metadata},
+	GitHubReleases:       {Metadata},
+	Author:               {Metadata},
+	Cookies:              {Metadata},
+	GogImages:            {Images},
+	GogDescriptionImages: {Images},
+	Checksums:            {Downloads},
+	GogDownloads:         {Downloads},
+	Releases:             {Binaries},
+	Runtimes:             {Binaries},
 }
 
 var theoRelAbsParents = map[camino.RelDir][]camino.AbsDir{
@@ -128,7 +134,7 @@ var theoRelAbsParents = map[camino.RelDir][]camino.AbsDir{
 	EgsPrefixes:   {Prefixes},
 }
 
-func AbsImagesDirByImageId(imageId string) (string, error) {
+func AbsGogImagesDirByImageId(imageId string) (string, error) {
 	if imageId == "" {
 		return "", fmt.Errorf("imageId cannot be empty")
 	}
@@ -139,7 +145,7 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 		return "", fmt.Errorf("imageId is too short")
 	}
 
-	idp := camino.GetAbs(Images)
+	idp := camino.GetRel(GogImages, Images)
 	return filepath.Join(idp, imageId[0:2]), nil
 }
 
@@ -188,14 +194,14 @@ func relSlugDownloadTypeDir(slug string, dt DownloadType, layout DownloadsLayout
 	return filepath.Join(relSlugDir, relDownloadTypeDir), nil
 }
 
-func AbsSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {
+func AbsGogSlugDownloadDir(slug string, dt DownloadType, layout DownloadsLayout) (string, error) {
 	rsdtd, err := relSlugDownloadTypeDir(slug, dt, layout)
 	if err != nil {
 		return "", err
 	}
 
-	downloadsDir := camino.GetAbs(Downloads)
-	return filepath.Join(downloadsDir, rsdtd), nil
+	gogDownloadsDir := camino.GetRel(GogDownloads, Downloads)
+	return filepath.Join(gogDownloadsDir, rsdtd), nil
 }
 
 func AbsReduxDir() string {

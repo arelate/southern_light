@@ -32,21 +32,21 @@ func filenameAsId(p string) (string, error) {
 	return "", nil
 }
 
-func LocalImageIds() (map[string]any, error) {
+func LocalGogImageIds() (map[string]any, error) {
 
 	liia := nod.Begin(" itemizing local images...")
 	defer liia.Done()
 
-	return walkFiles(camino.GetAbs(Images), filenameAsId)
+	return walkFiles(camino.GetRel(GogImages, Images), filenameAsId)
 }
 
-func LocalDownloadDirs() (map[string]any, error) {
-	return walkDirectories(camino.GetAbs(Downloads))
+func LocalGogDownloadDirs() (map[string]any, error) {
+	return walkDirectories(camino.GetRel(GogDownloads, Downloads))
 }
 
 func AbsLocalSlugDownloads(slug string, dl DownloadsLayout) (map[string]any, error) {
 	// using root product slug download dir to walk all files under it
-	absSlugDownloadDir, err := AbsSlugDownloadDir(slug, Installer, dl)
+	absSlugDownloadDir, err := AbsGogSlugDownloadDir(slug, Installer, dl)
 	if err != nil {
 		return nil, err
 	}

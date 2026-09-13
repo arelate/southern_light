@@ -27,14 +27,14 @@ var validatedExtensions = map[string]bool{
 
 func AbsChecksumPath(absDownloadPath string) (string, error) {
 
-	downloadsDir := camino.GetAbs(Downloads)
+	downloadsDir := camino.GetRel(GogDownloads, Downloads)
 
 	relDownloadPath, err := filepath.Rel(downloadsDir, absDownloadPath)
 	if err != nil {
 		return "", err
 	}
 
-	checksumsDir := camino.GetAbs(Checksums)
+	checksumsDir := camino.GetRel(Checksums, Downloads)
 
 	return filepath.Join(checksumsDir, relDownloadPath+xmlExt), nil
 }
@@ -52,7 +52,7 @@ func absLocalVideoPath(videoId string, videoDir string, ext string) string {
 
 func AbsLocalImagePath(imageId string) (string, error) {
 	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
-	idp, err := AbsImagesDirByImageId(imageId)
+	idp, err := AbsGogImagesDirByImageId(imageId)
 	if err != nil {
 		return "", err
 	}
@@ -86,7 +86,7 @@ func AbsDescriptionImagePath(path string) (string, error) {
 		return "", fmt.Errorf("sanitized description image path cannot be empty")
 	}
 
-	idp := camino.GetAbs(DescriptionImages)
+	idp := camino.GetRel(GogDescriptionImages, Images)
 
 	x, _ := utf8.DecodeRuneInString(path)
 
