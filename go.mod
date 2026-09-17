@@ -10,3 +10,5 @@ require (
 	github.com/boggydigital/redux v0.1.12
 	golang.org/x/net v0.58.0
 )
+
+require github.com/boggydigital/coost v0.4.3 // indirect

@@ -109,6 +109,7 @@ var vangoghRelAbsParents = map[camino.RelDir][]camino.AbsDir{
 	GitHubReleases:       {Metadata},
 	Author:               {Metadata},
 	Cookies:              {Metadata},
+	Tokens:               {Metadata},
 	GogImages:            {Images},
 	GogDescriptionImages: {Images},
 	Checksums:            {Downloads},

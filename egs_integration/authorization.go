@@ -2,12 +2,20 @@ package egs_integration
 
 import (
 	"encoding/base64"
+	"encoding/json/v2"
 	"errors"
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/arelate/southern_light/vangogh_integration"
+	"github.com/boggydigital/camino"
+	"github.com/boggydigital/coost"
+	"github.com/boggydigital/kevlar"
 )
 
 const (
@@ -20,6 +28,12 @@ const (
 	UserAgent = "UELauncher/15.18.2-29993784+++Portal+Release-Live Windows/10.0.19041.1.256.64bit"
 )
 
+const (
+	egsCookiesFilename = "egs-cookies.json"
+	egsTokenKey        = "egs-token"
+	jsonCatalogItemPfx = "{\"id\""
+)
+
 type GrantType string
 
 const (
@@ -27,6 +41,25 @@ const (
 	GrantTypeExchangeToken               = "exchange_code"
 	GrantTypeAuthorizationCode           = "authorization_code"
 	GrantTypeClientCredentials           = "client_credentials"
+)
+
+var egsClient *http.Client
+var egsTokenVerifiedRecently bool
+
+var (
+	eosOverlayGameAsset = GameAsset{
+		AppName:       "98bc04bc842e4906993fd6d6644ffb8d",
+		LabelName:     "Epic Online Services Overlay",
+		CatalogItemId: "cc15684f44d849e89e9bf4cec0508b68",
+		Namespace:     "302e5ede476149b1bc3e4fe6ae45e50e",
+	}
+
+	eosHelperGameAsset = GameAsset{
+		AppName:       "c9e2eb9993a1496c99dc529b49a07339",
+		LabelName:     "Epic Online Services Helper",
+		Namespace:     "302e5ede476149b1bc3e4fe6ae45e50e",
+		CatalogItemId: "1108a9c0af47438da91331753b22ea21",
+	}
 )
 
 type GetApiRedirectResponse struct {
@@ -190,4 +223,225 @@ func DeleteToken(token string, client *http.Client) error {
 	}
 
 	return readCloser.Close()
+}
+
+func GetClient() (*http.Client, error) {
+
+	if egsClient == nil {
+		cookiesDir := camino.GetRel(vangogh_integration.Cookies, vangogh_integration.Metadata)
+		egsCookiePath := filepath.Join(cookiesDir, egsCookiesFilename)
+
+		jar, err := coost.Read(HostUrl(), egsCookiePath)
+		if err != nil {
+			return nil, err
+		}
+
+		egsClient = http.DefaultClient
+		egsClient.Jar = jar
+	}
+
+	return egsClient, nil
+}
+
+func PostStoreToken(token string, grantType GrantType) error {
+
+	var err error
+
+	var client *http.Client
+	client, err = GetClient()
+	if err != nil {
+		return err
+	}
+
+	tokensDir := camino.GetRel(vangogh_integration.Tokens, vangogh_integration.Metadata)
+	kvTokens, err := kevlar.New(tokensDir, kevlar.JsonExt)
+	if err != nil {
+		return err
+	}
+
+	var rcPostTokenResponse io.ReadCloser
+
+	rcPostTokenResponse, err = PostToken(token, grantType, client)
+	if err != nil {
+		return err
+	}
+
+	defer rcPostTokenResponse.Close()
+
+	return kvTokens.Set(egsTokenKey, rcPostTokenResponse)
+}
+
+func GetAccessToken(cookieStr string) error {
+
+	cookiesDir := camino.GetRel(vangogh_integration.Cookies, vangogh_integration.Metadata)
+	egsCookiePath := filepath.Join(cookiesDir, egsCookiesFilename)
+
+	tokensDir := camino.GetRel(vangogh_integration.Tokens, vangogh_integration.Metadata)
+	kvTokens, err := kevlar.New(tokensDir, kevlar.JsonExt)
+	if err != nil {
+		return err
+	}
+
+	if err = coost.Import(cookieStr, HostUrl(), egsCookiePath); err != nil {
+		return err
+	}
+
+	if kvTokens.Has(egsTokenKey) {
+		if err = kvTokens.Cut(egsTokenKey); err != nil {
+			return err
+		}
+	}
+
+	var client *http.Client
+	client, err = GetClient()
+	if err != nil {
+		return err
+	}
+
+	var apiRedirectResponse GetApiRedirectResponse
+	var rcApiRedirectResponse io.ReadCloser
+
+	rcApiRedirectResponse, err = GetApiRedirect(client)
+	if err != nil {
+		return err
+	}
+
+	defer rcApiRedirectResponse.Close()
+
+	if err = json.UnmarshalRead(rcApiRedirectResponse, &apiRedirectResponse); err != nil {
+		return err
+	}
+
+	return PostStoreToken(apiRedirectResponse.AuthorizationCode, GrantTypeAuthorizationCode)
+}
+
+func RefreshToken(refreshToken string) error {
+	if refreshToken == "" {
+		return errors.New("refresh token not present")
+	}
+	return PostStoreToken(refreshToken, GrantTypeRefreshToken)
+}
+
+func GetStoredPostTokenResponse() (*PostTokenResponse, error) {
+	tokensDir := camino.GetRel(vangogh_integration.Tokens, vangogh_integration.Metadata)
+	kvTokens, err := kevlar.New(tokensDir, kevlar.JsonExt)
+	if err != nil {
+		return nil, err
+	}
+
+	var rcEgsToken io.ReadCloser
+	rcEgsToken, err = kvTokens.Get(egsTokenKey)
+	if err != nil {
+		return nil, err
+	}
+	defer rcEgsToken.Close()
+
+	var ptr PostTokenResponse
+	if err = json.UnmarshalRead(rcEgsToken, &ptr); err != nil {
+		return nil, err
+	}
+
+	return &ptr, nil
+}
+
+func VerifyToken(client *http.Client) (*PostTokenResponse, error) {
+
+	ptr, err := GetStoredPostTokenResponse()
+	if err != nil {
+		return nil, err
+	}
+
+	if ptr.AccessToken == "" {
+		return nil, errors.New("empty access token, re-connect EGS")
+	}
+
+	if egsTokenVerifiedRecently {
+		return ptr, nil
+	}
+
+	if ptr.ExpiresAt.Sub(time.Now()) < time.Hour {
+		if err = RefreshToken(ptr.RefreshToken); err != nil {
+			return nil, err
+		}
+
+		if ptr, err = GetStoredPostTokenResponse(); err != nil {
+			return nil, err
+		}
+	}
+
+	var rcVerifyTokenResponse io.ReadCloser
+
+	rcVerifyTokenResponse, err = GetVerifyToken(ptr.AccessToken, client)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rcVerifyTokenResponse.Close()
+
+	var verifyTokenResponse GetVerifyTokenResponse
+
+	if err = json.UnmarshalRead(rcVerifyTokenResponse, &verifyTokenResponse); err != nil {
+		return nil, err
+	}
+
+	if verifyTokenResponse.Token == "" {
+		return nil, errors.New("empty access token, re-connect EGS")
+	}
+
+	if ptr.ExpiresAt.Sub(time.Now()) > time.Hour*3 {
+		egsTokenVerifiedRecently = true
+	}
+
+	return ptr, nil
+}
+
+func SetupConnection(cookieStr string, reset bool) error {
+
+	var err error
+
+	if reset {
+		if err = ResetConnection(); err != nil {
+			return err
+		}
+	}
+
+	if cookieStr != "" {
+		if err = GetAccessToken(cookieStr); err != nil {
+			return err
+		}
+	}
+
+	client, err := GetClient()
+	if err != nil {
+		return err
+	}
+
+	_, err = VerifyToken(client)
+	return err
+}
+
+func ResetConnection() error {
+
+	cookiesDir := camino.GetRel(vangogh_integration.Cookies, vangogh_integration.Metadata)
+	egsCookiePath := filepath.Join(cookiesDir, egsCookiesFilename)
+
+	tokensDir := camino.GetRel(vangogh_integration.Tokens, vangogh_integration.Metadata)
+	kvTokens, err := kevlar.New(tokensDir, kevlar.JsonExt)
+	if err != nil {
+		return err
+	}
+
+	if _, err = os.Stat(egsCookiePath); err == nil {
+		if err = os.Remove(egsCookiePath); err != nil {
+			return nil
+		}
+	}
+
+	if kvTokens.Has(egsTokenKey) {
+		if err = kvTokens.Cut(egsTokenKey); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

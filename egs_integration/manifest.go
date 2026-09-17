@@ -1,10 +1,18 @@
 package egs_integration
 
 import (
+	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
+	"os"
 	"path/filepath"
 
 	"uuid"
+
+	"github.com/arelate/southern_light/vangogh_integration"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/nod"
 )
 
 const manifestMagic uint32 = 0x44BEC00C
@@ -114,4 +122,83 @@ type CustomFields struct {
 	Version uint8
 	Count   uint32
 	Fields  map[string]string
+}
+
+func GetManifest(appName string, gameManifest *GameManifest, operatingSystem vangogh_integration.OperatingSystem, force bool) (*Manifest, error) {
+
+	egma := nod.Begin("getting EGS manifest...")
+	defer egma.Done()
+
+	manifestsDir := vangogh_integration.AbsProductTypeDir(vangogh_integration.EgsManifests)
+
+	kvManifests, err := kevlar.New(manifestsDir, ManifestExt)
+	if err != nil {
+		return nil, err
+	}
+
+	osAppNameKey := fmt.Sprintf("%s-%s", appName, operatingSystem)
+
+	if !kvManifests.Has(osAppNameKey) || force {
+		if err = FetchManifests(osAppNameKey, gameManifest, kvManifests); err != nil {
+			return nil, err
+		}
+	}
+
+	absManifestFilename := filepath.Join(manifestsDir, osAppNameKey+ManifestExt)
+
+	manifestFile, err := os.Open(absManifestFilename)
+	if err != nil {
+		return nil, err
+	}
+	defer manifestFile.Close()
+
+	return ReadManifest(manifestFile)
+}
+
+func FetchManifests(key string, gameManifest *GameManifest, kvManifests kevlar.KeyValues) error {
+
+	manifestUrls, err := gameManifest.Urls()
+	if err != nil {
+		return err
+	}
+
+	client, err := GetClient()
+	if err != nil {
+		return err
+	}
+
+	var downloaded bool
+
+	for _, manifestUrl := range manifestUrls {
+		if err = FetchManifest(key, manifestUrl, client, kvManifests); err == nil {
+			downloaded = true
+			break
+		}
+	}
+
+	if !downloaded {
+		return errors.New("unable to successfully download at least one manifest")
+	}
+
+	return nil
+}
+
+func FetchManifest(key string, manifestUrl *url.URL, client *http.Client, kvManifests kevlar.KeyValues) error {
+
+	req, err := http.NewRequest(http.MethodGet, manifestUrl.String(), nil)
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return errors.New(resp.Status)
+	}
+
+	return kvManifests.Set(key, resp.Body)
 }
