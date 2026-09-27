@@ -13,7 +13,7 @@ const (
 	GogTitleProperty                      = "gog-title"
 	GogDevelopersProperty                 = "gog-developers"
 	GogPublishersProperty                 = "gog-publishers"
-	GogImageProperty                      = "gog-image"
+	GogHorizontalImageProperty            = "gog-horizontal-image"
 	GogVerticalImageProperty              = "gog-vertical-image"
 	GogScreenshotsProperty                = "gog-screenshots"
 	GogHeroProperty                       = "gog-hero"
@@ -223,7 +223,7 @@ func GogCatalogPageProperties() []string {
 		GogTitleProperty,
 		GogDevelopersProperty,
 		GogPublishersProperty,
-		GogImageProperty,
+		GogHorizontalImageProperty,
 		GogVerticalImageProperty,
 		GogLogoProperty,
 		GogBackgroundProperty,
@@ -258,7 +258,7 @@ func GogOrderPageProperties() []string {
 	return []string{
 		GogOrderDateProperty,
 		GogOrderPageProductsProperty,
-		GogImageProperty,
+		GogHorizontalImageProperty,
 	}
 }
 
@@ -266,7 +266,7 @@ func GogAccountPageProperties() []string {
 	return []string{
 		GogTagIdProperty,
 		GogTagNameProperty,
-		GogImageProperty,
+		GogHorizontalImageProperty,
 		GogSlugProperty,
 		GogAccountProductPageProperty,
 		GogIsAccountProductProperty,
@@ -283,7 +283,7 @@ func GogApiProductProperties() []string {
 		GogDevelopersProperty,
 		GogPublishersProperty,
 		GogLanguageCodeProperty,
-		GogImageProperty,
+		GogHorizontalImageProperty,
 		GogVerticalImageProperty,
 		GogScreenshotsProperty,
 		GogHeroProperty,
@@ -561,14 +561,14 @@ func DataKeyValues() []string {
 }
 
 var imageTypeProperties = map[gog_integration.ImageType]string{
-	gog_integration.Image:         GogImageProperty,
-	gog_integration.VerticalImage: GogVerticalImageProperty,
-	gog_integration.Screenshots:   GogScreenshotsProperty,
-	gog_integration.Hero:          GogHeroProperty,
-	gog_integration.Logo:          GogLogoProperty,
-	gog_integration.Icon:          GogIconProperty,
-	gog_integration.IconSquare:    GogIconSquareProperty,
-	gog_integration.Background:    GogBackgroundProperty,
+	gog_integration.HorizontalImage: GogHorizontalImageProperty,
+	gog_integration.VerticalImage:   GogVerticalImageProperty,
+	gog_integration.Screenshots:     GogScreenshotsProperty,
+	gog_integration.Hero:            GogHeroProperty,
+	gog_integration.Logo:            GogLogoProperty,
+	gog_integration.Icon:            GogIconProperty,
+	gog_integration.IconSquare:      GogIconSquareProperty,
+	gog_integration.Background:      GogBackgroundProperty,
 }
 
 func PropertyFromImageType(it gog_integration.ImageType) string {

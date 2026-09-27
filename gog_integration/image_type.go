@@ -11,7 +11,7 @@ type ImageType int
 
 const (
 	UnknownImageType ImageType = iota
-	Image                      // 1600x740
+	HorizontalImage            // 1600x740
 	Screenshots                // ...
 	VerticalImage              // 342x482
 	Hero                       // 2560x683
@@ -23,7 +23,7 @@ const (
 
 var imageTypeStrings = map[ImageType]string{
 	UnknownImageType: "unknown-image-type",
-	Image:            "image",
+	HorizontalImage:  "horizontal-image",
 	Screenshots:      "screenshots",
 	VerticalImage:    "vertical-image",
 	Hero:             "hero",
@@ -85,7 +85,7 @@ func ImagePropertyExt(it ImageType) (string, error) {
 	var err error
 
 	switch it {
-	case Image:
+	case HorizontalImage:
 		fallthrough
 	case VerticalImage:
 		fallthrough
