@@ -276,6 +276,7 @@ func GogAccountPageProperties() []string {
 		GogOwnedProperty,
 		GogTitleProperty,
 		GogOperatingSystemsProperty,
+		GogProductTypeProperty,
 	}
 }
 
