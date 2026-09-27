@@ -202,62 +202,6 @@ func (dls DownloadsList) Only(
 		FilterPatches(noPatches)
 }
 
-//func (list DownloadsList) Only(
-//	operatingSystems []OperatingSystem,
-//	langCodes []string,
-//	noDlcs bool,
-//	noExtras bool,
-//	noPatches bool) DownloadsList {
-//	osSet := make(map[OperatingSystem]bool)
-//	for _, os := range operatingSystems {
-//		if os == AnyOperatingSystem {
-//			for _, aos := range AllOperatingSystems() {
-//				osSet[aos] = true
-//			}
-//			break
-//		}
-//		osSet[os] = true
-//	}
-//
-//	dtSet := map[DownloadType]bool{
-//		Installer: true,
-//		DLC:       !noDlcs,
-//		Extra:     !noExtras,
-//	}
-//
-//	langSet := make(map[string]bool)
-//	for _, lc := range langCodes {
-//		langSet[lc] = true
-//	}
-//	matchingList := make(DownloadsList, 0)
-//	for _, dl := range list {
-//		if dl.OS != AnyOperatingSystem &&
-//			!osSet[dl.OS] {
-//			continue
-//		}
-//
-//		if dl.DownloadType != AnyDownloadType &&
-//			!dtSet[dl.DownloadType] {
-//			continue
-//		}
-//
-//		if dl.LanguageCode != "" &&
-//			len(langSet) > 0 &&
-//			!langSet[dl.LanguageCode] {
-//			continue
-//		}
-//
-//		if noPatches {
-//			if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
-//				continue
-//			}
-//		}
-//
-//		matchingList = append(matchingList, dl)
-//	}
-//	return matchingList
-//}
-
 func (dls DownloadsList) FilterOperatingSystems(operatingSystems ...OperatingSystem) DownloadsList {
 	if len(operatingSystems) == 0 {
 		return dls
@@ -351,10 +295,10 @@ func MapDownloads(
 	tpw nod.TotalProgressWriter) error {
 
 	if dlProcessor == nil {
-		return fmt.Errorf("vangogh_downloads: map downloads list processor is nil")
+		return errors.New("vangogh_downloads: map downloads list processor is nil")
 	}
 
-	if err := rdx.MustHave(GogSlugProperty, GogProductTypeProperty); err != nil {
+	if err := rdx.MustHave(GogSlugProperty); err != nil {
 		return err
 	}
 
@@ -365,25 +309,9 @@ func MapDownloads(
 		return err
 	}
 
-	packDlcProducts := make([]string, 0)
-	gameProducts := make([]string, 0, len(ids))
+	tpw.TotalInt(len(ids))
 
 	for _, id := range ids {
-		if pt, ok := rdx.GetLastVal(GogProductTypeProperty, id); ok && pt != gog_integration.ProductTypeGame {
-			packDlcProducts = append(packDlcProducts, id)
-			continue
-		}
-		gameProducts = append(gameProducts, id)
-	}
-
-	if len(packDlcProducts) > 0 {
-		pdpa := nod.Begin(" PACK, DLC products do not contain downloads:")
-		pdpa.EndWithResult(strings.Join(packDlcProducts, ", "))
-	}
-
-	tpw.TotalInt(len(gameProducts))
-
-	for _, id := range gameProducts {
 
 		detSlug, ok := rdx.GetLastVal(GogSlugProperty, id)
 
@@ -421,6 +349,11 @@ func MapDownloads(
 
 		if det != nil && det.IsPreOrder && len(filteredDownloads) == 0 {
 			nod.Log("%s is a pre-order and has no downloads", id)
+			continue
+		}
+
+		if len(filteredDownloads) == 0 {
+			nod.Log("%s filtered downloads are empty", id)
 			continue
 		}
 
