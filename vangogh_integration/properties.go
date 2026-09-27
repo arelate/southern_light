@@ -80,7 +80,6 @@ const (
 	GogVndbIdProperty                     = "gog-vndb-id"
 	GogOpenCriticIdProperty               = "gog-opencritic-id"
 	GogMetacriticIdProperty               = "gog-metacritic-id"
-	GogOwnedProperty                      = "gog-owned"
 	GogIsAccountProductProperty           = "gog-is-account-product"
 	GogAccountProductOrderProperty        = "gog-account-product-order"
 
@@ -210,7 +209,6 @@ var ProductTypeProperties = map[ProductType][]string{
 func GogLicencesProperties() []string {
 	return []string{
 		GogLicencesProperty,
-		GogOwnedProperty,
 	}
 }
 
@@ -273,7 +271,6 @@ func GogAccountPageProperties() []string {
 		GogAccountProductPageProperty,
 		GogIsAccountProductProperty,
 		GogAccountProductOrderProperty,
-		GogOwnedProperty,
 		GogTitleProperty,
 		GogOperatingSystemsProperty,
 		GogProductTypeProperty,
@@ -317,7 +314,6 @@ func GogApiProductProperties() []string {
 		GogAdditionalRequirementsProperty,
 		GogInDevelopmentProperty,
 		GogPreOrderProperty,
-		GogOwnedProperty,
 		GogLicencesProperty,
 	}
 }
