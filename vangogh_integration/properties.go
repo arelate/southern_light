@@ -5,7 +5,7 @@ import "github.com/arelate/southern_light/gog_integration"
 const (
 	// GOG properties
 
-	GogLicencesProperty                   = "gog-licences"
+	GogIsLicenceProductProperty           = "gog-is-licence-product"
 	GogUserWishlistProperty               = "gog-user-wishlist"
 	GogAccountProductPageProperty         = "gog-account-product-page"
 	GogCatalogProductPageProperty         = "gog-catalog-product-page"
@@ -208,7 +208,7 @@ var ProductTypeProperties = map[ProductType][]string{
 
 func GogLicencesProperties() []string {
 	return []string{
-		GogLicencesProperty,
+		GogIsLicenceProductProperty,
 	}
 }
 
@@ -314,7 +314,6 @@ func GogApiProductProperties() []string {
 		GogAdditionalRequirementsProperty,
 		GogInDevelopmentProperty,
 		GogPreOrderProperty,
-		GogLicencesProperty,
 	}
 }
 
