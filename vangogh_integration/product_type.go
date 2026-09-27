@@ -141,6 +141,7 @@ var gogAccountProductTypes = []ProductType{
 	GogLicences,
 	GogUserWishlist,
 	GogAccountPage,
+	GogApiProducts,
 	GogDetails,
 }
 
