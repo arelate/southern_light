@@ -137,21 +137,21 @@ var productTypeStrings = map[ProductType]string{
 	AvailableProducts: "available-products",
 }
 
-var gogPurchaseProductTypes = []ProductType{
+var gogAccountProductTypes = []ProductType{
 	GogLicences,
 	GogUserWishlist,
 	GogAccountPage,
 	GogDetails,
 }
 
-func GogPurchaseProductTypes() []ProductType {
-	return gogPurchaseProductTypes
+func GogAccountProductTypes() []ProductType {
+	return gogAccountProductTypes
 }
 
-func AdditionalProductTypes() iter.Seq[ProductType] {
+func GogAdditionalProductTypes() iter.Seq[ProductType] {
 	return func(yield func(ProductType) bool) {
 		for pt := range AllProductTypes() {
-			if slices.Contains(gogPurchaseProductTypes, pt) {
+			if slices.Contains(gogAccountProductTypes, pt) {
 				continue
 			}
 			if !yield(pt) {
