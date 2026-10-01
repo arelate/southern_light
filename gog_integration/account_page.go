@@ -7,7 +7,7 @@ package gog_integration
 type accountTag struct {
 	Id           string `json:"id"`
 	Name         string `json:"name"`
-	ProductCount string `json:"productCount"`
+	ProductCount int    `json:"productCount"`
 }
 
 type AccountPage struct {
@@ -22,11 +22,7 @@ type AccountPage struct {
 	UpdatedProductsCount       int              `json:"updatedProductsCount"`
 	HiddenUpdatedProductsCount int              `json:"hiddenUpdatedProductsCount"`
 	AppliedFilters             struct {
-		Tags []struct {
-			Id           string `json:"id"`
-			Name         string `json:"name"`
-			ProductCount int    `json:"productCount"`
-		} `json:"tags"`
+		Tags []accountTag `json:"tags"`
 	} `json:"appliedFilters"`
 	HasHiddenProducts bool `json:"hasHiddenProducts"`
 }
