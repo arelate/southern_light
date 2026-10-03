@@ -5,9 +5,9 @@
 package gog_integration
 
 type accountTag struct {
-	Id           string `json:"id"`
-	Name         string `json:"name"`
-	ProductCount int    `json:"productCount"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
+	//ProductCount int    `json:"productCount"`
 }
 
 type AccountPage struct {
