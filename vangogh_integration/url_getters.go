@@ -99,6 +99,7 @@ const (
 	UrlNoSteamShortcutParameter       = "no-steam-shortcut"
 	UrlNoPresetLaunchOptionsParameter = "no-preset-launch-options"
 	UrlNoValidationParameter          = "no-validation"
+	UrlNoInnoextractParameter         = "no-innoextract"
 	UrlSteamAppIdParameter            = "steam-appid"
 	UrlUrlParameter                   = "url"
 	UrlNoDlcsParameter                = "no-dlcs"
