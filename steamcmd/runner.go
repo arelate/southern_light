@@ -13,6 +13,7 @@ import (
 const (
 	steamCmdLoginCommand           = "+login"
 	steamCmdForceInstallDirCommand = "+force_install_dir"
+	steamCmdAppSetConfigCommand    = "+app_set_config"
 	steamCmdAppUpdateCommand       = "+app_update"
 	steamCmdAppInfoPrintCommand    = "+app_info_print"
 	steamCmdLicensesPrintCommand   = "+licenses_print"
@@ -28,7 +29,8 @@ const (
 )
 
 const (
-	steamCmdValidateParameter = "-validate"
+	steamCmdValidateParameter    = "-validate"
+	steamCmdOptionalDlcParameter = "optionaldlc"
 )
 
 const (
@@ -170,7 +172,7 @@ func LicensesPrint(absSteamCmdPath string, username string) (string, error) {
 	return sb.String(), nil
 }
 
-func AppUpdate(absSteamCmdPath string, id string, operatingSystem vangogh_integration.OperatingSystem, absInstallDir, username string, validate bool) error {
+func AppUpdate(absSteamCmdPath string, id string, operatingSystem vangogh_integration.OperatingSystem, absInstallDir, username string, optionalDlc ...string) error {
 
 	appUpdateCommands := []string{
 		steamCmdShutdownOnFailedCommandVariable, steamCmdTrueValue,
@@ -178,12 +180,16 @@ func AppUpdate(absSteamCmdPath string, id string, operatingSystem vangogh_integr
 		steamCmdForcePlatformTypeVariable, strings.ToLower(operatingSystem.String()),
 		steamCmdForceInstallDirCommand, absInstallDir,
 		steamCmdLoginCommand, username,
-		steamCmdAppUpdateCommand, id,
 	}
 
-	if validate {
-		appUpdateCommands = append(appUpdateCommands, steamCmdValidateParameter)
+	if len(optionalDlc) > 0 {
+		appUpdateCommands = append(appUpdateCommands,
+			steamCmdAppSetConfigCommand, id,
+			steamCmdOptionalDlcParameter, strings.Join(optionalDlc, ","))
 	}
+
+	appUpdateCommands = append(appUpdateCommands, steamCmdAppUpdateCommand, id)
+	appUpdateCommands = append(appUpdateCommands, steamCmdValidateParameter)
 
 	appUpdateCommands = append(appUpdateCommands, steamCmdQuitCommand)
 
