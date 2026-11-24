@@ -98,6 +98,7 @@ const (
 	UrlKeepDownloadsParameter         = "keep-downloads"
 	UrlNoSteamShortcutParameter       = "no-steam-shortcut"
 	UrlNoPresetLaunchOptionsParameter = "no-preset-launch-options"
+	UrlEgsAuthPassword                = "epic-games-auth-password"
 	UrlNoValidationParameter          = "no-validation"
 	UrlNoInnoextractParameter         = "no-innoextract"
 	UrlSteamAppIdParameter            = "steam-appid"

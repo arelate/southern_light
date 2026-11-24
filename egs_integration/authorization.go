@@ -44,7 +44,6 @@ const (
 )
 
 var egsClient *http.Client
-var egsTokenVerifiedRecently bool
 
 var (
 	eosOverlayGameAsset = GameAsset{
@@ -107,6 +106,12 @@ type GetVerifyTokenResponse struct {
 	Scope          any       `json:"scope"`
 	Acr            string    `json:"acr"`
 	AuthTime       time.Time `json:"auth_time"`
+}
+
+type GetExchangeTokenResponse struct {
+	ExpiresInSeconds int    `json:"expiresInSeconds"`
+	Code             string `json:"code"`
+	CreatingClientId string `json:"creatingClientId"`
 }
 
 func GetApiRedirect(client *http.Client) (io.ReadCloser, error) {
@@ -202,10 +207,11 @@ func getResponse(u *url.URL, token string, client *http.Client) (io.ReadCloser, 
 }
 
 func GetVerifyToken(token string, client *http.Client) (io.ReadCloser, error) {
+	return getResponse(AccountApiOauthVerifyUrl(), token, client)
+}
 
-	aovUrl := AccountApiOauthVerifyUrl()
-
-	return getResponse(aovUrl, token, client)
+func GetExchangeToken(token string, client *http.Client) (io.ReadCloser, error) {
+	return getResponse(AccountApiOauthExchangeUrl(), token, client)
 }
 
 func DeleteToken(token string, client *http.Client) error {
@@ -355,7 +361,7 @@ func VerifyToken(client *http.Client) (*PostTokenResponse, error) {
 		return nil, errors.New("empty access token, re-connect EGS")
 	}
 
-	if egsTokenVerifiedRecently {
+	if ptr.ExpiresAt.Sub(time.Now()) > time.Hour*3 {
 		return ptr, nil
 	}
 
@@ -388,11 +394,29 @@ func VerifyToken(client *http.Client) (*PostTokenResponse, error) {
 		return nil, errors.New("empty access token, re-connect EGS")
 	}
 
-	if ptr.ExpiresAt.Sub(time.Now()) > time.Hour*3 {
-		egsTokenVerifiedRecently = true
+	return ptr, nil
+}
+
+func ExchangeToken(token string, client *http.Client) (*GetExchangeTokenResponse, error) {
+
+	rcExchangeTokenResponse, err := GetExchangeToken(token, client)
+	if err != nil {
+		return nil, err
 	}
 
-	return ptr, nil
+	defer rcExchangeTokenResponse.Close()
+
+	var exchangeToken GetExchangeTokenResponse
+
+	if err = json.UnmarshalRead(rcExchangeTokenResponse, &exchangeToken); err != nil {
+		return nil, err
+	}
+
+	if exchangeToken.Code == "" {
+		return nil, errors.New("empty exchange token, re-connect EGS")
+	}
+
+	return &exchangeToken, nil
 }
 
 func SetupConnection(cookieStr string, reset bool) error {

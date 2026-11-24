@@ -39,6 +39,14 @@ func AccountApiOauthVerifyUrl() *url.URL {
 	})
 }
 
+func AccountApiOauthExchangeUrl() *url.URL {
+	return new(url.URL{
+		Scheme: httpsScheme,
+		Host:   accountHost,
+		Path:   accountApiOauthExchangePath,
+	})
+}
+
 func AccountApiOauthKillUrl(token string) *url.URL {
 	return new(url.URL{
 		Scheme: httpsScheme,

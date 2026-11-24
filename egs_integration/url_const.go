@@ -17,6 +17,7 @@ const (
 	apiRedirectPath                                                 = "/id/api/redirect"
 	accountApiOauthTokenPath                                        = "/account/api/oauth/token"
 	accountApiOauthVerifyPath                                       = "/account/api/oauth/verify"
+	accountApiOauthExchangePath                                     = "/account/api/oauth/exchange"
 	accountApiOauthSessionsKillPathTemplate                         = "/account/api/oauth/sessions/kill/{token}"
 	catalogItemPathTemplate                                         = "/catalog/api/shared/namespace/{namespace}/bulk/items"
 	entitlementsPathTemplate                                        = "/entitlement/api/account/{accountId}/entitlements"
