@@ -43,20 +43,22 @@ type Header struct {
 }
 
 type Metadata struct {
-	Offset        uint32
-	Version       uint8
-	FeatureLevel  uint32
-	IsFileData    bool
-	AppId         uint32
-	AppName       string
-	BuildVersion  string
-	LaunchExe     string
-	LaunchCommand string
-	PrereqIds     []string
-	PrereqName    string
-	PrereqPath    string
-	PrereqArgs    string
-	BuildId       string
+	Offset              uint32
+	Version             uint8
+	FeatureLevel        uint32
+	IsFileData          bool
+	AppId               uint32
+	AppName             string
+	BuildVersion        string
+	LaunchExe           string
+	LaunchCommand       string
+	PrereqIds           []string
+	PrereqName          string
+	PrereqPath          string
+	PrereqArgs          string
+	BuildId             string
+	UninstallActionPath string
+	UninstallActionArgs string
 }
 
 type ChunkList struct {
