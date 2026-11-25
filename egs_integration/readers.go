@@ -7,6 +7,7 @@ import (
 	"encoding/json/v2"
 	"errors"
 	"io"
+	"unicode/utf16"
 	"uuid"
 )
 
@@ -41,17 +42,47 @@ func readBytes(r io.Reader, n uint) ([]byte, error) {
 }
 
 func readString(r io.Reader) (string, error) {
-	if length, err := readUint32(r); err != nil || length == 0 {
+
+	if length, err := readUint32(r); err != nil {
+		return "", err
+	} else if length == 0 {
+		return "", nil
+	} else if int32(length) < 0 {
+		return readUtf16String(r, -int32(length))
+	} else {
+		data, err := readBytes(r, uint(length))
+		if err != nil {
+			return "", err
+		}
+
+		readLen := len(data) - 1
+		if data[readLen] != 0 {
+			return "", errors.New("string must be null terminated")
+		}
+
+		return string(data[:readLen]), nil
+	}
+}
+
+func readUtf16String(r io.Reader, charCount int32) (string, error) {
+
+	// UTF-16 characters are 2 bytes...
+	if data, err := readBytes(r, uint(int(charCount)*2)); err != nil {
 		return "", err
 	} else {
-		var data []byte
-		if data, err = readBytes(r, uint(length)); err != nil {
-			return "", err
-		} else if readLen := len(data) - 1; data[readLen] != 0 {
-			return "", errors.New("string must be null terminated")
-		} else {
-			return string(data[:readLen]), nil
+
+		// ...plus a 2-byte null terminator
+		readLen := len(data) - 2
+		if data[readLen] != 0 || data[readLen+1] != 0 {
+			return "", errors.New("utf16 string must be null terminated")
 		}
+
+		units := make([]uint16, readLen/2)
+		for ii := range units {
+			units[ii] = binary.LittleEndian.Uint16(data[ii*2:])
+		}
+
+		return string(utf16.Decode(units)), nil
 	}
 }
 
@@ -161,6 +192,9 @@ func readMetadata(r io.Reader) (*Metadata, error) {
 	if metadata.PrereqIds, err = readStringsSlice(r); err != nil {
 		return nil, err
 	}
+	if metadata.PrereqName, err = readString(r); err != nil {
+		return nil, err
+	}
 	if metadata.PrereqPath, err = readString(r); err != nil {
 		return nil, err
 	}
@@ -169,6 +203,14 @@ func readMetadata(r io.Reader) (*Metadata, error) {
 	}
 	if metadata.Version >= 1 {
 		if metadata.BuildId, err = readString(r); err != nil {
+			return nil, err
+		}
+	}
+	if metadata.Version >= 2 {
+		if metadata.UninstallActionPath, err = readString(r); err != nil {
+			return nil, err
+		}
+		if metadata.UninstallActionArgs, err = readString(r); err != nil {
 			return nil, err
 		}
 	}
