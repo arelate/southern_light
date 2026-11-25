@@ -109,6 +109,9 @@ type File struct {
 	InstallTags   []string
 	Size          uint64
 	Parts         []ChunkPart
+	HashMd5       []byte
+	MimeType      string
+	HashSha256    []byte
 }
 
 type ChunkPart struct {

@@ -364,6 +364,33 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 		}
 	}
 
+	if list.Version >= 1 {
+		for ii := range list.List {
+			var hasMd5 uint32
+			if hasMd5, err = readUint32(r); err != nil {
+				return nil, err
+			}
+			if hasMd5 != 0 {
+				if list.List[ii].HashMd5, err = readBytes(r, 16); err != nil {
+					return nil, err
+				}
+			}
+		}
+		for ii := range list.List {
+			if list.List[ii].MimeType, err = readString(r); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	if list.Version >= 2 {
+		for ii := range list.List {
+			if list.List[ii].HashSha256, err = readBytes(r, 32); err != nil {
+				return nil, err
+			}
+		}
+	}
+
 	for ii := range list.List {
 		var totalSize uint64
 		for jj := range list.List[ii].Parts {
