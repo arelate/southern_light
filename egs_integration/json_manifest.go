@@ -191,7 +191,7 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 				Size:       uint32(partSize.Uint64()),
 				Chunk: new(Chunk{
 					Uuid:       partUuid,
-					WindowSize: 2 ^ 20,
+					WindowSize: 1 << 20,
 				}),
 			}
 
