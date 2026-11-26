@@ -255,7 +255,7 @@ func (jm *JsonManifest) chunklist(filelist *FileList) (*ChunkList, error) {
 				index++
 			}
 
-			filelist.List[ii].Size += part.Chunk.FileSize
+			filelist.List[ii].Size += uint64(part.Size)
 		}
 	}
 
