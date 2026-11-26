@@ -207,7 +207,6 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 func (jm *JsonManifest) chunklist(filelist *FileList) (*ChunkList, error) {
 	chunklist := new(ChunkList{
 		Lookup: make(map[uuid.UUID]uint32),
-		Count:  uint32(len(jm.ChunkFilesizeList)),
 	})
 
 	var index uint32
@@ -250,13 +249,17 @@ func (jm *JsonManifest) chunklist(filelist *FileList) (*ChunkList, error) {
 				}
 			}
 
-			chunklist.Chunks = append(chunklist.Chunks, part.Chunk)
-			chunklist.Lookup[part.ParentUuid] = index
-			index++
+			if _, ok := chunklist.Lookup[part.ParentUuid]; !ok {
+				chunklist.Chunks = append(chunklist.Chunks, part.Chunk)
+				chunklist.Lookup[part.ParentUuid] = index
+				index++
+			}
 
 			filelist.List[ii].Size += part.Chunk.FileSize
 		}
 	}
+
+	chunklist.Count = uint32(len(chunklist.Chunks))
 
 	return chunklist, nil
 }
