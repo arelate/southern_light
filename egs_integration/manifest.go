@@ -79,14 +79,16 @@ type Chunk struct {
 }
 
 func chunkDir(featureLevel uint32) string {
-	if featureLevel < 3 {
-		return "Chunks"
-	} else if featureLevel < 6 {
-		return "ChunksV2"
-	} else if featureLevel < 15 {
+	if featureLevel >= 22 {
+		return "ChunksV5"
+	} else if featureLevel >= 15 {
+		return "ChunksV4"
+	} else if featureLevel >= 6 {
 		return "ChunksV3"
+	} else if featureLevel >= 3 {
+		return "ChunksV2"
 	}
-	return "ChunksV4"
+	return "Chunks"
 }
 
 func (chk *Chunk) Path(featureLevel uint32) string {
