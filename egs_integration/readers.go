@@ -3,6 +3,7 @@ package egs_integration
 import (
 	"bytes"
 	"compress/zlib"
+	"crypto/sha1"
 	"encoding/binary"
 	"encoding/json/v2"
 	"errors"
@@ -11,9 +12,12 @@ import (
 	"uuid"
 )
 
-var (
-	errUnsupportedBinaryManifestFormat = errors.New("unsupported binary manifest format")
+const (
+	maxStringByteLen   = 1 << 20
+	chunkPartFixedSize = 28
 )
+
+var errUnsupportedBinaryManifestFormat = errors.New("unsupported binary manifest format")
 
 func readUint8(r io.Reader) (val uint8, err error) {
 	err = binary.Read(r, binary.LittleEndian, &val)
@@ -49,6 +53,8 @@ func readString(r io.Reader) (string, error) {
 		return "", nil
 	} else if int32(length) < 0 {
 		return readUtf16String(r, -int32(length))
+	} else if length > maxStringByteLen {
+		return "", errors.New("manifest string is too long")
 	} else {
 		data, err := readBytes(r, uint(length))
 		if err != nil {
@@ -66,8 +72,13 @@ func readString(r io.Reader) (string, error) {
 
 func readUtf16String(r io.Reader, charCount int32) (string, error) {
 
+	byteLen := int(charCount) * 2
+	if byteLen > maxStringByteLen {
+		return "", errors.New("manifest utf16 string is too long")
+	}
+
 	// UTF-16 characters are 2 bytes...
-	if data, err := readBytes(r, uint(int(charCount)*2)); err != nil {
+	if data, err := readBytes(r, uint(byteLen)); err != nil {
 		return "", err
 	} else {
 
@@ -341,6 +352,9 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 			if list.List[ii].Parts[jj].DataSize, err = readUint32(r); err != nil {
 				return nil, err
 			}
+			if list.List[ii].Parts[jj].DataSize < chunkPartFixedSize {
+				return nil, errors.New("manifest chunk part too small")
+			}
 
 			var parentUuid uuid.UUID
 			if parentUuid, err = readUuid(r); err != nil {
@@ -351,7 +365,7 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 			if chunkId, ok := chunkList.Lookup[parentUuid]; ok {
 				list.List[ii].Parts[jj].Chunk = chunkList.Chunks[chunkId]
 			} else {
-				return nil, errors.New("parent UUID not found")
+				return nil, errors.New("manifest parent UUID not found")
 			}
 
 			if list.List[ii].Parts[jj].Offset, err = readUint32(r); err != nil {
@@ -359,6 +373,12 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 			}
 			if list.List[ii].Parts[jj].Size, err = readUint32(r); err != nil {
 				return nil, err
+			}
+
+			if extra := list.List[ii].Parts[jj].DataSize - chunkPartFixedSize; extra > 0 {
+				if _, err = readBytes(r, uint(extra)); err != nil {
+					return nil, err
+				}
 			}
 
 		}
@@ -537,6 +557,10 @@ func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 			return nil, errors.New("uncompressed data size mismatch")
 		}
 
+		if sum := sha1.Sum(unzipped); !bytes.Equal(sum[:], manifest.Header.ShaHash) {
+			return nil, errors.New("manifest uncompressed data sha1 mismatch")
+		}
+
 		reader = bytes.NewReader(unzipped)
 	case StorageUncompressed:
 		reader = r
@@ -598,7 +622,9 @@ func ReadManifest(r io.ReadSeeker) (*Manifest, error) {
 	if manifest, err := readBinaryManifest(r); err == nil {
 		return manifest, nil
 	} else if errors.Is(err, errUnsupportedBinaryManifestFormat) {
-		r.Seek(0, io.SeekStart)
+		if _, err = r.Seek(0, io.SeekStart); err != nil {
+			return nil, err
+		}
 		return readJsonManifest(r)
 	} else if err != nil {
 		return nil, err
