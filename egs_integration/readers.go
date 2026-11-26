@@ -135,7 +135,7 @@ func readHeader(r io.Reader) (*Header, error) {
 	var header Header
 	var err error
 
-	if header.Offset, err = readUint32(r); err != nil {
+	if header.Size, err = readUint32(r); err != nil {
 		return nil, err
 	}
 	if header.SizeUncompressed, err = readUint32(r); err != nil {
@@ -162,7 +162,7 @@ func readMetadata(r io.Reader) (*Metadata, error) {
 	var metadata Metadata
 	var err error
 
-	if metadata.Offset, err = readUint32(r); err != nil {
+	if metadata.Size, err = readUint32(r); err != nil {
 		return nil, err
 	}
 	if metadata.Version, err = readUint8(r); err != nil {
@@ -223,7 +223,7 @@ func readChunkList(r io.Reader) (*ChunkList, error) {
 	var list ChunkList
 	var err error
 
-	if list.Offset, err = readUint32(r); err != nil {
+	if list.Size, err = readUint32(r); err != nil {
 		return nil, err
 	}
 	if list.Version, err = readUint8(r); err != nil {
@@ -285,7 +285,7 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 	var list FileList
 	var err error
 
-	if list.Offset, err = readUint32(r); err != nil {
+	if list.Size, err = readUint32(r); err != nil {
 		return nil, err
 	}
 	if list.Version, err = readUint8(r); err != nil {
@@ -347,7 +347,7 @@ func readFileList(r io.Reader, chunkList *ChunkList) (*FileList, error) {
 				return nil, err
 			}
 
-			list.List[ii].Parts[jj].ParentUuid = parentUuid
+			list.List[ii].Parts[jj].ChunkUuid = parentUuid
 			if chunkId, ok := chunkList.Lookup[parentUuid]; ok {
 				list.List[ii].Parts[jj].Chunk = chunkList.Chunks[chunkId]
 			} else {
@@ -407,7 +407,7 @@ func readCustomFields(r io.ReadSeeker) (*CustomFields, error) {
 	var fields CustomFields
 	var err error
 
-	if fields.Offset, err = readUint32(r); err != nil {
+	if fields.Size, err = readUint32(r); err != nil {
 		return nil, err
 	}
 	if fields.Version, err = readUint8(r); err != nil {
@@ -515,7 +515,7 @@ func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		return nil, err
 	}
 
-	if _, err = r.Seek(int64(manifest.Header.Offset), io.SeekStart); err != nil {
+	if _, err = r.Seek(int64(manifest.Header.Size), io.SeekStart); err != nil {
 		return nil, err
 	}
 
@@ -555,7 +555,7 @@ func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		return nil, err
 	}
 
-	if savedPos, err = reader.Seek(savedPos+int64(manifest.Metadata.Offset), io.SeekStart); err != nil {
+	if savedPos, err = reader.Seek(savedPos+int64(manifest.Metadata.Size), io.SeekStart); err != nil {
 		return nil, err
 	}
 
@@ -563,7 +563,7 @@ func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		return nil, err
 	}
 
-	if savedPos, err = reader.Seek(savedPos+int64(manifest.ChunkList.Offset), io.SeekStart); err != nil {
+	if savedPos, err = reader.Seek(savedPos+int64(manifest.ChunkList.Size), io.SeekStart); err != nil {
 		return nil, err
 	}
 
@@ -571,7 +571,7 @@ func readBinaryManifest(r io.ReadSeeker) (*Manifest, error) {
 		return nil, err
 	}
 
-	if savedPos, err = reader.Seek(savedPos+int64(manifest.FileList.Offset), io.SeekStart); err != nil {
+	if savedPos, err = reader.Seek(savedPos+int64(manifest.FileList.Size), io.SeekStart); err != nil {
 		return nil, err
 	}
 

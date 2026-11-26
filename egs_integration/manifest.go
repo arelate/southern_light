@@ -34,7 +34,7 @@ type Manifest struct {
 }
 
 type Header struct {
-	Offset           uint32
+	Size             uint32
 	SizeUncompressed uint32
 	SizeCompressed   uint32
 	ShaHash          []byte
@@ -43,7 +43,7 @@ type Header struct {
 }
 
 type Metadata struct {
-	Offset              uint32
+	Size                uint32
 	Version             uint8
 	FeatureLevel        uint32
 	IsFileData          bool
@@ -62,7 +62,7 @@ type Metadata struct {
 }
 
 type ChunkList struct {
-	Offset  uint32
+	Size    uint32
 	Version uint8
 	Count   uint32
 	Chunks  []*Chunk
@@ -95,7 +95,7 @@ func (chk *Chunk) Path(featureLevel uint32) string {
 }
 
 type FileList struct {
-	Offset  uint32
+	Size    uint32
 	Version uint8
 	Count   uint32
 	List    []File
@@ -115,15 +115,15 @@ type File struct {
 }
 
 type ChunkPart struct {
-	DataSize   uint32
-	ParentUuid uuid.UUID
-	Offset     uint32
-	Size       uint32
-	Chunk      *Chunk
+	DataSize  uint32
+	ChunkUuid uuid.UUID
+	Offset    uint32
+	Size      uint32
+	Chunk     *Chunk
 }
 
 type CustomFields struct {
-	Offset  uint32
+	Size    uint32
 	Version uint8
 	Count   uint32
 	Fields  map[string]string

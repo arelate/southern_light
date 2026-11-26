@@ -26,14 +26,14 @@ type JsonManifest struct {
 	PrereqArgs          string   `json:"PrereqArgs"`
 	FileManifestList    []struct {
 		Filename         string `json:"Filename"`
-		FileHash         string `json:"FileHash"`
+		ShaHash          string `json:"FileHash"`
 		IsReadOnly       bool   `json:"bIsReadOnly"`
 		IsCompressed     bool   `json:"bIsCompressed"`
 		IsUnixExecutable bool   `json:"bIsUnixExecutable"`
 		FileChunkParts   []struct {
-			Guid   string `json:"Guid"`
-			Offset string `json:"Offset"`
-			Size   string `json:"Size"`
+			ChunkUuid string `json:"Guid"`
+			Offset    string `json:"Offset"`
+			Size      string `json:"Size"`
 		} `json:"FileChunkParts"`
 	} `json:"FileManifestList"`
 	ChunkHashList     map[string]string `json:"ChunkHashList"`
@@ -144,7 +144,7 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 
 	for _, fml := range jm.FileManifestList {
 
-		shaHash, err := parseJsonHash(fml.FileHash)
+		shaHash, err := parseJsonHash(fml.ShaHash)
 		if err != nil {
 			return nil, err
 		}
@@ -168,7 +168,7 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 
 		for _, fcp := range fml.FileChunkParts {
 			var partUuid uuid.UUID
-			partUuid, err = uuid.Parse(fcp.Guid)
+			partUuid, err = uuid.Parse(fcp.ChunkUuid)
 			if err != nil {
 				return nil, err
 			}
@@ -186,9 +186,9 @@ func (jm *JsonManifest) filelist() (*FileList, error) {
 			}
 
 			part := ChunkPart{
-				ParentUuid: partUuid,
-				Offset:     uint32(partOffset.Uint64()),
-				Size:       uint32(partSize.Uint64()),
+				ChunkUuid: partUuid,
+				Offset:    uint32(partOffset.Uint64()),
+				Size:      uint32(partSize.Uint64()),
 				Chunk: new(Chunk{
 					Uuid:       partUuid,
 					WindowSize: 1 << 20,
@@ -249,9 +249,9 @@ func (jm *JsonManifest) chunklist(filelist *FileList) (*ChunkList, error) {
 				}
 			}
 
-			if _, ok := chunklist.Lookup[part.ParentUuid]; !ok {
+			if _, ok := chunklist.Lookup[part.ChunkUuid]; !ok {
 				chunklist.Chunks = append(chunklist.Chunks, part.Chunk)
-				chunklist.Lookup[part.ParentUuid] = index
+				chunklist.Lookup[part.ChunkUuid] = index
 				index++
 			}
 
