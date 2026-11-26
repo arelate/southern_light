@@ -2,6 +2,7 @@ package egs_integration
 
 import (
 	"encoding/hex"
+	"errors"
 	"math/big"
 	"strconv"
 	"strings"
@@ -43,12 +44,23 @@ type JsonManifest struct {
 }
 
 func parseJsonInt(inStr string) (*big.Int, error) {
+
+	// values are encoded as little-endian sequences of 3-digit decimal groups,
+	// each representing a single byte; a truncated trailing group would otherwise
+	// slice out of range and panic
+	if len(inStr)%3 != 0 {
+		return nil, errors.New("json int must be encoded in groups of 3 digits")
+	}
+
 	num := big.NewInt(0)
 	shift := uint(0)
 	for i := 0; i < len(inStr); i += 3 {
 		val, err := strconv.ParseInt(inStr[i:i+3], 10, 64)
 		if err != nil {
 			return nil, err
+		}
+		if val < 0 || val > 255 {
+			return nil, errors.New("json int group must be in [0, 255] range")
 		}
 		num.Add(num, new(big.Int).Lsh(big.NewInt(val), shift))
 		shift += 8
